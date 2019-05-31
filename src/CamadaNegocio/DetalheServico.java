@@ -17,6 +17,9 @@ import javax.swing.JTable;
  * @author モニカ
  * @author 磐手
  * @author イントレピッド
+ * 
+ * @author 弐条
+ * @author 七草
  */
 
 public class DetalheServico {
@@ -63,7 +66,7 @@ public class DetalheServico {
         String sql;
         if(this.codigo == 0)
         {
-            sql = "insert into detalhe_serv (ds_descricao, ds_status) values ('"+this.descricao+"',"+this.status+", )";
+            sql = "insert into detalhe_serv (ds_descricao, ds_status) values ('"+this.descricao+"', "+this.status+" )";
         }
         else
         {

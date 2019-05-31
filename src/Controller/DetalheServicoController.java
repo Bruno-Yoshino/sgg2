@@ -14,6 +14,9 @@ import util.Validacao;
  * @author モニカ
  * @author 磐手
  * @author イントレピッド
+ * 
+ * @author 弐条
+ * @author 七草
  */
 public class DetalheServicoController 
 {
@@ -42,7 +45,7 @@ public class DetalheServicoController
            return 1;
        }
        
-       if(ds.VerificaDescricaoServico(nome))
+       if(ds.VerificaDescricaoServico(nome) && ds.getCodigo() == 0)
            return 2;
        
        ds.setDescricao(nome);

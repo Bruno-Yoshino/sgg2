@@ -14,6 +14,9 @@ import util.*;
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * 
+ * @author 弐条
+ * @author 七草
  */
 public class EstadoController 
 {
@@ -42,7 +45,7 @@ public class EstadoController
             return 1;
         if(v.ValidaTexto(uf) == 1)
             return 2;
-        if(est.CheckEstado(uf))
+        if(est.CheckEstado(uf) && est.getCodigo() == 0)
             return 3;
         est.setCodigo(id);
         est.setSigla(uf);

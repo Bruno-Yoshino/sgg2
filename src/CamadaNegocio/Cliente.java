@@ -351,7 +351,7 @@ public class Cliente {
     public boolean VerificaCliente(String cpf, String cnpj)
     {
         String sql;
-        if(cpf == null)
+        if(cpf != null)
             sql = "select * from fisica where cli_cpf = '"+cpf+"'";
         else
             sql = "select * from juridica where cli_cnpj = '"+cnpj+"'";

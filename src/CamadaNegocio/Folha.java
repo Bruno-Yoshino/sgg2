@@ -106,8 +106,8 @@ public class Folha {
         String sql;
         if(this.codigo == 0)
         {
-            sql = "insert into folha (fo_tamanho, fo_status, fo_qtd, fo_largura, fo_descricao) "
-                    + "values ('"+this.getTamanho()+"', '"+this.status+"', "+this.qtd+", "+this.altura+", "+this.largura+", '"+this.descricao+"')";
+            sql = "insert into folha (fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao) "
+                    + "values ('"+this.getTamanho()+"', '"+this.status+"', 0, "+this.altura+", "+this.largura+", '"+this.descricao+"')";
         }
         else
         {
@@ -124,7 +124,7 @@ public class Folha {
     
     public Folha buscarCodigo(int codigo)
     {
-        String sql = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura fo_descricao from folha where fo_codigo = "+codigo+"";
+        String sql = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao from folha where fo_codigo = "+codigo+"";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
@@ -142,7 +142,7 @@ public class Folha {
     
     public boolean CheckExist(String tamanho, String descricao)
     {
-        String sql = "select * from folha where fo_tamanho = '"+tamanho+"', fo_descricao = '"+descricao+"'";
+        String sql = "select * from folha where fo_tamanho = '"+tamanho+"' and fo_descricao = '"+descricao+"'";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
@@ -164,7 +164,7 @@ public class Folha {
         String query = null;
         if (valor.equals(""))
         {
-            query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura fo_descricao from folha";
+            query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao from folha";
         }
         else
         {
@@ -172,17 +172,17 @@ public class Folha {
             {
                 case 0:
                 {
-                    query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura fo_descricao from folha where fo_codigo = "+valor+"";
+                    query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao from folha where fo_codigo = "+valor+"";
                     break;
                 }
                 case 1:
                 {
-                    query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura fo_descricao from folha where fo_tamanho = '"+valor+"'";
+                    query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao from folha where fo_tamanho = '"+valor+"'";
                     break;
                 }
                 case 2:
                 {
-                    query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura fo_descricao from folha where fo_descricao like '%"+valor+"%'";
+                    query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao from folha where fo_descricao like '%"+valor+"%'";
                     break;
                 }
             }

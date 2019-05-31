@@ -9,6 +9,7 @@ import CamadaLogica.Banco;
 import CamadaNegocio.Empresa;
 import CamadaNegocio.Estado;
 import Controller.FuncionarioController;
+import java.awt.event.KeyEvent;
 import static javafx.application.Application.launch;
 import javax.swing.JOptionPane;
 import util.mensagens;
@@ -80,6 +81,17 @@ public class login extends javax.swing.JFrame
         jLabel2.setText("Senha:");
 
         txtusuario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtusuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtusuarioKeyPressed(evt);
+            }
+        });
+
+        txtsenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtsenhaKeyPressed(evt);
+            }
+        });
 
         btnLogar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnLogar.setText("Logar");
@@ -188,6 +200,16 @@ public class login extends javax.swing.JFrame
         txtsenha.setText("");
         txtusuario.setText("");
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void txtusuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtusuarioKeyPressed
+    if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+        btnLogarActionPerformed(null);
+    }//GEN-LAST:event_txtusuarioKeyPressed
+
+    private void txtsenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtsenhaKeyPressed
+    if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+        btnLogarActionPerformed(null);
+    }//GEN-LAST:event_txtsenhaKeyPressed
 
     /**
      * @param args the command line arguments

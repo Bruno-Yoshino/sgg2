@@ -18,6 +18,9 @@ import util.*;
  * @author 阿武隈
  * @author 長門
  * @author 大和
+ * 
+ * @author 弐条
+ * @author 七草
  */
 public class ClienteController {
     private Cliente c;
@@ -129,7 +132,7 @@ public class ClienteController {
             }
             c.setRazasoci(razasoci);//2
         }
-        if(c.VerificaCliente(cpf,cnpj))
+        if(c.VerificaCliente(cpf,cnpj) && c.getCodigo() == 0)
         {
             return 20;
         }

@@ -22,7 +22,7 @@ public class FolhaController
         return fo;
     }
     
-    public int validaCampo(String descricao, String altura, String largura, String tamanho)
+    public int validaCampo(String descricao, String altura, String largura, String tamanho, String codigo)
     {
         int quant;
         double lar, alt;
@@ -63,7 +63,7 @@ public class FolhaController
         }
         fo.setTamanho(tamanho);
         
-        if(fo.CheckExist(tamanho, descricao))
+        if(fo.CheckExist(tamanho, descricao) && codigo.equals("0"))
         {
             return 8;
         }

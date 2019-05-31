@@ -328,7 +328,7 @@ public class CadastroFolha extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        switch(fc.validaCampo(txtDescricao.getText(), txtAltura.getText(), txtLargura.getText(), txtTamanho.getText()))
+        switch(fc.validaCampo(txtDescricao.getText(), txtAltura.getText(), txtLargura.getText(), txtTamanho.getText(), txtCodigo.getText()))
         {
             case 1:
             JOptionPane.showMessageDialog(this, "Inforem a Descrição!", "Atnção", JOptionPane.WARNING_MESSAGE);
@@ -408,6 +408,7 @@ public class CadastroFolha extends javax.swing.JDialog {
         txtAltura.setText("");
         txtDescricao.setText("");
         txtLargura.setText("");
+        txtTamanho.setText("");
         cbStatus.setSelected(false);
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents());

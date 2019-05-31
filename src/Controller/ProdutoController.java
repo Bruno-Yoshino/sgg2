@@ -13,6 +13,10 @@ import util.*;
  * @author 羽根川　翼
  * @author 鳳翔
  * @author 利根
+ * 
+ * @author 弐条
+ * @author 七草
+ * 
  */
 public class ProdutoController {
     private Produto p;
@@ -38,6 +42,11 @@ public class ProdutoController {
        if(nome.trim().equals(""))
        {
            return 1;
+       }
+       
+       if(p.VerificaProduto(nome) && p.getCodigo() == 0)
+       {
+           return 2;
        }
        p.setNome(nome);
        p.setTipo(tipo);

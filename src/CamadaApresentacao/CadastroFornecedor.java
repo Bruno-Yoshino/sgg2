@@ -126,8 +126,10 @@ public class CadastroFornecedor extends javax.swing.JDialog {
             ex.printStackTrace();
         }
 
+        txtCidade.setEditable(false);
         txtCidade.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
+        txtUf.setEditable(false);
         txtUf.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         txtCodCid.setEditable(false);

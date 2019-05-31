@@ -8,6 +8,8 @@ import java.applet.Applet;
 import util.*;
 import Controller.FuncionarioController;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -21,6 +23,9 @@ import javax.swing.JOptionPane;
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * 
+ * @author 弐条
+ * @author 七草
  */
 public class CadastroFuncionario extends javax.swing.JDialog {
 
@@ -121,6 +126,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
         cbRelatorio = new javax.swing.JCheckBox();
         cbMovimentacao = new javax.swing.JCheckBox();
         cbAdm = new javax.swing.JCheckBox();
+        jLNivelAtual = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         lFoto = new javax.swing.JLabel();
         btnBuscaImg = new javax.swing.JButton();
@@ -177,6 +183,11 @@ public class CadastroFuncionario extends javax.swing.JDialog {
                 btnLocCidadeActionPerformed(evt);
             }
         });
+        btnLocCidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnLocCidadeKeyPressed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel5.setText("Endereço:");
@@ -221,8 +232,10 @@ public class CadastroFuncionario extends javax.swing.JDialog {
             ex.printStackTrace();
         }
 
+        txtCidade.setEditable(false);
         txtCidade.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
+        txtUf.setEditable(false);
         txtUf.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -263,33 +276,33 @@ public class CadastroFuncionario extends javax.swing.JDialog {
 
         cbCadastro.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         cbCadastro.setText("Cadastro");
-        cbCadastro.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                cbCadastroStateChanged(evt);
+        cbCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCadastroActionPerformed(evt);
             }
         });
 
         cbConsulta.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         cbConsulta.setText("Consulta");
-        cbConsulta.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                cbConsultaStateChanged(evt);
+        cbConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbConsultaActionPerformed(evt);
             }
         });
 
         cbRelatorio.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         cbRelatorio.setText("Relatorio");
-        cbRelatorio.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                cbRelatorioStateChanged(evt);
+        cbRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbRelatorioActionPerformed(evt);
             }
         });
 
         cbMovimentacao.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         cbMovimentacao.setText("Movimentação");
-        cbMovimentacao.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                cbMovimentacaoStateChanged(evt);
+        cbMovimentacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMovimentacaoActionPerformed(evt);
             }
         });
 
@@ -300,6 +313,8 @@ public class CadastroFuncionario extends javax.swing.JDialog {
                 cbAdmActionPerformed(evt);
             }
         });
+
+        jLNivelAtual.setText("0");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -316,18 +331,21 @@ public class CadastroFuncionario extends javax.swing.JDialog {
                 .addComponent(cbMovimentacao)
                 .addGap(18, 18, 18)
                 .addComponent(cbAdm)
+                .addGap(102, 102, 102)
+                .addComponent(jLNivelAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(11, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbCadastro)
                     .addComponent(cbConsulta)
                     .addComponent(cbRelatorio)
                     .addComponent(cbMovimentacao)
-                    .addComponent(cbAdm))
+                    .addComponent(cbAdm)
+                    .addComponent(jLNivelAtual))
                 .addContainerGap())
         );
 
@@ -375,11 +393,6 @@ public class CadastroFuncionario extends javax.swing.JDialog {
         txtCodCid.setEditable(false);
         txtCodCid.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtCodCid.setName("txtCodigo"); // NOI18N
-        txtCodCid.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCodCidFocusLost(evt);
-            }
-        });
 
         jLabel16.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel16.setText("Confirma Senha:");
@@ -742,7 +755,9 @@ public class CadastroFuncionario extends javax.swing.JDialog {
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         switch(fc.validar(txtCodigo.getText(), txtCodCid.getText(), txtNome.getText(), txtUsuario.getText(), txtSenha.getText(), soma, txtCpf.getText(), txtRg.getText(), txtOrgemi.getText(), txtEndereco.getText(), txtNumero.getText(), txtComplemento.getText(), txtTelefone.getText(), txtCelular.getText(), txtCaminho.getText(), txtCep.getText(), txtSenha1.getText()))
         {
-            case 1: JOptionPane.showMessageDialog(this, "Codigo Invalido","Alerta", JOptionPane.WARNING_MESSAGE); break;
+            case 1: JOptionPane.showMessageDialog(this, "Informe a Cidade","Alerta", JOptionPane.WARNING_MESSAGE); 
+            btnLocCidade.requestFocus();
+            break;
             case 2: JOptionPane.showMessageDialog(this, "Informe o Nome","Alerta", JOptionPane.WARNING_MESSAGE);
             txtNome.requestFocus(); break;
             case 3:
@@ -806,6 +821,10 @@ public class CadastroFuncionario extends javax.swing.JDialog {
             case 17:
             JOptionPane.showMessageDialog(this, "Informe o CPF!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtCpf.requestFocus();
+            break;
+            case 18:
+            JOptionPane.showMessageDialog(this, "Informe o Nivel desse usuario!","Alerta", JOptionPane.WARNING_MESSAGE);
+            m.WarmingMessage("Soma Atual"+soma, "Erro");
             break;
             default:
             if(fc.gravar())
@@ -894,7 +913,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
     }//GEN-LAST:event_txtCodigoFocusLost
 
     private void btnaddCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddCidadeActionPerformed
-        CadastroCidade frm = new CadastroCidade(null, false);
+        CadastroCidade frm = new CadastroCidade(null, true);
         frm.setVisible(true);
     }//GEN-LAST:event_btnaddCidadeActionPerformed
 
@@ -920,50 +939,6 @@ public class CadastroFuncionario extends javax.swing.JDialog {
             btnLocCidade.requestFocus();
         }
     }//GEN-LAST:event_btnLocCidadeActionPerformed
-
-    private void cbCadastroStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cbCadastroStateChanged
-        if(cbCadastro.isSelected())
-        {
-            soma += 2; 
-        }
-        else
-        {
-            soma -= 2;
-        }
-    }//GEN-LAST:event_cbCadastroStateChanged
-
-    private void cbConsultaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cbConsultaStateChanged
-        if(cbConsulta.isSelected())
-        {
-            soma += 4; 
-        }
-        else
-        {
-            soma -= 4;
-        }
-    }//GEN-LAST:event_cbConsultaStateChanged
-
-    private void cbRelatorioStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cbRelatorioStateChanged
-        if(cbRelatorio.isSelected())
-        {
-            soma += 8; 
-        }
-        else
-        {
-            soma -= 8;
-        }
-    }//GEN-LAST:event_cbRelatorioStateChanged
-
-    private void cbMovimentacaoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cbMovimentacaoStateChanged
-        if(cbMovimentacao.isSelected())
-        {
-            soma += 16; 
-        }
-        else
-        {
-            soma -= 16;
-        }
-    }//GEN-LAST:event_cbMovimentacaoStateChanged
 
     private void btnBuscaImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaImgActionPerformed
         String local = sc.CarregaLogo(lFoto);
@@ -999,11 +974,63 @@ public class CadastroFuncionario extends javax.swing.JDialog {
             
             soma = 0;
         }
+        jLNivelAtual.setText(""+soma);
     }//GEN-LAST:event_cbAdmActionPerformed
 
-    private void txtCodCidFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodCidFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodCidFocusLost
+    private void cbCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCadastroActionPerformed
+        if(cbCadastro.isSelected())
+        {
+            soma += 2; 
+        }
+        else
+        {
+            soma -= 2;
+        }
+        jLNivelAtual.setText(""+soma);
+    }//GEN-LAST:event_cbCadastroActionPerformed
+
+    private void cbConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbConsultaActionPerformed
+        if(cbConsulta.isSelected())
+        {
+            soma += 4; 
+        }
+        else
+        {
+            soma -= 4;
+        }
+                jLNivelAtual.setText(""+soma);
+    }//GEN-LAST:event_cbConsultaActionPerformed
+
+    private void cbRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbRelatorioActionPerformed
+        if(cbRelatorio.isSelected())
+        {
+            soma += 8; 
+        }
+        else
+        {
+            soma -= 8;
+        }
+                jLNivelAtual.setText(""+soma);
+    }//GEN-LAST:event_cbRelatorioActionPerformed
+
+    private void cbMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMovimentacaoActionPerformed
+        if(cbMovimentacao.isSelected())
+        {
+            soma += 16; 
+        }
+        else
+        {  
+            soma -= 16;
+        }
+                jLNivelAtual.setText(""+soma);
+    }//GEN-LAST:event_cbMovimentacaoActionPerformed
+
+    private void btnLocCidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnLocCidadeKeyPressed
+        if(btnLocCidade.isFocusable() && evt.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+            btnLocCidadeActionPerformed(null);
+        }
+    }//GEN-LAST:event_btnLocCidadeKeyPressed
 
     private void limpar()
     {
@@ -1101,6 +1128,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
     private javax.swing.JCheckBox cbConsulta;
     private javax.swing.JCheckBox cbMovimentacao;
     private javax.swing.JCheckBox cbRelatorio;
+    private javax.swing.JLabel jLNivelAtual;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

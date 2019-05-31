@@ -21,6 +21,9 @@ import util.SystemControl;
  * @author 羽根川　翼
  * @author 鳳翔
  * @author 利根
+ * 
+ * @author 弐条
+ * @author 七草
  */
 public class CadastroProduto extends javax.swing.JDialog {
 
@@ -370,6 +373,10 @@ public class CadastroProduto extends javax.swing.JDialog {
         {
             case 1:
             JOptionPane.showMessageDialog(this, "Inforem o Nome do Produto!", "Atnção", JOptionPane.WARNING_MESSAGE);
+            txtNome.requestFocus();
+            break;
+            case 2:
+            JOptionPane.showMessageDialog(this, "Produto ja cadastrado!", "Atnção", JOptionPane.WARNING_MESSAGE);
             txtNome.requestFocus();
             break;
             default:

@@ -170,7 +170,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Home");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -673,7 +673,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
        CadastroDetalheServico frm = new CadastroDetalheServico(this, true);
-       frm.setTitle("Cadastro Serviço");
+       frm.setTitle("Cadastro Detalhe Serviço");
        frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
@@ -702,22 +702,22 @@ public class Principal extends javax.swing.JFrame {
         }
         else
         {
-            if(soma <= 16)
+            if(soma >= 16)
             {
                 Servico.setVisible(true);
                 soma -= 16;
             }
-            if(soma <= 8)
+            if(soma >= 8)
             {
                 Relatorio.setVisible(true);
                 soma -= 8;
             }
-            if(soma <= 4)
+            if(soma >= 4)
             {
                 Consulta.setVisible(true);
                 soma -= 4;
             }
-            if(soma <= 2)
+            if(soma >= 2)
             {
                 Cadastro.setVisible(true);
                 soma = 0;

@@ -17,6 +17,9 @@ import util.mensagens;
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * 
+ * @author 弐条
+ * @author 七草
  */
 public class CidadeController 
 {
@@ -47,7 +50,7 @@ public class CidadeController
             return 1;
         if(v.ValidaTexto(uf) == 1)
             return 2;
-        if(cid.VerificaCidade(nome, est.getCodigo()))
+        if(cid.VerificaCidade(nome, est.getCodigo()) && cid.getCodigo() == 0)
             return 3;
         cid.setCodigo(id);
         cid.setNome(nome);

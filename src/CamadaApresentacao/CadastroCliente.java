@@ -116,7 +116,7 @@ public class CadastroCliente extends javax.swing.JDialog {
         btnCancelar = new javax.swing.JButton();
         btnLocalizar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -156,8 +156,18 @@ public class CadastroCliente extends javax.swing.JDialog {
         });
 
         btnaddEstado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
+        btnaddEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaddEstadoActionPerformed(evt);
+            }
+        });
 
         btnaddCidade.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
+        btnaddCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaddCidadeActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel5.setText("Endereço:");
@@ -854,6 +864,16 @@ public class CadastroCliente extends javax.swing.JDialog {
         panefisica.setVisible(false);
     }
     }//GEN-LAST:event_rbjuridicaStateChanged
+
+    private void btnaddEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddEstadoActionPerformed
+        CadastroEstado frm = new CadastroEstado(null, true);
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnaddEstadoActionPerformed
+
+    private void btnaddCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddCidadeActionPerformed
+        CadastroCidade frm = new CadastroCidade(null, true);
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnaddCidadeActionPerformed
 
     private void limpar()
     {

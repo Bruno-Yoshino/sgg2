@@ -75,7 +75,7 @@ public class CadastroEmpresa extends javax.swing.JDialog {
         btnGravar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -132,8 +132,10 @@ public class CadastroEmpresa extends javax.swing.JDialog {
             ex.printStackTrace();
         }
 
+        txtCidade.setEditable(false);
         txtCidade.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
+        txtUf.setEditable(false);
         txtUf.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -352,7 +354,7 @@ public class CadastroEmpresa extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnaddCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddCidadeActionPerformed
-        CadastroCidade frm = new CadastroCidade(null, false);
+        CadastroCidade frm = new CadastroCidade(null, true);
         frm.setVisible(true);
     }//GEN-LAST:event_btnaddCidadeActionPerformed
 

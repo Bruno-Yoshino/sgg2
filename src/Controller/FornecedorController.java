@@ -11,8 +11,11 @@ import CamadaNegocio.Fornecedor;
 import util.Validacao;
 
 /**
- *
- * @author Bruno Yoshino
+ * @author 吉野　廉
+ * @author 海女
+ * 
+ * @author 弐条
+ * @author 七草
  */
 public class FornecedorController 
 {
@@ -58,14 +61,14 @@ public class FornecedorController
         {
             return 1;
         }
-        forn.setCodigo(Integer.parseInt(cidade));
+        forn.setCodigo(Integer.parseInt(codigo));
         forn.setCid(new Cidade().buscarCodigo(Integer.parseInt(cidade))); 
         if(nome.trim().equals("")) // nome nao informado
         {
             return 2;
         }
         forn.setNome(nome);
-        if(telefone.trim().length() <= 3 || celular.trim().length() <= 3)
+        if(telefone.trim().length() <= 5 || celular.trim().length() <= 5) /// Mudar o estilo de verificacao
         {
             return 12;
         }

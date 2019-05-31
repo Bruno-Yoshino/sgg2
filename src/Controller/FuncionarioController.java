@@ -13,6 +13,9 @@ import util.Validacao;
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * 
+ * @author 弐条
+ * @author 七草
  */
 public class FuncionarioController {
     private Funcionario func;
@@ -88,7 +91,7 @@ public class FuncionarioController {
         {
             return 6;
         }
-        func.setNivel(nivel);
+        
         if(orgemi.trim().equals("")) // orgemi nao informado
         {
             return 7;
@@ -142,6 +145,13 @@ public class FuncionarioController {
         {
             return 17;
         }
+        
+        if(nivel < 0)
+        {
+            return 18;
+        }
+        func.setNivel(nivel);
+        
         func.setRg(rg);
         func.setCaminho(caminho);
         return 0;

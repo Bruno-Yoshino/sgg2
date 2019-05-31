@@ -15,8 +15,11 @@ import javax.swing.JTable;
  *
  * @author 吉野　廉
  * @author モニカ
+ * 
  * @author 磐手
  * @author イントレピッド
+ * @author 弐条
+ * @author 七草
  */
 public class Servico 
 {
@@ -64,11 +67,11 @@ public class Servico
         String sql;
         if(this.codigo == 0)
         {
-            sql = "insert into servico (serv_nome, serv_status) values ('"+this.nome+"',"+this.status+", )";
+            sql = "insert into servico (serv_nome, serv_status) values ('"+this.nome+"',"+this.status+")";
         }
         else
         {
-            sql = "update servico set serv_nome = '"+this.nome+"',  serv_status = "+this.status+"   where serv_codigo = "+this.codigo+"";
+            sql = "update servico set serv_nome = '"+this.nome+"',  serv_status = "+this.status+"  where serv_codigo = "+this.codigo+"";
         }
         return Banco.getCon().manipular(sql);
     }

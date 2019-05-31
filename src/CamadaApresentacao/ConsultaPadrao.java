@@ -17,6 +17,9 @@ import javax.swing.JOptionPane;
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * 
+ * @author 弐条
+ * @author 七草
  */
 public class ConsultaPadrao extends javax.swing.JDialog {
 

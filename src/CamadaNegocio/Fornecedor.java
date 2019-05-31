@@ -19,6 +19,9 @@ import javax.swing.JTable;
  * @author 海女
  * @author 御子
  * @author 稲荷
+ * 
+ * @author 弐条
+ * @author 七草
  */
 public class Fornecedor 
 {
@@ -94,12 +97,12 @@ public class Fornecedor
         String sql;
         if(this.codigo == 0)
         {
-            sql = "insert into fornecedor (forn_cid, forn_nome, forn_telefone, forn_celular, forn_email\n" +
-                    ") values ("+this.cid.getCodigo()+", '"+this.getNome()+"', '"+this.getTel()+"', '"+this.getCel()+"')";
+            sql = "insert into fornecedor (cid_codigo, forn_nome, forn_telefone, forn_celular, forn_email\n" +
+                    ") values ("+this.cid.getCodigo()+", '"+this.getNome()+"', '"+this.getTel()+"', '"+this.getCel()+"', '"+this.email+"')";
         }
         else
         {
-            sql = "update funcioanrio set forn_cid = "+this.cid.getCodigo()+", forn_nome = '"+this.getNome()+"', "
+            sql = "update fornecedor set cid_codigo = "+this.cid.getCodigo()+", forn_nome = '"+this.getNome()+"', "
                     + " forn_telefone = '"+this.getTel()+"', forn_celular = '"+this.getCel()+"', forn_email = '"+this.email+"' where forn_codigo = "+this.codigo+"";
         }
         return Banco.getCon().manipular(sql);
@@ -115,7 +118,7 @@ public class Fornecedor
     public Fornecedor buscarNome(String s)
     {
         String sql;
-        sql = "select forn_codigo, forn_cid, forn_nome, "
+        sql = "select forn_codigo, cid_codigo, forn_nome, "
                 + "forn_telefone, "
                 + "forn_celular, forn_email"
                 + "from fornecedor "
@@ -139,7 +142,7 @@ public class Fornecedor
     public boolean checarNome(String s)
     {
         String sql;
-        sql = "select forn_codigo, forn_cid, forn_nome, "
+        sql = "select forn_codigo, cid_codigo, forn_nome, "
                 + "forn_telefone, "
                 + "forn_celular, forn_email"
                 + "from fornecedor "
@@ -162,11 +165,11 @@ public class Fornecedor
     public Fornecedor buscarCodigo(int i)
     {
         String sql;
-        sql = "select forn_codigo, forn_cid, forn_nome, "
+        sql = "select forn_codigo, cid_codigo, forn_nome, "
                 + "forn_telefone, "
                 + "forn_celular, forn_email "
                 + "from fornecedor "
-                + "where forn_codigo "+i+" ";
+                + "where forn_codigo = "+i+" ";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
@@ -189,7 +192,7 @@ public class Fornecedor
         String query = null;
         if (valor.equals(""))
         {
-            query = "select forn_codigo, forn_cid, forn_nome, "
+            query = "select forn_codigo, cid_codigo, forn_nome, "
                 + "forn_telefone, "
                 + "forn_celular, forn_email "
                 + "from fornecedor "
@@ -201,7 +204,7 @@ public class Fornecedor
             {
                 case 0:
                 {
-                    query = "select forn_codigo, forn_cid, forn_nome, "
+                    query = "select forn_codigo, cid_codigo, forn_nome, "
                         + "forn_telefone, "
                         + "forn_celular, forn_email "
                         + "from fornecedor "
@@ -210,11 +213,11 @@ public class Fornecedor
                 }
                 case 1:
                 {
-                    query = "select forn_codigo, forn_cid, forn_nome, "
+                    query = "select forn_codigo, cid_codigo, forn_nome, "
                         + "forn_telefone, "
                         + "forn_celular, forn_email "
                         + "from fornecedor "
-                        + "where forn_nome like '%"+valor+"%'  order by forn_nome";
+                        + "where forn_nome ilike '%"+valor+"%'  order by forn_nome";
                     break;
                 }
             }

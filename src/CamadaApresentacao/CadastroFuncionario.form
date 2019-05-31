@@ -318,6 +318,7 @@
         <Component class="javax.swing.JButton" name="btnLocCidade">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLocCidadeActionPerformed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="btnLocCidadeKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
@@ -415,6 +416,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtCidade">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
@@ -422,6 +424,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtUf">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
@@ -534,6 +537,8 @@
                       <Component id="cbMovimentacao" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="cbAdm" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
+                      <Component id="jLNivelAtual" min="-2" pref="76" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -541,13 +546,14 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="11" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="cbCadastro" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbConsulta" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbRelatorio" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbAdm" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLNivelAtual" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -563,7 +569,7 @@
                 <Property name="text" type="java.lang.String" value="Cadastro"/>
               </Properties>
               <Events>
-                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="cbCadastroStateChanged"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCadastroActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JCheckBox" name="cbConsulta">
@@ -574,7 +580,7 @@
                 <Property name="text" type="java.lang.String" value="Consulta"/>
               </Properties>
               <Events>
-                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="cbConsultaStateChanged"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbConsultaActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JCheckBox" name="cbRelatorio">
@@ -585,7 +591,7 @@
                 <Property name="text" type="java.lang.String" value="Relatorio"/>
               </Properties>
               <Events>
-                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="cbRelatorioStateChanged"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbRelatorioActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JCheckBox" name="cbMovimentacao">
@@ -596,7 +602,7 @@
                 <Property name="text" type="java.lang.String" value="Movimenta&#xe7;&#xe3;o"/>
               </Properties>
               <Events>
-                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="cbMovimentacaoStateChanged"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbMovimentacaoActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JCheckBox" name="cbAdm">
@@ -609,6 +615,11 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbAdmActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLNivelAtual">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="0"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -681,9 +692,6 @@
             </Property>
             <Property name="name" type="java.lang.String" value="txtCodigo" noResource="true"/>
           </Properties>
-          <Events>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCodCidFocusLost"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtSenha1">
         </Component>

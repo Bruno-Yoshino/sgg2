@@ -14,6 +14,9 @@ import util.Validacao;
  * @author モニカ
  * @author 磐手
  * @author イントレピッド
+ * 
+ * @author 弐条
+ * @author 七草
  */
 public class ServicoController 
 {
@@ -42,7 +45,7 @@ public class ServicoController
            return 1;
        }
        
-       if(s.VerificaServico(nome))
+       if(s.VerificaServico(nome) && s.getCodigo() == 0)
            return 2;
        
        s.setNome(nome);

@@ -124,8 +124,14 @@
               <Font name="Arial" size="14" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtusuarioKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtsenha">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtsenhaKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnLogar">
           <Properties>

@@ -16,6 +16,9 @@ import javax.swing.JTable;
  *
  * @author 吉野　廉
  * @author 羽根川　翼
+ * 
+ * @author 弐条
+ * @author 七草
  */
 public class TipoConta {
     private int codigo;
@@ -59,14 +62,15 @@ public class TipoConta {
         {
             sql = "update tipo_conta set tc_tipo = '"+this.tipo+"' where tc_codigo = "+this.codigo+"";
         }
-        return false;
+        
+        return Banco.getCon().manipular(sql);
     }
     
     public boolean excluir(int codigo)
     {
         String sql;
         sql = "delete from tipo_conta where tc_codigo = "+codigo+"";
-        return false;
+        return Banco.getCon().manipular(sql);
     }
     
     public TipoConta buscarTipo(String s)
