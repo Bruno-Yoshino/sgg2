@@ -15,6 +15,9 @@ import javax.swing.JTable;
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * 
+ * @author 弐条
+ * @author 七草
  */
 public class Folha {
     private int codigo;
@@ -103,7 +106,7 @@ public class Folha {
         String sql;
         if(this.codigo == 0)
         {
-            sql = "insert into folha (fo_tamanho, fo_status, fo_qtd, fo_largura fo_descricao) "
+            sql = "insert into folha (fo_tamanho, fo_status, fo_qtd, fo_largura, fo_descricao) "
                     + "values ('"+this.getTamanho()+"', '"+this.status+"', "+this.qtd+", "+this.altura+", "+this.largura+", '"+this.descricao+"')";
         }
         else
