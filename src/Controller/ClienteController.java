@@ -10,6 +10,7 @@ import CamadaNegocio.Estado;
 import CamadaNegocio.Cliente;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JComboBox;
 import util.*;
 /**
@@ -42,7 +43,7 @@ public class ClienteController {
         this.c = c;
     }
     
-    public int validar(String codigo, String cidade, String nome, String endereco, String numero, String complemento, String cep, String telefone, String celular, String email, String cpf, String rg, String orgemi_insc, LocalDate dataNasc, String razasoci, String cnpj, boolean flag)
+    public int validar(String codigo, String cidade, String nome, String endereco, String numero, String complemento, String cep, String telefone, String celular, String email, String cpf, String rg, String orgemi_insc, Date dataNasc, String razasoci, String cnpj, boolean flag)
     {
         c.setComplemento(complemento);//11
         c.setCodigo(Integer.parseInt(codigo));//1
@@ -96,9 +97,10 @@ public class ClienteController {
         }
         c.setCep(cep);//9
         
-        if(email.trim().equals(""))
+        if(!email.trim().equals(""))
         {
-            return 14;
+            if(!v.ValidarEmail(email))
+                return 14;
         }
         c.setEmail(email);//10
         if(flag)
@@ -118,6 +120,7 @@ public class ClienteController {
                 return 17;
             }
             c.setDataNasc(dataNasc);//3
+            c.setCnpj(null);
         }
         else
         {
@@ -131,6 +134,7 @@ public class ClienteController {
                 return 19;
             }
             c.setRazasoci(razasoci);//2
+            c.setCpf(null);
         }
         if(c.VerificaCliente(cpf,cnpj) && c.getCodigo() == 0)
         {
@@ -154,6 +158,14 @@ public class ClienteController {
         return c.gravar();
     }
     
+    public boolean gravarSegundaParte(boolean flag)
+    {
+        c.setCodigo(c.RetornaMaxCodigo());
+        if(c.getCpf() != null)
+            return c.gravarFisica(flag);
+        return c.gravarJuridica(flag);
+    }
+    
     public boolean recuperar()
     {
         return c.recuperar(c.getCodigo()); 
@@ -175,9 +187,10 @@ public class ClienteController {
         lista = uf.buscarALL();
         for(int i = 0; i < lista.size(); i++)
         {
-            c.addItem(lista.get(i));
+            c.addItem(lista.get(i).getSigla());
             c.updateUI();
         }
+        c.setSelectedIndex(1);
     }
     
     public void CarregaCidade(JComboBox c, String uf)
@@ -186,7 +199,7 @@ public class ClienteController {
         lista = cid.buscarPEstado(uf);
         for(int i = 0; i < lista.size(); i++)
         {
-            c.addItem(lista.get(i));
+            c.addItem(lista.get(i).getNome());
             c.updateUI();
         }
     }
@@ -195,5 +208,28 @@ public class ClienteController {
     {
         //return 0;
         return this.cid.buscarPCidadeEstado(cid, uf).getCodigo();
+    }
+    
+    public Cliente buscaClienteCodigo(int codigo)
+    {
+        Cliente temp = c.buscarCodigo(codigo);
+        if(temp != null)
+            c = temp;
+        return temp;
+    }
+    
+    public void carregaFisica(int codigo)
+    {
+       c.buscarCodigoFisica(codigo);
+    }
+    
+    public void carregaJuridica(int codigo)
+    {
+       c.buscarCodigoJuridica(codigo);
+    }
+    
+    public void Reativar(int codigo)
+    {
+        c.recuperar(codigo);
     }
 }

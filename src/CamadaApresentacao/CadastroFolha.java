@@ -21,6 +21,7 @@ public class CadastroFolha extends javax.swing.JDialog {
     public CadastroFolha(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         btnNovo.setName("btnNovo");
         btnAlterar.setName("btnAlterar");
         btnCancelar.setName("btnCancelar");

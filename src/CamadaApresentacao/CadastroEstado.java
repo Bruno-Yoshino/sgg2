@@ -22,6 +22,7 @@ public class CadastroEstado extends javax.swing.JDialog {
     public CadastroEstado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         txtuf_cod.setEnabled(false);
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents());

@@ -33,19 +33,21 @@ public class ConsultaPadrao extends javax.swing.JDialog {
     private int tl;
     private String tabela;
     private int posDefault;
+    private final int x, y;
     boolean jtableEditavel;
     
     public ConsultaPadrao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+        setLocationRelativeTo(null);
+        cbFlagCliente.setVisible(false);
         cbOpcao.requestFocus();
-        txtCnpj.setVisible(false);
-        txtCpf.setVisible(false);
         dateInicio.setVisible(false);
         dateFim.setVisible(false);
         jla.setVisible(false);
         txtValor.setText("");
+        x = txtValor.getX();
+        y = txtValor.getY();
     }
 
     /**
@@ -61,14 +63,15 @@ public class ConsultaPadrao extends javax.swing.JDialog {
         cbOpcao = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLTexto = new javax.swing.JLabel();
-        txtCnpj = new br.com.ikeda.beans.jFormatTextCnpj();
-        txtCpf = new br.com.ikeda.beans.jFormatTextCpf();
         dateInicio = new br.com.marciorl.beans.DateChooser();
         dateFim = new br.com.marciorl.beans.DateChooser();
         jla = new javax.swing.JLabel();
         btnLocalizar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         txtValor = new javax.swing.JTextField();
+        cbFlagCliente = new javax.swing.JCheckBox();
+        txtCPF = new br.com.ikeda.beans.jFormatTextCpf();
+        txtCNPJ = new br.com.ikeda.beans.jFormatTextCnpj();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -119,6 +122,9 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             }
         });
 
+        cbFlagCliente.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        cbFlagCliente.setText("Pessoa Fisica?");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -129,23 +135,25 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLTexto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtValor)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(dateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jla)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dateFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtValor))))
-                .addGap(69, 69, 69)
+                                .addComponent(dateFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbFlagCliente)
+                .addGap(44, 44, 44)
                 .addComponent(btnLocalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(134, 134, 134)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,19 +169,19 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabel1)
+                            .addComponent(cbFlagCliente))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLTexto)
                             .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                .addComponent(dateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jla)
-                                .addComponent(dateFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(dateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jla)
+                            .addComponent(dateFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -212,7 +220,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -262,14 +270,23 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             cbOpcao.addItem(vetOpcoes[i]);
         }
         cbOpcao.setSelectedIndex(posDefault);
+        if(tabela.equals("Cliente"))
+            cbFlagCliente.setVisible(true);
     }
     
     private void ControlaComboBox() //alterar os campos conforme a opcao selecionada
     {
         String nome = (String) cbOpcao.getSelectedItem();
+
+        dateInicio.setVisible(false);
+        dateFim.setVisible(false);
+        jla.setVisible(false);
+        txtCNPJ.setVisible(false);
+        txtCPF.setVisible(false);
         if(nome.equals("Data"))
         {
             txtValor.setVisible(false);
+            dateInicio.setLocation(x,y);
             dateInicio.setVisible(true);
             jLTexto.setText("Data");
         }
@@ -287,25 +304,26 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             {
                 if(nome.equals("CPF"))
                 {
+                    txtCPF.setVisible(true);
+                    txtCPF.setLocation(x,y);
+                    cbFlagCliente.setVisible(false);
                     txtValor.setVisible(false);
-                    txtCpf.setVisible(true);
                     jLTexto.setText("CPF");
                 }
                 else
                 {
                     if(nome.equals("CNPJ"))
                     {
+                        txtCNPJ.setLocation(x,y);
+                        txtCNPJ.setVisible(true);
+                        cbFlagCliente.setVisible(false);
                         txtValor.setVisible(false);
-                        txtCnpj.setVisible(true);
                         jLTexto.setText("CNPJ");
                     } 
                     else
                     {
-                        txtCnpj.setVisible(false);
-                        txtCpf.setVisible(false);
-                        dateInicio.setVisible(false);
-                        dateFim.setVisible(false);
-                        jla.setVisible(false);
+                        if(tabela.equals("Cliente"))
+                            cbFlagCliente.setVisible(true);
                         txtValor.setVisible(true);
                         jLTexto.setText("Valor");
                     }
@@ -313,6 +331,11 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             }
         }
     }
+    
+    /*        vet[0] = "Código";
+        vet[1] = "Nome";
+        vet[2] = "CPF";
+        vet[3] = "CNPJ";*/
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         if (evt.getClickCount() == 2)
         {
@@ -533,13 +556,10 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             if(tipo == 2)
             {
-                rs = Funcionario.buscarDados(txtCpf.getText(), tipo);
+                rs = Funcionario.buscarDados(txtCPF.getText(), tipo);
             }
             else
-            {
                 rs = Funcionario.buscarDados(txtValor.getText(), tipo);
-            }
-            
             while (rs.next())
             {//"Código", "Nome", "CPF", "Telefone", "Celular", "Data Adimicao", "Data Demição"
                 model.addRow(new Object[]
@@ -600,13 +620,14 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Cliente.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
-            rs = Cliente.buscarDados(txtValor.getText(), tipo);
             switch(tipo)
             {
-                case 2: rs = Cliente.buscarDados(txtCpf.getText(), tipo); break;
-                case 3: rs = Cliente.buscarDados(txtCnpj.getText(), tipo); break;
-                default:  rs = Cliente.buscarDados(txtValor.getText(), tipo);
-            }           
+                case 2: rs = Cliente.buscarDados(txtValor.getText(), tipo, true); break;
+                
+                case 3: rs = Cliente.buscarDados(txtValor.getText(), tipo, false); break;
+                
+                default: rs = Cliente.buscarDados(txtValor.getText(), tipo, cbFlagCliente.isSelected()); 
+            }
             while (rs.next())
             {//"Código", "Nome", "CPF/CNPJ", "Telefone", "Celular", "Enderecço", "Numero", "Complemento", "Status"
                 //c.cli_codigo, c.cli_nome, f.cli_cpf, j.cli_cnpj, 
@@ -615,13 +636,13 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                 {
                     rs.getInt(1), 
                     rs.getString(2), 
-                    rs.getString(3) == null ? rs.getString(3) : rs.getString(4), 
+                    rs.getString(3),
+                    rs.getString(4), 
                     rs.getString(5), 
                     rs.getString(6), 
                     rs.getString(7), 
                     rs.getString(8), 
-                    rs.getString(9), 
-                    rs.getBoolean(10) ? "Ativo" : "Não Ativo"
+                    rs.getBoolean(9) ? "Ativo" : "Não Ativo"
                 });
             }
         } 
@@ -659,6 +680,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLocalizar;
     private javax.swing.JButton btnSair;
+    private javax.swing.JCheckBox cbFlagCliente;
     private javax.swing.JComboBox<String> cbOpcao;
     private br.com.marciorl.beans.DateChooser dateFim;
     private br.com.marciorl.beans.DateChooser dateInicio;
@@ -669,8 +691,8 @@ public class ConsultaPadrao extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel jla;
-    private br.com.ikeda.beans.jFormatTextCnpj txtCnpj;
-    private br.com.ikeda.beans.jFormatTextCpf txtCpf;
+    private br.com.ikeda.beans.jFormatTextCnpj txtCNPJ;
+    private br.com.ikeda.beans.jFormatTextCpf txtCPF;
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }

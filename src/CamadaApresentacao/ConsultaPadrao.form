@@ -67,28 +67,30 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cbOpcao" min="-2" pref="580" max="-2" attributes="0"/>
+                          <Component id="cbOpcao" min="-2" pref="518" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLTexto" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txtValor" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <Component id="txtCnpj" min="-2" pref="118" max="-2" attributes="0"/>
+                                  <Component id="txtCPF" min="-2" pref="77" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtCpf" min="-2" pref="105" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="txtCNPJ" min="-2" pref="125" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="dateInicio" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jla" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="dateFim" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="txtValor" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="cbFlagCliente" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   <Component id="btnLocalizar" min="-2" pref="93" max="-2" attributes="0"/>
                   <EmptySpace min="134" pref="134" max="-2" attributes="0"/>
                   <Component id="btnSair" min="-2" pref="87" max="-2" attributes="0"/>
@@ -107,6 +109,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="cbOpcao" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbFlagCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -114,14 +117,12 @@
                               <Component id="txtValor" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtCnpj" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtCpf" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="2" attributes="0">
-                                  <Component id="dateInicio" alignment="2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jla" alignment="2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="dateFim" alignment="2" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="dateInicio" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="jla" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="dateFim" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtCPF" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtCNPJ" alignment="2" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -162,10 +163,6 @@
             <Property name="text" type="java.lang.String" value="Valor:"/>
           </Properties>
         </Component>
-        <Component class="br.com.ikeda.beans.jFormatTextCnpj" name="txtCnpj">
-        </Component>
-        <Component class="br.com.ikeda.beans.jFormatTextCpf" name="txtCpf">
-        </Component>
         <Component class="br.com.marciorl.beans.DateChooser" name="dateInicio">
         </Component>
         <Component class="br.com.marciorl.beans.DateChooser" name="dateFim">
@@ -204,6 +201,18 @@
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtValorFocusGained"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JCheckBox" name="cbFlagCliente">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Pessoa Fisica?"/>
+          </Properties>
+        </Component>
+        <Component class="br.com.ikeda.beans.jFormatTextCpf" name="txtCPF">
+        </Component>
+        <Component class="br.com.ikeda.beans.jFormatTextCnpj" name="txtCNPJ">
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel2">
@@ -232,7 +241,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="474" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="473" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>

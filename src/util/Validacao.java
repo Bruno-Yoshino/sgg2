@@ -8,6 +8,7 @@ package util;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
+import javafx.scene.control.TextField;
 
 /**
  *
@@ -67,4 +68,11 @@ public class Validacao
     {
         return dataI.before(dataF);
     }
+    
+    public boolean ValidarEmail(String email)
+    {
+        String mailFormat = "^[a-zA-Z0-9!#$%&'_`/=~\\*\\+\\-\\?\\^\\{\\|\\}]+(\\.[a-zA-Z0-9!#$%&'_`/=~\\*\\+\\-\\?\\^\\{\\|\\}]+)*+(.*)@[a-zA-Z0-9][a-zA-Z0-9\\-]*(\\.[a-zA-Z0-9\\-]+)+$";
+        return email.matches(mailFormat);
+    }
+    
 }

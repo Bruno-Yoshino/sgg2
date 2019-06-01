@@ -22,6 +22,7 @@ public class CadastroTipoConta extends javax.swing.JDialog {
     public CadastroTipoConta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         txtCodigo.setEnabled(false);
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents());

@@ -25,6 +25,7 @@ public class CadastroCidade extends javax.swing.JDialog {
     public CadastroCidade(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         txtCodigo.setEnabled(false);
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents());

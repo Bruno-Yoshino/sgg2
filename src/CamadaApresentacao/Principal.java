@@ -515,7 +515,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem11.setText("Compra");
         Servico.add(jMenuItem11);
 
-        jMenuItem12.setText("jMenuItem12");
+        jMenuItem12.setText("Produção");
         Servico.add(jMenuItem12);
 
         jMenuBar1.add(Servico);

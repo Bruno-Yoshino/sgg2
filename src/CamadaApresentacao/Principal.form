@@ -131,7 +131,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem12">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jMenuItem12"/>
+                <Property name="text" type="java.lang.String" value="Produ&#xe7;&#xe3;o"/>
               </Properties>
             </MenuItem>
           </SubComponents>

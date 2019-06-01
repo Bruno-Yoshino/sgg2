@@ -29,6 +29,7 @@ public class CadastroEmpresa extends javax.swing.JDialog {
     public CadastroEmpresa(java.awt.Frame parent, boolean modal, boolean flag) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         txtCodCid.setVisible(false);
         txtCaminho.setVisible(false);
         carregar();

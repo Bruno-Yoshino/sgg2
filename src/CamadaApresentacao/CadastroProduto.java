@@ -33,6 +33,7 @@ public class CadastroProduto extends javax.swing.JDialog {
     public CadastroProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         btnNovo.setName("btnNovo");
         btnAlterar.setName("btnAlterar");
         btnCancelar.setName("btnCancelar");

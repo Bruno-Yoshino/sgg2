@@ -38,6 +38,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
     public CadastroFuncionario(java.awt.Frame parent, boolean modal, boolean firstAccess) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         txtCodigo.setEnabled(false);
         this.firstAccess = firstAccess;
         txtCaminho.setVisible(false);

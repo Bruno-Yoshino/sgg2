@@ -10,7 +10,6 @@ import CamadaLogica.ReadOnlyTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JTable;
@@ -34,17 +33,39 @@ public class Cliente {
     private String celular;
     private Boolean status;
     private String email;
+    private Date dataC;
+
+    public Cliente(int codigo, Cidade cid, String nome, String endereco, int nunero, String cep, String complemento, String telefone, String celular, Boolean status, String email, Date dataC, String cpf, String rg, Date dataNasc, String org_insc, String razasoci, String cnpj) {
+        this.codigo = codigo;
+        this.cid = cid;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.nunero = nunero;
+        this.cep = cep;
+        this.complemento = complemento;
+        this.telefone = telefone;
+        this.celular = celular;
+        this.status = status;
+        this.email = email;
+        this.dataC = dataC;
+        this.cpf = cpf;
+        this.rg = rg;
+        this.dataNasc = dataNasc;
+        this.org_insc = org_insc;
+        this.razasoci = razasoci;
+        this.cnpj = cnpj;
+    }
     
     private String cpf;
     private String rg;
-    private LocalDate dataNasc;
+    private Date dataNasc;
     
     private String org_insc;
     
     private String razasoci;
     private String cnpj;
 
-    public Cliente(int codigo, Cidade cid, String nome, String endereco, int nunero, String cep, String complemento, String telefone, String celular, Boolean status, String email, String cpf, String rg, String org_insc, LocalDate dataNasc, String razasoci, String cnpj) {
+    public Cliente(int codigo, Cidade cid, String nome, String endereco, int nunero, String cep, String complemento, String telefone, String celular, Boolean status, String email, String cpf, String rg, String org_insc, Date dataNasc, String razasoci, String cnpj) {
         this.codigo = codigo;
         this.cid = cid;
         this.nome = nome;
@@ -193,11 +214,11 @@ public class Cliente {
         this.org_insc = org_insc;
     }
 
-    public LocalDate getDataNasc() {
+    public Date getDataNasc() {
         return dataNasc;
     }
 
-    public void setDataNasc(LocalDate dataNasc) {
+    public void setDataNasc(Date dataNasc) {
         this.dataNasc = dataNasc;
     }
 
@@ -216,6 +237,14 @@ public class Cliente {
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
+
+    public Date getDataC() {
+        return dataC;
+    }
+
+    public void setDataC(Date dataC) {
+        this.dataC = dataC;
+    }
     
     //-----------------------------------------------------DAO---------------------------------------------------------
     public boolean gravar()  // using This
@@ -223,10 +252,10 @@ public class Cliente {
         String sql;
         if(this.codigo == 0)
         {
-            sql = "insert into cliente (cid_codigo, cli_nome, cli_endereco, cli_numero, cli_cep, cli_complemento, cli_telefone, cli_celular, cli_email, cli_cadastro) "
+            sql = "insert into cliente (cid_codigo, cli_nome, cli_endereco, cli_numero, cli_cep, cli_complemento, cli_telefone, cli_celular, cli_email, cli_cadastro, cli_status) "
                     + "values ("+this.cid.getCodigo()+", '"+this.nome+"', '"+this.endereco+"', "+this.nunero+", '"+this.cep+"', '"+this.complemento+"', "
                     + "'"+this.telefone+"', "
-                    + "'"+this.celular+"', '"+this.email+"', '"+Date.from(Instant.now())+"')";
+                    + "'"+this.celular+"', '"+this.email+"', '"+Date.from(Instant.now())+"', true)";
         }
         else
         {
@@ -236,10 +265,10 @@ public class Cliente {
         }
         return Banco.getCon().manipular(sql);
     }
-    public boolean gravarJuridica()  // using This
+    public boolean gravarJuridica(boolean flag)  // using This
     {
         String sql;
-        if(this.codigo == 0)
+        if(flag)
         {
             sql = "insert into juridica (cli_codigo, cli_razasoci, cli_cnpj, cli_inscest) "
                     + "values ("+this.codigo+", '"+this.razasoci+"', '"+this.cnpj+"', "+this.org_insc+")";
@@ -250,10 +279,10 @@ public class Cliente {
         }
         return Banco.getCon().manipular(sql);
     }
-    public boolean gravarFisica()  // using This
+    public boolean gravarFisica(boolean flag)  // using This
     {
         String sql;
-        if(this.codigo == 0)
+        if(flag)
         {
             sql = "insert into fisica (cli_codigo, cli_cpf, cli_rg, cli_orgemi, cli_datanasc) "
                     + "values ("+this.codigo+", '"+this.cpf+"', '"+this.rg+"', '"+this.org_insc+"', '"+this.dataNasc+"')";
@@ -283,14 +312,16 @@ public class Cliente {
     {
         String sql;
         sql = "select cli_codigo, cid_codigo, cli_nome, cli_endereco, cli_numero, cli_cep, "
-                + "cli_complemento, cli_telefone, cli_celular, cli_email  from cliente where cli_codigo = "+c+"";
+                + "cli_complemento, cli_telefone, cli_celular, cli_status, cli_email  from cliente where cli_codigo = "+c+"";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
             if (rs.next()) 
             {  //int codigo, Cidade cid, String nome, String endereco, int nunero, String cep, 
                 //String complemento, String telefone, String celular, Boolean status, String email
-                return new Cliente(rs.getInt("cli_codigo"), new Cidade().buscarCodigo(rs.getInt(2)), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getBoolean(10), rs.getString(11));
+                return new Cliente(rs.getInt("cli_codigo"), new Cidade().buscarCodigo(rs.getInt(2)), 
+                        rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), 
+                        rs.getString(7), rs.getString(8), rs.getString(9), rs.getBoolean(10), rs.getString(11));
             }
         } 
         catch (SQLException e) 
@@ -312,7 +343,7 @@ public class Cliente {
                 this.cpf = rs.getString(1);
                 this.rg = rs.getString(2);
                 this.org_insc = rs.getString(3);
-                this.dataNasc = LocalDate.parse(""+rs.getDate(4));
+                this.dataNasc = rs.getDate(4);
             }
             else
             {
@@ -392,37 +423,81 @@ public class Cliente {
         return 0;
     }
     
-    public static ResultSet buscarDados(String valor, int tipo)//Para consulta
+    public int RetornaMaxCodigo()
+    {
+        String sql = "select max(cli_codigo) from cliente";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+    
+    public static ResultSet buscarDados(String valor, int tipo, boolean flag)//Para consulta
     {
       //"Código", "Nome", "CPF/CNPJ", "Telefone", "Celular", "Enderecço", "Numero", "Complemento"
         String query = null;
-        if (valor.equals(""))
-        {
-            query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero, c.cli_complemento, c.cli_status from cliente c, fisica f, juridica j where c.cli_codigo = f.cli_codigo or c.cli_codigo = j.cli_codigo order by c.cli_nome";
-        }
-        else
-        {
-            switch (tipo)
+        if(flag)
+        {   //Fisica
+            if (valor.equals(""))
             {
-                case 0:
+                query = "select c.cli_codigo, c.cli_nome, f.cli_cpf,  c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where c.cli_codigo = f.cli_codigo order by c.cli_nome";
+            }
+            else
+            {
+                switch (tipo)
                 {
-                    query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero, c.cli_complemento, c.cli_status from cliente c, fisica f, juridica j where c.cid_codigo = " + Integer.parseInt(valor) + " and (c.cli_codigo = f.cli_codigo or c.cli_codigo = j.cli_codigo) order by c.cli_nome";
-                    break;
+                    case 0:
+                    {
+                        query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where c.cid_codigo = " + Integer.parseInt(valor) + " order by c.cli_nome";
+                        break;
+                    }
+                    case 1:
+                    {
+                        query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where c.cid_nome like '%" + valor + "%' order by c.cli_nome";
+                        break;
+                    }
+                    case 2:
+                    {
+                        query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where f.cli_cpf = " + valor + " and c.cli_codigo = f.cli_codigo order by c.cli_nome";
+                        break;
+                    }
                 }
-                case 1:
+            }
+        }
+        else // juridica
+        {
+            if (valor.equals(""))
+            {
+                query = "select c.cli_codigo, c.cli_nome, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, juridica j where c.cli_codigo = j.cli_codigo order by c.cli_nome";
+            }
+            else
+            {
+                switch (tipo)
                 {
-                    query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero, c.cli_complemento, c.cli_status from cliente c, fisica f, juridica j where c.cid_nome like '%" + valor + "%' and (c.cli_codigo = f.cli_codigo or c.cli_codigo = j.cli_codigo) order by c.cli_nome";
-                    break;
-                }
-                case 2:
-                {
-                    query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero, c.cli_complemento, c.cli_status from cliente c, fisica f, juridica j where f.cli_cpf = " + valor + " and c.cli_codigo = f.cli_codigo order by c.cli_nome";
-                    break;
-                }
-                case 3:
-                {
-                    query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero, c.cli_complemento, c.cli_status from cliente c, fisica f, juridica j where j.cid_cnpj like '%" + valor + "%' and c.cli_codigo = j.cli_codigo order by c.cli_nome";
-                    break;
+                    case 0:
+                    {
+                        query = "select c.cli_codigo, c.cli_nome, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, juridica j where c.cid_codigo = " + Integer.parseInt(valor) + " order by c.cli_nome";
+                        break;
+                    }
+                    case 1:
+                    {
+                        query = "select c.cli_codigo, c.cli_nome, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, juridica j where c.cid_nome like '%" + valor + "%' order by c.cli_nome";
+                        break;
+                    }
+                    case 3:
+                    {
+                        query = "select c.cli_codigo, c.cli_nome, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, juridica j where j.cid_cnpj like '%" + valor + "%' order by c.cli_nome";
+                        break;
+                    }
                 }
             }
         }

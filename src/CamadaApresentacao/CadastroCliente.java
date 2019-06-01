@@ -26,10 +26,15 @@ public class CadastroCliente extends javax.swing.JDialog {
     private final mensagens m = new mensagens();
     private final ClienteController cc = new ClienteController();
     float x, y;
+    boolean flagG;
     
-    public CadastroCliente(java.awt.Frame parent, boolean modal) {
+    public CadastroCliente(java.awt.Frame parent, boolean modal) 
+    {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
+        jLabel15.setVisible(false);
+        txtcli_datac.setVisible(false);
         txtcid_codigo.setVisible(false);
         btnNovo.setName("btnNovo");
         btnAlterar.setName("btnAlterar");
@@ -50,6 +55,7 @@ public class CadastroCliente extends javax.swing.JDialog {
         sc.HabilityComponents(panejuridica.getComponents(), false);
         sc.Initialize(jPanel2.getComponents()); 
         rbfisica.setSelected(true);
+        CarregaEstado();
     }
 
     /**
@@ -66,18 +72,30 @@ public class CadastroCliente extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtcli_cod = new javax.swing.JTextField();
+        rbfisica = new javax.swing.JRadioButton();
+        rbjuridica = new javax.swing.JRadioButton();
         txtcli_nome = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         cbuf = new javax.swing.JComboBox<>();
-        cbcidade = new javax.swing.JComboBox<>();
         btnaddEstado = new javax.swing.JButton();
+        cbcidade = new javax.swing.JComboBox<>();
         btnaddCidade = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         txtcli_endereco = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtcli_numero = new javax.swing.JTextField();
+        txtcli_cep = new javax.swing.JFormattedTextField();
         txtcli_complemento = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        txtcli_telefone = new javax.swing.JFormattedTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txtcli_telefone1 = new javax.swing.JFormattedTextField();
+        jLabel15 = new javax.swing.JLabel();
+        txtcid_codigo = new javax.swing.JTextField();
+        txtEmail = new br.com.ikeda.beans.jTextFieldEmail();
+        txtcli_datac = new br.com.marciorl.beans.DateChooser();
         panefisica = new javax.swing.JPanel();
         txtcli_cpf = new javax.swing.JFormattedTextField();
         jLabel12 = new javax.swing.JLabel();
@@ -86,26 +104,14 @@ public class CadastroCliente extends javax.swing.JDialog {
         jLabel14 = new javax.swing.JLabel();
         txtcli_orgEmi = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        dateChooser1 = new br.com.marciorl.beans.DateChooser();
+        txtcli_datanasc = new br.com.marciorl.beans.DateChooser();
         panejuridica = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
-        txtcli_cnpj = new javax.swing.JFormattedTextField();
         jLabel18 = new javax.swing.JLabel();
-        txtcli_ie = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         txtcli_rs = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        txtcli_cep = new javax.swing.JFormattedTextField();
-        jLabel9 = new javax.swing.JLabel();
-        txtcli_telefone = new javax.swing.JFormattedTextField();
-        rbfisica = new javax.swing.JRadioButton();
-        rbjuridica = new javax.swing.JRadioButton();
-        jLabel10 = new javax.swing.JLabel();
-        txtcli_telefone1 = new javax.swing.JFormattedTextField();
-        jLabel15 = new javax.swing.JLabel();
-        txtcli_datanasc = new javax.swing.JFormattedTextField();
-        txtcid_codigo = new javax.swing.JTextField();
-        txtEmail = new br.com.ikeda.beans.jTextFieldEmail();
+        txtcli_cnpj = new br.com.ikeda.beans.jFormatTextCnpj();
+        txtcli_ie = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
@@ -138,20 +144,30 @@ public class CadastroCliente extends javax.swing.JDialog {
             }
         });
 
+        rbfisica.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        rbfisica.setText("Pessoa Fisica");
+        rbfisica.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbfisicaStateChanged(evt);
+            }
+        });
+
+        rbjuridica.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        rbjuridica.setText("Pessoa Juridica");
+        rbjuridica.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbjuridicaStateChanged(evt);
+            }
+        });
+
         txtcli_nome.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel4.setText("Estado:");
 
-        cbuf.addHierarchyListener(new java.awt.event.HierarchyListener() {
-            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
-                cbufHierarchyChanged(evt);
-            }
-        });
-
-        cbcidade.addHierarchyListener(new java.awt.event.HierarchyListener() {
-            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
-                cbcidadeHierarchyChanged(evt);
+        cbuf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cbufFocusLost(evt);
             }
         });
 
@@ -159,6 +175,12 @@ public class CadastroCliente extends javax.swing.JDialog {
         btnaddEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnaddEstadoActionPerformed(evt);
+            }
+        });
+
+        cbcidade.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cbcidadeFocusLost(evt);
             }
         });
 
@@ -179,10 +201,51 @@ public class CadastroCliente extends javax.swing.JDialog {
 
         txtcli_numero.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
+        try {
+            txtcli_cep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtcli_cep.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
         txtcli_complemento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel7.setText("Complemento:");
+
+        jLabel8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel8.setText("CEP:");
+
+        jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel9.setText("Telefone:");
+
+        try {
+            txtcli_telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel10.setText("Celular:");
+
+        try {
+            txtcli_telefone1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel15.setText("Data de Cadastro:");
+
+        txtcid_codigo.setEditable(false);
+        txtcid_codigo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtcid_codigo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtcid_codigoFocusLost(evt);
+            }
+        });
+
+        txtcli_datac.setEditable(false);
 
         panefisica.setBackground(new java.awt.Color(255, 255, 255));
         panefisica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fisica", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
@@ -236,8 +299,8 @@ public class CadastroCliente extends javax.swing.JDialog {
                         .addComponent(txtcli_orgEmi, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panefisicaLayout.createSequentialGroup()
                         .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtcli_datanasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panefisicaLayout.setVerticalGroup(
@@ -253,7 +316,7 @@ public class CadastroCliente extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panefisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
-                    .addComponent(dateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtcli_datanasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -263,22 +326,15 @@ public class CadastroCliente extends javax.swing.JDialog {
         jLabel16.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel16.setText("CNPJ:");
 
-        try {
-            txtcli_cnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###/##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtcli_cnpj.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-
         jLabel18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel18.setText("Inscrição Estadual:");
-
-        txtcli_ie.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel19.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel19.setText("Razão Social:");
 
         txtcli_rs.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        txtcli_ie.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout panejuridicaLayout = new javax.swing.GroupLayout(panejuridica);
         panejuridica.setLayout(panejuridicaLayout);
@@ -290,12 +346,12 @@ public class CadastroCliente extends javax.swing.JDialog {
                     .addGroup(panejuridicaLayout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtcli_cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(txtcli_cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel18)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtcli_ie, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 265, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panejuridicaLayout.createSequentialGroup()
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -310,76 +366,14 @@ public class CadastroCliente extends javax.swing.JDialog {
                     .addComponent(txtcli_rs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addGroup(panejuridicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtcli_cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
                     .addComponent(jLabel18)
+                    .addComponent(txtcli_cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtcli_ie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 1, Short.MAX_VALUE))
         );
 
-        jLabel8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel8.setText("CEP:");
-
-        try {
-            txtcli_cep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtcli_cep.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-
-        jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel9.setText("Telefone:");
-
-        try {
-            txtcli_telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-#####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        rbfisica.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        rbfisica.setText("Pessoa Fisica");
-        rbfisica.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                rbfisicaStateChanged(evt);
-            }
-        });
-
-        rbjuridica.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        rbjuridica.setText("Pessoa Juridica");
-        rbjuridica.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                rbjuridicaStateChanged(evt);
-            }
-        });
-
-        jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel10.setText("Celular:");
-
-        try {
-            txtcli_telefone1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-#####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        jLabel15.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel15.setText("Data de Cadastro:");
-
-        try {
-            txtcli_datanasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtcli_datanasc.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-
-        txtcid_codigo.setEditable(false);
-        txtcid_codigo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtcid_codigo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtcid_codigoFocusLost(evt);
-            }
-        });
-
-        jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel11.setText("e-mail:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -438,7 +432,8 @@ public class CadastroCliente extends javax.swing.JDialog {
                                     .addComponent(jLabel9)
                                     .addComponent(jLabel11))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(txtcli_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -447,10 +442,9 @@ public class CadastroCliente extends javax.swing.JDialog {
                                         .addComponent(txtcli_telefone1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel15)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtcli_datanasc, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtcli_datac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addComponent(txtcid_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -500,7 +494,7 @@ public class CadastroCliente extends javax.swing.JDialog {
                     .addComponent(jLabel10)
                     .addComponent(txtcli_telefone1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15)
-                    .addComponent(txtcli_datanasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtcli_datac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -624,7 +618,95 @@ public class CadastroCliente extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtcli_codFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtcli_codFocusLost
-        // TODO add your handling code here:
+      if(!txtcli_cod.getText().equals("0"))
+      {
+          if(cc.buscaClienteCodigo(Integer.parseInt(txtcli_cod.getText())) != null)
+          {
+              if(cc.getC().getStatus())
+              {
+                cc.carregaFisica(cc.getC().getCodigo());
+                cc.carregaJuridica(cc.getC().getCodigo());
+                txtEmail.setText(cc.getC().getEmail());
+                txtcli_cod.setText(""+cc.getC().getCodigo());
+                txtcli_cep.setText(cc.getC().getCep());
+                txtcli_complemento.setText(cc.getC().getComplemento());
+                txtcli_datac.setText(""+cc.getC().getDataC());
+                txtcli_endereco.setText(cc.getC().getEndereco());
+                txtcli_nome.setText(cc.getC().getNome());
+                txtcli_numero.setText(""+cc.getC().getNunero());
+                txtcli_telefone.setText(cc.getC().getTelefone());
+                txtcli_telefone1.setText(cc.getC().getCelular());
+
+                if(cc.getC().getCpf() != null)
+                {
+                    rbfisica.setSelected(true);
+                    txtcli_cpf.setText(cc.getC().getCpf());
+                    txtcli_rg.setText(cc.getC().getRg());
+                    txtcli_orgEmi.setText(cc.getC().getOrg_insc());
+                    txtcli_datanasc.setData(cc.getC().getDataNasc());
+                }
+                else
+                {
+                    rbjuridica.setSelected(true);
+                    txtcli_rs.setText(cc.getC().getRazasoci());
+                    txtcli_cnpj.setText(cc.getC().getCnpj());
+                    txtcli_ie.setText(cc.getC().getOrg_insc());
+                }
+
+                cbuf.setSelectedItem(cc.getC().getCid().getE().getSigla());
+                cc.CarregaCidade(cbcidade, (String) cbuf.getSelectedItem());
+                cbcidade.setSelectedItem(cc.getC().getCid().getNome());
+                txtcid_codigo.setText(""+cc.getC().getCid().getCodigo());
+                sc.Alter(jPanel2.getComponents());
+              }
+              else
+              {
+                  if(JOptionPane.showConfirmDialog(null, "Este cliente não esta Ativo, Deseja Ativar novamente?", "", JOptionPane.INFORMATION_MESSAGE) == JOptionPane.YES_OPTION)
+                  {
+                      cc.recuperar();
+                      m.InformationMessage("Ativado com sucesso", "Informação");
+                      limpar();
+                  }
+                  else
+                  {
+                    cc.carregaFisica(cc.getC().getCodigo());
+                    cc.carregaJuridica(cc.getC().getCodigo());
+                    txtEmail.setText(cc.getC().getEmail());
+                    txtcli_cod.setText(""+cc.getC().getCodigo());
+                    txtcli_cep.setText(cc.getC().getCep());
+                    txtcli_complemento.setText(cc.getC().getComplemento());
+                    txtcli_datac.setText(""+cc.getC().getDataC());
+                    txtcli_endereco.setText(cc.getC().getEndereco());
+                    txtcli_nome.setText(cc.getC().getNome());
+                    txtcli_numero.setText(""+cc.getC().getNunero());
+                    txtcli_telefone.setText(cc.getC().getTelefone());
+                    txtcli_telefone1.setText(cc.getC().getCelular());
+
+                    if(cc.getC().getCpf() != null)
+                    {
+                        rbfisica.setSelected(true);
+                        txtcli_cpf.setText(cc.getC().getCpf());
+                        txtcli_rg.setText(cc.getC().getRg());
+                        txtcli_orgEmi.setText(cc.getC().getOrg_insc());
+                        txtcli_datanasc.setData(cc.getC().getDataNasc());
+                    }
+                    else
+                    {
+                        rbjuridica.setSelected(true);
+                        txtcli_rs.setText(cc.getC().getRazasoci());
+                        txtcli_cnpj.setText(cc.getC().getCnpj());
+                        txtcli_ie.setText(cc.getC().getOrg_insc());
+                    }
+
+                    cbuf.setSelectedItem(cc.getC().getCid().getE().getSigla());
+                    cc.CarregaCidade(cbcidade, (String) cbuf.getSelectedItem());
+                    cbcidade.setSelectedItem(cc.getC().getCid().getNome());
+                    txtcid_codigo.setText(""+cc.getC().getCid().getCodigo());
+                    sc.Alter(jPanel2.getComponents());
+                  }
+              }
+          }
+      }
     }//GEN-LAST:event_txtcli_codFocusLost
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
@@ -633,6 +715,7 @@ public class CadastroCliente extends javax.swing.JDialog {
         sc.HabilityComponents(panejuridica.getComponents(), true);
         sc.Edity(jPanel2.getComponents()); 
         txtcli_cod.setText("0");
+        flagG = true;
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
@@ -640,6 +723,7 @@ public class CadastroCliente extends javax.swing.JDialog {
         sc.HabilityComponents(panefisica.getComponents(), true);
         sc.HabilityComponents(panejuridica.getComponents(), true);
         sc.Edity(jPanel2.getComponents()); 
+        flagG = false;
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -681,7 +765,7 @@ public class CadastroCliente extends javax.swing.JDialog {
         String c;
         c = txtcli_orgEmi.getText().equals("") ? txtcli_ie.getText() : txtcli_orgEmi.getText();
         boolean flag = rbfisica.isSelected();
-        switch(cc.validar(txtcli_cod.getText(), txtcid_codigo.getText(), txtcli_nome.getText(), txtcli_endereco.getText(), txtcli_numero.getText(), txtcli_complemento.getText(), txtcli_cep.getText(), txtcli_telefone.getText(), txtcli_telefone1.getText(), txtEmail.getText(), txtcli_cpf.getText(), txtcli_rg.getText(), c, LocalDate.parse((CharSequence) dateChooser1.getData()), txtcli_rs.getText(), txtcli_cnpj.getText(), flag))
+        switch(cc.validar(txtcli_cod.getText(), txtcid_codigo.getText(), txtcli_nome.getText(), txtcli_endereco.getText(), txtcli_numero.getText(), txtcli_complemento.getText(), txtcli_cep.getText(), txtcli_telefone.getText(), txtcli_telefone1.getText(), txtEmail.getText(), txtcli_cpf.getText(), txtcli_rg.getText(), c, txtcli_datanasc.getData(), txtcli_rs.getText(), txtcli_cnpj.getText(), flag))
         {//              String codigo, String cidade,                     String nome, String endereco,                    String numero,          String complemento, String cep,                 String telefone, String celular,                                String email, String cpf, String rg, String orgemi_insc,                                                                                    LocalDate dataNasc, String razasoci, String cnpj, boolean flag
             case 1: JOptionPane.showMessageDialog(this, "Codigo Invalido","Alerta", JOptionPane.WARNING_MESSAGE); break;
             case 2: JOptionPane.showMessageDialog(this, "Informe o Nome","Alerta", JOptionPane.WARNING_MESSAGE);
@@ -733,7 +817,7 @@ public class CadastroCliente extends javax.swing.JDialog {
             txtcli_cep.requestFocus();
             break;
             case 14:
-            JOptionPane.showMessageDialog(this, "Inforem o e-mail","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "E-Mail Invalido","Alerta", JOptionPane.WARNING_MESSAGE);
             txtEmail.requestFocus();
             break;
             case 15:
@@ -785,8 +869,11 @@ public class CadastroCliente extends javax.swing.JDialog {
             default:
             if(cc.gravar())
             {
-                JOptionPane.showMessageDialog(this, "Gravado com sucesso!","Informação", JOptionPane.INFORMATION_MESSAGE);
-                limpar();
+                if(cc.gravarSegundaParte(flagG))
+                {
+                    JOptionPane.showMessageDialog(this, "Gravado com sucesso!","Informação", JOptionPane.INFORMATION_MESSAGE);
+                    limpar();                    
+                }
             }
             else
             {
@@ -828,20 +915,11 @@ public class CadastroCliente extends javax.swing.JDialog {
                 rbfisica.setSelected(true);
             }
             String data = ""+cc.getC().getDataNasc();
-            dateChooser1.setData(Date.from(Instant.parse((CharSequence) data))); 
+            txtcli_datac.setData(Date.from(Instant.parse((CharSequence) data))); 
             cbuf.setSelectedItem(cc.getC().getCid().getE().getSigla());
             cbcidade.setSelectedItem(cc.getC().getCid().getNome()); 
         }
     }//GEN-LAST:event_txtcid_codigoFocusLost
-
-    private void cbufHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_cbufHierarchyChanged
-        cc.CarregaCidade(cbcidade, (String) cbuf.getSelectedItem());
-    }//GEN-LAST:event_cbufHierarchyChanged
-
-    private void cbcidadeHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_cbcidadeHierarchyChanged
-        if(cbcidade.getSelectedItem() != null)
-            txtcid_codigo.setText(""+cc.buscaCodigoCidade((String)cbcidade.getSelectedItem(), (String)cbuf.getSelectedItem()));
-    }//GEN-LAST:event_cbcidadeHierarchyChanged
 
     private void rbfisicaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbfisicaStateChanged
     if(rbfisica.isSelected())
@@ -875,6 +953,16 @@ public class CadastroCliente extends javax.swing.JDialog {
         frm.setVisible(true);
     }//GEN-LAST:event_btnaddCidadeActionPerformed
 
+    private void cbufFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbufFocusLost
+      if(cbuf.getSelectedItem() != null)
+        cc.CarregaCidade(cbcidade, (String) cbuf.getSelectedItem());
+    }//GEN-LAST:event_cbufFocusLost
+
+    private void cbcidadeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbcidadeFocusLost
+        if(cbcidade.getSelectedItem() != null)
+            txtcid_codigo.setText(""+cc.buscaCodigoCidade((String)cbcidade.getSelectedItem(), (String)cbuf.getSelectedItem()));
+    }//GEN-LAST:event_cbcidadeFocusLost
+
     private void limpar()
     {
         txtcli_cod.setText("");
@@ -882,7 +970,8 @@ public class CadastroCliente extends javax.swing.JDialog {
         txtcli_cnpj.setText("");
         txtcli_complemento.setText("");
         txtcli_cpf.setText("");
-        txtcli_datanasc.setValue(null);
+        txtcli_datanasc.setData(Date.from(Instant.now()));
+        txtcli_datanasc.setData(Date.from(Instant.now()));
         txtcli_ie.setText("");
         txtcli_nome.setText("");
         txtcli_numero.setText("");
@@ -892,8 +981,9 @@ public class CadastroCliente extends javax.swing.JDialog {
         txtcli_telefone.setText("");
         txtcli_telefone1.setText("");
         txtcli_endereco.setText("");
-        cbuf.setSelectedIndex(1);
-        cbcidade.setSelectedIndex(1);
+        txtEmail.setText("");
+        cbuf.setSelectedIndex(0);
+        cbcidade.removeAllItems();
         txtcid_codigo.setText("");
         
         sc.HabilityComponents(jPanel1.getComponents(), false);
@@ -919,7 +1009,6 @@ public class CadastroCliente extends javax.swing.JDialog {
     private javax.swing.JButton btnaddEstado;
     private javax.swing.JComboBox<String> cbcidade;
     private javax.swing.JComboBox<String> cbuf;
-    private br.com.marciorl.beans.DateChooser dateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -948,11 +1037,12 @@ public class CadastroCliente extends javax.swing.JDialog {
     private br.com.ikeda.beans.jTextFieldEmail txtEmail;
     private javax.swing.JTextField txtcid_codigo;
     private javax.swing.JFormattedTextField txtcli_cep;
-    private javax.swing.JFormattedTextField txtcli_cnpj;
+    private br.com.ikeda.beans.jFormatTextCnpj txtcli_cnpj;
     private javax.swing.JTextField txtcli_cod;
     private javax.swing.JTextField txtcli_complemento;
     private javax.swing.JFormattedTextField txtcli_cpf;
-    private javax.swing.JFormattedTextField txtcli_datanasc;
+    private br.com.marciorl.beans.DateChooser txtcli_datac;
+    private br.com.marciorl.beans.DateChooser txtcli_datanasc;
     private javax.swing.JTextField txtcli_endereco;
     private javax.swing.JTextField txtcli_ie;
     private javax.swing.JTextField txtcli_nome;
