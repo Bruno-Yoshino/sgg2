@@ -123,14 +123,14 @@ public class TipoConta {
         {
             switch (tipo)
             {
+//                case 0:
+//                {
+//                    query = "select * from tipo_conta where tc_codigo = "+valor+" ";
+//                    break;
+//                }
                 case 0:
                 {
-                    query = "select * from tipo_conta where tc_codigo = "+valor+" ";
-                    break;
-                }
-                case 1:
-                {
-                    query = "select * from tipo_conta where tc_tipo like '%" + valor + "%' order by tc_tipo";
+                    query = "select * from tipo_conta where tc_tipo ilike '%" + valor + "%' order by tc_tipo";
                     break;
                 }
             }

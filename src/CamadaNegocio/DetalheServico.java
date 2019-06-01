@@ -152,14 +152,14 @@ public class DetalheServico {
         {
             switch (tipo)
             {
+//                case 0:
+//                {
+//                    query = "select ds_codigo, ds_descricao, ds_status from detalhe_serv where prod_codigo = " + Integer.parseInt(valor) + " order by ds_descricao";
+//                    break;
+//                }
                 case 0:
                 {
-                    query = "select ds_codigo, ds_descricao, ds_status from detalhe_serv where prod_codigo = " + Integer.parseInt(valor) + " order by ds_descricao";
-                    break;
-                }
-                case 1:
-                {
-                    query = "select ds_codigo, ds_descricao, ds_status from detalhe_serv where ds_descricao like '%" + valor + "%' order by ds_descricao";
+                    query = "select ds_codigo, ds_descricao, ds_status from detalhe_serv where ds_descricao ilike '%" + valor + "%' order by ds_descricao";
                     break;
                 }
             }

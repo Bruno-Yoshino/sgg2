@@ -153,14 +153,14 @@ public class Servico
         {
             switch (tipo)
             {
+//                case 0:
+//                {
+//                    query = "select serv_codigo, serv_nome, serv_status from servico where prod_codigo = " + Integer.parseInt(valor) + " order by serv_nome";
+//                    break;
+//                }
                 case 0:
                 {
-                    query = "select serv_codigo, serv_nome, serv_status from servico where prod_codigo = " + Integer.parseInt(valor) + " order by serv_nome";
-                    break;
-                }
-                case 1:
-                {
-                    query = "select serv_codigo, serv_nome, serv_status from servico where serv_nome like '%" + valor + "%' order by serv_nome";
+                    query = "select serv_codigo, serv_nome, serv_status from servico where serv_nome ilike '%" + valor + "%' order by serv_nome";
                     break;
                 }
             }

@@ -91,8 +91,8 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="cbFlagCliente" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                  <Component id="btnLocalizar" min="-2" pref="93" max="-2" attributes="0"/>
-                  <EmptySpace min="134" pref="134" max="-2" attributes="0"/>
+                  <Component id="btnLocalizar" min="-2" pref="110" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
                   <Component id="btnSair" min="-2" pref="87" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -177,6 +177,12 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnLocalizar">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Icon/Localizar 32.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Localizar"/>
           </Properties>
           <Events>
@@ -185,7 +191,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnSair">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Voltar"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Icon/Sair.png"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSairActionPerformed"/>

@@ -101,6 +101,8 @@ public class ConsultaPadrao extends javax.swing.JDialog {
         jla.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jla.setText("a");
 
+        btnLocalizar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 32.png"))); // NOI18N
         btnLocalizar.setText("Localizar");
         btnLocalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,7 +110,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             }
         });
 
-        btnSair.setText("Voltar");
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Sair.png"))); // NOI18N
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
@@ -154,8 +156,8 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbFlagCliente)
                 .addGap(44, 44, 44)
-                .addComponent(btnLocalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(134, 134, 134)
+                .addComponent(btnLocalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(117, 117, 117)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -554,7 +556,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Funcionario.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
-            if(tipo == 2)
+            if(tipo == 1)
             {
                 rs = Funcionario.buscarDados(txtCPF.getText(), tipo);
             }
@@ -622,9 +624,9 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             switch(tipo)
             {
-                case 2: rs = Cliente.buscarDados(txtValor.getText(), tipo, true); break;
+                case 1: rs = Cliente.buscarDados(txtValor.getText(), tipo, true); break;
                 
-                case 3: rs = Cliente.buscarDados(txtValor.getText(), tipo, false); break;
+                case 2: rs = Cliente.buscarDados(txtValor.getText(), tipo, false); break;
                 
                 default: rs = Cliente.buscarDados(txtValor.getText(), tipo, cbFlagCliente.isSelected()); 
             }

@@ -352,25 +352,25 @@ public class Funcionario
         {
             switch (tipo)
             {
+//                case 0:
+//                {
+//                    query = "select func_codigo, cid_codigo, func_nome, func_login, func_senha, func_nivel, func_cpf, "
+//                    + "func_rg, func_orgemi, func_endereco, func_numero, func_complemento, func_telefone, "
+//                    + "func_celular, func_caminho, func_dtadimicao, func_dtdemissao, func_cep "
+//                    + "from funcionario "
+//                    + "where func_codigo = "+valor+"  order by func_nome";
+//                    break;
+//                }
                 case 0:
                 {
                     query = "select func_codigo, cid_codigo, func_nome, func_login, func_senha, func_nivel, func_cpf, "
                     + "func_rg, func_orgemi, func_endereco, func_numero, func_complemento, func_telefone, "
                     + "func_celular, func_caminho, func_dtadimicao, func_dtdemissao, func_cep "
                     + "from funcionario "
-                    + "where func_codigo = "+valor+"  order by func_nome";
+                    + "where func_nome ilike '%"+valor+"%'  order by func_nome";
                     break;
                 }
                 case 1:
-                {
-                    query = "select func_codigo, cid_codigo, func_nome, func_login, func_senha, func_nivel, func_cpf, "
-                    + "func_rg, func_orgemi, func_endereco, func_numero, func_complemento, func_telefone, "
-                    + "func_celular, func_caminho, func_dtadimicao, func_dtdemissao, func_cep "
-                    + "from funcionario "
-                    + "where func_nome like '%"+valor+"%'  order by func_nome";
-                    break;
-                }
-                case 2:
                     query = "select func_codigo, cid_codigo, func_nome, func_login, func_senha, func_nivel, func_cpf, "
                     + "func_rg, func_orgemi, func_endereco, func_numero, func_complemento, func_telefone, "
                     + "func_celular, func_caminho, func_dtadimicao, func_dtdemissao, func_cep "

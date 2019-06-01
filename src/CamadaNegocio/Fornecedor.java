@@ -202,16 +202,16 @@ public class Fornecedor
         {
             switch (tipo)
             {
+//                case 0:
+//                {
+//                    query = "select forn_codigo, cid_codigo, forn_nome, "
+//                        + "forn_telefone, "
+//                        + "forn_celular, forn_email "
+//                        + "from fornecedor "
+//                        + "where forn_codigo = "+valor+"  order by forn_nome";
+//                    break;
+//                }
                 case 0:
-                {
-                    query = "select forn_codigo, cid_codigo, forn_nome, "
-                        + "forn_telefone, "
-                        + "forn_celular, forn_email "
-                        + "from fornecedor "
-                        + "where forn_codigo = "+valor+"  order by forn_nome";
-                    break;
-                }
-                case 1:
                 {
                     query = "select forn_codigo, cid_codigo, forn_nome, "
                         + "forn_telefone, "

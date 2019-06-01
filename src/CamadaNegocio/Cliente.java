@@ -455,17 +455,17 @@ public class Cliente {
             {
                 switch (tipo)
                 {
+//                    case 0:
+//                    {
+//                        query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where c.cid_codigo = " + Integer.parseInt(valor) + " order by c.cli_nome";
+//                        break;
+//                    }
                     case 0:
                     {
-                        query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where c.cid_codigo = " + Integer.parseInt(valor) + " order by c.cli_nome";
+                        query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where c.cid_nome ilike '%" + valor + "%' order by c.cli_nome";
                         break;
                     }
                     case 1:
-                    {
-                        query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where c.cid_nome like '%" + valor + "%' order by c.cli_nome";
-                        break;
-                    }
-                    case 2:
                     {
                         query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where f.cli_cpf = " + valor + " and c.cli_codigo = f.cli_codigo order by c.cli_nome";
                         break;
@@ -483,17 +483,17 @@ public class Cliente {
             {
                 switch (tipo)
                 {
+//                    case 0:
+//                    {
+//                        query = "select c.cli_codigo, c.cli_nome, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, juridica j where c.cid_codigo = " + Integer.parseInt(valor) + " order by c.cli_nome";
+//                        break;
+//                    }
                     case 0:
                     {
-                        query = "select c.cli_codigo, c.cli_nome, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, juridica j where c.cid_codigo = " + Integer.parseInt(valor) + " order by c.cli_nome";
+                        query = "select c.cli_codigo, c.cli_nome, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, juridica j where c.cid_nome ilike '%" + valor + "%' order by c.cli_nome";
                         break;
                     }
-                    case 1:
-                    {
-                        query = "select c.cli_codigo, c.cli_nome, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, juridica j where c.cid_nome like '%" + valor + "%' order by c.cli_nome";
-                        break;
-                    }
-                    case 3:
+                    case 2:
                     {
                         query = "select c.cli_codigo, c.cli_nome, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, juridica j where j.cid_cnpj like '%" + valor + "%' order by c.cli_nome";
                         break;

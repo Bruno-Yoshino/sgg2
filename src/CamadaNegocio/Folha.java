@@ -170,19 +170,19 @@ public class Folha {
         {
             switch (tipo)
             {
+//                case 0:
+//                {
+//                    query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao from folha where fo_codigo = "+valor+"";
+//                    break;
+//                }
                 case 0:
                 {
-                    query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao from folha where fo_codigo = "+valor+"";
+                    query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao from folha where fo_tamanho ilike '%"+valor+"%'";
                     break;
                 }
                 case 1:
                 {
-                    query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao from folha where fo_tamanho = '"+valor+"'";
-                    break;
-                }
-                case 2:
-                {
-                    query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao from folha where fo_descricao like '%"+valor+"%'";
+                    query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao from folha where fo_descricao ilike '%"+valor+"%'";
                     break;
                 }
             }

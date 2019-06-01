@@ -94,6 +94,7 @@ public class login extends javax.swing.JFrame
         });
 
         btnLogar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnLogar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Login32.png"))); // NOI18N
         btnLogar.setText("Logar");
         btnLogar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,6 +103,7 @@ public class login extends javax.swing.JFrame
         });
 
         btnCancel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Limpar32.png"))); // NOI18N
         btnCancel.setText("Limpar");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,10 +129,10 @@ public class login extends javax.swing.JFrame
                             .addComponent(txtusuario)
                             .addComponent(txtsenha, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
-                        .addComponent(btnLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(63, 63, 63)
-                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(172, 172, 172)
+                        .addComponent(btnLogar)
+                        .addGap(64, 64, 64)
+                        .addComponent(btnCancel)))
                 .addContainerGap(109, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(

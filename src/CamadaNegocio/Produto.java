@@ -179,14 +179,14 @@ public class Produto {
         {
             switch (tipo)
             {
+//                case 0:
+//                {
+//                    query = "select pro_codigo, pro_nome, pro_tipo, pro_status, pro_caminho from produto where prod_codigo = " + Integer.parseInt(valor) + " order by pro_nome";
+//                    break;
+//                }
                 case 0:
                 {
-                    query = "select pro_codigo, pro_nome, pro_tipo, pro_status, pro_caminho from produto where prod_codigo = " + Integer.parseInt(valor) + " order by pro_nome";
-                    break;
-                }
-                case 1:
-                {
-                    query = "select pro_codigo, pro_nome, pro_tipo, pro_status, pro_caminho from produto where pro_nome like '%" + valor + "%' order by pro_nome";
+                    query = "select pro_codigo, pro_nome, pro_tipo, pro_status, pro_caminho from produto where pro_nome ilike '%" + valor + "%' order by pro_nome";
                     break;
                 }
             }

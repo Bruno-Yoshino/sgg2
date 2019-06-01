@@ -145,16 +145,16 @@ public class Principal extends javax.swing.JFrame {
         jlLogo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         Cadastro = new javax.swing.JMenu();
-        cadFuncionario = new javax.swing.JMenuItem();
-        cadCliente = new javax.swing.JMenuItem();
-        cadCidade = new javax.swing.JMenuItem();
-        cadEstado = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        cadEstado = new javax.swing.JMenuItem();
+        cadCidade = new javax.swing.JMenuItem();
+        cadCliente = new javax.swing.JMenuItem();
+        cadFuncionario = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         Servico = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -164,6 +164,16 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         Consulta = new javax.swing.JMenu();
+        cadEstado1 = new javax.swing.JMenuItem();
+        cadCidade1 = new javax.swing.JMenuItem();
+        cadCliente1 = new javax.swing.JMenuItem();
+        cadFuncionario1 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
+        jMenuItem20 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem22 = new javax.swing.JMenuItem();
         Relatorio = new javax.swing.JMenu();
         Configuracao = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
@@ -408,29 +418,13 @@ public class Principal extends javax.swing.JFrame {
 
         Cadastro.setText("Cadastro");
 
-        cadFuncionario.setText("Funcionario");
-        cadFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem1.setText("Empresa");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cadFuncionarioActionPerformed(evt);
+                jMenuItem1ActionPerformed(evt);
             }
         });
-        Cadastro.add(cadFuncionario);
-
-        cadCliente.setText("Cliente");
-        cadCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cadClienteActionPerformed(evt);
-            }
-        });
-        Cadastro.add(cadCliente);
-
-        cadCidade.setText("Cidade");
-        cadCidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cadCidadeActionPerformed(evt);
-            }
-        });
-        Cadastro.add(cadCidade);
+        Cadastro.add(jMenuItem1);
 
         cadEstado.setText("Estado");
         cadEstado.addActionListener(new java.awt.event.ActionListener() {
@@ -440,29 +434,37 @@ public class Principal extends javax.swing.JFrame {
         });
         Cadastro.add(cadEstado);
 
-        jMenuItem1.setText("Empresa");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        cadCidade.setText("Cidade");
+        cadCidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                cadCidadeActionPerformed(evt);
             }
         });
-        Cadastro.add(jMenuItem1);
+        Cadastro.add(cadCidade);
 
-        jMenuItem2.setText("Produto");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        cadCliente.setText("Cliente");
+        cadCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                cadClienteActionPerformed(evt);
             }
         });
-        Cadastro.add(jMenuItem2);
+        Cadastro.add(cadCliente);
 
-        jMenuItem3.setText("Folha");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        cadFuncionario.setText("Funcionario");
+        cadFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                cadFuncionarioActionPerformed(evt);
             }
         });
-        Cadastro.add(jMenuItem3);
+        Cadastro.add(cadFuncionario);
+
+        jMenuItem6.setText("Fornecedor");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        Cadastro.add(jMenuItem6);
 
         jMenuItem4.setText("Serviço");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -480,13 +482,21 @@ public class Principal extends javax.swing.JFrame {
         });
         Cadastro.add(jMenuItem5);
 
-        jMenuItem6.setText("Fornecedor");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem2.setText("Produto");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                jMenuItem2ActionPerformed(evt);
             }
         });
-        Cadastro.add(jMenuItem6);
+        Cadastro.add(jMenuItem2);
+
+        jMenuItem3.setText("Folha");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        Cadastro.add(jMenuItem3);
 
         jMenuItem15.setText("Tipo de Conta");
         jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
@@ -521,6 +531,87 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(Servico);
 
         Consulta.setText("Consulta");
+
+        cadEstado1.setText("Estado");
+        cadEstado1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadEstado1ActionPerformed(evt);
+            }
+        });
+        Consulta.add(cadEstado1);
+
+        cadCidade1.setText("Cidade");
+        cadCidade1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadCidade1ActionPerformed(evt);
+            }
+        });
+        Consulta.add(cadCidade1);
+
+        cadCliente1.setText("Cliente");
+        cadCliente1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadCliente1ActionPerformed(evt);
+            }
+        });
+        Consulta.add(cadCliente1);
+
+        cadFuncionario1.setText("Funcionario");
+        cadFuncionario1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadFuncionario1ActionPerformed(evt);
+            }
+        });
+        Consulta.add(cadFuncionario1);
+
+        jMenuItem21.setText("Fornecedor");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
+        Consulta.add(jMenuItem21);
+
+        jMenuItem19.setText("Serviço");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
+        Consulta.add(jMenuItem19);
+
+        jMenuItem20.setText("Detalhe do Serviço");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
+        Consulta.add(jMenuItem20);
+
+        jMenuItem17.setText("Produto");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        Consulta.add(jMenuItem17);
+
+        jMenuItem18.setText("Folha");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        Consulta.add(jMenuItem18);
+
+        jMenuItem22.setText("Tipo de Conta");
+        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem22ActionPerformed(evt);
+            }
+        });
+        Consulta.add(jMenuItem22);
+
         jMenuBar1.add(Consulta);
 
         Relatorio.setText("Relatorio");
@@ -689,6 +780,101 @@ public class Principal extends javax.swing.JFrame {
        frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
+    private void cadFuncionario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadFuncionario1ActionPerformed
+        ConsultaPadrao consFuncionario = new ConsultaPadrao(null, true);
+        String[] vet = new String[2];
+        vet[0] = "Nome";
+        vet[1] = "CPF";
+        consFuncionario.configuraOpcoes(vet, 2, 1, "Funcionario", false);
+        consFuncionario.verificaconsulta(false);
+        consFuncionario.setVisible(true);
+    }//GEN-LAST:event_cadFuncionario1ActionPerformed
+
+    private void cadCliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadCliente1ActionPerformed
+        ConsultaPadrao consFuncionario = new ConsultaPadrao(null, true);
+        String[] vet = new String[3];
+        vet[0] = "Nome";
+        vet[1] = "CPF";
+        vet[2] = "CNPJ";
+        consFuncionario.configuraOpcoes(vet, 3, 0, "Cliente", false);
+        consFuncionario.verificaconsulta(false);
+        consFuncionario.setVisible(true);
+    }//GEN-LAST:event_cadCliente1ActionPerformed
+
+    private void cadCidade1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadCidade1ActionPerformed
+        ConsultaPadrao consEstado = new ConsultaPadrao(null, true);
+        String[] vet = new String[2];
+        vet[0] = "UF";
+        vet[1] = "Cidade";
+        consEstado.configuraOpcoes(vet, 2, 1, "Cidade", false);
+        consEstado.verificaconsulta(false);
+        consEstado.setVisible(true);
+    }//GEN-LAST:event_cadCidade1ActionPerformed
+
+    private void cadEstado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadEstado1ActionPerformed
+        ConsultaPadrao consEstado = new ConsultaPadrao(null, true);
+        String[] vet = new String[1];
+        vet[0] = "Sigla do Estado";
+        consEstado.configuraOpcoes(vet, 1, 0, "Estado", false);
+        consEstado.verificaconsulta(false);
+        consEstado.setVisible(true);
+    }//GEN-LAST:event_cadEstado1ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        ConsultaPadrao consProduto = new ConsultaPadrao(null, true);
+        String[] vet = new String[1];
+        vet[0] = "Nome";
+        consProduto.configuraOpcoes(vet, 1, 0, "Produto", false);
+        consProduto.verificaconsulta(false);
+        consProduto.setVisible(true);
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        ConsultaPadrao consFolha = new ConsultaPadrao(null, true);
+        String[] vet = new String[2];
+        vet[0] = "Tamanho";
+        vet[1] = "Descrição";
+        consFolha.configuraOpcoes(vet, 2, 0, "Folha", false);
+        consFolha.verificaconsulta(false);
+        consFolha.setVisible(true);
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        ConsultaPadrao consDS = new ConsultaPadrao(null, true);
+        String[] vet = new String[1];
+        vet[0] = "Nome";
+        consDS.configuraOpcoes(vet, 1, 0, "Servico", false);
+        consDS.verificaconsulta(false);
+        consDS.setVisible(true);
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+        ConsultaPadrao consDS = new ConsultaPadrao(null, true);
+        String[] vet = new String[1];
+        vet[0] = "Detalhe";
+        consDS.configuraOpcoes(vet, 1, 0, "DetalheServico", false);
+        consDS.verificaconsulta(false);
+        consDS.setVisible(true);
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+        ConsultaPadrao consFornecedor = new ConsultaPadrao(null, true);
+        String[] vet = new String[1];
+        vet[0] = "Nome";
+        consFornecedor.configuraOpcoes(vet, 1, 0, "Fornecedor", false);
+        consFornecedor.verificaconsulta(false);
+        consFornecedor.setVisible(true);
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
+
+    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+        ConsultaPadrao consTC = new ConsultaPadrao(null, true);
+        String[] vet = new String[1];
+        vet[0] = "Tipo";
+        consTC.configuraOpcoes(vet, 1, 0, "TipoConta", false);
+        consTC.verificaconsulta(false);
+        consTC.setVisible(true);
+    }//GEN-LAST:event_jMenuItem22ActionPerformed
+
 
     private void AccessLevel(int soma)
     {  
@@ -743,9 +929,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btn8;
     private javax.swing.JButton btn9;
     private javax.swing.JMenuItem cadCidade;
+    private javax.swing.JMenuItem cadCidade1;
     private javax.swing.JMenuItem cadCliente;
+    private javax.swing.JMenuItem cadCliente1;
     private javax.swing.JMenuItem cadEstado;
+    private javax.swing.JMenuItem cadEstado1;
     private javax.swing.JMenuItem cadFuncionario;
+    private javax.swing.JMenuItem cadFuncionario1;
     private br.com.marciorl.beans.Calendario calendario1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -758,7 +948,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
+    private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

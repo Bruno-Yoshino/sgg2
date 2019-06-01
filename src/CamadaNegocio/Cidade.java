@@ -224,14 +224,14 @@ public class Cidade {
                 {
                     query = "select cid.cid_codigo, cid.cid_nome, uf.uf_codigo, uf.uf_sigla"
                              + " from cidade cid, estado uf "
-                            + "where cid.cid_codigo = " + Integer.parseInt(valor) + " and cid.uf_codigo = uf.uf_codigo  order by cid.cid_nome";
+                            + "where cuf.uf_sigla = '" + valor + "' and cid.uf_codigo = uf.uf_codigo order by cid.cid_nome";
                     break;
                 }
                 case 1:
                 {
                     query = "select cid.cid_codigo, cid.cid_nome, uf.uf_codigo, uf.uf_sigla"
                              + " from cidade cid, estado uf "
-                            + "where cid.cid_nome like '%" + valor + "%' and cid.uf_codigo = uf.uf_codigo  order by cid.cid_nome";
+                            + "where cid.cid_nome ilike '%" + valor + "%' and cid.uf_codigo = uf.uf_codigo  order by cid.cid_nome";
                     break;
                 }
             }

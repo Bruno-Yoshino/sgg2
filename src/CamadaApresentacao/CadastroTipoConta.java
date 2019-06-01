@@ -108,6 +108,8 @@ public class CadastroTipoConta extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        btnNovo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
         btnNovo.setText("Novo");
         btnNovo.setName("btnNovo"); // NOI18N
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -116,6 +118,8 @@ public class CadastroTipoConta extends javax.swing.JDialog {
             }
         });
 
+        btnAlterar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.setName("btnAlterar"); // NOI18N
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -124,6 +128,8 @@ public class CadastroTipoConta extends javax.swing.JDialog {
             }
         });
 
+        btnExcluir.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Excluir16.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setName("btnExcluir"); // NOI18N
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -132,6 +138,8 @@ public class CadastroTipoConta extends javax.swing.JDialog {
             }
         });
 
+        btnCancelar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Cancelar16.png.jpg"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setName("btnCancelar"); // NOI18N
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -140,6 +148,8 @@ public class CadastroTipoConta extends javax.swing.JDialog {
             }
         });
 
+        btnLocalizar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
         btnLocalizar.setText("Localizar");
         btnLocalizar.setName("btnLocalizar"); // NOI18N
         btnLocalizar.addActionListener(new java.awt.event.ActionListener() {
@@ -148,6 +158,8 @@ public class CadastroTipoConta extends javax.swing.JDialog {
             }
         });
 
+        btnGravar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Gravar16.png"))); // NOI18N
         btnGravar.setText("Gravar");
         btnGravar.setName("btnGravar"); // NOI18N
         btnGravar.addActionListener(new java.awt.event.ActionListener() {
@@ -156,7 +168,7 @@ public class CadastroTipoConta extends javax.swing.JDialog {
             }
         });
 
-        btnSair.setText("Voltar");
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Sair.png"))); // NOI18N
         btnSair.setName("btnSair"); // NOI18N
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,14 +184,14 @@ public class CadastroTipoConta extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnLocalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(btnLocalizar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -256,10 +268,9 @@ public class CadastroTipoConta extends javax.swing.JDialog {
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
         ConsultaPadrao consTC = new ConsultaPadrao(null, true);
-        String[] vet = new String[2];
-        vet[0] = "Código";
-        vet[1] = "Tipo";
-        consTC.configuraOpcoes(vet, 2, 1, "TipoConta", false);
+        String[] vet = new String[1];
+        vet[0] = "Tipo";
+        consTC.configuraOpcoes(vet, 1, 0, "TipoConta", false);
         consTC.verificaconsulta(true);
         consTC.setVisible(true);
         if (consTC.getCodigo() != 0)

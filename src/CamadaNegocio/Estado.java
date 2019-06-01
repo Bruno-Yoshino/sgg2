@@ -169,14 +169,14 @@ public class Estado
         {
             switch (tipo)
             {
+//                case 0:
+//                {
+//                    sql = "select * from estado where uf_codigo = " + Integer.parseInt(valor) + " order by uf_sigla";
+//                    break;
+//                }
                 case 0:
                 {
-                    sql = "select * from estado where uf_codigo = " + Integer.parseInt(valor) + " order by uf_sigla";
-                    break;
-                }
-                case 1:
-                {
-                    sql = "select * from estado where uf_sigla like '%" + valor + "%' order by uf_sigla";
+                    sql = "select * from estado where uf_sigla ilike '%" + valor + "%' order by uf_sigla";
                     break;
                 }
             }
