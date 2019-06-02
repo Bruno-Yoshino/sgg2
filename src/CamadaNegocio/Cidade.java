@@ -224,7 +224,7 @@ public class Cidade {
                 {
                     query = "select cid.cid_codigo, cid.cid_nome, uf.uf_codigo, uf.uf_sigla"
                              + " from cidade cid, estado uf "
-                            + "where cuf.uf_sigla = '" + valor + "' and cid.uf_codigo = uf.uf_codigo order by cid.cid_nome";
+                            + "where uf.uf_sigla ilike '" + valor + "' and cid.uf_codigo = uf.uf_codigo order by cid.cid_nome";
                     break;
                 }
                 case 1:

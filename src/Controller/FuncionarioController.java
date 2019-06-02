@@ -131,7 +131,7 @@ public class FuncionarioController {
         {
             return 14;
         }
-        func.setCpf(cpf);
+        
         if(!senha.equals(senha2))
         {
             return 15;
@@ -145,7 +145,21 @@ public class FuncionarioController {
         {
             return 17;
         }
-        
+        String cpfA = cpf;
+        cpfA = cpfA.replaceAll("\\.", "");
+        cpfA = cpfA.replaceAll("/", "");
+        cpfA = cpfA.replaceAll("-", "");
+        int dig1, dig2;
+        dig1 = vali.PrimeiroDigito(cpfA);
+        dig2 = vali.SegundoDigito(cpfA);  
+        String d1, d2;
+        d1 = Integer.toString(dig1);
+        d2 = Integer.toString(dig2);
+        if(cpfA.charAt(9) != d1.charAt(0) || cpfA.charAt(10) != d2.charAt(0))
+        {
+            return 19;
+        }
+        func.setCpf(cpf);
         if(nivel < 0)
         {
             return 18;

@@ -840,7 +840,11 @@ public class CadastroFuncionario extends javax.swing.JDialog {
             break;
             case 18:
             JOptionPane.showMessageDialog(this, "Informe o Nivel desse usuario!","Alerta", JOptionPane.WARNING_MESSAGE);
-            m.WarmingMessage("Soma Atual"+soma, "Erro");
+            //m.WarmingMessage("Soma Atual"+soma, "Erro");
+            break;
+            case 19:
+            JOptionPane.showMessageDialog(this, "CPF invárido","Alerta", JOptionPane.WARNING_MESSAGE);
+            txtCpf.requestFocus();
             break;
             default:
             if(fc.gravar())

@@ -852,6 +852,10 @@ public class CadastroCliente extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Inforem a Rasão Social","Alerta", JOptionPane.WARNING_MESSAGE);
             txtcli_rs.requestFocus();
             break;
+            case 21:
+            JOptionPane.showMessageDialog(this, "CPF invárido","Alerta", JOptionPane.WARNING_MESSAGE);
+            txtcli_cpf.requestFocus();
+            break;
             case 20:
                 ClienteController cctemp = new ClienteController();
                 cctemp.setC(cc.buscaVerifica()); 

@@ -101,6 +101,11 @@ public class login extends javax.swing.JFrame
                 btnLogarActionPerformed(evt);
             }
         });
+        btnLogar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnLogarKeyPressed(evt);
+            }
+        });
 
         btnCancel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Limpar32.png"))); // NOI18N
@@ -188,6 +193,7 @@ public class login extends javax.swing.JFrame
                     emp = emp.buscarEmpresa();
                     txtsenha.setText("");
                     txtusuario.setText("");
+                    txtusuario.requestFocus();
                     Principal frm = new Principal(this, true, fc.getFunc(), emp);
                     frm.setVisible(true);
                     this.setVisible(false);
@@ -212,6 +218,11 @@ public class login extends javax.swing.JFrame
     if(evt.getKeyCode() == KeyEvent.VK_ENTER)
         btnLogarActionPerformed(null);
     }//GEN-LAST:event_txtsenhaKeyPressed
+
+    private void btnLogarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnLogarKeyPressed
+    if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+        btnLogarActionPerformed(null);
+    }//GEN-LAST:event_btnLogarKeyPressed
 
     /**
      * @param args the command line arguments

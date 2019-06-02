@@ -7,6 +7,7 @@ package CamadaApresentacao;
 
 import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.*;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -61,17 +62,17 @@ public class ConsultaPadrao extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         cbOpcao = new javax.swing.JComboBox<>();
+        cbFlagCliente = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jLTexto = new javax.swing.JLabel();
+        txtValor = new javax.swing.JTextField();
+        txtCPF = new br.com.ikeda.beans.jFormatTextCpf();
+        txtCNPJ = new br.com.ikeda.beans.jFormatTextCnpj();
         dateInicio = new br.com.marciorl.beans.DateChooser();
         dateFim = new br.com.marciorl.beans.DateChooser();
         jla = new javax.swing.JLabel();
         btnLocalizar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
-        txtValor = new javax.swing.JTextField();
-        cbFlagCliente = new javax.swing.JCheckBox();
-        txtCPF = new br.com.ikeda.beans.jFormatTextCpf();
-        txtCNPJ = new br.com.ikeda.beans.jFormatTextCnpj();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -92,11 +93,43 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             }
         });
 
+        cbFlagCliente.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        cbFlagCliente.setText("Pessoa Fisica?");
+        cbFlagCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbFlagClienteKeyPressed(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("Opção:");
 
         jLTexto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLTexto.setText("Valor:");
+
+        txtValor.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtValor.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtValorFocusGained(evt);
+            }
+        });
+        txtValor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtValorKeyPressed(evt);
+            }
+        });
+
+        txtCPF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCPFKeyPressed(evt);
+            }
+        });
+
+        txtCNPJ.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCNPJKeyPressed(evt);
+            }
+        });
 
         jla.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jla.setText("a");
@@ -117,16 +150,6 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             }
         });
 
-        txtValor.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtValor.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtValorFocusGained(evt);
-            }
-        });
-
-        cbFlagCliente.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        cbFlagCliente.setText("Pessoa Fisica?");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -144,7 +167,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtValor)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -306,8 +329,8 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             {
                 if(nome.equals("CPF"))
                 {
+                    txtCPF.setLocation(x+105,y-3);
                     txtCPF.setVisible(true);
-                    txtCPF.setLocation(x,y);
                     cbFlagCliente.setVisible(false);
                     txtValor.setVisible(false);
                     jLTexto.setText("CPF");
@@ -316,7 +339,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                 {
                     if(nome.equals("CNPJ"))
                     {
-                        txtCNPJ.setLocation(x,y);
+                        txtCNPJ.setLocation(x+105,y-3);
                         txtCNPJ.setVisible(true);
                         cbFlagCliente.setVisible(false);
                         txtValor.setVisible(false);
@@ -391,9 +414,27 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             case "Servico": Servico(); break;
             case "Fornecedor": Fornecedor(); break;
         }
-        
-
     }//GEN-LAST:event_btnLocalizarActionPerformed
+
+    private void txtValorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorKeyPressed
+    if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+        btnLocalizarActionPerformed(null);
+    }//GEN-LAST:event_txtValorKeyPressed
+
+    private void txtCPFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCPFKeyPressed
+    if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+        btnLocalizarActionPerformed(null);
+    }//GEN-LAST:event_txtCPFKeyPressed
+
+    private void txtCNPJKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCNPJKeyPressed
+    if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+        btnLocalizarActionPerformed(null);
+    }//GEN-LAST:event_txtCNPJKeyPressed
+
+    private void cbFlagClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbFlagClienteKeyPressed
+    if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+        btnLocalizarActionPerformed(null);
+    }//GEN-LAST:event_cbFlagClienteKeyPressed
     
     private void Estado() 
     {

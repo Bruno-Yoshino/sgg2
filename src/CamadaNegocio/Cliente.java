@@ -271,11 +271,11 @@ public class Cliente {
         if(flag)
         {
             sql = "insert into juridica (cli_codigo, cli_razasoci, cli_cnpj, cli_inscest) "
-                    + "values ("+this.codigo+", '"+this.razasoci+"', '"+this.cnpj+"', "+this.org_insc+")";
+                    + "values ("+this.codigo+", '"+this.razasoci+"', '"+this.cnpj+"', '"+this.org_insc+"')";
         }
         else
         {
-            sql = "update juridica set cli_razasoci = '"+this.razasoci+"', cli_cnpj = '"+this.cnpj+"', cli_inscest = "+this.org_insc+" where cli_codigo = "+this.codigo+"";
+            sql = "update juridica set cli_razasoci = '"+this.razasoci+"', cli_cnpj = '"+this.cnpj+"', cli_inscest = '"+this.org_insc+"' where cli_codigo = "+this.codigo+"";
         }
         return Banco.getCon().manipular(sql);
     }
@@ -462,7 +462,7 @@ public class Cliente {
 //                    }
                     case 0:
                     {
-                        query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where c.cid_nome ilike '%" + valor + "%' order by c.cli_nome";
+                        query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where c.cli_nome ilike '%" + valor + "%' order by c.cli_nome";
                         break;
                     }
                     case 1:
@@ -490,7 +490,7 @@ public class Cliente {
 //                    }
                     case 0:
                     {
-                        query = "select c.cli_codigo, c.cli_nome, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, juridica j where c.cid_nome ilike '%" + valor + "%' order by c.cli_nome";
+                        query = "select c.cli_codigo, c.cli_nome, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, juridica j where c.cli_nome ilike '%" + valor + "%' order by c.cli_nome";
                         break;
                     }
                     case 2:

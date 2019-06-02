@@ -75,4 +75,37 @@ public class Validacao
         return email.matches(mailFormat);
     }
     
+    public int PrimeiroDigito(String cpf)
+    {
+        int soma = 0, resultado = 0, resto = 0, num;
+        for(int i = 0, x = 10; i < 9; i++, x--)
+        {
+            num = Character.digit(cpf.charAt(i), 10);
+            soma = soma + num * x; 
+        }
+        resto = soma%11;
+        resultado = 11 - resto;
+        if(resultado == 10 || resultado == 11)
+        {
+            return 0;
+        }
+        return resultado;
+    }
+
+    public int SegundoDigito(String cpf)
+    {
+        int soma = 0, resultado = 0, resto = 0, num;
+        for(int i = 0, x = 11; i < 10; i++, x--)
+        {
+            num = Character.digit(cpf.charAt(i), 10);
+            soma = soma + num * x; 
+        }
+        resto = soma%11;
+        resultado = 11 - resto;
+        if(resultado == 10 || resultado == 11)
+        {
+            return 0;
+        }
+        return resultado;
+    }
 }

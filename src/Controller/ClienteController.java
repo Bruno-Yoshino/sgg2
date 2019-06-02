@@ -109,6 +109,20 @@ public class ClienteController {
             {
                 return 15;
             }
+            String cpfA = cpf;
+            cpfA = cpfA.replaceAll("\\.", "");
+            cpfA = cpfA.replaceAll("/", "");
+            cpfA = cpfA.replaceAll("-", "");
+            int dig1, dig2;
+            dig1 = v.PrimeiroDigito(cpfA);
+            dig2 = v.SegundoDigito(cpfA);  
+            String d1, d2;
+            d1 = Integer.toString(dig1);
+            d2 = Integer.toString(dig2);
+            if(cpfA.charAt(9) != d1.charAt(0) || cpfA.charAt(10) != d2.charAt(0))
+            {
+                return 21;
+            }
             c.setCpf(cpf);//1
             if(rg.trim().length() != 12)
             {

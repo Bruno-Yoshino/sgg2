@@ -223,7 +223,7 @@ public class CadastroFolha extends javax.swing.JDialog {
 
         btnLocalizar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
-        btnLocalizar.setText("Locarizar");
+        btnLocalizar.setText("Localizar");
         btnLocalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLocalizarActionPerformed(evt);

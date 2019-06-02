@@ -378,7 +378,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Icon/Localizar 16.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Locarizar"/>
+            <Property name="text" type="java.lang.String" value="Localizar"/>
             <Property name="name" type="java.lang.String" value="btnLocalizar" noResource="true"/>
           </Properties>
           <Events>
