@@ -248,7 +248,7 @@ public class CadastroTipoConta extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        if(JOptionPane.showConfirmDialog(this, "Deseja excluir esta Cidade?", "Atenção", JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION)
+        if(JOptionPane.showConfirmDialog(this, "Deseja excluir esta Tipo de Conta?", "Atenção", JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION)
         {
             if(tcc.excluir(txtCodigo.getText()))
             {

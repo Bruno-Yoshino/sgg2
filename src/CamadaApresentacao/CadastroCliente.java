@@ -742,8 +742,16 @@ public class CadastroCliente extends javax.swing.JDialog {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if(JOptionPane.showConfirmDialog(this, "Deseja realmente excluir este cliente?", "Atenção", JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION)
         {
-            cc.excluir(Integer.parseInt(txtcli_cod.getText()));
-            limpar();
+            if (cc.excluir(Integer.parseInt(txtcli_cod.getText()))) 
+            {
+                m.InformationMessage("Excluido com sucesso", "Informação");
+                limpar();
+            }
+            else
+            {
+                m.ErroMessage("Erro ao excluir", "Erro");
+            }
+            
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
@@ -962,11 +970,15 @@ public class CadastroCliente extends javax.swing.JDialog {
     private void btnaddEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddEstadoActionPerformed
         CadastroEstado frm = new CadastroEstado(null, true);
         frm.setVisible(true);
+        cbuf.removeAllItems();
+        CarregaEstado();
     }//GEN-LAST:event_btnaddEstadoActionPerformed
 
     private void btnaddCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddCidadeActionPerformed
         CadastroCidade frm = new CadastroCidade(null, true);
         frm.setVisible(true);
+        cbcidade.removeAllItems();
+        cc.CarregaCidade(cbcidade, (String) cbuf.getSelectedItem());
     }//GEN-LAST:event_btnaddCidadeActionPerformed
 
     private void cbufFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbufFocusLost

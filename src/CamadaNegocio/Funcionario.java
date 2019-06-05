@@ -384,7 +384,7 @@ public class Funcionario
 
     public static void configuraModel(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
     {
-        String colunas[] = new String [] {"Código", "Nome", "CPF", "Telefone", "Celular", "Data Adimicao", "Data Demição"};
+        String colunas[] = new String [] {"Código", "Nome", "CPF", "Telefone", "Celular", "Data Adimissão", "Data Demissão"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));
         jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
         jTable.getColumnModel().getColumn(1).setPreferredWidth(250);

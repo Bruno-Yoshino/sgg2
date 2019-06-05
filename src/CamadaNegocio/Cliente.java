@@ -462,7 +462,7 @@ public class Cliente {
 //                    }
                     case 0:
                     {
-                        query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where c.cli_nome ilike '%" + valor + "%' order by c.cli_nome";
+                        query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where c.cli_nome ilike '%" + valor + "%' and c.cli_codigo = f.cli_codigo order by c.cli_nome";
                         break;
                     }
                     case 1:
@@ -490,7 +490,7 @@ public class Cliente {
 //                    }
                     case 0:
                     {
-                        query = "select c.cli_codigo, c.cli_nome, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, juridica j where c.cli_nome ilike '%" + valor + "%' order by c.cli_nome";
+                        query = "select c.cli_codigo, c.cli_nome, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, juridica j where c.cli_nome ilike '%" + valor + "%' and c.cli_codigo = j.cli_codigo order by c.cli_nome";
                         break;
                     }
                     case 2:
