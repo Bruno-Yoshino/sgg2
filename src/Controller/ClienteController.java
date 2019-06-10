@@ -84,7 +84,9 @@ public class ClienteController {
         } catch (NumberFormatException e) {
             return 11;
         }
-        if(telefone.trim().length() <= 3 || celular.trim().length() <= 3)
+        String telT = telefone.replace(" ", "");
+        String telC = celular.replace(" ", "");
+        if(telT.equals("()-") && telC.equals("()-"))
         {
             return 12;
         }
@@ -124,7 +126,7 @@ public class ClienteController {
                 return 21;
             }
             c.setCpf(cpf);//1
-            if(rg.trim().length() != 12)
+            if(rg.trim().equals(""))
             {
                 return 16;
             }

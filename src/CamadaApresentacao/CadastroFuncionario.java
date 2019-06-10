@@ -252,7 +252,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
         txtCpf.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         try {
-            txtRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###-A")));
+            txtRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }

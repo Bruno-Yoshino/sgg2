@@ -68,7 +68,9 @@ public class FornecedorController
             return 2;
         }
         forn.setNome(nome);
-        if(telefone.trim().length() <= 5 || celular.trim().length() <= 5) /// Mudar o estilo de verificacao
+        String telT = telefone.replace(" ", "");
+        String telC = celular.replace(" ", "");
+        if(telT.equals("()-") && telC.equals("()-"))
         {
             return 12;
         }

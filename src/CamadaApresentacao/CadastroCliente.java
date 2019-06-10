@@ -264,7 +264,7 @@ public class CadastroCliente extends javax.swing.JDialog {
         jLabel13.setText("RG:");
 
         try {
-            txtcli_rg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###-A")));
+            txtcli_rg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }

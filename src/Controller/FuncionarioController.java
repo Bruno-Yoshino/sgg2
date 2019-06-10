@@ -116,7 +116,9 @@ public class FuncionarioController {
         } catch (NumberFormatException e) {
             return 11;
         }
-        if(telefone.trim().length() <= 3 || celular.trim().length() <= 3)
+        String telT = telefone.replace(" ", "");
+        String telC = celular.replace(" ", "");
+        if(telT.equals("()-") && telC.equals("()-"))
         {
             return 12;
         }
@@ -137,7 +139,7 @@ public class FuncionarioController {
             return 15;
         }
         func.setComplemento(complemento);
-        if(rg.trim().length() == 3)
+        if(rg.trim().equals(""))
         {
             return 16;
         }

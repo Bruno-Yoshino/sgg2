@@ -40,7 +40,7 @@ public class login extends javax.swing.JFrame
         {
             est.InsereDadosESTADOS();
             m.InformationMessage("Seja bem vindo! Como é o primeiro Cadastro, vamos cadastrar o primeiro Funiconairo.", "Informação");
-            CadastroFuncionario frm = new CadastroFuncionario(this, false, true);
+            CadastroFuncionario frm = new CadastroFuncionario(this, true, true);
             frm.setVisible(true);
         }
         if(emp.verificaEmpresa() == 0)
