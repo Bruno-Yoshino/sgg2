@@ -210,6 +210,7 @@
         </Component>
         <Component class="br.com.ikeda.beans.jTextFieldMonetario" name="txtValor">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
@@ -225,6 +226,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtDataAberto">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
@@ -240,6 +242,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtFuncionario">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
@@ -247,6 +250,7 @@
         </Component>
         <Component class="br.com.ikeda.beans.jTextFieldMonetario" name="txtValorTotal">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
@@ -270,6 +274,7 @@
         </Component>
         <Component class="br.com.ikeda.beans.jTextFieldMonetario" name="txtValorRetirado">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
@@ -285,6 +290,7 @@
         </Component>
         <Component class="br.com.ikeda.beans.jTextFieldMonetario" name="txtValorTotalDesconto">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
@@ -303,6 +309,7 @@
         </Component>
         <Component class="br.com.ikeda.beans.jTextFieldMonetario" name="txtValorTotalCDesconto">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
@@ -325,6 +332,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtDataFechado">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
@@ -349,6 +357,7 @@
         </Component>
         <Component class="br.com.ikeda.beans.jTextFieldMonetario" name="txtValorReal">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
@@ -364,6 +373,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtDiferenca">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
@@ -371,6 +381,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtDataAberto1">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
@@ -378,6 +389,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtDataAberto2">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>

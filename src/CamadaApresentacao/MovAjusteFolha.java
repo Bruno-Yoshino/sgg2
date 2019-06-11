@@ -5,18 +5,36 @@
  */
 package CamadaApresentacao;
 
+import CamadaNegocio.Funcionario;
+import Controller.AjusteFolhaController;
+import util.SystemControl;
+import util.mensagens;
+
 /**
  *
- * @author Bruno Yoshino
+ * @author 羽根川　翼
+ * @author 阿賀野
+ * @author 矢矧
  */
-public class MovAjusteFolha extends javax.swing.JDialog {
+public class MovAjusteFolha extends javax.swing.JDialog 
+{
 
-    /**
-     * Creates new form MovAjusteFolha
-     */
-    public MovAjusteFolha(java.awt.Frame parent, boolean modal) {
+    private final SystemControl sc = new SystemControl();
+    private final mensagens m = new mensagens();
+    private final AjusteFolhaController afc = new AjusteFolhaController();
+    
+    public MovAjusteFolha(java.awt.Frame parent, boolean modal, Funcionario f) {
         super(parent, modal);
         initComponents();
+        afc.getAf().setFunc(f);
+        btnNovo.setName("btnNovo");
+        btnAlterar.setName("btnAlterar");
+        btnCancelar.setName("btnCancelar");
+        btnGravar.setName("btnGravar");
+        btnLocalizar.setName("btnLocalizar");
+        btnSair.setName("btnSair");
+        sc.HabilityComponents(jPanel1.getComponents(), false);
+        sc.Initialize(jPanel2.getComponents());
     }
 
     /**
@@ -33,7 +51,7 @@ public class MovAjusteFolha extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         txtcod = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txaObs = new javax.swing.JTextArea();
+        txtObs = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtTamnho = new javax.swing.JTextField();
@@ -42,22 +60,22 @@ public class MovAjusteFolha extends javax.swing.JDialog {
         txtqtd = new javax.swing.JTextField();
         lbTexto = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtTamnho1 = new javax.swing.JTextField();
-        btnaddCidade = new javax.swing.JButton();
-        btnaddCidade1 = new javax.swing.JButton();
+        txtServico = new javax.swing.JTextField();
+        btnaddServico = new javax.swing.JButton();
+        btnlocServico = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        btnaddCidade2 = new javax.swing.JButton();
-        btnaddCidade3 = new javax.swing.JButton();
-        dateChooser1 = new br.com.marciorl.beans.DateChooser();
+        rbdecrement = new javax.swing.JRadioButton();
+        rbincrement = new javax.swing.JRadioButton();
+        btnaddFolha = new javax.swing.JButton();
+        btnlocFolha = new javax.swing.JButton();
+        txtData = new br.com.marciorl.beans.DateChooser();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
+        btnLocalizar = new javax.swing.JButton();
+        btnGravar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
 
         jFormattedTextField1.setText("jFormattedTextField1");
 
@@ -69,20 +87,23 @@ public class MovAjusteFolha extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("Codigo:");
 
+        txtcod.setEditable(false);
         txtcod.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        txaObs.setColumns(20);
-        txaObs.setRows(5);
-        jScrollPane1.setViewportView(txaObs);
+        txtObs.setColumns(20);
+        txtObs.setRows(5);
+        jScrollPane1.setViewportView(txtObs);
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel2.setText("Observação:");
 
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setText("Tamanho/Formato:");
 
+        txtTamnho.setEditable(false);
         txtTamnho.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
+        txtQtdAtual.setEditable(false);
         txtQtdAtual.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -93,19 +114,60 @@ public class MovAjusteFolha extends javax.swing.JDialog {
         lbTexto.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lbTexto.setText("Quantidade a ser retirado:");
 
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Servioço utilizado:");
 
-        txtTamnho1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtServico.setEditable(false);
+        txtServico.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        btnaddServico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
+        btnaddServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaddServicoActionPerformed(evt);
+            }
+        });
+
+        btnlocServico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
+        btnlocServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlocServicoActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Data:");
 
-        jRadioButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jRadioButton2.setText("Retirar");
+        rbdecrement.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        rbdecrement.setText("Retirar");
+        rbdecrement.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbdecrementStateChanged(evt);
+            }
+        });
 
-        jRadioButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jRadioButton1.setText("Adidiconar");
+        rbincrement.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        rbincrement.setText("Adidiconar");
+        rbincrement.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbincrementStateChanged(evt);
+            }
+        });
+
+        btnaddFolha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
+        btnaddFolha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaddFolhaActionPerformed(evt);
+            }
+        });
+
+        btnlocFolha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
+        btnlocFolha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlocFolhaActionPerformed(evt);
+            }
+        });
+
+        txtData.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -118,30 +180,30 @@ public class MovAjusteFolha extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTamnho1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtServico, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnaddCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnaddServico, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnaddCidade1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnlocServico, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTamnho)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnaddFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnlocFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTamnho)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnaddCidade2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnaddCidade3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(57, 57, 57))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtcod, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButton1)
+                                .addComponent(rbincrement)
                                 .addGap(18, 18, 18)
-                                .addComponent(jRadioButton2))
+                                .addComponent(rbdecrement))
                             .addComponent(jLabel2)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
@@ -151,10 +213,10 @@ public class MovAjusteFolha extends javax.swing.JDialog {
                                 .addComponent(lbTexto)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtqtd, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -164,24 +226,24 @@ public class MovAjusteFolha extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtcod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(rbincrement)
+                    .addComponent(rbdecrement))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel5)
-                                .addComponent(txtTamnho1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnaddCidade1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnaddCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnlocServico, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnaddServico, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(txtTamnho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnaddCidade3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnaddCidade2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnlocFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnaddFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -190,7 +252,7 @@ public class MovAjusteFolha extends javax.swing.JDialog {
                     .addComponent(txtqtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
-                        .addComponent(dateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -201,25 +263,39 @@ public class MovAjusteFolha extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton1.setText("Localizar");
-
-        jButton2.setText("Gravar");
-
-        jButton3.setText("Voltar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
+        btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnNovoActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Alterar");
+        btnAlterar.setText("Alterar");
 
-        jButton5.setText("Novo");
+        btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
+        btnLocalizar.setText("Localizar");
 
-        jButton6.setText("Cancelar");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Gravar16.png"))); // NOI18N
+        btnGravar.setText("Gravar");
+        btnGravar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnGravarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Cancelar16.png.jpg"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Sair.png"))); // NOI18N
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
             }
         });
 
@@ -229,17 +305,17 @@ public class MovAjusteFolha extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnLocalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -248,12 +324,12 @@ public class MovAjusteFolha extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnGravar, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                        .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
+                    .addComponent(btnLocalizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnNovo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAlterar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -281,28 +357,108 @@ public class MovAjusteFolha extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+       dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpar();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnaddServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddServicoActionPerformed
+       CadastroServico frm = new CadastroServico(null, true);
+       frm.setTitle("Cadastro Serviço");
+       frm.setVisible(true);
+    }//GEN-LAST:event_btnaddServicoActionPerformed
+
+    private void btnlocServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlocServicoActionPerformed
+        ConsultaPadrao consDS = new ConsultaPadrao(null, true);
+        String[] vet = new String[1];
+        vet[0] = "Nome";
+        consDS.configuraOpcoes(vet, 1, 0, "Servico", false);
+        consDS.verificaconsulta(true);
+        consDS.setVisible(true);
+        if (consDS.getCodigo() != 0)
+        {
+            afc.buscaServico(consDS.getCodigo());
+            consDS.dispose();
+            txtServico.setText(afc.getAf().getServ().getNome());
+        }
+        else
+        {
+            consDS.dispose();
+        }
+    }//GEN-LAST:event_btnlocServicoActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        sc.Edity(jPanel2.getComponents());
+        sc.HabilityComponents(jPanel1.getComponents(), true);
+        txtcod.setText("0");
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnaddFolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddFolhaActionPerformed
+       CadastroFolha frm = new CadastroFolha(null, true);
+       frm.setTitle("Cadastro Folha");
+       frm.setVisible(true);
+    }//GEN-LAST:event_btnaddFolhaActionPerformed
+
+    private void btnlocFolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlocFolhaActionPerformed
+        ConsultaPadrao consFolha = new ConsultaPadrao(null, true);
+        String[] vet = new String[2];
+        vet[0] = "Tamanho";
+        vet[1] = "Descrição";
+        consFolha.configuraOpcoes(vet, 2, 0, "Folha", false);
+        consFolha.verificaconsulta(true);
+        consFolha.setVisible(true);
+        if (consFolha.getCodigo() != 0)
+        {
+            afc.buscaFolha(consFolha.getCodigo());
+            consFolha.dispose();
+            txtTamnho.setText(afc.getAf().getF().getTamanho()+ "/" +afc.getAf().getF().getDescricao());
+        }
+        else
+        {
+            consFolha.dispose();
+        }
+    }//GEN-LAST:event_btnlocFolhaActionPerformed
+
+    private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnGravarActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void rbincrementStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbincrementStateChanged
+        if(rbincrement.isSelected())
+            rbdecrement.setSelected(false);
+    }//GEN-LAST:event_rbincrementStateChanged
 
+    private void rbdecrementStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbdecrementStateChanged
+        if(rbdecrement.isSelected())
+            rbincrement.setSelected(false);
+    }//GEN-LAST:event_rbdecrementStateChanged
 
+    private void limpar()
+    {
+        txtObs.setText("");
+        txtQtdAtual.setText("");
+        txtServico.setText("");
+        txtTamnho.setText("");
+        txtcod.setText("");
+        txtqtd.setText("");
+        sc.Initialize(jPanel2.getComponents());
+        sc.HabilityComponents(jPanel1.getComponents(), false);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnaddCidade;
-    private javax.swing.JButton btnaddCidade1;
-    private javax.swing.JButton btnaddCidade2;
-    private javax.swing.JButton btnaddCidade3;
-    private br.com.marciorl.beans.DateChooser dateChooser1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGravar;
+    private javax.swing.JButton btnLocalizar;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnaddFolha;
+    private javax.swing.JButton btnaddServico;
+    private javax.swing.JButton btnlocFolha;
+    private javax.swing.JButton btnlocServico;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -312,14 +468,15 @@ public class MovAjusteFolha extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbTexto;
-    private javax.swing.JTextArea txaObs;
+    private javax.swing.JRadioButton rbdecrement;
+    private javax.swing.JRadioButton rbincrement;
+    private br.com.marciorl.beans.DateChooser txtData;
+    private javax.swing.JTextArea txtObs;
     private javax.swing.JTextField txtQtdAtual;
+    private javax.swing.JTextField txtServico;
     private javax.swing.JTextField txtTamnho;
-    private javax.swing.JTextField txtTamnho1;
     private javax.swing.JTextField txtcod;
     private javax.swing.JTextField txtqtd;
     // End of variables declaration//GEN-END:variables

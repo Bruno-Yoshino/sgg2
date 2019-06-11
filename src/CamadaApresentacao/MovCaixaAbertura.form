@@ -125,7 +125,7 @@
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="0"/>
+              <Font name="Arial" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Valor:"/>
           </Properties>
@@ -147,6 +147,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtTamnho">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
@@ -161,6 +162,9 @@
           </Properties>
         </Component>
         <Component class="br.com.marciorl.beans.DateChooser" name="dateChooser1">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="br.com.marciorl.beans.Relogio" name="relogio1">
         </Component>
@@ -190,9 +194,6 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Foto"/>
-              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -240,6 +241,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Gravar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAbrirActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnSair">
           <Properties>

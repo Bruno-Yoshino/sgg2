@@ -201,4 +201,14 @@ public class Folha {
         jTable.getColumnModel().getColumn(4).setPreferredWidth(90);
         jTable.getColumnModel().getColumn(5).setPreferredWidth(50);
     }
+    
+    //--------------------------------------------------------------  ↑ Para Cadastro
+    // * @author 速吸
+    // * @author 神威
+    //-------------------------------------------------------------   ↓ Para Atualizar Estoque
+    public boolean atualizarEstoque()
+    {
+        String sql = "update folha set fo_estoque = "+this.qtd+" where fo_codigo = "+codigo+"";
+        return Banco.getCon().manipular(sql);
+    }
 }

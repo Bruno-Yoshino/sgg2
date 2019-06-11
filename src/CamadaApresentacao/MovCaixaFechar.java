@@ -65,18 +65,22 @@ public class MovCaixaFechar extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("Valor Inicial do Caixa:");
 
+        txtValor.setEditable(false);
         txtValor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Data/Horario da Abertura:");
 
+        txtDataAberto.setEditable(false);
         txtDataAberto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Funcionario responsavel :");
 
+        txtFuncionario.setEditable(false);
         txtFuncionario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
+        txtValorTotal.setEditable(false);
         txtValorTotal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -85,11 +89,13 @@ public class MovCaixaFechar extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Valor da(s) Retiradas(s) durante o dia:");
 
+        txtValorRetirado.setEditable(false);
         txtValorRetirado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Valor Total de Desconto:");
 
+        txtValorTotalDesconto.setEditable(false);
         txtValorTotalDesconto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtValorTotalDesconto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,6 +106,7 @@ public class MovCaixaFechar extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel7.setText("Valor Total com desconto:");
 
+        txtValorTotalCDesconto.setEditable(false);
         txtValorTotalCDesconto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -107,6 +114,7 @@ public class MovCaixaFechar extends javax.swing.JDialog {
 
         txtValorCaixa.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
+        txtDataFechado.setEditable(false);
         txtDataFechado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -116,15 +124,19 @@ public class MovCaixaFechar extends javax.swing.JDialog {
         jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel10.setText("Valor real em caixa:");
 
+        txtValorReal.setEditable(false);
         txtValorReal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel11.setText("Diferença:");
 
+        txtDiferenca.setEditable(false);
         txtDiferenca.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
+        txtDataAberto1.setEditable(false);
         txtDataAberto1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
+        txtDataAberto2.setEditable(false);
         txtDataAberto2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

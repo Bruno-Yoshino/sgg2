@@ -203,5 +203,14 @@ public class Produto {
         jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
         jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
     }
+    //--------------------------------------------------------------  ↑ Para Cadastro
+    // * @author 速吸
+    // * @author 神威
+    //-------------------------------------------------------------   ↓ Para Atualizar Estoque
     
+    public boolean atualizarEstoque()
+    {
+        String sql = "update produto set pro_estoque = "+this.qtd+" where pro_codigo = "+this.codigo+"";
+        return Banco.getCon().manipular(sql);
+    }
 }

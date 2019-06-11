@@ -5,18 +5,38 @@
  */
 package CamadaApresentacao;
 
+import CamadaNegocio.Funcionario;
+import Controller.CaixaController;
+import java.awt.Image;
+import java.time.LocalDateTime;
+import javax.swing.ImageIcon;
+import util.SystemControl;
+import util.mensagens;
+
 /**
- *
- * @author Bruno Yoshino
+ * 
+ * @author 吉野　廉
+ * @author 磐手
+ * @author イントレピッド
  */
 public class MovCaixaAbertura extends javax.swing.JDialog {
 
-    /**
-     * Creates new form MovCaixaAbertura
-     */
-    public MovCaixaAbertura(java.awt.Frame parent, boolean modal) {
+    private final SystemControl sc = new SystemControl();
+    private final mensagens m = new mensagens();
+    private final CaixaController cc = new CaixaController();
+    
+    public MovCaixaAbertura(java.awt.Frame parent, boolean modal, Funcionario func) {
         super(parent, modal);
         initComponents();
+        cc.setF(func);
+        if(cc.OpenExist())
+        {
+            m.InformationMessage("Já existe um caixa Aberto! Favor fechar o caixa que esta aberto!", "Atenção");
+            dispose();
+        }
+        ImageIcon icon = new ImageIcon(cc.getF().getCaminho());
+        jLabel2.setIcon(new ImageIcon(icon.getImage().getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_DEFAULT))); // Utilizado para recuperar imagem.
+        txtTamnho.setText(cc.getF().getNome()); 
     }
 
     /**
@@ -47,7 +67,7 @@ public class MovCaixaAbertura extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setText("Valor:");
 
         txtValor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -55,15 +75,16 @@ public class MovCaixaAbertura extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Funcionario:");
 
+        txtTamnho.setEditable(false);
         txtTamnho.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("Data Abertura:");
 
+        dateChooser1.setEditable(false);
+
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        jLabel2.setText("Foto");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -129,6 +150,11 @@ public class MovCaixaAbertura extends javax.swing.JDialog {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnAbrir.setText("Gravar");
+        btnAbrir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbrirActionPerformed(evt);
+            }
+        });
 
         btnSair.setText("Voltar");
 
@@ -177,9 +203,24 @@ public class MovCaixaAbertura extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
+        switch(cc.varidar(txtValor.getText(), LocalDateTime.now(), 0))
+        {
+            case 1: m.InformationMessage("Informe o valor!", "Atenção"); txtValor.requestFocus(); txtValor.setText(""); break;
+            case 2: m.InformationMessage("Valor negativo!", "Atenção"); txtValor.requestFocus();  break;
+            default:
+                 if(cc.abrir())
+                 {
+                     m.InformationMessage("Caixa aberto com sucesso!", "Informação");
+                     dispose();
+                 }
+                 else
+                 {
+                     m.ErroMessage("Erro ao abriri Caixa!", "Atenção");
+                 }
+        }
+    }//GEN-LAST:event_btnAbrirActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
