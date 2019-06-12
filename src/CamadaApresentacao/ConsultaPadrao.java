@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * @author 阿賀野
+ * @author 矢矧
  * 
  * @author 弐条
  * @author 七草
@@ -311,8 +313,8 @@ public class ConsultaPadrao extends javax.swing.JDialog {
         if(nome.equals("Data"))
         {
             txtValor.setVisible(false);
-            dateInicio.setLocation(x,y);
             dateInicio.setVisible(true);
+            dateInicio.setLocation(x+105,y-3);
             jLTexto.setText("Data");
         }
         else
@@ -321,9 +323,13 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             {
                 txtValor.setVisible(false);
                 dateInicio.setVisible(true);
-                dateFim.setVisible(true);
-                jLTexto.setText("Periodo");
+                dateInicio.setLocation(x+105,y-3);
                 jla.setVisible(true);
+                jla.setLocation(x+110,y-3);
+                dateFim.setVisible(true);
+                dateFim.setLocation(x+115,y-3);
+                jLTexto.setText("Periodo");
+
             }
             else
             {

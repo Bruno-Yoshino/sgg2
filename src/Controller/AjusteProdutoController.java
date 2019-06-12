@@ -5,8 +5,8 @@
  */
 package Controller;
 
-import CamadaNegocio.AjustarFolha;
-import CamadaNegocio.Folha;
+import CamadaNegocio.AjustarProduto;
+import CamadaNegocio.Produto;
 import CamadaNegocio.Funcionario;
 import CamadaNegocio.Servico;
 import java.util.Date;
@@ -18,70 +18,70 @@ import util.Validacao;
  * @author 阿賀野
  * @author 矢矧
  */
-public class AjusteFolhaController 
+public class AjusteProdutoController 
 {
-    private Folha f;
+    private Produto p;
     private Funcionario func;    
     private Servico serv;
     private final util.Validacao v;
-    private AjustarFolha af;
+    private AjustarProduto ap;
 
-    public AjusteFolhaController() {
-        f = new Folha();
+    public AjusteProdutoController() {
+        p = new Produto();
         func  = new Funcionario();
         v = new Validacao();
-        af = new AjustarFolha();
+        ap = new AjustarProduto();
         serv = new Servico();
     }
 
-    public AjustarFolha getAf() {
-        return af;
+    public AjustarProduto getAf() {
+        return ap;
     }
 
-    public void setAf(AjustarFolha af) {
-        this.af = af;
+    public void setAf(AjustarProduto ap) {
+        this.ap = ap;
     }
     
     public void buscaServico(int codigo)
     {
-        af.setServ(serv.buscarCodigo(codigo));
+        ap.setServ(serv.buscarCodigo(codigo));
     }
     
     public void buscaFolha(int codigo)
     {
-        af.setF(f.buscarCodigo(codigo));
+        ap.setF(p.buscarCodigo(codigo));
     }
     
     public int validar(String codigo, String qtd, Date data, boolean flag, String obs)
     {
-        af.setCodigo(v.ConverteNumeroInteiro(codigo));
+        ap.setCodigo(v.ConverteNumeroInteiro(codigo));
         if(qtd.equals(""))
             return 1;
         if(v.ConverteNumeroInteiro(qtd) == -999)
             return 2;
-        af.setQtd(v.ConverteNumeroInteiro(qtd));
+        ap.setQtd(v.ConverteNumeroInteiro(qtd));
         if(obs.trim().equals(""))
             return 3;
         if(!flag)
         {
-            if(af.getQtd() > af.getF().getQtd())
+            if(ap.getQtd() > ap.getF().getQtd())
                 return 4;
         }
-        af.setFlag(flag);
-        af.setObs(obs);
-        af.setData(data);
+        ap.setFlag(flag);
+        ap.setObs(obs);
+        ap.setData(data);
         return 0;
     }
     
     public boolean gravar()
     {
-        return af.gravar();
+        return ap.gravar();
     }
     
     public void atualizaEstoque()
     {
         AtualizarEstoqueController aec = new AtualizarEstoqueController();
-        aec.setF(f);
-        aec.atualizarEstoqueFolha(af.isFlag(), af.getQtd());
+        aec.setP(p);
+        aec.atualizarEstoqueProduto(ap.isFlag(), ap.getQtd());
     }
 }

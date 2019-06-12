@@ -7,6 +7,8 @@ package CamadaApresentacao;
 
 import CamadaNegocio.Funcionario;
 import Controller.AjusteFolhaController;
+import java.time.Instant;
+import java.util.Date;
 import util.SystemControl;
 import util.mensagens;
 
@@ -33,6 +35,14 @@ public class MovAjusteFolha extends javax.swing.JDialog
         btnGravar.setName("btnGravar");
         btnLocalizar.setName("btnLocalizar");
         btnSair.setName("btnSair");
+        btnaddFolha.setName("btnaddFolha");
+        btnaddServico.setName("btnaddServico");
+        btnlocFolha.setName("btnlocFolha");
+        btnlocServico.setName("btnlocServico");
+        
+        btnAlterar.setVisible(false);
+        btnLocalizar.setVisible(false);
+        
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents());
     }
@@ -245,14 +255,15 @@ public class MovAjusteFolha extends javax.swing.JDialog
                         .addComponent(btnlocFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnaddFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtQtdAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbTexto)
-                    .addComponent(txtqtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
-                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(txtQtdAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbTexto)
+                        .addComponent(txtqtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -271,10 +282,16 @@ public class MovAjusteFolha extends javax.swing.JDialog
             }
         });
 
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
         btnAlterar.setText("Alterar");
 
         btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
         btnLocalizar.setText("Localizar");
+        btnLocalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocalizarActionPerformed(evt);
+            }
+        });
 
         btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Gravar16.png"))); // NOI18N
         btnGravar.setText("Gravar");
@@ -349,7 +366,7 @@ public class MovAjusteFolha extends javax.swing.JDialog
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -423,7 +440,24 @@ public class MovAjusteFolha extends javax.swing.JDialog
     }//GEN-LAST:event_btnlocFolhaActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        // TODO add your handling code here:
+        switch(afc.validar(txtcod.getText(), txtqtd.getText(), Date.from(Instant.now()), rbincrement.isSelected(), txtObs.getText()))
+        {
+            case 1:  m.InformationMessage("Informe a quantidade!", "Informação"); txtqtd.requestFocus(); break;
+            case 2:  m.InformationMessage("Quanridade negativa!", "Informação"); txtqtd.requestFocus(); break;
+            //case 3:  m.InformationMessage("Informe a observação!", "Informação"); txtObs.requestFocus();break;
+            case 4:  m.InformationMessage("A quantidade informada é maior que a quantidade existente no estoque!", "Informação"); txtqtd.requestFocus(); break;
+            default:
+                if(afc.gravar())
+                {
+                    afc.atualizaEstoque();
+                    m.InformationMessage("Esqtoque ajustado com sucesso!", "Informação");
+                    limpar();
+                }
+                else
+                {
+                    m.ErroMessage("Erro ao Ajustar Estoque!", "ERRO");
+                }
+        }
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void rbincrementStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbincrementStateChanged
@@ -436,6 +470,10 @@ public class MovAjusteFolha extends javax.swing.JDialog
             rbincrement.setSelected(false);
     }//GEN-LAST:event_rbdecrementStateChanged
 
+    private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
+    
+    }//GEN-LAST:event_btnLocalizarActionPerformed
+
     private void limpar()
     {
         txtObs.setText("");
@@ -444,6 +482,8 @@ public class MovAjusteFolha extends javax.swing.JDialog
         txtTamnho.setText("");
         txtcod.setText("");
         txtqtd.setText("");
+        rbincrement.setSelected(true);
+        
         sc.Initialize(jPanel2.getComponents());
         sc.HabilityComponents(jPanel1.getComponents(), false);
     }

@@ -7,7 +7,6 @@ package CamadaNegocio;
 
 import CamadaLogica.Banco;
 import CamadaLogica.ReadOnlyTableModel;
-import Controller.AjusteFolhaController;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -19,20 +18,20 @@ import javax.swing.JTable;
  * @author 阿賀野
  * @author 矢矧
  */
-public class AjustarFolha {
+public class AjustarProduto {
     private int codigo;
     private Servico serv;
-    private Folha f;
+    private Produto p;
     private int qtd;
     private Date data;
     private boolean flag;
     private String obs;
     private Funcionario func;
 
-    public AjustarFolha(int codigo, Servico serv, Folha f, int qtd, Date data, boolean flag, String obs, Funcionario func) {
+    public AjustarProduto(int codigo, Servico serv, Produto p, int qtd, Date data, boolean flag, String obs, Funcionario func) {
         this.codigo = codigo;
         this.serv = serv;
-        this.f = f;
+        this.p = p;
         this.qtd = qtd;
         this.data = data;
         this.flag = flag;
@@ -40,9 +39,9 @@ public class AjustarFolha {
         this.func = func;
     }
 
-    public AjustarFolha() {
+    public AjustarProduto() {
         this.serv = new Servico();
-        this.f = new Folha();
+        this.p = new Produto();
     }
 
     public int getCodigo() {
@@ -61,12 +60,12 @@ public class AjustarFolha {
         this.serv = serv;
     }
 
-    public Folha getF() {
-        return f;
+    public Produto getF() {
+        return p;
     }
 
-    public void setF(Folha f) {
-        this.f = f;
+    public void setF(Produto p) {
+        this.p = p;
     }
 
     public int getQtd() {
@@ -114,32 +113,32 @@ public class AjustarFolha {
         String sql = "";
         if(codigo == 0)
         {
-            sql = "INSERT INTO ajuste_folha( " +
-                  " serv_codigo, fo_codigo, func_codigo, af_qtd, af_data, af_flag, af_obs) " +
-                  " VALUES ("+serv == null ? null : serv.getCodigo()+", "+f.getCodigo()+", "+func.getCodigo()+", "+qtd+", '"+data+"', "+flag+", '"+obs+"')";
+            sql = "INSERT INTO ajuste_produto( " +
+                  " serv_codigo, pro_codigo, func_codigo, af_qtd, af_data, af_flag, af_obs) " +
+                  " VALUES ("+serv == null ? null : serv.getCodigo()+", "+p.getCodigo()+", "+func.getCodigo()+", "+qtd+", '"+data+"', "+flag+", '"+obs+"')";
         }
         else
         {
-            sql = "UPDATE ajuste_folha " +
-                  " SET serv_codigo="+serv == null ? null : serv.getCodigo()+", fo_codigo="+f.getCodigo()+", func_codigo="+func.getCodigo()+", af_qtd="+qtd+", af_data='"+data+"', af_flag="+flag+", af_obs='"+obs+"' " +
+            sql = "UPDATE ajuste_produto " +
+                  " SET serv_codigo="+serv == null ? null : serv.getCodigo()+", pro_codigo="+p.getCodigo()+", func_codigo="+func.getCodigo()+", af_qtd="+qtd+", af_data='"+data+"', af_flag="+flag+", af_obs='"+obs+"' " +
                   " WHERE af_codigo="+codigo+"";
         }
         return Banco.getCon().manipular(sql);
     }
     
-    public AjustarFolha buscarCodigo(int i)
+    public AjustarProduto buscarCodigo(int i)
     {
         String sql;
-        sql = "SELECT af.af_codigo, af.serv_codigo, af.fo_codigo, af.func_codigo, af.af_qtd, af.af_data, af.af_flag, af.af_obs " +
-              "FROM ajuste_folha af, servico s, folha f, funcionario func "
-            + "Where af.serv_codigo = s.serv_codigo and af.fo_codigo = f.fo_codigo and af.func_codigo = func.func_codigo "
-            + "and af.af_codigo = "+i+"";
+        sql = "SELECT ap.af_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.af_qtd, ap.af_data, ap.af_flag, ap.af_obs " +
+              "FROM ajuste_produto ap, servico s, folha p, funcionario func "
+            + "Where ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo "
+            + "and ap.af_codigo = "+i+"";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
             if (rs.next()) 
-            {//int codigo, Servico serv, Folha f, int qtd, Date data, boolean flag, String obs, Funcionario func
-                return new AjustarFolha(rs.getInt(1), new Servico().buscarCodigo(rs.getInt(2)), new Folha().buscarCodigo(rs.getInt(3)), rs.getInt(5), rs.getDate(6), rs.getBoolean(7), rs.getString(8), new Funcionario().buscarCodigo(4));
+            {//int codigo, Servico serv, Produto p, int qtd, Date data, boolean flag, String obs, Funcionario func
+                return new AjustarProduto(rs.getInt(1), new Servico().buscarCodigo(rs.getInt(2)), new Produto().buscarCodigo(rs.getInt(3)), rs.getInt(5), rs.getDate(6), rs.getBoolean(7), rs.getString(8), new Funcionario().buscarCodigo(4));
             }
         } 
         catch (SQLException e) 
@@ -155,10 +154,10 @@ public class AjustarFolha {
         String query = null;
         if (valor.equals(""))
         {
-            query = "SELECT af.af_codigo, af.serv_codigo, af.fo_codigo, af.func_codigo, af.af_qtd, af.af_data, af.af_flag, af.af_obs " +
-                    "FROM ajuste_folha af, servico s, folha f, funcionario func "
-                    + "Where af.serv_codigo = s.serv_codigo and af.fo_codigo = f.fo_codigo and af.func_codigo = func.func_codigo "
-                    + "Order by af.af_data";
+            query = "SELECT ap.af_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.af_qtd, ap.af_data, ap.af_flag, ap.af_obs " +
+                    "FROM ajuste_produto ap, servico s, folha p, funcionario func "
+                    + "Where ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo "
+                    + "Order by ap.af_data";
         }
         else
         {
@@ -175,23 +174,23 @@ public class AjustarFolha {
 //                }
                 case 0:
                 {
-                    query = "SELECT af.af_codigo, af.serv_codigo, af.fo_codigo, af.func_codigo, af.af_qtd, af.af_data, af.af_flag, af.af_obs " +
-                            "FROM ajuste_folha af, servico s, folha f, funcionario func "
-                            + "Where af.serv_codigo = s.serv_codigo and af.fo_codigo = f.fo_codigo and af.func_codigo = func.func_codigo and func.func_nome ilike '%"+valor+"%' "
-                            + "Order by af.af_data";
+                    query = "SELECT ap.af_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.af_qtd, ap.af_data, ap.af_flag, ap.af_obs " +
+                            "FROM ajuste_produto ap, servico s, folha p, funcionario func "
+                            + "Where ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo and func.func_nome ilike '%"+valor+"%' "
+                            + "Order by ap.af_data";
                     break;
                 }
                 case 1:
-                    query = "SELECT af.af_codigo, af.serv_codigo, af.fo_codigo, af.func_codigo, af.af_qtd, af.af_data, af.af_flag, af.af_obs " +
-                            "FROM ajuste_folha af, servico s, folha f, funcionario func "
-                            + "Where af.af_data = '"+data1+"' and af.serv_codigo = s.serv_codigo and af.fo_codigo = f.fo_codigo and af.func_codigo = func.func_codigo "
-                            + "Order by af.af_data";
+                    query = "SELECT ap.af_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.af_qtd, ap.af_data, ap.af_flag, ap.af_obs " +
+                            "FROM ajuste_produto ap, servico s, folha p, funcionario func "
+                            + "Where ap.af_data = '"+data1+"' and ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo "
+                            + "Order by ap.af_data";
                     break;
                 case 2:
-                    query = "SELECT af.af_codigo, af.serv_codigo, af.fo_codigo, af.func_codigo, af.af_qtd, af.af_data, af.af_flag, af.af_obs " +
-                            "FROM ajuste_folha af, servico s, folha f, funcionario func "
-                            + "Where af.af_data BETWEEN '"+data1+"' and '"+data2+"' and  af.serv_codigo = s.serv_codigo and af.fo_codigo = f.fo_codigo and af.func_codigo = func.func_codigo "
-                            + "Order by af.af_data";
+                    query = "SELECT ap.af_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.af_qtd, ap.af_data, ap.af_flag, ap.af_obs " +
+                            "FROM ajuste_produto ap, servico s, folha p, funcionario func "
+                            + "Where ap.af_data BETWEEN '"+data1+"' and '"+data2+"' and  ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo "
+                            + "Order by ap.af_data";
                     break;
             }
         }
@@ -199,8 +198,8 @@ public class AjustarFolha {
     }
     
     public static void configuraModel(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
-    {//int codigo, Servico serv, Folha f, int qtd, Date data, boolean flag, String obs, Funcionario func
-        String colunas[] = new String [] {"Código", "Servico", "Folha", "Qtd", "Data", "Tipo", "Obs", "Funcionario"};
+    {//int codigo, Servico serv, Produto p, int qtd, Date data, boolean flag, String obs, Funcionario func
+        String colunas[] = new String [] {"Código", "Servico", "Produto", "Qtd", "Data", "Tipo", "Obs", "Funcionario"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));
         jTable.getColumnModel().getColumn(0).setPreferredWidth(15);
         jTable.getColumnModel().getColumn(1).setPreferredWidth(250);
@@ -211,4 +210,5 @@ public class AjustarFolha {
         jTable.getColumnModel().getColumn(6).setPreferredWidth(250);
         jTable.getColumnModel().getColumn(7).setPreferredWidth(200);
     }
+    
 }
