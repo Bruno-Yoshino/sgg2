@@ -52,7 +52,7 @@ public class AjusteFolhaController
         af.setF(f.buscarCodigo(codigo));
     }
     
-    public int validar(String codigo, String qtd, Date data, boolean flag, String obs)
+    public int validar(String codigo, String qtd, Date data, boolean flag, String obs, String tamanho, String servico)
     {
         af.setCodigo(v.ConverteNumeroInteiro(codigo));
         if(qtd.equals(""))
@@ -67,6 +67,10 @@ public class AjusteFolhaController
             if(af.getQtd() > af.getF().getQtd())
                 return 4;
         }
+        if(tamanho.equals(""))
+            return 5;
+        if(servico.equals(""))
+            return 6;
         af.setFlag(flag);
         af.setObs(obs);
         af.setData(data);

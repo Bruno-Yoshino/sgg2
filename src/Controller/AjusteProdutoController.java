@@ -34,11 +34,11 @@ public class AjusteProdutoController
         serv = new Servico();
     }
 
-    public AjustarProduto getAf() {
+    public AjustarProduto getAp() {
         return ap;
     }
 
-    public void setAf(AjustarProduto ap) {
+    public void setAp(AjustarProduto ap) {
         this.ap = ap;
     }
     
@@ -47,12 +47,37 @@ public class AjusteProdutoController
         ap.setServ(serv.buscarCodigo(codigo));
     }
     
-    public void buscaFolha(int codigo)
+    public void buscaProduto(int codigo)
     {
-        ap.setF(p.buscarCodigo(codigo));
+        ap.setP(p.buscarCodigo(codigo));
     }
+
+    public Produto getP() {
+        return p;
+    }
+
+    public void setP(Produto p) {
+        this.p = p;
+    }
+
+    public Funcionario getFunc() {
+        return func;
+    }
+
+    public void setFunc(Funcionario func) {
+        this.func = func;
+    }
+
+    public Servico getServ() {
+        return serv;
+    }
+
+    public void setServ(Servico serv) {
+        this.serv = serv;
+    }   
     
-    public int validar(String codigo, String qtd, Date data, boolean flag, String obs)
+    
+    public int validar(String codigo, String qtd, Date data, boolean flag, String obs, String produto, String servico)
     {
         ap.setCodigo(v.ConverteNumeroInteiro(codigo));
         if(qtd.equals(""))
@@ -64,9 +89,13 @@ public class AjusteProdutoController
             return 3;
         if(!flag)
         {
-            if(ap.getQtd() > ap.getF().getQtd())
+            if(ap.getQtd() > ap.getP().getQtd())
                 return 4;
         }
+        if(produto.equals(""))
+            return 5;
+        if(servico.equals(""))
+            return 6;
         ap.setFlag(flag);
         ap.setObs(obs);
         ap.setData(data);

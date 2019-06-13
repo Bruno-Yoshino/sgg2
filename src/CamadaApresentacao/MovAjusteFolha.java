@@ -440,12 +440,14 @@ public class MovAjusteFolha extends javax.swing.JDialog
     }//GEN-LAST:event_btnlocFolhaActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        switch(afc.validar(txtcod.getText(), txtqtd.getText(), Date.from(Instant.now()), rbincrement.isSelected(), txtObs.getText()))
+        switch(afc.validar(txtcod.getText(), txtqtd.getText(), Date.from(Instant.now()), rbincrement.isSelected(), txtObs.getText(), txtTamnho.getText(), txtServico.getText()))
         {
             case 1:  m.InformationMessage("Informe a quantidade!", "Informação"); txtqtd.requestFocus(); break;
             case 2:  m.InformationMessage("Quanridade negativa!", "Informação"); txtqtd.requestFocus(); break;
             //case 3:  m.InformationMessage("Informe a observação!", "Informação"); txtObs.requestFocus();break;
             case 4:  m.InformationMessage("A quantidade informada é maior que a quantidade existente no estoque!", "Informação"); txtqtd.requestFocus(); break;
+            case 5:  m.InformationMessage("Informe a Folha!", "Informação"); btnlocFolha.requestFocus(); break;
+            case 6:  m.InformationMessage("Informe o Serviço!", "Informação"); btnlocServico.requestFocus(); break;
             default:
                 if(afc.gravar())
                 {

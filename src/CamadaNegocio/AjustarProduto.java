@@ -60,11 +60,11 @@ public class AjustarProduto {
         this.serv = serv;
     }
 
-    public Produto getF() {
+    public Produto getP() {
         return p;
     }
 
-    public void setF(Produto p) {
+    public void setP(Produto p) {
         this.p = p;
     }
 

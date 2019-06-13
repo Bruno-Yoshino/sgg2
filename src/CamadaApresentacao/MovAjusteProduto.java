@@ -5,18 +5,44 @@
  */
 package CamadaApresentacao;
 
+import CamadaNegocio.Funcionario;
+import Controller.AjusteProdutoController;
+import java.time.Instant;
+import java.util.Date;
+import util.SystemControl;
+import util.mensagens;
+
 /**
  *
  * @author Bruno Yoshino
  */
 public class MovAjusteProduto extends javax.swing.JDialog {
 
-    /**
-     * Creates new form MovAjusteProduto
-     */
-    public MovAjusteProduto(java.awt.Frame parent, boolean modal) {
+    private final SystemControl sc = new SystemControl();
+    private final mensagens m = new mensagens();
+    private final AjusteProdutoController apc = new AjusteProdutoController();
+    
+    public MovAjusteProduto(java.awt.Frame parent, boolean modal, Funcionario f) {
         super(parent, modal);
         initComponents();
+        
+        apc.getAp().setFunc(f);
+        btnNovo.setName("btnNovo");
+        btnAlterar.setName("btnAlterar");
+        btnCancelar.setName("btnCancelar");
+        btnGravar.setName("btnGravar");
+        btnLocalizar.setName("btnLocalizar");
+        btnSair.setName("btnSair");
+        btnaddProduto.setName("btnaddProduto");
+        btnaddServico.setName("btnaddServico");
+        btnlocProduto.setName("btnlocProduto");
+        btnlocServico.setName("btnlocServico");
+        
+        btnAlterar.setVisible(false);
+        btnLocalizar.setVisible(false);
+        
+        sc.HabilityComponents(jPanel1.getComponents(), false);
+        sc.Initialize(jPanel2.getComponents());
     }
 
     /**
@@ -96,21 +122,51 @@ public class MovAjusteProduto extends javax.swing.JDialog {
         txtServico.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         btnaddServico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
+        btnaddServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaddServicoActionPerformed(evt);
+            }
+        });
 
         btnlocServico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
+        btnlocServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlocServicoActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Data:");
 
         rbincrement.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         rbincrement.setText("Adidiconar");
+        rbincrement.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbincrementStateChanged(evt);
+            }
+        });
 
         rbdecrement.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         rbdecrement.setText("Retirar");
+        rbdecrement.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbdecrementStateChanged(evt);
+            }
+        });
 
         btnaddProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
+        btnaddProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaddProdutoActionPerformed(evt);
+            }
+        });
 
         btnlocProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
+        btnlocProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlocProdutoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -213,9 +269,19 @@ public class MovAjusteProduto extends javax.swing.JDialog {
 
         btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
         btnLocalizar.setText("Localizar");
+        btnLocalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocalizarActionPerformed(evt);
+            }
+        });
 
         btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Gravar16.png"))); // NOI18N
         btnGravar.setText("Gravar");
+        btnGravar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGravarActionPerformed(evt);
+            }
+        });
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Sair.png"))); // NOI18N
         btnSair.addActionListener(new java.awt.event.ActionListener() {
@@ -226,9 +292,19 @@ public class MovAjusteProduto extends javax.swing.JDialog {
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
         btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
         btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Cancelar16.png.jpg"))); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -297,14 +373,124 @@ public class MovAjusteProduto extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+       limpar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-   
+    private void btnaddServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddServicoActionPerformed
+       CadastroServico frm = new CadastroServico(null, true);
+       frm.setTitle("Cadastro Serviço");
+       frm.setVisible(true);
+    }//GEN-LAST:event_btnaddServicoActionPerformed
+
+    private void btnlocServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlocServicoActionPerformed
+        ConsultaPadrao consDS = new ConsultaPadrao(null, true);
+        String[] vet = new String[1];
+        vet[0] = "Nome";
+        consDS.configuraOpcoes(vet, 1, 0, "Servico", false);
+        consDS.verificaconsulta(true);
+        consDS.setVisible(true);
+        if (consDS.getCodigo() != 0)
+        {
+            apc.buscaServico(consDS.getCodigo());
+            consDS.dispose();
+            txtServico.setText(apc.getAp().getServ().getNome());
+        }
+        else
+        {
+            consDS.dispose();
+        }
+    }//GEN-LAST:event_btnlocServicoActionPerformed
+
+    private void btnaddProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddProdutoActionPerformed
+       CadastroProduto frm = new CadastroProduto(null, true);
+       frm.setTitle("Cadastro Produto");
+       frm.setVisible(true);
+    }//GEN-LAST:event_btnaddProdutoActionPerformed
+
+    private void btnlocProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlocProdutoActionPerformed
+        ConsultaPadrao consP = new ConsultaPadrao(null, true);
+        String[] vet = new String[2];
+        vet[0] = "Tamanho";
+        vet[1] = "Descrição";
+        consP.configuraOpcoes(vet, 2, 0, "Folha", false);
+        consP.verificaconsulta(true);
+        consP.setVisible(true);
+        if (consP.getCodigo() != 0)
+        {
+            apc.buscaProduto(consP.getCodigo());
+            consP.dispose();
+            txtProduto.setText(apc.getAp().getP().getNome());
+        }
+        else
+        {
+            consP.dispose();
+        }
+    }//GEN-LAST:event_btnlocProdutoActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        sc.Edity(jPanel2.getComponents());
+        sc.HabilityComponents(jPanel1.getComponents(), true);
+        txtcod.setText("0");
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLocalizarActionPerformed
+
+    private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
+        switch(apc.validar(txtcod.getText(), txtqtd.getText(), Date.from(Instant.now()), rbincrement.isSelected(), txtObs.getText(), txtProduto.getText(), txtServico.getText()))
+        {
+            case 1:  m.InformationMessage("Informe a quantidade!", "Informação"); txtqtd.requestFocus(); break;
+            case 2:  m.InformationMessage("Quanridade negativa!", "Informação"); txtqtd.requestFocus(); break;
+            //case 3:  m.InformationMessage("Informe a observação!", "Informação"); txtObs.requestFocus();break;
+            case 4:  m.InformationMessage("A quantidade informada é maior que a quantidade existente no estoque!", "Informação"); txtqtd.requestFocus(); break;
+            case 5:  m.InformationMessage("Informe o Produto!", "Informação"); btnlocProduto.requestFocus(); break;
+            case 6:  m.InformationMessage("Informe o Serviço!", "Informação"); btnlocServico.requestFocus(); break;
+            default:
+                if(apc.gravar())
+                {
+                    apc.atualizaEstoque();
+                    m.InformationMessage("Esqtoque ajustado com sucesso!", "Informação");
+                    limpar();
+                }
+                else
+                {
+                    m.ErroMessage("Erro ao Ajustar Estoque!", "ERRO");
+                }
+        }
+    }//GEN-LAST:event_btnGravarActionPerformed
+
+    private void rbincrementStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbincrementStateChanged
+        if(rbincrement.isSelected())
+            rbdecrement.setSelected(false);
+    }//GEN-LAST:event_rbincrementStateChanged
+
+    private void rbdecrementStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbdecrementStateChanged
+        if(rbdecrement.isSelected())
+            rbincrement.setSelected(false);
+    }//GEN-LAST:event_rbdecrementStateChanged
+
+    private void limpar()
+    {
+        txtObs.setText("");
+        txtQtdAtual.setText("");
+        txtServico.setText("");
+        txtProduto.setText("");
+        txtcod.setText("");
+        txtqtd.setText("");
+        rbincrement.setSelected(true);
+        
+        sc.Initialize(jPanel2.getComponents());
+        sc.HabilityComponents(jPanel1.getComponents(), false);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
