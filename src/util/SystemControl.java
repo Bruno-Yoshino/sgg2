@@ -5,15 +5,28 @@
  */
 package util;
 
+import br.com.marciorl.beans.DateChooser;
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import java.awt.Component;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.chart.PieChart.Data;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  * プログラマー
@@ -185,5 +198,60 @@ public class SystemControl
             jfilechooser.setMultiSelectionEnabled(false);
         }
         return jfilechooser;
+    }
+    
+    public void limpar(Component c[])
+    {
+        for (Component c1 : c) 
+        {    
+            if(c1 instanceof JTextField)
+                ((JTextField) c1).setText("");
+            else
+            {
+                if(c1 instanceof JTextArea)
+                    ((JTextArea) c1).setText("");
+                else
+                {
+                    if(c1 instanceof JFormattedTextField)
+                        ((JFormattedTextField) c1).setText("");
+                    else
+                    {
+                        if(c1 instanceof JCheckBox)
+                            ((JCheckBox) c1).setSelected(false);
+                        else
+                        {
+                            if(c1 instanceof JRadioButton)
+                                ((JRadioButton) c1).setSelected(false);
+                            else
+                            {
+                                if(c1 instanceof JComboBox)
+                                    ((JComboBox) c1).setSelectedIndex(1);
+                                else
+                                {
+                                    if(c1 instanceof JTabbedPane)
+                                    {
+                                        for(int i = 0; i < ((JTabbedPane) c1).getTabCount(); i++)
+                                        {
+                                            ((JTabbedPane) c1).setSelectedIndex(i);
+                                            limpar(((JTabbedPane) c1).getComponents());
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if(c1 instanceof DateChooser)
+                                            ((DateChooser) c1).setData(Date.from(Instant.now()));
+                                        else
+                                        {
+                                            if(c1 instanceof JTable)
+                                                 ((JTable) c1).removeAll();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
