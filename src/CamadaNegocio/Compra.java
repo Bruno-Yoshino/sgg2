@@ -29,6 +29,7 @@ public class Compra
     private Funcionario func;
     private double valort;
     private Date data;
+    
     ArrayList<Compra_Folha> lcf;
     ArrayList<Compra_Produto> lcp;
 
@@ -100,6 +101,5 @@ public class Compra
     public void setLcp(ArrayList<Compra_Produto> lcp) {
         this.lcp = lcp;
     }
-    
     
 }

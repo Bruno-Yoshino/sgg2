@@ -6,8 +6,14 @@
 package CamadaApresentacao;
 
 /**
- *
- * @author Bruno Yoshino
+ * 
+ * @author 吉野　廉
+ * @author 羽根川　翼
+ * @author モニカ
+ * @author 鳳翔
+ * @author 川村
+ * @author 磐手
+ * @author イントレピッド
  */
 public class MovPedido extends javax.swing.JDialog {
 

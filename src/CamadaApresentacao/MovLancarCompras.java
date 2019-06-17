@@ -5,7 +5,10 @@
  */
 package CamadaApresentacao;
 
+import CamadaNegocio.Funcionario;
+import Controller.LancarCompraController;
 import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
 import util.SystemControl;
 import util.mensagens;
 
@@ -26,8 +29,9 @@ public class MovLancarCompras extends javax.swing.JDialog {
 
     private final SystemControl sc = new SystemControl();
     private final mensagens m = new mensagens();
+    private final LancarCompraController lcc = new LancarCompraController();
     
-    public MovLancarCompras(java.awt.Frame parent, boolean modal) {
+    public MovLancarCompras(java.awt.Frame parent, boolean modal, Funcionario f) {
         super(parent, modal);
         initComponents();
         
@@ -53,6 +57,8 @@ public class MovLancarCompras extends javax.swing.JDialog {
         btnLocProd.setName("btnLocProd");
         jTabbedPane1.setMnemonicAt(0, KeyEvent.VK_P);
         jTabbedPane1.setMnemonicAt(1, KeyEvent.VK_F);
+        
+        lcc.getC().setFunc(f);
         
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents());
@@ -114,6 +120,10 @@ public class MovLancarCompras extends javax.swing.JDialog {
         jLabel19 = new javax.swing.JLabel();
         txtvalorF = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txtforn = new javax.swing.JTextField();
+        btnaddForn = new javax.swing.JButton();
+        btnLocForn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
@@ -142,6 +152,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("Codigo:");
 
+        txtCodigo.setEditable(false);
         txtCodigo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         tbP.setModel(new javax.swing.table.DefaultTableModel(
@@ -157,8 +168,10 @@ public class MovLancarCompras extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel5.setText("Codigo:");
 
+        txtcodP.setEditable(false);
         txtcodP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
+        txtproduto.setEditable(false);
         txtproduto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -182,22 +195,48 @@ public class MovLancarCompras extends javax.swing.JDialog {
         jLabel8.setText("Quantidade:");
 
         txtqtdP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtqtdP.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtqtdPFocusLost(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel9.setText("Preço Unitario:");
 
         txtprecoP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtprecoP.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtprecoPFocusLost(evt);
+            }
+        });
 
+        txtvalortP.setEditable(false);
         txtvalortP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel11.setText("Valor Total:");
 
         btnaddDP.setText("Adicionar Dados");
+        btnaddDP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaddDPActionPerformed(evt);
+            }
+        });
 
         btnexcP.setText("Excluir");
+        btnexcP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnexcPActionPerformed(evt);
+            }
+        });
 
         btnaltP.setText("Alterar");
+        btnaltP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaltPActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -243,9 +282,8 @@ public class MovLancarCompras extends javax.swing.JDialog {
                                         .addComponent(txtproduto, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnaddProd)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLocProd)
-                        .addGap(0, 38, Short.MAX_VALUE)))
+                        .addGap(0, 8, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -257,10 +295,10 @@ public class MovLancarCompras extends javax.swing.JDialog {
                     .addComponent(txtcodP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLocProd, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7)
-                        .addComponent(txtproduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnLocProd, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtproduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnaddProd, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -299,6 +337,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         ));
         jScrollPane2.setViewportView(tbF);
 
+        txtValorTF.setEditable(false);
         txtValorTF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -313,14 +352,21 @@ public class MovLancarCompras extends javax.swing.JDialog {
         jLabel15.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel15.setText("Codigo:");
 
+        txtCodigoF.setEditable(false);
         txtCodigoF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
+        txtFolha.setEditable(false);
         txtFolha.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel16.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel16.setText("Preço Unitario:");
 
         txtPrecoF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtPrecoF.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPrecoFFocusLost(evt);
+            }
+        });
 
         btnaddF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
         btnaddF.addActionListener(new java.awt.event.ActionListener() {
@@ -337,12 +383,32 @@ public class MovLancarCompras extends javax.swing.JDialog {
         });
 
         txtQtdF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtQtdF.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtQtdFFocusLost(evt);
+            }
+        });
 
         btnAltF.setText("Alterar");
+        btnAltF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAltFActionPerformed(evt);
+            }
+        });
 
         btnExcluirF.setText("Excluir");
+        btnExcluirF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirFActionPerformed(evt);
+            }
+        });
 
         btnaddDF.setText("Adicionar Dados");
+        btnaddDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaddDFActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -427,17 +493,40 @@ public class MovLancarCompras extends javax.swing.JDialog {
         jLabel18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel18.setText("Valor Total Produto:");
 
+        txtvalorTotP.setEditable(false);
         txtvalorTotP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
+        txtvalorTotF.setEditable(false);
         txtvalorTotF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel19.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel19.setText("Valor Total Folha:");
 
+        txtvalorF.setEditable(false);
         txtvalorF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel25.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel25.setText("Valor Total Final:");
+
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel10.setText("Fornecedor:");
+
+        txtforn.setEditable(false);
+        txtforn.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        btnaddForn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
+        btnaddForn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaddFornActionPerformed(evt);
+            }
+        });
+
+        btnLocForn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
+        btnLocForn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocFornActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -446,13 +535,9 @@ public class MovLancarCompras extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(jLabel18)
@@ -461,9 +546,22 @@ public class MovLancarCompras extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel19)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtvalorTotF, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(txtvalorTotF, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtforn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnaddForn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLocForn)
+                        .addGap(29, 29, 29))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addComponent(jLabel25)
@@ -475,9 +573,15 @@ public class MovLancarCompras extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel10)
+                        .addComponent(txtforn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnLocForn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnaddForn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -620,10 +724,14 @@ public class MovLancarCompras extends javax.swing.JDialog {
         consProduto.setVisible(true);
         if (consProduto.getCodigo() != 0)
         {
-            txtCodigo.setText(String.valueOf(consProduto.getCodigo()));
+            lcc.buscProduto(consProduto.getCodigo());
+            txtcodP.setText(""+lcc.getP().getCodigo());
+            txtproduto.setText(""+lcc.getP().getNome());
+            txtqtdP.setText("0");
+            txtprecoP.setText("0");
+            txtvalortP.setText("0");
             consProduto.dispose();
-            //txtCodigoFocusLost(null);
-            sc.Alter(jPanel2.getComponents());
+            
         }
         else
         {
@@ -648,10 +756,14 @@ public class MovLancarCompras extends javax.swing.JDialog {
         consFolha.setVisible(true);
         if (consFolha.getCodigo() != 0)
         {
-            txtCodigo.setText(String.valueOf(consFolha.getCodigo()));
+            lcc.buscaFolha(consFolha.getCodigo());
+            txtCodigoF.setText(""+lcc.getF().getCodigo());
+            txtFolha.setText(lcc.getF().getTamanho()+"\\"+lcc.getF().getDescricao());
+            txtQtdF.setText("0");
+            txtPrecoF.setText("0");
+            txtValorTF.setText("0");
             consFolha.dispose();
-            //txtCodigoFocusLost(null);
-            sc.Alter(jPanel2.getComponents());
+            
         }
         else
         {
@@ -659,6 +771,128 @@ public class MovLancarCompras extends javax.swing.JDialog {
             btnLocalizar.requestFocus();
         }
     }//GEN-LAST:event_btnlocFActionPerformed
+
+    private void btnaddFornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddFornActionPerformed
+       CadastroFornecedor frm = new CadastroFornecedor(null, true);
+       frm.setTitle("Cadastro Fornecedor");
+       frm.setVisible(true);
+    }//GEN-LAST:event_btnaddFornActionPerformed
+
+    private void btnLocFornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocFornActionPerformed
+        ConsultaPadrao consFornecedor = new ConsultaPadrao(null, true);
+        String[] vet = new String[1];
+        vet[0] = "Nome";
+        consFornecedor.configuraOpcoes(vet, 1, 0, "Fornecedor", false);
+        consFornecedor.verificaconsulta(true);
+        consFornecedor.setVisible(true);
+        if (consFornecedor.getCodigo() != 0)
+        {
+            lcc.buscFornecedor(consFornecedor.getCodigo());
+            txtforn.setText(lcc.getForn().getNome()); 
+            consFornecedor.dispose();
+        }
+        else
+        {
+            consFornecedor.dispose();
+            btnLocalizar.requestFocus();
+        }
+    }//GEN-LAST:event_btnLocFornActionPerformed
+
+    private void btnaddDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddDFActionPerformed
+       switch(lcc.validar(txtcodP.getText(), txtproduto.getText(), txtqtdP.getText(), txtprecoP.getText(), tbP, true))
+       {
+           case 3: m.InformationMessage("Informe o Produto!", "Atenção"); btnLocProd.requestFocus(); break;
+           default:lcc.CalculaTotal(txtvalortP, txtvalorTotP, txtvalorF);
+       }
+    }//GEN-LAST:event_btnaddDFActionPerformed
+
+    private void btnaddDPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddDPActionPerformed
+       switch(lcc.validar(txtCodigoF.getText(), txtFolha.getText(), txtQtdF.getText(), txtPrecoF.getText(), tbF, false))
+       {
+           case 3: m.InformationMessage("Informe a Folha!", "Atenção"); btnlocF.requestFocus(); break;
+           default:lcc.CalculaTotal(txtValorTF, txtvalorTotF, txtvalorF);
+       }
+    }//GEN-LAST:event_btnaddDPActionPerformed
+
+    private void txtqtdPFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqtdPFocusLost
+       switch(lcc.Calcula(txtqtdP, txtprecoP, txtvalortP))
+       {
+           case 1: m.InformationMessage("Informe a quantidade! A Quantidade precisa ser mairo que 0!", "Atenção"); txtqtdP.requestFocus(); break;
+           case 2: m.InformationMessage("Informe o valor! O Valor precisa ser mairo que 0!", "Atenção"); txtprecoP.requestFocus(); break;
+       }
+    }//GEN-LAST:event_txtqtdPFocusLost
+
+    private void txtprecoPFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtprecoPFocusLost
+       switch(lcc.Calcula(txtqtdP, txtprecoP, txtvalortP))
+       {
+           case 1: m.InformationMessage("Informe a quantidade! A Quantidade precisa ser mairo que 0!", "Atenção"); txtqtdP.requestFocus(); break;
+           case 2: m.InformationMessage("Informe o valor! O Valor precisa ser mairo que 0!", "Atenção"); txtprecoP.requestFocus(); break;
+       }
+    }//GEN-LAST:event_txtprecoPFocusLost
+
+    private void txtQtdFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQtdFFocusLost
+       switch(lcc.Calcula(txtQtdF, txtPrecoF, txtValorTF))
+       {
+           case 1: m.InformationMessage("Informe a quantidade! A Quantidade precisa ser mairo que 0!", "Atenção"); txtQtdF.requestFocus(); break;
+           case 2: m.InformationMessage("Informe o valor! O Valor precisa ser mairo que 0!", "Atenção"); txtPrecoF.requestFocus(); break;
+       }  
+    }//GEN-LAST:event_txtQtdFFocusLost
+
+    private void txtPrecoFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecoFFocusLost
+       switch(lcc.Calcula(txtQtdF, txtPrecoF, txtValorTF))
+       {
+           case 1: m.InformationMessage("Informe a quantidade! A Quantidade precisa ser mairo que 0!", "Atenção"); txtQtdF.requestFocus(); break;
+           case 2: m.InformationMessage("Informe o valor! O Valor precisa ser mairo que 0!", "Atenção"); txtPrecoF.requestFocus(); break;
+       }
+    }//GEN-LAST:event_txtPrecoFFocusLost
+
+    private void btnAltFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltFActionPerformed
+        if(tbF.getSelectedRow() >= 0)
+        {
+            txtCodigoF.setText(""+tbF.getValueAt(tbF.getSelectedRow(), 0));
+            txtFolha.setText(""+tbF.getValueAt(tbF.getSelectedRow(), 1));
+            txtQtdF.setText(""+tbF.getValueAt(tbF.getSelectedRow(), 2));
+            txtvalorF.setText(""+tbF.getValueAt(tbF.getSelectedRow(), 3));
+            txtValorTF.setText(""+tbF.getValueAt(tbF.getSelectedRow(), 4));
+        }
+        else
+        {
+            m.InformationMessage("Selecione uma linha!", "Atenção"); 
+            tbF.requestFocus();
+        }
+    }//GEN-LAST:event_btnAltFActionPerformed
+
+    private void btnaltPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaltPActionPerformed
+        if(tbP.getSelectedRow() >= 0)
+        {
+            txtcodP.setText(""+tbF.getValueAt(tbP.getSelectedRow(), 0));
+            txtproduto.setText(""+tbF.getValueAt(tbP.getSelectedRow(), 1));
+            txtqtdP.setText(""+tbF.getValueAt(tbP.getSelectedRow(), 2));
+            txtprecoP.setText(""+tbF.getValueAt(tbP.getSelectedRow(), 3));
+            txtvalortP.setText(""+tbF.getValueAt(tbP.getSelectedRow(), 4));
+        }
+        else
+        {
+            m.InformationMessage("Selecione uma linha!", "Atenção"); 
+            tbP.requestFocus();
+        }
+    }//GEN-LAST:event_btnaltPActionPerformed
+
+    private void btnexcPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexcPActionPerformed
+        if(m.Pergunta("Deseja realmente Excluir esta Linha?", "Atenção") == JOptionPane.YES_OPTION)
+        {
+            lcc.ExcluirLinha(tbP, txtvalorTotP, txtValorTF);
+            m.InformationMessage("Excluido com Sucesso!", "Atenção");
+        }
+    }//GEN-LAST:event_btnexcPActionPerformed
+
+    private void btnExcluirFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirFActionPerformed
+        if(m.Pergunta("Deseja realmente Excluir esta Linha?", "Atenção") == JOptionPane.YES_OPTION)
+        {
+            lcc.ExcluirLinha(tbF, txtvalorTotF, txtValorTF);
+            m.InformationMessage("Excluido com Sucesso!", "Atenção");
+        }
+    }//GEN-LAST:event_btnExcluirFActionPerformed
 
 
 
@@ -669,6 +903,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnExcluirF;
     private javax.swing.JButton btnGravar;
+    private javax.swing.JButton btnLocForn;
     private javax.swing.JButton btnLocProd;
     private javax.swing.JButton btnLocalizar;
     private javax.swing.JButton btnNovo;
@@ -676,11 +911,13 @@ public class MovLancarCompras extends javax.swing.JDialog {
     private javax.swing.JButton btnaddDF;
     private javax.swing.JButton btnaddDP;
     private javax.swing.JButton btnaddF;
+    private javax.swing.JButton btnaddForn;
     private javax.swing.JButton btnaddProd;
     private javax.swing.JButton btnaltP;
     private javax.swing.JButton btnexcP;
     private javax.swing.JButton btnlocF;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -711,6 +948,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
     private javax.swing.JTextField txtQtdF;
     private javax.swing.JTextField txtValorTF;
     private javax.swing.JTextField txtcodP;
+    private javax.swing.JTextField txtforn;
     private javax.swing.JTextField txtprecoP;
     private javax.swing.JTextField txtproduto;
     private javax.swing.JTextField txtqtdP;

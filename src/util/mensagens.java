@@ -34,4 +34,9 @@ public class mensagens
     {
         JOptionPane.showMessageDialog(null, text, title, JOptionPane.QUESTION_MESSAGE);
     }
+    
+    public Integer Pergunta(String text, String title)
+    {
+        return JOptionPane.showConfirmDialog(null, text, title, JOptionPane.QUESTION_MESSAGE);
+    }
 }

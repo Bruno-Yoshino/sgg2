@@ -228,7 +228,7 @@ public class SystemControl
                                     ((JComboBox) c1).setSelectedIndex(1);
                                 else
                                 {
-                                    if(c1 instanceof JTabbedPane)
+                                    if(c1 instanceof JTable)
                                     {
                                         for(int i = 0; i < ((JTabbedPane) c1).getTabCount(); i++)
                                         {
