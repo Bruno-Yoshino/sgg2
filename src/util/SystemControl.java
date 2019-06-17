@@ -42,7 +42,7 @@ public class SystemControl
     }
     
     
-    public void HabilityComponents(Component c[], boolean flag)
+    public final void HabilityComponents(Component c[], boolean flag)
     {
         for (Component c1 : c) 
         {
@@ -50,7 +50,7 @@ public class SystemControl
         }
     }
     
-    public void Edity(Component c[])
+    public final void Edity(Component c[])
     {
         for (Component c1 : c) 
         {
@@ -89,7 +89,7 @@ public class SystemControl
         }
     }
     
-    public void Alter(Component c[])
+    public final void Alter(Component c[])
     {
         for (Component c1 : c) 
         {
@@ -128,7 +128,7 @@ public class SystemControl
         }
     }
     
-    public void Initialize(Component c[])
+    public final void Initialize(Component c[])
     {
         for (Component c1 : c) 
         {
@@ -167,7 +167,7 @@ public class SystemControl
         }
     }
     
-    public String CarregaLogo(JLabel imagem)
+    public final String CarregaLogo(JLabel imagem)
     {
         String local = null;
         int chamar = getJFileChooser().showOpenDialog(null);
@@ -190,7 +190,7 @@ public class SystemControl
         return local;
     }
     
-    public javax.swing.JFileChooser getJFileChooser()
+    public final javax.swing.JFileChooser getJFileChooser()
     {
         if(jfilechooser == null)
         {
@@ -200,7 +200,7 @@ public class SystemControl
         return jfilechooser;
     }
     
-    public void limpar(Component c[])
+    public final void limpar(Component c[])
     {
         for (Component c1 : c) 
         {    

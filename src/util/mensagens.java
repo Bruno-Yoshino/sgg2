@@ -18,24 +18,24 @@ public class mensagens
     public mensagens() {
     }
     
-    public void ErroMessage(String text, String title)
+    public final void ErroMessage(String text, String title)
     {
         JOptionPane.showMessageDialog(null, text, title, JOptionPane.ERROR_MESSAGE);
     }
-    public void WarmingMessage(String text, String title)
+    public final void WarmingMessage(String text, String title)
     {
         JOptionPane.showMessageDialog(null, text, title, JOptionPane.WARNING_MESSAGE);
     }
-    public void InformationMessage(String text, String title)
+    public final void InformationMessage(String text, String title)
     {
         JOptionPane.showMessageDialog(null, text, title, JOptionPane.INFORMATION_MESSAGE);
     }
-    public void QuestionMessage(String text, String title)
+    public final void QuestionMessage(String text, String title)
     {
         JOptionPane.showMessageDialog(null, text, title, JOptionPane.QUESTION_MESSAGE);
     }
     
-    public Integer Pergunta(String text, String title)
+    public final Integer Pergunta(String text, String title)
     {
         return JOptionPane.showConfirmDialog(null, text, title, JOptionPane.QUESTION_MESSAGE);
     }

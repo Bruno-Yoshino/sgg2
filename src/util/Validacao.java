@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
  */
 public class Validacao 
 {
-    public int ValidaTexto(String texto)//1 == "" | 0 == OK
+    public final int ValidaTexto(String texto)//1 == "" | 0 == OK
     {
         if(texto.trim().equals(""))
         {
@@ -26,7 +26,7 @@ public class Validacao
         return 0;
     }        
      
-    public int ConverteNumeroInteiro(String texto)// return == -999 -> Nuber Invalid | return != -999 -> OK
+    public final int ConverteNumeroInteiro(String texto)// return == -999 -> Nuber Invalid | return != -999 -> OK
     {
         try 
         {
@@ -38,7 +38,19 @@ public class Validacao
         }
     } 
     
-    public double ConverteNumeroReal(String texto)// return == -999 -> Nuber Invalid | return != -999 -> OK
+    public final int ConverteNumeroInteiro(Object obj)// return == -999 -> Nuber Invalid | return != -999 -> OK
+    {
+        try 
+        {
+            return Integer.parseInt(String.valueOf(obj));
+        } 
+        catch (NumberFormatException e) 
+        {
+            return -999;
+        }
+    } 
+    
+    public final double ConverteNumeroReal(String texto)// return == -999 -> Nuber Invalid | return != -999 -> OK
     {
         try 
         {
@@ -50,32 +62,44 @@ public class Validacao
         }
     }
     
-    public boolean ValidarDataMenorAtual(LocalDate data)
+    public final double ConverteNumeroReal(Object obj)// return == -999 -> Nuber Invalid | return != -999 -> OK
+    {
+        try 
+        {
+            return Double.parseDouble(String.valueOf(obj));
+        } 
+        catch (NumberFormatException e) 
+        {
+            return -999;
+        }
+    }
+    
+    public final boolean ValidarDataMenorAtual(LocalDate data)
     {
         return data.isBefore(LocalDate.now());
     }
     
-    public boolean ValidarDataDuasData(LocalDate dataI, LocalDate dataF)
+    public final boolean ValidarDataDuasData(LocalDate dataI, LocalDate dataF)
     {
         return dataI.isBefore(dataF);
     }
-    public boolean ValidarDataMenorAtual(Date data)
+    public final boolean ValidarDataMenorAtual(Date data)
     {
         return data.before(Date.from(Instant.now()));
     }
     
-    public boolean ValidarDataDuasData(Date dataI, Date dataF)
+    public final boolean ValidarDataDuasData(Date dataI, Date dataF)
     {
         return dataI.before(dataF);
     }
     
-    public boolean ValidarEmail(String email)
+    public final boolean ValidarEmail(String email)
     {
         String mailFormat = "^[a-zA-Z0-9!#$%&'_`/=~\\*\\+\\-\\?\\^\\{\\|\\}]+(\\.[a-zA-Z0-9!#$%&'_`/=~\\*\\+\\-\\?\\^\\{\\|\\}]+)*+(.*)@[a-zA-Z0-9][a-zA-Z0-9\\-]*(\\.[a-zA-Z0-9\\-]+)+$";
         return email.matches(mailFormat);
     }
     
-    public int PrimeiroDigito(String cpf)
+    public final int PrimeiroDigito(String cpf)
     {
         int soma = 0, resultado = 0, resto = 0, num;
         for(int i = 0, x = 10; i < 9; i++, x--)
@@ -92,7 +116,7 @@ public class Validacao
         return resultado;
     }
 
-    public int SegundoDigito(String cpf)
+    public final int SegundoDigito(String cpf)
     {
         int soma = 0, resultado = 0, resto = 0, num;
         for(int i = 0, x = 11; i < 10; i++, x--)

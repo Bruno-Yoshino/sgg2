@@ -5,6 +5,9 @@
  */
 package CamadaNegocio;
 
+import CamadaLogica.Banco;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -102,4 +105,60 @@ public class Compra
         this.lcp = lcp;
     }
     
+    public boolean gravar()
+    {
+        String sql;
+        if(codigo == 0)
+            sql = "INSERT INTO compra( " +
+              " forn_codigo, comp_valortotal, comp_data, func_codigo) " +
+              " VALUES ("+f == null ? null : f.getCodigo()+", "+valort+", '"+data+"', "+func.getCodigo()+");";
+        else
+            sql = "UPDATE compra\n" +
+                  "SET forn_codigo="+f == null ? null : f.getCodigo()+", comp_valortotal="+valort+", comp_data='"+data+"', func_codigo="+func.getCodigo()+"\n" +
+                  "WHERE comp_codigo="+codigo+";";
+        return Banco.getCon().manipular(sql);
+    }
+    
+    public boolean excluir()
+    {
+        String sql = "delete form compra where comp_codigo = "+codigo+"";
+        return Banco.getCon().manipular(sql);
+    }
+    public boolean excluirItens()
+    {
+        String sql = "delete form compra_produto where comp_codigo = "+codigo+"; delete form compra_folha where comp_codigo = "+codigo+"";
+        return Banco.getCon().manipular(sql);
+    }
+    
+    public boolean gravarItem(int codigoI, int qtd, double preco, boolean flag)
+    {
+        String sql;
+        if(flag)
+            sql = "INSERT INTO compra_produto(comp_codigo, pro_codigo, compp_qtd, compp_preco) VALUES ("+codigo+", "+codigoI+", "+qtd+", "+preco+");";
+        else
+            sql = "INSERT INTO compra_folha(comp_codigo, fo_codigo, compf_qtd, compf_preco) VALUES ("+codigo+", "+codigoI+", "+qtd+", "+preco+");";
+        return Banco.getCon().manipular(sql);
+    }
+    
+
+    
+    public int maxCodigo()//comp_codigo, forn_codigo, comp_valortotal, comp_data, func_codigo
+    {
+        String sql = "select max(comp_codigo) "
+                + "from compra ";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+        
 }
