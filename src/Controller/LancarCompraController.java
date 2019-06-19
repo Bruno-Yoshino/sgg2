@@ -43,6 +43,8 @@ public class LancarCompraController
     private Folha f;
     private Produto p;
     private Fornecedor forn;
+    private Compra_Produto cp = new Compra_Produto();
+    private Compra_Folha cf = new Compra_Folha();
     private final mensagens m = new mensagens();
 
     public LancarCompraController() {
@@ -148,16 +150,19 @@ public class LancarCompraController
             {
                 c.gravarItem(v.ConverteNumeroInteiro(modelP.getValueAt(i, 0)), v.ConverteNumeroInteiro(modelP.getValueAt(i, 2)), v.ConverteNumeroReal(modelP.getValueAt(i, 3)), true);
 //                lcp.add(new Compra_Produto(c, p.buscarCodigo(v.ConverteNumeroInteiro(modelP.getValueAt(i, 0))), v.ConverteNumeroInteiro(modelP.getValueAt(i, 2)), v.ConverteNumeroReal(modelP.getValueAt(i, 3))));
+                p = p.buscarCodigo(v.ConverteNumeroInteiro(modelP.getValueAt(i, 0)));
+                p.setQtd(p.getQtd()+v.ConverteNumeroInteiro(modelP.getValueAt(i, 2)));
+                p.atualizarEstoque();
             }
 
             for (int i = 0; i < modelF.getRowCount(); i++) 
             {
                 c.gravarItem(v.ConverteNumeroInteiro(modelF.getValueAt(i, 0)), v.ConverteNumeroInteiro(modelF.getValueAt(i, 2)), v.ConverteNumeroReal(modelF.getValueAt(i, 3)), false);
 //                lcf.add(new Compra_Folha(c, f.buscarCodigo(v.ConverteNumeroInteiro(modelF.getValueAt(i, 0))), v.ConverteNumeroInteiro(modelF.getValueAt(i, 2)), v.ConverteNumeroReal(modelF.getValueAt(i, 3))));
+                f = f.buscarCodigo(v.ConverteNumeroInteiro(modelP.getValueAt(i, 0)));
+                f.setQtd(f.getQtd()+v.ConverteNumeroInteiro(modelP.getValueAt(i, 2)));
+                f.atualizarEstoque();
             }
-
-//            c.setLcp(lcp);
-//            c.setLcf(lcf);
             return true;
         }
         return false;
@@ -176,19 +181,30 @@ public class LancarCompraController
     public void buscFornecedor(int codigo)
     {
         forn = new Fornecedor().buscarCodigo(codigo);
-    } 
+    }
     
-    public int Calcula(JTextField qtd, JTextField valor, JTextField total)
+    public void buscaCompra(int codigo)
     {
+        c = c.buscaCompra(codigo);
+        c.setLcf(cf.buscaCompraFolha(codigo));
+        c.setLcp(cp.buscaCompraProduto(codigo));
+    }   
+    
+    public int Calcula(JTextField qtd, JTextField valor, JTextField total)//.replaceAll("\\.", "");
+    {
+        String var = valor.getText();
+        var = var.replaceAll("\\.", "");
+        var = var.replace(',', '.');
+        valor.setText(var);
         if(v.ConverteNumeroInteiro(qtd.getText()) <= 0)
         {
             return 1;
         }
-        if(v.ConverteNumeroReal(valor.getText()) <= 0)
+        if(v.ConverteNumeroReal(var) <= 0)
         {
             return 2;
         }
-        total.setText(""+(Double)(v.ConverteNumeroInteiro(qtd.getText()) * v.ConverteNumeroReal(valor.getText())));
+        total.setText(""+(Double)(v.ConverteNumeroInteiro(qtd.getText()) * v.ConverteNumeroReal(var)));
         return 0;
     }
     
@@ -210,5 +226,40 @@ public class LancarCompraController
         if(c.excluirItens())
             return c.excluir();
         return false;
+    }
+    
+    public void addItens(JTable tabelaF, JTable tabelaP, JTextField valorTF, JTextField valorTP)
+    {
+        double valort = 0;
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabelaF.getModel();
+        for (Compra_Folha lcf : c.getLcf()) 
+        {
+            model.addRow(new Object[]
+            {
+                lcf.getF().getCodigo(), 
+                lcf.getF().getTamanho()+"/"+lcf.getF().getDescricao(), 
+                lcf.getQtd(),
+                lcf.getPreco(),
+                lcf.getQtd()*lcf.getPreco()
+            });
+            valort = valort + lcf.getQtd()*lcf.getPreco();
+        }
+        valorTF.setText(""+valort);
+        
+        model = (ReadOnlyTableModel) tabelaP.getModel();
+        valort = 0;
+        for (Compra_Produto lcp : c.getLcp()) 
+        {
+            model.addRow(new Object[]
+            {
+                lcp.getP().getCodigo(), 
+                lcp.getP().getNome(), 
+                lcp.getQtd(),
+                lcp.getPreco(),
+                lcp.getQtd()*lcp.getPreco()
+            });
+            valort = valort + lcp.getQtd()*lcp.getPreco();
+        }
+        valorTP.setText(""+valort);
     }
 }

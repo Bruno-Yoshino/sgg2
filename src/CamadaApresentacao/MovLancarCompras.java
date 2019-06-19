@@ -60,6 +60,8 @@ public class MovLancarCompras extends javax.swing.JDialog {
         jTabbedPane1.setMnemonicAt(0, KeyEvent.VK_P);
         jTabbedPane1.setMnemonicAt(1, KeyEvent.VK_F);
         
+        lcc.getForn().setCodigo(0);
+        
         lcc.getC().setFunc(f);
         
         sc.HabilityComponents(jPanel1.getComponents(), false);
@@ -213,6 +215,9 @@ public class MovLancarCompras extends javax.swing.JDialog {
 
         txtprecoP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtprecoP.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtprecoPFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtprecoPFocusLost(evt);
             }
@@ -366,6 +371,9 @@ public class MovLancarCompras extends javax.swing.JDialog {
 
         txtPrecoF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtPrecoF.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPrecoFFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtPrecoFFocusLost(evt);
             }
@@ -647,6 +655,11 @@ public class MovLancarCompras extends javax.swing.JDialog {
 
         btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
         btnLocalizar.setText("Localizar");
+        btnLocalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocalizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -741,7 +754,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
             txtcodP.setText(""+lcc.getP().getCodigo());
             txtproduto.setText(""+lcc.getP().getNome());
             txtqtdP.setText("0");
-            txtprecoP.setText("0");
+            txtprecoP.setText("1");
             txtvalortP.setText("0");
             consProduto.dispose();
             
@@ -773,7 +786,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
             txtCodigoF.setText(""+lcc.getF().getCodigo());
             txtFolha.setText(lcc.getF().getTamanho()+"\\"+lcc.getF().getDescricao());
             txtQtdF.setText("0");
-            txtPrecoF.setText("0");
+            txtPrecoF.setText("1");
             txtValorTF.setText("0");
             consFolha.dispose();
             
@@ -816,7 +829,12 @@ public class MovLancarCompras extends javax.swing.JDialog {
        {
            case 3: m.InformationMessage("Informe o Produto!", "Atenção"); btnLocProd.requestFocus(); break;
            case 4: m.InformationMessage("O item não pode ser inserido!", "Atenção"); break;
-           default:lcc.CalculaTotal(txtvalortP, txtvalorTotP, txtvalorF);//limpar os campos
+           default:lcc.CalculaTotal(txtvalortP, txtvalorTotP, txtvalorF);
+                    txtCodigoF.setText("");
+                    txtFolha.setText("");
+                    txtQtdF.setText("0");
+                    txtPrecoF.setText("1");
+                    txtValorTF.setText("0");
        }
     }//GEN-LAST:event_btnaddDFActionPerformed
 
@@ -825,7 +843,12 @@ public class MovLancarCompras extends javax.swing.JDialog {
        {
            case 3: m.InformationMessage("Informe a Folha!", "Atenção"); btnlocF.requestFocus(); break;
            case 4: m.InformationMessage("O item não pode ser inserido!", "Atenção"); break;
-           default:lcc.CalculaTotal(txtValorTF, txtvalorTotF, txtvalorF);//limpar os campos
+           default:lcc.CalculaTotal(txtValorTF, txtvalorTotF, txtvalorF);
+                    txtcodP.setText("");
+                    txtproduto.setText("");
+                    txtqtdP.setText("0");
+                    txtprecoP.setText("1");
+                    txtvalortP.setText("0");
        }
     }//GEN-LAST:event_btnaddDPActionPerformed
 
@@ -935,8 +958,46 @@ public class MovLancarCompras extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusLost
-        
+        if(!txtCodigo.getText().equals("0"))
+        {
+            lcc.buscaCompra(Integer.parseInt(txtCodigo.getText()));
+            txtforn.setText(lcc.getForn().getNome());
+            txtvalorF.setText(""+lcc.getC().getValort());
+            lcc.addItens(tbF, tbP, txtvalorTotF, txtvalorTotP);
+            sc.Alter(jPanel2.getComponents());
+        }
     }//GEN-LAST:event_txtCodigoFocusLost
+
+    private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
+        ConsultaPadrao consCompra = new ConsultaPadrao(null, true);
+        String[] vet = new String[3];
+        vet[0] = "Tudo";
+        vet[1] = "Data";
+        vet[3] = "Periodo";
+        consCompra.configuraOpcoes(vet, 3, 0, "Folha", false);
+        consCompra.verificaconsulta(true);
+        consCompra.setVisible(true);
+        if (consCompra.getCodigo() != 0)
+        {
+            txtCodigo.setText(String.valueOf(consCompra.getCodigo()));
+            consCompra.dispose();
+            txtCodigoFocusLost(null);
+            sc.Alter(jPanel2.getComponents());
+        }
+        else
+        {
+            consCompra.dispose();
+            btnLocalizar.requestFocus();
+        }
+    }//GEN-LAST:event_btnLocalizarActionPerformed
+
+    private void txtprecoPFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtprecoPFocusGained
+        txtprecoP.setText("");
+    }//GEN-LAST:event_txtprecoPFocusGained
+
+    private void txtPrecoFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecoFFocusGained
+        txtPrecoF.setText("");
+    }//GEN-LAST:event_txtPrecoFFocusGained
 
 
 

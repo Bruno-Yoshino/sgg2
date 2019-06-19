@@ -53,6 +53,8 @@ public class CaixaController
     
     public int varidar(String valor, LocalDateTime data, int codigo)
     {
+        valor = valor.replaceAll("\\.", "");
+        valor = valor.replace(',', '.');
         c.setSaldoI(v.ConverteNumeroReal(valor));
         if(c.getSaldoI() == -999)
             return 1;

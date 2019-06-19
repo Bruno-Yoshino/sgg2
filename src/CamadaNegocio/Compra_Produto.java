@@ -5,6 +5,10 @@
  */
 package CamadaNegocio;
 
+import CamadaLogica.Banco;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
 /**
  *
  * Moniter
@@ -68,5 +72,25 @@ public class Compra_Produto
         this.preco = preco;
     }
 
-    
+    public ArrayList<Compra_Produto> buscaCompraProduto(int codigo)
+    {
+        ArrayList<Compra_Produto> lista = new ArrayList<>();
+        String sql;
+        sql = "select cp.comp_codigo, cp.pro_codigo, cp.compp_qtd, cp.compp_preco "
+                 + " from compra_produto cp "
+                 + "where cp.comp_codigo = "+codigo+"";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {//int codigo, Fornecedor f, Funcionario func, double valort, Date data, ArrayList<Compra_Folha> lcf, ArrayList<Compra_Produto> lcp
+            if (rs.next()) 
+            {
+                lista.add(new Compra_Produto(c, new Produto().buscarCodigo(rs.getInt(2)), rs.getInt(3), rs.getDouble(4)));
+            }
+        } 
+        catch (Exception e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return lista;
+    }
 }
