@@ -935,8 +935,14 @@ public class MovLancarCompras extends javax.swing.JDialog {
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         if(lcc.gravar(txtCodigo.getText(), txtvalorF.getText(), tbP, tbF))
         {
-            m.InformationMessage("Gravado com sucesso", "Atenção");
-            //ここ、会計後の支払いの設定。
+            m.InformationMessage("Gravado com sucesso! Sera redirecionado para gerar as parcelas!", "Atenção");
+            GerenciarParcela frm = new GerenciarParcela(null, true, null, lcc.getC());
+            frm.setVisible(true);
+            if(frm.isFlag())
+            {
+                sc.limpar(jPanel1.getComponents());
+                sc.Initialize(jPanel2.getComponents());
+            }
         }
         else
         {

@@ -11,6 +11,7 @@ import CamadaNegocio.ContaPagar;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import util.Validacao;
 import util.mensagens;
 
@@ -120,4 +121,67 @@ public class GerenciarParcelaController {
         }
         return valor / qtd;
     }
+    
+    public int varidar(String valor)
+    {
+        
+         if(v.ConverteNumeroReal(valor) < -3 && valor.length() > 0)
+         {
+             return 1;
+         }
+         
+         return 0;
+    }
+    
+    public int varidarValor(String valor, JTextField fd)
+    {
+        String var;
+        var = valor.replaceAll("\\.", "");
+        var = var.replace(',', '.');
+         if(v.ConverteNumeroReal(var) <= 0 && var.length() > 0)
+         {
+             return 1;
+         }
+         fd.setText(var);
+         return 0;
+    }
+    
+    public void atualizarValor(JTextField fd, JTable jTable, int linha)
+    {
+        ReadOnlyTableModel model = (ReadOnlyTableModel) jTable.getModel();
+        model.setValueAt(fd.getText(), linha, 1);
+    }
+    
+    public int check(JTable jTable, JTextField total)
+    {
+        ReadOnlyTableModel model = (ReadOnlyTableModel) jTable.getModel();
+        double tot = 0;
+        for (int i = 0; i < model.getRowCount(); i++) 
+        {
+            tot += (double) model.getValueAt(i, 1);
+        }
+        if(tot != v.ConverteNumeroReal(total))
+            return 1;
+        
+        return 0;
+    }
+    
+    public boolean gravar(JTable jTable)
+    {
+        ReadOnlyTableModel model = (ReadOnlyTableModel) jTable.getModel();
+        boolean x = true;
+        cp.setParcela(0);
+        cp.setValorC((Double) model.getValueAt(0, 1));
+        cp.setDataV((Date) model.getValueAt(0, 2));
+        x = cp.gravar();
+        cp.setParcela(cp.maxCodigo());
+        for (int i = 1; i < model.getRowCount() && x; i++) 
+        {
+            cp.setValorC((Double) model.getValueAt(i, 1));
+            cp.setDataV((Date) model.getValueAt(i, 2));
+            x = cp.gravar();
+        }
+        return x;
+    }
+        
 }

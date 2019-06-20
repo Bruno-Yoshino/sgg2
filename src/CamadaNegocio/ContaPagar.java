@@ -1,5 +1,8 @@
 package CamadaNegocio;
 
+import CamadaLogica.Banco;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.util.Date;
 
@@ -156,10 +159,27 @@ public class ContaPagar {
     
     public boolean gravar()
     {
-        String sql = "INSERT INTO public.conta_pagar(comp_codigo, cp_data, cp_local, cp_valorc, cp_dtpago, cp_valorp, cp_nparcela, tc_codigo, func_codigo, caixa_codigo, cp_datavencimento, cp_obs) " +
+        String sql = "INSERT INTO conta_pagar(comp_codigo, cp_data, cp_local, cp_valorc, cp_dtpago, cp_valorp, cp_nparcela, tc_codigo, func_codigo, caixa_codigo, cp_datavencimento, cp_obs) " +
                      " VALUES ("+(comp==null ? null:comp.getCodigo())+", '"+dataL+"', '"+local+"', "+valorC+", '"+dataP+"', "+valorP+", "+parcela+", "+(tc==null ? null:tc.getCodigo())+", "+func.getCodigo()+", "+(c==null ? null:c.getCodigo())+", '"+dataV+"', '"+obs+"');";
         
-        return false;
+        return Banco.getCon().manipular(sql);
     }
     
+    public int maxCodigo()
+    {
+        String sql = "select max(cp_codigo) from conta_pagar";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
 }
