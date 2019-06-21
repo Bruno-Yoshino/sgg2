@@ -1,22 +1,41 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CamadaApresentacao;
 
+import CamadaLogica.ReadOnlyTableModel;
+import CamadaNegocio.Funcionario;
+import Controller.LancarDespesaController;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import util.SystemControl;
+import util.mensagens;
+
 /**
- *
- * @author Bruno Yoshino
+ * @author 吉野　廉
+ * @author 羽根川　翼
+ * @author モニカ
+ * @author 香取 
+ * @author 鹿島
  */
 public class MovPagarContas extends javax.swing.JDialog {
 
-    /**
-     * Creates new form MovPagarContas
-     */
-    public MovPagarContas(java.awt.Frame parent, boolean modal) {
+    private final SystemControl sc = new SystemControl();
+    private final mensagens m = new mensagens();
+    private final LancarDespesaController ldc = new LancarDespesaController();
+    private final Funcionario f;
+    
+    public MovPagarContas(java.awt.Frame parent, boolean modal, Funcionario func) throws SQLException {
         super(parent, modal);
         initComponents();
+        
+        btnAlterar.setName("btnAlterar");
+        btnCancelar.setName("btnCancelar");
+        btnGravar.setName("btnGravar");
+        btnSair.setName("btnSair");
+        
+        sc.HabilityComponents(jPanel2.getComponents(), false);
+        f = func;
+        ldc.carregarTabela(jTable1);
     }
 
     /**
@@ -30,17 +49,21 @@ public class MovPagarContas extends javax.swing.JDialog {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtcli_cod = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtcli_nome1 = new javax.swing.JTextField();
+        txtCodBarra = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtcli_nome = new javax.swing.JTextField();
+        txtValor = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        txtDataVencimento = new javax.swing.JFormattedTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtcli_cod1 = new javax.swing.JTextField();
-        dateChooser1 = new br.com.marciorl.beans.DateChooser();
+        txtTipo = new javax.swing.JTextField();
+        dcDataPagamento = new br.com.marciorl.beans.DateChooser();
+        lbData = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        txtValorP = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txtLocal = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         btnAlterar = new javax.swing.JButton();
         btnGravar = new javax.swing.JButton();
@@ -58,27 +81,23 @@ public class MovPagarContas extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("Codigo:");
 
-        txtcli_cod.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtCodigo.setEditable(false);
+        txtCodigo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Codigo de barra:");
 
-        txtcli_nome1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtCodBarra.setEditable(false);
+        txtCodBarra.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Valor do Documento:");
 
-        txtcli_nome.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtValor.setEditable(false);
+        txtValor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel8.setText("Data Vencimento:");
-
-        try {
-            txtDataVencimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtDataVencimento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel10.setText("Data Pagamento:");
@@ -86,7 +105,20 @@ public class MovPagarContas extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Tipo:");
 
-        txtcli_cod1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtTipo.setEditable(false);
+        txtTipo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        lbData.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel11.setText("Valor Pago:");
+
+        txtValorP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel12.setText("Local:");
+
+        txtLocal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -99,27 +131,35 @@ public class MovPagarContas extends javax.swing.JDialog {
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel5)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtcli_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(jLabel8)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtDataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbData, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel3)
                             .addGap(18, 18, 18)
-                            .addComponent(txtcli_nome1, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCodBarra, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel1)
                                 .addComponent(jLabel2))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtcli_cod, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtcli_cod1))))
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtTipo))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(dcDataPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtValorP, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -128,39 +168,68 @@ public class MovPagarContas extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtcli_cod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(7, 7, 7)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtCodBarra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(lbData, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtcli_cod1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(7, 7, 7)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtcli_nome1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtcli_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel8)
-                        .addComponent(txtDataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel12)
+                    .addComponent(txtLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(dateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(dcDataPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(txtValorP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnGravar.setText("Gravar");
+        btnGravar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGravarActionPerformed(evt);
+            }
+        });
 
         btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -195,10 +264,7 @@ public class MovPagarContas extends javax.swing.JDialog {
         jTable1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Tipo", "Codigo de Barras", "Valor", "Data de Vencimento", "Codigo C."
@@ -242,24 +308,104 @@ public class MovPagarContas extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        if (jTable1.getSelectedRow() >= 0)
+        {////Tipo, Cb barra, valor, data, codigo
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            txtCodigo.setText(""+model.getValueAt(jTable1.getSelectedRow(), 4));
+            txtTipo.setText(""+model.getValueAt(jTable1.getSelectedRow(), 0));
+            txtCodBarra.setText(""+model.getValueAt(jTable1.getSelectedRow(), 1));
+            txtValor.setText(""+model.getValueAt(jTable1.getSelectedRow(), 2));
+            lbData.setText(""+model.getValueAt(jTable1.getSelectedRow(), 3));
+            LocalComponentsCtrl(true);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Você deve selecionar um registro", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+      sc.limpar(jPanel2.getComponents());
+      LocalComponentsCtrl(false);
+      lbData.setText("");
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
+        switch(ldc.validarContasPagar(txtCodigo.getText(), txtValorP.getText(), dcDataPagamento.getData(), txtLocal.getText(), txtValor.getText()))
+        {
+            case 1: m.InformationMessage("Informe o valor a ser pago!", "Atenção"); txtValorP.requestFocus(); break;
+            case 2: m.InformationMessage("Valor precisa ser maior ou igual a 0!", "Atenção"); txtValorP.requestFocus(); break;
+            case 3: m.InformationMessage("Alterer o valor Pago", "Atenção"); txtValorP.requestFocus(); break;
+            case 5: 
+                ldc.alterar();
+                ldc.getCp().setFunc(f);
+                if(ldc.SeocndInserting())
+                {
+                    m.InformationMessage("Lançado e Alterado com Sucesso!", "Atenção");
+                    sc.limpar(jPanel2.getComponents());
+                    LocalComponentsCtrl(false);
+                    lbData.setText("");
+                    try {
+                        ldc.carregarTabela(jTable1);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MovPagarContas.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else
+                {
+                   m.ErroMessage("ERRO", "ERRO"); 
+                }
+                break;
+            default: 
+                if(ldc.alterar())
+                {
+                    m.InformationMessage("Alterado com Sucesso!", "Atenção");
+                    sc.limpar(jPanel2.getComponents());
+                    LocalComponentsCtrl(false);
+                    lbData.setText("");
+                    try {
+                        ldc.carregarTabela(jTable1);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MovPagarContas.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else
+                {
+                   m.ErroMessage("ERRO", "ERRO"); 
+                }
+        }
+    }//GEN-LAST:event_btnGravarActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
+
+private void LocalComponentsCtrl(boolean flag)
+{
+    txtValorP.setEditable(flag);
+    txtLocal.setEditable(flag);
+    dcDataPagamento.setEditable(flag);
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnSair;
-    private br.com.marciorl.beans.DateChooser dateChooser1;
+    private br.com.marciorl.beans.DateChooser dcDataPagamento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -269,10 +415,12 @@ public class MovPagarContas extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JFormattedTextField txtDataVencimento;
-    private javax.swing.JTextField txtcli_cod;
-    private javax.swing.JTextField txtcli_cod1;
-    private javax.swing.JTextField txtcli_nome;
-    private javax.swing.JTextField txtcli_nome1;
+    private javax.swing.JLabel lbData;
+    private javax.swing.JTextField txtCodBarra;
+    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtLocal;
+    private javax.swing.JTextField txtTipo;
+    private javax.swing.JTextField txtValor;
+    private javax.swing.JTextField txtValorP;
     // End of variables declaration//GEN-END:variables
 }
