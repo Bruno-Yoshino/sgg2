@@ -22,6 +22,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -244,6 +245,11 @@ public class SystemControl
                                         {
                                             if(c1 instanceof JTable)
                                                  ((JTable) c1).removeAll();
+                                            else
+                                            {
+                                                if(c1 instanceof JPanel)
+                                                    limpar(((JPanel) c1).getComponents());
+                                            }
                                         }
                                     }
                                 }
@@ -253,6 +259,14 @@ public class SystemControl
                 }
             }
         }
+    }
+    
+    public final String removeCharacter(String texto, int posicao)//posicao = texto.lenght() - 1
+    {
+        String temp = "";
+        for(int i = 0; i < posicao; i++)
+            temp += texto.charAt(i);
+        return temp;
     }
     
     public final String BankCheck(String number)

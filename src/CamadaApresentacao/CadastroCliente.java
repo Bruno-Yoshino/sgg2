@@ -760,23 +760,23 @@ public class CadastroCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
-        ConsultaPadrao consFuncionario = new ConsultaPadrao(null, true);
+        ConsultaPadrao consCliente = new ConsultaPadrao(null, true);
         String[] vet = new String[3];
         vet[0] = "Nome";
         vet[1] = "CPF";
         vet[2] = "CNPJ";
-        consFuncionario.configuraOpcoes(vet, 3, 0, "Cliente", false);
-        consFuncionario.verificaconsulta(true);
-        consFuncionario.setVisible(true);
-        if (consFuncionario.getCodigo() != 0)
+        consCliente.configuraOpcoes(vet, 3, 0, "Cliente", false);
+        consCliente.verificaconsulta(true);
+        consCliente.setVisible(true);
+        if (consCliente.getCodigo() != 0)
         {
-            txtcli_cod.setText(""+consFuncionario.getCodigo());
-            consFuncionario.dispose();
+            txtcli_cod.setText(""+consCliente.getCodigo());
+            consCliente.dispose();
             txtcli_codFocusLost(null);
         }
         else
         {
-            consFuncionario.dispose();
+            consCliente.dispose();
             btnLocalizar.requestFocus();
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed

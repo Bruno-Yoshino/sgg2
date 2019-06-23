@@ -74,6 +74,32 @@ public class Validacao
         }
     }
     
+    public final double ConverteNumeroRealFormatado(Object obj)// return == -999 -> Nuber Invalid | return != -999 -> OK
+    {
+        try 
+        {
+            return Double.parseDouble(String.valueOf(obj).replace(".", "").replace(",", "."));
+        } 
+        catch (NumberFormatException e) 
+        {
+            return -999;
+        }
+    }
+    
+    public final double ConverteNumeroRealFormatado(String texto)// return == -999 -> Nuber Invalid | return != -999 -> OK
+    {
+        try 
+        {
+            return Double.parseDouble(texto.replace(".", "").replace(",", "."));
+        } 
+        catch (NumberFormatException e) 
+        {
+            return -999;
+        }
+    }
+    
+    
+    
     public final boolean ValidarDataMenorAtual(LocalDate data)
     {
         return data.isBefore(LocalDate.now());
