@@ -132,6 +132,11 @@ public class MovDespesa extends javax.swing.JDialog {
         jLabel3.setText("Codigo de barra:");
 
         txtCodBarra.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtCodBarra.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCodBarraFocusGained(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel7.setText("Nome da Conta:");
@@ -430,6 +435,21 @@ public class MovDespesa extends javax.swing.JDialog {
                 }
         }
     }//GEN-LAST:event_btnGravarActionPerformed
+
+    private void txtCodBarraFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodBarraFocusGained
+        if(txtCodBarra.getText().length() == 3)
+        {
+            String texto, temp;
+            texto = txtCodBarra.getText();
+            temp = sc.BankCheck(texto);
+            if(temp.equals("Desconhecido"))
+            {
+                texto = "" + texto.charAt(0) + texto.charAt(1);
+                temp = sc.BankCheck(texto);
+            }
+            labelBanco.setText(temp);
+        }
+    }//GEN-LAST:event_txtCodBarraFocusGained
 
     private void carregaTipo() throws SQLException
     {

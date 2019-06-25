@@ -1,7 +1,9 @@
 package CamadaApresentacao;
 
+import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Funcionario;
 import Controller.OrcamentoController;
+import javax.swing.JOptionPane;
 import util.SystemControl;
 import util.Validacao;
 import util.mensagens;
@@ -26,6 +28,8 @@ public class MovOrcamneto extends javax.swing.JDialog {
     private final mensagens m = new mensagens();
     private final OrcamentoController oc = new OrcamentoController();
     private final Validacao v = new Validacao(); 
+    private boolean flag;
+    private int linha;
     
     public MovOrcamneto(java.awt.Frame parent, boolean modal, Funcionario F) {
         super(parent, modal);
@@ -55,6 +59,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents());
+        //サービスの詳細を追加して下さい
     }
 
     /**
@@ -149,6 +154,11 @@ public class MovOrcamneto extends javax.swing.JDialog {
 
         btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
         btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
         btnAlterar.setText("Alterar");
@@ -256,9 +266,14 @@ public class MovOrcamneto extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Serviço", "Valor", "Quantidade", "Valor Papel", "Valor Arte", "Valor Impreção", "Valor Acabamento", "Valor Chapa", "Valor MDO", "Valor Total", "Descrição"
+                "Serviço", "Valor", "Quantidade", "Valor Papel", "Valor Arte", "Valor Impreção", "Valor Acabamento", "Valor Chapa", "Valor MDO", "Desconto", "Valor Total", "Descrição"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -307,8 +322,18 @@ public class MovOrcamneto extends javax.swing.JDialog {
         });
 
         btnExcluirServi.setText("Excluir");
+        btnExcluirServi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirServiActionPerformed(evt);
+            }
+        });
 
         btnAlterarServico.setText("Alterar");
+        btnAlterarServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarServicoActionPerformed(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel17.setText("Custo Papel:");
@@ -548,11 +573,11 @@ public class MovOrcamneto extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(txtValor_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel23)
-                        .addComponent(txtDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(txtValor_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(LCodigoServi))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -592,6 +617,11 @@ public class MovOrcamneto extends javax.swing.JDialog {
                 "Descrição", "Vias", "Numeração Inicio", "Numeração Fim", "Outros", "Codigo D"
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTable2);
 
         txtDescServi.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -610,8 +640,18 @@ public class MovOrcamneto extends javax.swing.JDialog {
         txtNumeracaoF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jButton4.setText("Adicionar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Excluir");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel15.setText("Vias:");
@@ -814,17 +854,18 @@ public class MovOrcamneto extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(6, 6, 6))
         );
 
         pack();
@@ -896,7 +937,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void txtValorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusGained
-       txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText()));
+        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
     }//GEN-LAST:event_txtValorFocusGained
 
     private void spQtdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spQtdFocusGained
@@ -904,35 +945,35 @@ public class MovOrcamneto extends javax.swing.JDialog {
         {
             spQtd.setValue(sc.removeCharacter(String.valueOf(spQtd.getValue()), String.valueOf(spQtd.getValue()).length()-1));
         }
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText()));
+        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
     }//GEN-LAST:event_spQtdFocusGained
 
     private void txtCustoPFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoPFocusGained
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText()));
+        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
     }//GEN-LAST:event_txtCustoPFocusGained
 
     private void txtCustoIFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoIFocusGained
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText()));
+        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
     }//GEN-LAST:event_txtCustoIFocusGained
 
     private void txtCustoAcabFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoAcabFocusGained
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText()));
+        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
     }//GEN-LAST:event_txtCustoAcabFocusGained
 
     private void txtCustoArtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoArtFocusGained
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText()));
+        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
     }//GEN-LAST:event_txtCustoArtFocusGained
 
     private void txtCustoChapFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoChapFocusGained
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText()));
+        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
     }//GEN-LAST:event_txtCustoChapFocusGained
 
     private void txtCustoMdOFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoMdOFocusGained
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText()));
+        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
     }//GEN-LAST:event_txtCustoMdOFocusGained
 
     private void txtDescontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescontoFocusGained
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText()));
+        txtValor_total.setText(""+oc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
     }//GEN-LAST:event_txtDescontoFocusGained
 
     private void txtValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorActionPerformed
@@ -968,11 +1009,75 @@ public class MovOrcamneto extends javax.swing.JDialog {
     }//GEN-LAST:event_txtDescontoActionPerformed
 
     private void btnAddServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddServicoActionPerformed
-     switch(oc.varidar(txtServico.getText(), txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDescricao.getText()))
+     switch(oc.varidarAddServico(txtServico.getText(), txtValor.getText(), (String) spQtd.getValue(), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDescricao.getText(), txtDesconto.getText(), linha, txtValor_total.getText()))
      {
-         
+         case 1: m.InformationMessage("Informe o Serviço!", "Atenção"); btnlocServico.requestFocus(); break;
+         case 2: m.InformationMessage("Informe a Quantidade!", "Atenção"); spQtd.requestFocus(); break;
+         case 3: m.InformationMessage("Informe o Valor!", "Atenção"); txtValor.requestFocus(); break;
+         default: 
+             oc.addTabelaServico(jTable1, linha);
+             oc.calculoTotal(jTable1);
+             linha = -1;
      }
     }//GEN-LAST:event_btnAddServicoActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        linha = -1;
+        flag = true;
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnAlterarServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarServicoActionPerformed
+        if (jTable1.getSelectedRow() >= 0)
+        {
+      //      sc.HabilityComponents(jPanel4.getComponents(), true);
+            linha = jTable1.getSelectedRow();
+            //テキストフィールドにデーターを追加。
+            
+        }
+        else
+        {
+         //   sc.HabilityComponents(jPanel4.getComponents(), false);
+            m.InformationMessage("Você deve selecionar um registro", "Informação");
+        }
+    }//GEN-LAST:event_btnAlterarServicoActionPerformed
+
+    private void btnExcluirServiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirServiActionPerformed
+        if(oc.excluirServico(jTable1, linha, flag))
+        {
+            m.InformationMessage("Excluido com Sucesso", "Informação");
+            oc.calculoTotal(jTable1);
+        }
+    }//GEN-LAST:event_btnExcluirServiActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if (jTable1.getSelectedRow() >= 0)
+        {
+            sc.HabilityComponents(jPanel4.getComponents(), true);
+        }
+        else
+        {
+            sc.HabilityComponents(jPanel4.getComponents(), false);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        if (jTable1.getSelectedRow() >= 0)
+        {
+            sc.HabilityComponents(jPanel4.getComponents(), true);
+        }
+        else
+        {
+            sc.HabilityComponents(jPanel4.getComponents(), false);
+        }
+    }//GEN-LAST:event_jTable2MouseClicked
 
     
 
