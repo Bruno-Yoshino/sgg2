@@ -35,6 +35,7 @@ public class OrcamentoController {
     private int sequenceOS;
     private ArrayList<Orcamento_Servico> excluirS;
     private ArrayList<Integer> excluirSD;
+    private ArrayList<String> excluirDetalhes;
 
     public OrcamentoController() {
         o = new Orcamento();
@@ -43,6 +44,7 @@ public class OrcamentoController {
         sd = new DetalheServico();
         excluirS = new ArrayList<>();
         excluirSD = new ArrayList<>();
+        excluirDetalhes = new ArrayList<>();
         sequenceOS = 1;
     }
 
@@ -90,6 +92,52 @@ public class OrcamentoController {
         return 0;
     }
     
+    public int varidarAddServicoDetalhe(String detalhe, String numeracaoI, String numeracaoF, String via, String outros, JTable tabela, int linhaS, int linhaD)
+    {
+        ArrayList<Orcamento_Servico> tempS = o.getLista();
+        ArrayList<Orcamento_Servico_Detalhe> tempSD = o.getLista().get(linhaS).getLista();
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        DetalheServico ds = new DetalheServico().buscarDescricao(detalhe);
+        switch(detalhe.toUpperCase())
+        {
+            case "NUMERAÇÃO":
+                if(numeracaoI.equals(""))
+                    return 1;
+                if(numeracaoF.equals(""))
+                    return 2;
+                if(v.ConverteNumeroInteiro(numeracaoI) < 0)
+                    return 3;
+                if(v.ConverteNumeroInteiro(numeracaoF) < 0)
+                    return 4;
+                if(v.ConverteNumeroInteiro(numeracaoI) > v.ConverteNumeroInteiro(numeracaoF))
+                    return 5;
+                break;
+            case "VIAS":
+                if(numeracaoI.equals(""))
+                    return 6;
+                if(v.ConverteNumeroInteiro(numeracaoI) <= 0)
+                    return 7;
+                break;
+            case "OUTROS":
+                if(numeracaoI.equals(""))
+                    return 8;
+                break;
+            default:
+        }
+        
+        for(int i = 0; i < model.getRowCount(); i++)
+        {
+            if(v.ConverteNumeroInteiro(model.getValueAt(i, 5)) == ds.getCodigo())
+                return 9;
+        }
+        if(linhaD < 0)
+            tempSD.add(new Orcamento_Servico_Detalhe(ds, v.ConverteNumeroInteiro(numeracaoI), v.ConverteNumeroInteiro(numeracaoF), v.ConverteNumeroInteiro(via), outros, tempS.get(linhaS).getSequence()));
+        else
+            tempSD.add(linhaD, new Orcamento_Servico_Detalhe(ds, v.ConverteNumeroInteiro(numeracaoI), v.ConverteNumeroInteiro(numeracaoF), v.ConverteNumeroInteiro(via), outros, tempS.get(linhaS).getSequence()));
+        o.getLista().get(linhaS).setLista(tempSD);
+        return 0;
+    }
+    
     public void addTabelaServico(JTable tabela, int linha)
     {
         ArrayList<Orcamento_Servico> temp = o.getLista();
@@ -111,25 +159,52 @@ public class OrcamentoController {
                 temp.get(temp.size()-1).getDescricao()
             });
         }
+    }
+    
+    public void addTabelaServicoDetalhe(JTable tabela, int linha)// まだ
+    {
+        ArrayList<Orcamento_Servico> temp = o.getLista();
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        if(linha == -1)
+        {
+            model.addRow(new Object[]{
+                temp.get(temp.size()-1).getServ().getNome(),
+                temp.get(temp.size()-1).getValor(),
+                temp.get(temp.size()-1).getQtd(),
+                temp.get(temp.size()-1).getCustoPapel(),
+                temp.get(temp.size()-1).getCustoImpre(),
+                temp.get(temp.size()-1).getCustoAcab()
+            });
+        }
         else
+        {
             model.setValueAt(temp.get(linha).getServ().getNome(), linha, 0);
             model.setValueAt(temp.get(linha).getValor(), linha, 1);
             model.setValueAt(temp.get(linha).getQtd(), linha, 2);
             model.setValueAt(temp.get(linha).getCustoPapel(), linha, 3);
             model.setValueAt(temp.get(linha).getCustoImpre(), linha, 4);
             model.setValueAt(temp.get(linha).getCustoAcab(), linha, 5);
-            model.setValueAt(temp.get(linha).getCustoArte(), linha, 6);
-            model.setValueAt(temp.get(linha).getCustoChapa(), linha, 7);
-            model.setValueAt(temp.get(linha).getCustoMdO(), linha, 8);
-            model.setValueAt(temp.get(linha).getDesconto(), linha, 9);
-            model.setValueAt(temp.get(linha).getValor()*temp.get(temp.size()-1).getQtd()+temp.get(temp.size()-1).getCustoPapel()+temp.get(temp.size()-1).getCustoImpre()+temp.get(temp.size()-1).getCustoAcab()+temp.get(temp.size()-1).getCustoArte()+temp.get(temp.size()-1).getCustoChapa()+temp.get(temp.size()-1).getCustoMdO(), linha, 10);
-            model.setValueAt(temp.get(linha).getDescricao(), linha, 11);
+        }
     }
     
     
     public double calcular(String valor, String qtd, String custoP, String custoI, String custoAca, String custoArt, String custoChap, String custoMdO, String desconto)
     {
         return (v.ConverteNumeroReal(valor) * v.ConverteNumeroInteiro(qtd)) + v.ConverteNumeroReal(custoI) + v.ConverteNumeroReal(custoAca) + v.ConverteNumeroReal(custoArt) + v.ConverteNumeroReal(custoChap) + v.ConverteNumeroReal(custoMdO) - v.ConverteNumeroReal(desconto);
+    }
+    
+    public void excluirDetalheServico(JTable tabela, int linhaS, int linhaDS, boolean flag, String codigoO)
+    {
+        ArrayList<Orcamento_Servico> tempS = o.getLista();
+        ArrayList<Orcamento_Servico_Detalhe> tempSD = o.getLista().get(linhaS).getLista();
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        model.removeRow(linhaDS);
+        if(!flag) // FAlse -> Alterar
+        {
+            model.removeRow(linhaDS);
+            excluirDetalhes.add(new Orcamento_Servico_Detalhe().CreatingDeleteSQLComand(v.ConverteNumeroInteiro(codigoO), tempS.get(linhaS).getServ().getCodigo(), o.getLista().get(linhaS).getLista().get(linhaDS).getDs().getCodigo(), o.getLista().get(linhaS).getLista().get(linhaDS).getSequence()));
+        }
+        o.getLista().get(linhaS).getLista().remove(linhaDS);
     }
     
     public boolean excluirServico(JTable tabela, int linha, boolean flag)

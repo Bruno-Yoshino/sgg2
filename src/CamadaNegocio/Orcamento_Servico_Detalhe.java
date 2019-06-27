@@ -80,5 +80,9 @@ public class Orcamento_Servico_Detalhe {
         this.sequence = sequence;
     }
     
-    
+    public String CreatingDeleteSQLComand(int codigoO, int codigoS, int codigoD, int sequencia)
+    {
+        String sql = "delete form orcamento_servico_detalhe where orc_codigo = "+codigoO+" and serv_codigo = "+codigoS+" and ds_codigo = "+codigoD+" and os_sequence = "+sequencia+"";
+        return sql;
+    }
 }
