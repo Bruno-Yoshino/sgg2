@@ -1,6 +1,7 @@
 package Controller;
 
 import CamadaLogica.ReadOnlyTableModel;
+import CamadaNegocio.Cliente;
 import CamadaNegocio.DetalheServico;
 import CamadaNegocio.Orcamento;
 import CamadaNegocio.Orcamento_Servico;
@@ -72,6 +73,16 @@ public class OrcamentoController {
         this.sd = sd;
     }
     
+    public void buscaClietne(int codigo)
+    {
+        o.setCli(new Cliente().buscarCodigo(codigo));
+    }
+    
+    public String exibirServico(int codigo)
+    {
+        return new Servico().buscarCodigo(codigo).getNome();
+    }
+    
     public int varidarAddServico(String servico, String valor, String qtd, String custoP, String custoI, String custoAca, String custoArt, String custoChap, String custoMdO, String descricao, String desconto, int linha, String total)
     {
         ArrayList<Orcamento_Servico> temp = o.getLista();
@@ -130,10 +141,10 @@ public class OrcamentoController {
             if(v.ConverteNumeroInteiro(model.getValueAt(i, 5)) == ds.getCodigo())
                 return 9;
         }
-        if(linhaD < 0)
+       // if(linhaD < 0)
             tempSD.add(new Orcamento_Servico_Detalhe(ds, v.ConverteNumeroInteiro(numeracaoI), v.ConverteNumeroInteiro(numeracaoF), v.ConverteNumeroInteiro(via), outros, tempS.get(linhaS).getSequence()));
-        else
-            tempSD.add(linhaD, new Orcamento_Servico_Detalhe(ds, v.ConverteNumeroInteiro(numeracaoI), v.ConverteNumeroInteiro(numeracaoF), v.ConverteNumeroInteiro(via), outros, tempS.get(linhaS).getSequence()));
+        //else
+        //    tempSD.add(linhaD, new Orcamento_Servico_Detalhe(ds, v.ConverteNumeroInteiro(numeracaoI), v.ConverteNumeroInteiro(numeracaoF), v.ConverteNumeroInteiro(via), outros, tempS.get(linhaS).getSequence()));
         o.getLista().get(linhaS).setLista(tempSD);
         return 0;
     }
@@ -165,8 +176,8 @@ public class OrcamentoController {
     {
         ArrayList<Orcamento_Servico> temp = o.getLista();
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
-        if(linha == -1)
-        {
+//        if(linha == -1)
+//        {
             model.addRow(new Object[]{
                 temp.get(temp.size()-1).getServ().getNome(),
                 temp.get(temp.size()-1).getValor(),
@@ -175,16 +186,16 @@ public class OrcamentoController {
                 temp.get(temp.size()-1).getCustoImpre(),
                 temp.get(temp.size()-1).getCustoAcab()
             });
-        }
-        else
-        {
-            model.setValueAt(temp.get(linha).getServ().getNome(), linha, 0);
-            model.setValueAt(temp.get(linha).getValor(), linha, 1);
-            model.setValueAt(temp.get(linha).getQtd(), linha, 2);
-            model.setValueAt(temp.get(linha).getCustoPapel(), linha, 3);
-            model.setValueAt(temp.get(linha).getCustoImpre(), linha, 4);
-            model.setValueAt(temp.get(linha).getCustoAcab(), linha, 5);
-        }
+//        }
+//        else
+//        {
+//            model.setValueAt(temp.get(linha).getServ().getNome(), linha, 0);
+//            model.setValueAt(temp.get(linha).getValor(), linha, 1);
+//            model.setValueAt(temp.get(linha).getQtd(), linha, 2);
+//            model.setValueAt(temp.get(linha).getCustoPapel(), linha, 3);
+//            model.setValueAt(temp.get(linha).getCustoImpre(), linha, 4);
+//            model.setValueAt(temp.get(linha).getCustoAcab(), linha, 5);
+//        }
     }
     
     
@@ -196,10 +207,9 @@ public class OrcamentoController {
     public void excluirDetalheServico(JTable tabela, int linhaS, int linhaDS, boolean flag, String codigoO)
     {
         ArrayList<Orcamento_Servico> tempS = o.getLista();
-        ArrayList<Orcamento_Servico_Detalhe> tempSD = o.getLista().get(linhaS).getLista();
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
         model.removeRow(linhaDS);
-        if(!flag) // FAlse -> Alterar
+        if(!flag) // False -> Alterar
         {
             model.removeRow(linhaDS);
             excluirDetalhes.add(new Orcamento_Servico_Detalhe().CreatingDeleteSQLComand(v.ConverteNumeroInteiro(codigoO), tempS.get(linhaS).getServ().getCodigo(), o.getLista().get(linhaS).getLista().get(linhaDS).getDs().getCodigo(), o.getLista().get(linhaS).getLista().get(linhaDS).getSequence()));
@@ -264,5 +274,10 @@ public class OrcamentoController {
             total += v.ConverteNumeroReal(model.getValueAt(i, 10));
         }
         return total;
+    }
+    
+    public void carregarFormaPagamento()
+    {
+        
     }
 }

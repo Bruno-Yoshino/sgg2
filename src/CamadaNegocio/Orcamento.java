@@ -1,5 +1,7 @@
 package CamadaNegocio;
 
+import CamadaLogica.Banco;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -105,6 +107,24 @@ public class Orcamento {
         this.lista = lista;
     }
     
+    public boolean gravar()
+    {
+        String sql = "";
+        return Banco.getCon().manipular(sql);
+    }
+    
+    public boolean excluir()
+    {
+        String sql = "";
+        return Banco.getCon().manipular(sql); 
+    }
+    
+    public int UltimoCodigo()
+    {
+        String sql = "";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        return 0;
+    }
     
     
 }

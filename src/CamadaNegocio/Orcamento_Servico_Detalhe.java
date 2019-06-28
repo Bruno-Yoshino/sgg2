@@ -1,5 +1,7 @@
 package CamadaNegocio;
 
+import CamadaLogica.Banco;
+
 /**
  *
  * @author 吉野　廉
@@ -84,5 +86,17 @@ public class Orcamento_Servico_Detalhe {
     {
         String sql = "delete form orcamento_servico_detalhe where orc_codigo = "+codigoO+" and serv_codigo = "+codigoS+" and ds_codigo = "+codigoD+" and os_sequence = "+sequencia+"";
         return sql;
+    }
+    
+    public boolean gravar()
+    {
+        String sql = "";
+        return Banco.getCon().manipular(sql);
+    }
+    
+    public boolean excluir()
+    {
+        String sql = "";
+        return Banco.getCon().manipular(sql); 
     }
 }

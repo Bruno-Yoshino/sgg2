@@ -1,5 +1,6 @@
 package CamadaNegocio;
 
+import CamadaLogica.Banco;
 import java.util.ArrayList;
 
 /**
@@ -149,5 +150,15 @@ public class Orcamento_Servico {
         this.lista = lista;
     }
     
+    public boolean gravar()
+    {
+        String sql = "";
+        return Banco.getCon().manipular(sql);
+    }
     
+    public boolean excluir()
+    {
+        String sql = "";
+        return Banco.getCon().manipular(sql); 
+    }
 }

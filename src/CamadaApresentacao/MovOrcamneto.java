@@ -168,6 +168,11 @@ public class MovOrcamneto extends javax.swing.JDialog {
 
         btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Gravar16.png"))); // NOI18N
         btnGravar.setText("Gravar");
+        btnGravar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGravarActionPerformed(evt);
+            }
+        });
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Sair.png"))); // NOI18N
         btnSair.addActionListener(new java.awt.event.ActionListener() {
@@ -888,6 +893,8 @@ public class MovOrcamneto extends javax.swing.JDialog {
         consCliente.setVisible(true);
         if (consCliente.getCodigo() != 0)
         {
+            oc.buscaClietne(consCliente.getCodigo());
+            txtCliente.setText(""+oc.getO().getCli().getNome());
             consCliente.dispose();
         }
         else
@@ -911,7 +918,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         consServico.setVisible(true);
         if (consServico.getCodigo() != 0)
         {
-            LCodigoServi.setText(String.valueOf(consServico.getCodigo()));
+            LCodigoServi.setText(oc.exibirServico(consServico.getCodigo()));
             consServico.dispose();
         }
         else
@@ -1016,7 +1023,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
          case 3: m.InformationMessage("Informe o Valor!", "Atenção"); txtValor.requestFocus(); break;
          default: 
              oc.addTabelaServico(jTable1, linha);
-             oc.calculoTotal(jTable1);
+             txtValorT.setText(""+oc.calculoTotal(jTable1));
              linha = -1;
      }
     }//GEN-LAST:event_btnAddServicoActionPerformed
@@ -1031,8 +1038,20 @@ public class MovOrcamneto extends javax.swing.JDialog {
         {
       //      sc.HabilityComponents(jPanel4.getComponents(), true);
             linha = jTable1.getSelectedRow();
-            //テキストフィールドにデーターを追加。
-            
+            //テキストフィールドにデーターを追加。 追加済み↓2019/06/27
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            txtServico.setText(""+model.getValueAt(jTable1.getSelectedRow(), 0));
+            txtValor.setText(""+model.getValueAt(jTable1.getSelectedRow(), 1));
+            spQtd.setValue(model.getValueAt(jTable1.getSelectedRow(), 2));
+            txtCustoP.setText(""+model.getValueAt(jTable1.getSelectedRow(), 3));
+            txtCustoArt.setText(""+model.getValueAt(jTable1.getSelectedRow(), 4));
+            txtCustoI.setText(""+model.getValueAt(jTable1.getSelectedRow(), 5));
+            txtCustoAcab.setText(""+model.getValueAt(jTable1.getSelectedRow(), 6));
+            txtCustoChap.setText(""+model.getValueAt(jTable1.getSelectedRow(), 7));
+            txtCustoMdO.setText(""+model.getValueAt(jTable1.getSelectedRow(), 8));
+            txtDesconto.setText(""+model.getValueAt(jTable1.getSelectedRow(), 9));
+            txtValor_total.setText(""+model.getValueAt(jTable1.getSelectedRow(), 10));
+            txtDescricao.setText(""+model.getValueAt(jTable1.getSelectedRow(), 11));
         }
         else
         {
@@ -1042,19 +1061,31 @@ public class MovOrcamneto extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAlterarServicoActionPerformed
 
     private void btnExcluirServiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirServiActionPerformed
-        if(oc.excluirServico(jTable1, linha, flag))
+        if(oc.excluirServico(jTable1, jTable1.getSelectedRow(), flag))
         {
             m.InformationMessage("Excluido com Sucesso", "Informação");
-            oc.calculoTotal(jTable1);
+            txtValorT.setText(""+oc.calculoTotal(jTable1));
         }
     }//GEN-LAST:event_btnExcluirServiActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+       switch(oc.varidarAddServicoDetalhe((String) cbDescricao.getSelectedItem(), txtNumeracaoI.getText(), txtNumeracaoF.getText(), txtVia.getText(), txtOutros.getText(), jTable2, jTable1.getSelectedRow(), 0))
+       {
+           case 1: m.InformationMessage("Informe a numeração Inicial", "Informação"); txtNumeracaoI.requestFocus(); break;
+           case 2: m.InformationMessage("Informe a numeração Final", "Informação"); txtNumeracaoF.requestFocus(); break;
+           case 3: m.InformationMessage("A numeração Inicial deve ser maior que 0", "Informação"); txtNumeracaoI.requestFocus(); break;
+           case 4: m.InformationMessage("A numeração Final deve ser maior que 0", "Informação"); txtNumeracaoF.requestFocus(); break;
+           case 5: m.InformationMessage("A numeração Inicail não deve ser menor que a numeração Final", "Informação"); txtNumeracaoI.requestFocus(); break;
+           case 6: m.InformationMessage("Informe a quantidade de Via(s)", "Informação"); txtVia.requestFocus(); break;
+           case 7: m.InformationMessage("A quantidade de Via(s) não pode ser menor ou igual a 0", "Informação"); txtVia.requestFocus(); break;
+           case 8: m.InformationMessage("Informe o campo Outros", "Informação"); txtOutros.requestFocus(); break;
+           default:
+               oc.addTabelaServicoDetalhe(jTable2, 0);
+       }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        oc.excluirDetalheServico(jTable2, jTable1.getSelectedRow(), jTable2.getSelectedRow(), flag, txtCodigo.getText());
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -1078,6 +1109,10 @@ public class MovOrcamneto extends javax.swing.JDialog {
             sc.HabilityComponents(jPanel4.getComponents(), false);
         }
     }//GEN-LAST:event_jTable2MouseClicked
+
+    private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
+        
+    }//GEN-LAST:event_btnGravarActionPerformed
 
     
 
