@@ -1,10 +1,12 @@
 package CamadaNegocio;
 
 import CamadaLogica.Banco;
+import CamadaLogica.ReadOnlyTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JTable;
 
 /**
  *
@@ -127,7 +129,7 @@ public class Orcamento {
     }
     
     public boolean excluir(int codigo)
-    {
+    {//後でPedido とリンクがあるかどうかの確認.
         String sql = "DELETE FROM orcamento " +
                      " WHERE orc_numero="+codigo+";";
         return Banco.getCon().manipular(sql); 
@@ -148,7 +150,7 @@ public class Orcamento {
     {
         Orcamento temp = new Orcamento();
         String sql = "SELECT orc_numero, cli_codigo, func_codigo, orc_valortotal, orc_dataorc, orc_validade, fpg_codigo " +
-                     " FROM public.orcamento "
+                     " FROM orcamento "
                     + " WHERE orc_numero = "+codigo+"";
         ResultSet rs=Banco.getCon().consultar(sql);
         if(rs.next())
@@ -162,5 +164,108 @@ public class Orcamento {
         }
         temp.setLista(new Orcamento_Servico().buscar(temp.getCodigo()));
         return temp;
+    }
+    
+    public static ResultSet ConsultaOrcamento(String valor, int tipo, Date dataI, Date dataF)
+    {
+        String query = null;
+        if (valor.equals(""))
+        {
+            query = "SELECT o.orc_numero, c.cli_nome, o.orc_valortotal, o.orc_dataorc, o.orc_validade "
+                + " FROM orcamento o, cliente c "
+                + " WHERE o.cli_codigo = c.cli_codigo ";
+        }
+        else
+        {
+            switch (tipo)
+            {
+                case 0:// Tudo
+                {
+                    query = "SELECT o.orc_numero, c.cli_nome, o.orc_valortotal, o.orc_dataorc, o.orc_validade "
+                          + " FROM orcamento o, cliente c "
+                          + " WHERE o.cli_codigo = c.cli_codigo ";
+                    break;
+                }
+                case 1:// Data
+                {
+                    query = "SELECT o.orc_numero, c.cli_nome, o.orc_valortotal, o.orc_dataorc, o.orc_validade "
+                          + " FROM orcamento o, cliente c "
+                          + " WHERE o.orc_dataorc = '"+valor+"' and o.cli_codigo = c.cli_codigo ";
+                    break;
+                }
+                case 2:// Periodo
+                {
+                    query = "SELECT o.orc_numero, c.cli_nome, o.orc_valortotal, o.orc_dataorc, o.orc_validade "
+                             + " FROM orcamento o, cliente c "
+                            + " WHERE o.orc_dataorc BETWEEN '"+dataI+"' and '"+dataF+"' and o.cli_codigo = c.cli_codigo";
+                    break;
+                }
+                case 3:// Numero
+                {
+                    query = "select o.orc_numero, c.cli_nome, o.orc_valortotal, o.orc_dataorc, o.orc_validade "
+                             + " FROM orcamento o, cliente c "
+                            + "where o.orc_numero = '"+valor+"' and o.cli_codigo = c.cli_codigo";
+                    break;
+                }
+            }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
+    public static ResultSet ConsultaOrcamentoServico(int codigo)
+    {
+        String query = null;
+        query = "SELECT s.serv_nome, os.os_valor, os.os_qtd, os.os_custopapel, os.os_custoarte, os.os_custoimpressao, os.os_custoacabamento, os.os_custochapa, os.os_customdo, os.os_desconto, os.os_descricao, os.os_sequence " +
+                " FROM orcamento_servico os, servico s "
+              + " WHERE os.orc_numero = "+codigo+" and os.serv_codigo = s.serv_codigo;";
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
+    public static ResultSet ConsultaOrcamentoServicoD(int codigo, int sequence)
+    {
+        String query = null;
+        query = "SELECT ds.ds_descricao, osd.osd_numeracaoini, osd.osd_numeracaofim, osd.osd_vias, osd.osd_outros, osd.os_sequence " +
+                " FROM orcamento_servico_detalhe osd, detalhe_serv ds "
+              + " WHERE osd.orc_numero = "+codigo+" and os_sequence = "+sequence+" and osd.ds_codigo = ds.ds_codigo;";
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
+    public static void configuraModel(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
+    {
+        String colunas[] = new String [] {"Número", "Cliente", "Data Pedido", "Data Vencimento", "Valor Total"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(250);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+    }
+    
+    public static void configuraModelOrcamentoS(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
+    {
+        String colunas[] = new String [] {"Serviço", "Valor", "Quantidade", "C. Papel", "C. Arte", "C. Impressão", "C. Acabamento", "C. Chapa", "C. MdO", "Desconto", "Valor Total", "Descrição"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(250);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(70);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(70);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(70);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(70);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(70);
+        jTable.getColumnModel().getColumn(6).setPreferredWidth(70);
+        jTable.getColumnModel().getColumn(7).setPreferredWidth(70);
+        jTable.getColumnModel().getColumn(8).setPreferredWidth(70);
+        jTable.getColumnModel().getColumn(9).setPreferredWidth(70);
+        jTable.getColumnModel().getColumn(10).setPreferredWidth(250);
+    }
+    
+    public static void configuraModelOrcamentoSD(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
+    {
+        String colunas[] = new String [] {"Descrição", "Vias", "Numeração I.", "Numeração F", "Outros"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(250);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(70);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(70);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(70);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(200);
     }
 }

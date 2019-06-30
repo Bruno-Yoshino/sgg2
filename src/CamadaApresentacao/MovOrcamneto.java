@@ -1251,7 +1251,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
     private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusLost
         if(!txtCodigo.getText().equals("0"))
         {
-            if(oc.getO().getCodigo() != 0)
+            if(oc.getO() != null)
             {
                 txtCodigo.setText(""+oc.getO().getCodigo());
                 txtCliente.setText(""+oc.getO().getCli().getNome());

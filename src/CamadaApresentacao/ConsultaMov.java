@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import CamadaNegocio.Compra;
+import CamadaNegocio.Orcamento;
+import java.util.ArrayList;
 
 /**
  *
@@ -29,6 +31,7 @@ public class ConsultaMov extends javax.swing.JDialog {
     private int posDefault;
     private final int x, y;
     boolean jtableEditavel;
+    private ArrayList<Integer> listaSequence;
 
     public ConsultaMov(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -41,6 +44,7 @@ public class ConsultaMov extends javax.swing.JDialog {
         txtValor.setText("");
         x = txtValor.getX();
         y = txtValor.getY();
+        listaSequence = new ArrayList<>();
     }
 
     /**
@@ -384,6 +388,7 @@ public class ConsultaMov extends javax.swing.JDialog {
                     dateFim.setVisible(false);
                     jLTexto.setText("Tudo");
                     txtValor.setVisible(false);
+                    txtValor.setText("");
                 }
                 else
                 {
@@ -428,6 +433,9 @@ public class ConsultaMov extends javax.swing.JDialog {
                         CompraFolha();
                         CompraProduto();
                         break;
+                    case "Orçamento":
+                        OrcamentoServico();
+                        break;
                 }
             }
         }
@@ -454,6 +462,7 @@ public class ConsultaMov extends javax.swing.JDialog {
         switch(tabela)
         {
             case "Compra": Compra(); break; 
+            case "Orçamento": Orcamento(); break;
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
@@ -465,7 +474,7 @@ public class ConsultaMov extends javax.swing.JDialog {
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
         switch(tabela)
         {
-            case "Orçamento": break;
+            case "Orçamento": OrcamentoServicoDetalhe(); break;
         }
     }//GEN-LAST:event_jTable3MouseClicked
 
@@ -499,6 +508,35 @@ public class ConsultaMov extends javax.swing.JDialog {
             System.out.println("Erro: \n" + sqlEmp.toString());
         }
     }
+    
+    private void Orcamento() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            Orcamento.configuraModel(jTable1);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            rs = Orcamento.ConsultaOrcamento(txtValor.getText(), tipo, dateInicio.getData(), dateFim.getData());
+            while (rs.next())
+            {
+                model.addRow(new Object[]
+                {//"Número", "Cliente", "Data Pedido", "Data Vencimento", "Valor Total"
+                    rs.getInt(1), 
+                    rs.getString(2),
+                    rs.getDate(3),
+                    rs.getDate(4),
+                    rs.getDouble(5)
+                });
+            }
+        } 
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    //------------------------------------------------------------------ セカンド及びサードテーブル
     private void CompraProduto() 
     {
         try
@@ -524,6 +562,7 @@ public class ConsultaMov extends javax.swing.JDialog {
             System.out.println("Erro: \n" + sqlEmp.toString());
         }
     }
+    
     private void CompraFolha() 
     {
         try
@@ -541,6 +580,70 @@ public class ConsultaMov extends javax.swing.JDialog {
                     rs.getInt(4),
                     rs.getDouble(5),
                     rs.getInt(4) * rs.getDouble(5)
+                });
+            }
+        } 
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void OrcamentoServico() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            Orcamento.configuraModelOrcamentoS(jTable3);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable3.getModel();
+            rs = Orcamento.ConsultaOrcamentoServico(codigo); //1 == produto 2 == folha
+            while (rs.next())
+            {
+                model.addRow(new Object[]
+                {
+                    rs.getString(1),
+                    rs.getDouble(2),
+                    rs.getInt(3),
+                    rs.getDouble(4),
+                    rs.getDouble(5),
+                    rs.getDouble(6),
+                    rs.getDouble(7),
+                    rs.getDouble(8),
+                    rs.getDouble(9),
+                    rs.getDouble(10),
+                    rs.getDouble(2)*rs.getInt(3)+rs.getDouble(4)+rs.getDouble(5)+rs.getDouble(6)+rs.getDouble(7)+rs.getDouble(8)+rs.getDouble(9)+rs.getDouble(10),
+                    rs.getString(11)
+                });
+                listaSequence.add(rs.getInt(12));
+            }
+        } 
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void OrcamentoServicoDetalhe() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            Orcamento.configuraModelOrcamentoSD(jTable4);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable4.getModel();
+            rs = Orcamento.ConsultaOrcamentoServicoD(codigo, listaSequence.get(jTable3.getSelectedRow())); //1 == produto 2 == folha
+            while (rs.next())
+            {
+                
+                model.addRow(new Object[]
+                {//ds.ds_descricao, osd.osd_numeracaoini, osd.osd_numeracaofim, osd.osd_vias, osd.osd_outros, osd.os_sequence
+                 //"Descrição", "Vias", "Numeração I.", "Numeração F", "Outros"   
+                    rs.getString(1),
+                    rs.getInt(4),
+                    rs.getInt(2),
+                    rs.getInt(3),
+                    rs.getString(5),
                 });
             }
         } 
