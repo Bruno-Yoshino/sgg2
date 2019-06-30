@@ -975,12 +975,12 @@ public class MovLancarCompras extends javax.swing.JDialog {
     }//GEN-LAST:event_txtCodigoFocusLost
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
-        ConsultaPadrao consCompra = new ConsultaPadrao(null, true);
+        ConsultaMov consCompra = new ConsultaMov(null, true);
         String[] vet = new String[3];
         vet[0] = "Tudo";
         vet[1] = "Data";
-        vet[3] = "Periodo";
-        consCompra.configuraOpcoes(vet, 3, 0, "Folha", false);
+        vet[2] = "Periodo";
+        consCompra.configuraOpcoes(vet, 3, 0, "Compra", false);
         consCompra.verificaconsulta(true);
         consCompra.setVisible(true);
         if (consCompra.getCodigo() != 0)

@@ -3,6 +3,9 @@ package CamadaApresentacao;
 import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Funcionario;
 import Controller.OrcamentoController;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import util.SystemControl;
 import util.Validacao;
@@ -31,7 +34,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
     private boolean flag;
     private int linha;
     
-    public MovOrcamneto(java.awt.Frame parent, boolean modal, Funcionario F) {
+    public MovOrcamneto(java.awt.Frame parent, boolean modal, Funcionario F) throws SQLException {
         super(parent, modal);
         initComponents();
         
@@ -59,7 +62,8 @@ public class MovOrcamneto extends javax.swing.JDialog {
         
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents());
-        //サービスの詳細を追加して下さい
+        //サービスの詳細を追加して下さい ===>>> 追加済み.
+        oc.carregarDetalhes(cbDescricao);
     }
 
     /**
@@ -162,9 +166,19 @@ public class MovOrcamneto extends javax.swing.JDialog {
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
         btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Excluir16.png"))); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Gravar16.png"))); // NOI18N
         btnGravar.setText("Gravar");
@@ -194,6 +208,11 @@ public class MovOrcamneto extends javax.swing.JDialog {
 
         btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
         btnLocalizar.setText("Localizar");
+        btnLocalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocalizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -245,6 +264,11 @@ public class MovOrcamneto extends javax.swing.JDialog {
 
         txtCodigo.setEditable(false);
         txtCodigo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtCodigo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCodigoFocusLost(evt);
+            }
+        });
 
         txtCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -931,12 +955,20 @@ public class MovOrcamneto extends javax.swing.JDialog {
        CadastroDetalheServico frm = new CadastroDetalheServico(null, true);
        frm.setTitle("Cadastro Detalhe Serviço");
        frm.setVisible(true);
+        try {
+            oc.carregarDetalhes(cbDescricao);
+        } catch (SQLException ex) {
+            Logger.getLogger(MovOrcamneto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnaddDetalheActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
        sc.limpar(jPanel1.getComponents());
        sc.HabilityComponents(jPanel1.getComponents(), false);
        sc.Initialize(jPanel2.getComponents());
+       flag = true;
+       linha = -1;
+       oc.clearSequenceNumber();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -1031,6 +1063,9 @@ public class MovOrcamneto extends javax.swing.JDialog {
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         linha = -1;
         flag = true;
+        sc.HabilityComponents(jPanel1.getComponents(), true);
+        sc.Edity(jPanel2.getComponents());
+        txtValorT.setText("0");
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnAlterarServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarServicoActionPerformed
@@ -1080,7 +1115,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
            case 7: m.InformationMessage("A quantidade de Via(s) não pode ser menor ou igual a 0", "Informação"); txtVia.requestFocus(); break;
            case 8: m.InformationMessage("Informe o campo Outros", "Informação"); txtOutros.requestFocus(); break;
            default:
-               oc.addTabelaServicoDetalhe(jTable2, 0);
+               oc.addTabelaServicoDetalhe(jTable2, jTable1.getSelectedRow());
        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -1092,6 +1127,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         if (jTable1.getSelectedRow() >= 0)
         {
             sc.HabilityComponents(jPanel4.getComponents(), true);
+            oc.carregarTabelaDetalheServico(jTable2, jTable1.getSelectedRow());
         }
         else
         {
@@ -1111,8 +1147,123 @@ public class MovOrcamneto extends javax.swing.JDialog {
     }//GEN-LAST:event_jTable2MouseClicked
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        
+        try {
+            switch(oc.varidarOrcamento(txtCodigo.getText(), txtCliente.getText(), (String) cbForma.getSelectedItem(), txtValorT.getText(), dcDataPedido.getData(), dcDataVencimento.getData()))
+            {
+                case 1: m.InformationMessage("Informe o Cliente!", "Atenção"); btnlocCliente.requestFocus(); break;
+                case 2: m.InformationMessage("Informe o(s) Serviço(s)!", "Atenção"); btnlocServico.requestFocus(); break;
+                case 3: m.InformationMessage("A data de vencimetno é inferior a data do Orçamento!", "Atenção");
+                default:
+                    if(flag)
+                    {
+                        if(oc.gravarOrcamento())
+                        {
+                            oc.UpdateNumberOrcamento();
+                            if(oc.gravarOrcemntoServico())
+                                if(oc.gravarOrcamentoServicoDetalhe())
+                                {
+                                    m.InformationMessage("Gravado com Sucesso", "Informação");
+                                    sc.limpar(jPanel1.getComponents());
+                                    //flag = true;
+                                    linha = -1;
+                                    oc.clearSequenceNumber();
+                                }
+                                else
+                                    m.ErroMessage("ERRO", "ERRO3");
+                            else
+                             m.ErroMessage("ERRO", "ERRO2");   
+                        }
+                        else
+                        {
+                            m.ErroMessage("ERRO", "ERRO1");
+                        }
+                        
+                    }
+                    else
+                    {
+                        if(oc.gravarOrcamento())
+                        {
+                            if(oc.alterarOrcamentoServico())
+                                if(oc.alterarOrcamentoServicoDetalhe())
+                                {
+                                    m.InformationMessage("Alterado com Sucesso", "Informação");
+                                    sc.limpar(jPanel1.getComponents());
+                                    flag = true;
+                                    linha = -1;
+                                    oc.clearSequenceNumber();
+                                }
+                                else
+                                    m.ErroMessage("ERRO1", "ERRO3");
+                            else
+                             m.ErroMessage("ERRO2", "ERRO2");   
+                        }
+                        else
+                        {
+                            m.ErroMessage("ERRO1", "ERRO1");
+                        }
+                    }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MovOrcamneto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGravarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        if(m.Pergunta("Deseja excluir esse Orçamento?", "Atenção") == JOptionPane.YES_OPTION)
+        {
+            if(oc.excluirOrcamento(Integer.parseInt(txtCodigo.getText())))
+                m.InformationMessage("Excluido com Sucesso!", "Informação");
+            else
+                m.ErroMessage("Erro ao Excluir! Provavelmente esta sendo usado em Pedido ou em alguma outra Tabela!", "Erro");
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
+        ConsultaMov consCompra = new ConsultaMov(null, true);
+        String[] vet = new String[3];
+        vet[0] = "Tudo";
+        vet[1] = "Data";
+        vet[2] = "Periodo";
+        vet[3] = "Numero";
+        consCompra.configuraOpcoes(vet, 4, 0, "Orçamento", false);
+        consCompra.verificaconsulta(true);
+        consCompra.setVisible(true);
+        if (consCompra.getCodigo() != 0)
+        {
+            txtCodigo.setText(String.valueOf(consCompra.getCodigo()));
+            consCompra.dispose();
+            txtCodigoFocusLost(null);
+            sc.Alter(jPanel2.getComponents());
+        }
+        else
+        {
+            consCompra.dispose();
+            btnLocalizar.requestFocus();
+        }
+    }//GEN-LAST:event_btnLocalizarActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        flag = false;
+        sc.HabilityComponents(jPanel1.getComponents(), true);
+        sc.Edity(jPanel2.getComponents());
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusLost
+        if(!txtCodigo.getText().equals("0"))
+        {
+            if(oc.getO().getCodigo() != 0)
+            {
+                txtCodigo.setText(""+oc.getO().getCodigo());
+                txtCliente.setText(""+oc.getO().getCli().getNome());
+                txtValorT.setText(""+oc.getO().getValorTotal());
+                dcDataPedido.setData(oc.getO().getOrcado());
+                dcDataVencimento.setData(oc.getO().getValidade());
+                cbForma.setSelectedItem(oc.getO().getFp().getNome());
+                oc.carregarTabelaServico(jTable1);
+                oc.carregarTabelaDetalheServico(jTable2, 0);
+            }
+        }
+    }//GEN-LAST:event_txtCodigoFocusLost
 
     
 

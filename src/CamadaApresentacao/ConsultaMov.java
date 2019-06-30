@@ -391,6 +391,7 @@ public class ConsultaMov extends javax.swing.JDialog {
                     dateFim.setVisible(false);
                     jla.setVisible(false);
                     txtValor.setVisible(true);
+                    jLTexto.setText("Valor");
                 }
             }
         }
@@ -462,7 +463,10 @@ public class ConsultaMov extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
-        // TODO add your handling code here:
+        switch(tabela)
+        {
+            case "Orçamento": break;
+        }
     }//GEN-LAST:event_jTable3MouseClicked
 
     private void jTable4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable4MouseClicked

@@ -1,5 +1,9 @@
 package CamadaNegocio;
 
+import CamadaLogica.Banco;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author 吉野　廉
@@ -51,7 +55,27 @@ public class FormaPagamento {
     public void setStatus(boolean status) {
         this.status = status;
     }
+    //--------------------------------------------------------------------------
+    public FormaPagamento buscaForma(String texto) throws SQLException
+    {
+        String sql = "select fpg_codigo, fpg_nome, fpg_status forma_pagamento where fpg_nome = '"+texto+"'";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        if(rs.next())
+        {
+            return new FormaPagamento(rs.getInt(1), rs.getString(2), rs.getBoolean(3));
+        }
+        return null;
+    }
     
-    
+    public FormaPagamento buscaForma(int codigo) throws SQLException
+    {
+        String sql = "select fpg_codigo, fpg_nome, fpg_status forma_pagamento where fpg_codigo = "+codigo+"";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        if(rs.next())
+        {
+            return new FormaPagamento(rs.getInt(1), rs.getString(2), rs.getBoolean(3));
+        }
+        return null;
+    }
     
 }

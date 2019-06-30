@@ -1,6 +1,8 @@
 package CamadaNegocio;
 
 import CamadaLogica.Banco;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -150,15 +152,75 @@ public class Orcamento_Servico {
         this.lista = lista;
     }
     
-    public boolean gravar()
+    public boolean gravar(int codigoO)
     {
-        String sql = "";
+        String sql =  "INSERT INTO orcamento_servico( " +
+                  " orc_numero, serv_codigo, os_valor, os_qtd, os_custopapel, os_custoimpressao, os_custoacabamento, os_custoarte, os_custochapa, os_customdo, os_desconto, os_descricao, os_sequence) " +
+                  " VALUES ("+codigoO+", "+serv.getCodigo()+", "+valor+", "+qtd+", "+custoPapel+", "+custoImpre+", "
+                    + ""+custoAcab+", "+custoArte+", "+custoChapa+", "+custoMdO+", "+desconto+", '"+descricao+"', "+sequence+");";
         return Banco.getCon().manipular(sql);
     }
     
-    public boolean excluir()
+    public boolean alterar(int codigoO)
     {
-        String sql = "";
+        String sql =  "UPDATE orcamento_servico " +
+                  " SET serv_codigo="+serv.getCodigo()+", os_valor="+valor+", os_qtd="+qtd+", os_custopapel="+custoPapel+", os_custoimpressao="+custoImpre+", os_custoacabamento="+custoAcab+", os_custoarte="+custoArte+", os_custochapa="+custoChapa+", os_customdo="+custoMdO+", os_desconto="+desconto+", os_descricao='"+descricao+"' " +
+                  " WHERE orc_numero="+codigoO+" and os_sequence = "+sequence+";";
+        return Banco.getCon().manipular(sql);
+    }
+    
+    public boolean excluir(int codigoO, int sequence)
+    {
+        String sql = "DELETE FROM orcamento_servico " +
+                     " WHERE orc_numero="+codigoO+" and os_sequence = "+sequence+";";
         return Banco.getCon().manipular(sql); 
+    }
+    
+    public boolean excluir(int codigoO)
+    {
+        String sql = "DELETE FROM orcamento_servico " +
+                     " WHERE orc_numero="+codigoO+";";
+        return Banco.getCon().manipular(sql); 
+    }
+    
+    public boolean ChecarExiste(int codigoO, int sequence)
+    {
+        String sql;
+        sql = "select * from orcamento_servico where orc_numero="+codigoO+" and os_sequence = "+sequence+"";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return true;
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+    
+    public ArrayList<Orcamento_Servico> buscar(int codigo)
+    {
+        ArrayList<Orcamento_Servico> lista = new ArrayList<>();
+        String sql;
+        sql = "SELECT orc_numero, serv_codigo, os_valor, os_qtd, os_custopapel, os_custoimpressao, os_custoacabamento, os_custoarte, os_custochapa, os_customdo, os_desconto, os_descricao, os_sequence " +
+              " FROM public.orcamento_servico"
+            + " WHERE orc_numero = "+codigo+";";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            while (rs.next()) 
+            {
+                lista.add(new Orcamento_Servico(new Servico().buscarCodigo(rs.getInt(2)), rs.getDouble(3), rs.getInt(4), rs.getDouble(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8), rs.getDouble(9), rs.getDouble(10), rs.getDouble(11), rs.getString(12), rs.getInt(13), new Orcamento_Servico_Detalhe().buscar(rs.getInt(1), rs.getInt(13))));
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return lista;
     }
 }

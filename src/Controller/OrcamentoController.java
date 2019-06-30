@@ -3,11 +3,16 @@ package Controller;
 import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Cliente;
 import CamadaNegocio.DetalheServico;
+import CamadaNegocio.FormaPagamento;
 import CamadaNegocio.Orcamento;
 import CamadaNegocio.Orcamento_Servico;
 import CamadaNegocio.Orcamento_Servico_Detalhe;
 import CamadaNegocio.Servico;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import util.Validacao;
@@ -72,7 +77,7 @@ public class OrcamentoController {
     public void setSd(DetalheServico sd) {
         this.sd = sd;
     }
-    
+    //-----------------------------------------------------------------------------------
     public void buscaClietne(int codigo)
     {
         o.setCli(new Cliente().buscarCodigo(codigo));
@@ -81,6 +86,23 @@ public class OrcamentoController {
     public String exibirServico(int codigo)
     {
         return new Servico().buscarCodigo(codigo).getNome();
+    }
+    
+    public int varidarOrcamento(String codigo, String cliente, String formaPag, String valorT, Date dataorc, Date varidade) throws SQLException
+    {
+        o.setCodigo(v.ConverteNumeroInteiro(codigo));
+        if(cliente.equals(""))
+            return 1;
+        if(v.ConverteNumeroReal(valorT) <= 0)
+            return 2;
+        o.setValorTotal(v.ConverteNumeroReal(valorT));
+        if(v.ValidarDataDuasData(dataorc, varidade))
+            if(!v.ValidarDataDuasDataIgual(dataorc, dataorc))
+                return 3;
+        o.setOrcado(dataorc);
+        o.setValidade(varidade);
+        o.setFp(new FormaPagamento().buscaForma(formaPag));
+        return 0;
     }
     
     public int varidarAddServico(String servico, String valor, String qtd, String custoP, String custoI, String custoAca, String custoArt, String custoChap, String custoMdO, String descricao, String desconto, int linha, String total)
@@ -170,21 +192,36 @@ public class OrcamentoController {
                 temp.get(temp.size()-1).getDescricao()
             });
         }
+        else
+        {
+            model.setValueAt(temp.get(linha).getServ().getNome(), linha, 0);
+            model.setValueAt(temp.get(linha).getValor(), linha, 1);
+            model.setValueAt(temp.get(linha).getQtd(), linha, 2);
+            model.setValueAt(temp.get(linha).getCustoPapel(), linha, 3);
+            model.setValueAt(temp.get(linha).getCustoImpre(), linha, 4);
+            model.setValueAt(temp.get(linha).getCustoAcab(), linha, 5);
+            model.setValueAt(temp.get(linha).getCustoArte(), linha, 6);
+            model.setValueAt(temp.get(linha).getCustoChapa(), linha, 7);
+            model.setValueAt(temp.get(linha).getCustoMdO(), linha, 8);
+            model.setValueAt(temp.get(linha).getDesconto(), linha, 9);
+            model.setValueAt(temp.get(linha).getValor()*temp.get(linha).getQtd()+temp.get(linha).getCustoPapel()+temp.get(linha).getCustoImpre()+temp.get(linha).getCustoAcab()+temp.get(linha).getCustoArte()+temp.get(linha).getCustoChapa()+temp.get(linha).getCustoMdO(), linha, 10);
+            model.setValueAt(temp.get(linha).getDescricao(), linha, 11);
+        }
     }
     
-    public void addTabelaServicoDetalhe(JTable tabela, int linha)// まだ
+    public void addTabelaServicoDetalhe(JTable tabela, int linha)// まだ  =>> OK 2019/06/29
     {
         ArrayList<Orcamento_Servico> temp = o.getLista();
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
 //        if(linha == -1)
 //        {
             model.addRow(new Object[]{
-                temp.get(temp.size()-1).getServ().getNome(),
-                temp.get(temp.size()-1).getValor(),
-                temp.get(temp.size()-1).getQtd(),
-                temp.get(temp.size()-1).getCustoPapel(),
-                temp.get(temp.size()-1).getCustoImpre(),
-                temp.get(temp.size()-1).getCustoAcab()
+                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getDs().getDescricao(),
+                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getVias(),
+                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getNumeracaoI(),
+                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getNumeracaoF(),
+                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getOutros(),
+                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getDs().getCodigo()
             });
 //        }
 //        else
@@ -276,8 +313,135 @@ public class OrcamentoController {
         return total;
     }
     
+    public void carregarTabelaDetalheServico(JTable tabela, int linha)
+    {
+        ArrayList<Orcamento_Servico> temp = o.getLista();
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        for (int i = 0; i < temp.size(); i++) 
+        {
+                model.addRow(new Object[]{
+                temp.get(linha).getLista().get(i).getDs().getDescricao(),
+                temp.get(linha).getLista().get(i).getVias(),
+                temp.get(linha).getLista().get(i).getNumeracaoI(),
+                temp.get(linha).getLista().get(i).getNumeracaoF(),
+                temp.get(linha).getLista().get(i).getOutros(),
+                temp.get(linha).getLista().get(i).getDs().getCodigo()
+            });
+        }
+    }
+    
+    public void UpdateNumberOrcamento() throws SQLException
+    {
+        o.setCodigo(new Orcamento().UltimoCodigo());
+    }
+           
     public void carregarFormaPagamento()
     {
         
+    }
+    
+    public void carregarDetalhes(JComboBox cb) throws SQLException
+    {
+        ResultSet rs = new DetalheServico().buscarDetalhes();
+        while (rs.next()) 
+        {
+                 cb.addItem(rs.getString(2));
+        }
+    }
+    
+    public void clearSequenceNumber()
+    {
+        sequenceOS = 1;
+    }
+    
+    public boolean gravarOrcamento()
+    {
+        return o.gravar();
+    }
+    
+    public boolean gravarOrcemntoServico()
+    {
+        boolean control = true;
+        for(int i = 0; i < o.getLista().size() && control; i++)
+        {
+            control = o.getLista().get(i).gravar(o.getCodigo());
+        }
+        return control;
+    }
+    
+    public boolean gravarOrcamentoServicoDetalhe()
+    {
+        boolean control = true;
+        for(int i = 0; i < o.getLista().size() && control; i++)
+        {
+            for(int y = 0; y < o.getLista().get(i).getLista().size() && control; y++)
+            {
+                control = o.getLista().get(i).getLista().get(y).gravar(o.getCodigo(), o.getLista().get(i).getServ().getCodigo());
+            }
+        }
+        return control;
+    }
+    
+    public boolean alterarOrcamentoServico()
+    {
+        boolean control = true;
+        for(int i = 0; i < o.getLista().size() && control; i++)
+        {
+            if(o.getLista().get(i).ChecarExiste(o.getCodigo(), o.getLista().get(i).getSequence()))
+                control = o.getLista().get(i).alterar(o.getCodigo());
+            else
+                control = o.getLista().get(i).gravar(o.getCodigo());
+        }
+        return control;
+    }
+    
+    public boolean alterarOrcamentoServicoDetalhe()
+    {
+        boolean control = true;
+        for(int i = 0; i < o.getLista().size() && control; i++)
+        {
+            for(int y = 0; y < o.getLista().get(i).getLista().size() && control; y++)
+            {
+                if(o.getLista().get(i).getLista().get(y).ChecarExiste(o.getCodigo(), o.getLista().get(i).getSequence(), o.getLista().get(i).getLista().get(y).getDs().getCodigo()))
+                    control = o.getLista().get(i).getLista().get(y).alterar(o.getCodigo(), o.getLista().get(i).getServ().getCodigo());
+                else
+                    control = o.getLista().get(i).getLista().get(y).gravar(o.getCodigo(), o.getLista().get(i).getServ().getCodigo());
+            }
+        }
+        return control;
+    }
+    
+    public boolean excluirOrcamento(int codigo)
+    {
+        return new Orcamento_Servico_Detalhe().excluir(codigo) && new Orcamento_Servico().excluir(codigo) && new Orcamento().excluir(codigo);
+    }
+    
+    public void buscarDados(int codigo) throws SQLException
+    {
+        Orcamento temp = o.buscar(codigo);
+        o = temp == null ? new Orcamento() : temp;
+    }
+    
+    public void carregarTabelaServico(JTable tabela)
+    {
+        ArrayList<Orcamento_Servico> temp = o.getLista();
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        for(int i = 0; i < temp.size(); i++)
+        {
+            model.addRow(new Object[]{
+                temp.get(i).getServ().getNome(),
+                temp.get(i).getValor(),
+                temp.get(i).getQtd(),
+                temp.get(i).getCustoPapel(),
+                temp.get(i).getCustoImpre(),
+                temp.get(i).getCustoAcab(),
+                temp.get(i).getCustoArte(),
+                temp.get(i).getCustoChapa(),
+                temp.get(i).getCustoMdO(),
+                temp.get(i).getDesconto(),
+                temp.get(i).getValor()*temp.get(i).getQtd()+temp.get(i).getCustoPapel()+temp.get(i).getCustoImpre()+temp.get(i).getCustoAcab()+temp.get(i).getCustoArte()+temp.get(i).getCustoChapa()+temp.get(i).getCustoMdO(),
+                temp.get(i).getDescricao()
+            });
+        }
     }
 }

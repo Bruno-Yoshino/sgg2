@@ -119,6 +119,11 @@ public class Validacao
         return dataI.before(dataF);
     }
     
+    public final boolean ValidarDataDuasDataIgual(Date dataI, Date dataF)
+    {
+        return dataI.equals(dataF);
+    }
+    
     public final boolean ValidarEmail(String email)
     {
         String mailFormat = "^[a-zA-Z0-9!#$%&'_`/=~\\*\\+\\-\\?\\^\\{\\|\\}]+(\\.[a-zA-Z0-9!#$%&'_`/=~\\*\\+\\-\\?\\^\\{\\|\\}]+)*+(.*)@[a-zA-Z0-9][a-zA-Z0-9\\-]*(\\.[a-zA-Z0-9\\-]+)+$";

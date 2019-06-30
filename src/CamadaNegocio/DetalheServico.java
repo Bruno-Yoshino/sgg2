@@ -167,6 +167,13 @@ public class DetalheServico {
         return Banco.getCon().retornaResultSet(query);
     }
     
+    public ResultSet buscarDetalhes()
+    {
+      
+        String query = "select ds_codigo, ds_descricao, ds_status from detalhe_serv order by ds_descricao";
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
     public static void configuraModel(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
     {
         String colunas[] = new String [] {"Código", "Descrição", "Status"};
