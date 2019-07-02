@@ -15,6 +15,10 @@ import util.mensagens;
  * @author 川村
  * @author 磐手
  * @author イントレピッド
+ * @author 七海
+ * @author 海女
+ * @author 御子
+ * @author 稲荷
  */
 public class MovPedido extends javax.swing.JDialog {
 
