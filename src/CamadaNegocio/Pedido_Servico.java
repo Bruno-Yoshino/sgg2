@@ -1,11 +1,17 @@
 package CamadaNegocio;
 
+import CamadaLogica.Banco;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * @author 巴御前
+ * @author 高村　結衣
+ * @author 里川　麗奈
  * @author 鳳翔
  * @author 川村
  * @author 磐手
@@ -93,5 +99,74 @@ public class Pedido_Servico {
         this.lista = lista;
     }
     
+    public boolean gravar(int codigoP)
+    {
+        String sql =  "INSERT INTO pedido_servico( " +
+                  " pe_codigo, serv_codigo, pe_valor, pe_qtd, pe_desconto, pe_descricao, pe_sequence) " +
+                  " VALUES ("+codigoP+", "+serv.getCodigo()+", "+valor+", "+qtd+", "+desconto+", '"+descricao+"', "+sequence+");";
+        return Banco.getCon().manipular(sql);
+    }
     
+    public boolean alterar(int codigoP)
+    {
+        String sql =  "UPDATE pedido_servico " +
+                  " SET serv_codigo="+serv.getCodigo()+", pe_valor="+valor+", pe_qtd="+qtd+", pe_desconto="+desconto+", pe_descricao='"+descricao+"' " +
+                  " WHERE pe_codigo="+codigoP+" and pe_sequence = "+sequence+";";
+        return Banco.getCon().manipular(sql);
+    }
+    
+    public boolean excluir(int codigoP, int sequence)
+    {
+        String sql = "DELETE FROM pedido_servico " +
+                     " WHERE pe_codigo="+codigoP+" and pe_sequence = "+sequence+";";
+        return Banco.getCon().manipular(sql); 
+    }
+    
+    public boolean excluir(int codigoP)
+    {
+        String sql = "DELETE FROM pedido_servico " +
+                     " WHERE pe_codigo="+codigoP+";";
+        return Banco.getCon().manipular(sql); 
+    }
+    
+    public boolean ChecarExiste(int codigoP, int sequence)
+    {
+        String sql;
+        sql = "select * from pedido_servico where pe_codigo="+codigoP+" and pe_sequence = "+sequence+"";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return true;
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+    
+    public ArrayList<Pedido_Servico> buscar(int codigo)
+    {
+        ArrayList<Pedido_Servico> lista = new ArrayList<>();
+        String sql;
+        sql = "SELECT pe_codigo, serv_codigo, pe_valor, pe_qtd, pe_desconto, pe_descricao, pe_sequence " +
+              " FROM public.pedido_servico"
+            + " WHERE pe_codigo = "+codigo+";";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            while (rs.next()) 
+            {
+                lista.add(new Pedido_Servico(new Servico().buscarCodigo(rs.getInt(2)), rs.getDouble(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getInt(7), new Pedido_Servico_Detalhe().buscar(rs.getInt(1), rs.getInt(7))));
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return lista;
+    }
 }

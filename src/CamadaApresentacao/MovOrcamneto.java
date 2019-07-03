@@ -156,6 +156,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        btnNovo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
         btnNovo.setText("Novo");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -164,6 +165,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
             }
         });
 
+        btnAlterar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -172,6 +174,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
             }
         });
 
+        btnExcluir.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Excluir16.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -180,6 +183,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
             }
         });
 
+        btnGravar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Gravar16.png"))); // NOI18N
         btnGravar.setText("Gravar");
         btnGravar.addActionListener(new java.awt.event.ActionListener() {
@@ -195,6 +199,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
             }
         });
 
+        btnCancelar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Cancelar16.png.jpg"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -203,9 +208,11 @@ public class MovOrcamneto extends javax.swing.JDialog {
             }
         });
 
+        btnPDF.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/pdf32.png"))); // NOI18N
         btnPDF.setText("Gerar PDF");
 
+        btnLocalizar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
         btnLocalizar.setText("Localizar");
         btnLocalizar.addActionListener(new java.awt.event.ActionListener() {
@@ -222,9 +229,9 @@ public class MovOrcamneto extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -244,12 +251,12 @@ public class MovOrcamneto extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
                     .addComponent(btnNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPDF, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnGravar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLocalizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnLocalizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -942,7 +949,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         consServico.setVisible(true);
         if (consServico.getCodigo() != 0)
         {
-            LCodigoServi.setText(oc.exibirServico(consServico.getCodigo()));
+            txtServico.setText(oc.exibirServico(consServico.getCodigo()));
             consServico.dispose();
         }
         else
@@ -1183,6 +1190,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
                     {
                         if(oc.gravarOrcamento())
                         {
+                            oc.excluirListas(Integer.parseInt(txtCodigo.getText()));
                             if(oc.alterarOrcamentoServico())
                                 if(oc.alterarOrcamentoServicoDetalhe())
                                 {
@@ -1219,25 +1227,25 @@ public class MovOrcamneto extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
-        ConsultaMov consCompra = new ConsultaMov(null, true);
+        ConsultaMov consOrcamento = new ConsultaMov(null, true);
         String[] vet = new String[3];
         vet[0] = "Tudo";
         vet[1] = "Data";
         vet[2] = "Periodo";
         vet[3] = "Numero";
-        consCompra.configuraOpcoes(vet, 4, 0, "Orçamento", false);
-        consCompra.verificaconsulta(true);
-        consCompra.setVisible(true);
-        if (consCompra.getCodigo() != 0)
+        consOrcamento.configuraOpcoes(vet, 4, 0, "Orçamento", false);
+        consOrcamento.verificaconsulta(true);
+        consOrcamento.setVisible(true);
+        if (consOrcamento.getCodigo() != 0)
         {
-            txtCodigo.setText(String.valueOf(consCompra.getCodigo()));
-            consCompra.dispose();
+            txtCodigo.setText(String.valueOf(consOrcamento.getCodigo()));
+            consOrcamento.dispose();
             txtCodigoFocusLost(null);
             sc.Alter(jPanel2.getComponents());
         }
         else
         {
-            consCompra.dispose();
+            consOrcamento.dispose();
             btnLocalizar.requestFocus();
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed
@@ -1251,6 +1259,11 @@ public class MovOrcamneto extends javax.swing.JDialog {
     private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusLost
         if(!txtCodigo.getText().equals("0"))
         {
+            try {
+                oc.buscarDados(Integer.parseInt(txtCodigo.getText()));
+            } catch (SQLException ex) {
+                Logger.getLogger(MovOrcamneto.class.getName()).log(Level.SEVERE, null, ex);
+            }
             if(oc.getO() != null)
             {
                 txtCodigo.setText(""+oc.getO().getCodigo());

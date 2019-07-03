@@ -114,6 +114,13 @@ public class Orcamento_Servico_Detalhe {
         return Banco.getCon().manipular(sql); 
     }
     
+    public boolean excluir(int codigoO, int sequence, int codigoD)
+    {
+        String sql = "DELETE FROM orcamento_servico_detalhe " +
+                     " WHERE orc_numero="+codigoO+" and os_sequence = "+sequence+" and ds_codigo = "+codigoD+";";
+        return Banco.getCon().manipular(sql); 
+    }
+    
     public boolean excluir(int codigoO)
     {
         String sql = "DELETE FROM orcamento_servico_detalhe " +

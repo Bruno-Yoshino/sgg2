@@ -72,6 +72,10 @@ public class SystemControl
                 case "btnAlterar":
                     c1.setEnabled(false);
                     break;
+                    
+                case "btnEntregar":
+                    c1.setEnabled(false);
+                    break;
                 
                 case "btnExcluir":
                     c1.setEnabled(false);
@@ -111,6 +115,10 @@ public class SystemControl
                 case "btnAlterar":
                     c1.setEnabled(true);
                     break;
+                    
+                case "btnEntregar":
+                    c1.setEnabled(true);
+                    break;
                 
                 case "btnExcluir":
                     c1.setEnabled(true);
@@ -144,6 +152,10 @@ public class SystemControl
                     break;
                 
                 case "btnAlterar":
+                    c1.setEnabled(false);
+                    break;
+                    
+                case "btnEntregar":
                     c1.setEnabled(false);
                     break;
                 

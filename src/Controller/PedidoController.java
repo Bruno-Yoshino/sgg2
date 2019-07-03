@@ -25,6 +25,9 @@ import util.mensagens;
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * @author 巴御前
+ * @author 高村　結衣
+ * @author 里川　麗奈
  * @author 鳳翔
  * @author 川村
  * @author 磐手
@@ -42,18 +45,16 @@ public class PedidoController {
     private Servico ser;
     private DetalheServico sd; 
     private int sequenceOS;
-    private ArrayList<Pedido_Servico> excluirS;
-    private ArrayList<Integer> excluirSD;
-    private ArrayList<String> excluirDetalhes;
+
 
     public PedidoController() {
         p = new Pedido();
         v = new Validacao();
         ser = new Servico();
         sd = new DetalheServico();
-        excluirS = new ArrayList<>();
-        excluirSD = new ArrayList<>();
-        excluirDetalhes = new ArrayList<>();
+//        excluirS = new ArrayList<>();
+//        excluirSD = new ArrayList<>();
+//        excluirDetalhes = new ArrayList<>();
         sequenceOS = 1;
     }
 
@@ -100,7 +101,7 @@ public class PedidoController {
         if(v.ConverteNumeroReal(valorT) <= 0)
             return 2;
         p.setValorTotal(v.ConverteNumeroReal(valorT));
-        if(!v.ValidarDataDuasData(dataP, varidade) && !flag)
+        if(!v.ValidarDataDuasData(dataP, varidade) && flag)// dcEbtrega is Visible? flag is check this. True check. False ignoreted
             if(!v.ValidarDataDuasDataIgual(dataP, varidade))
                 return 3;
         p.setPedido(dataP);
@@ -228,9 +229,9 @@ public class PedidoController {
     }
     
     
-    public double calcular(String valor, String qtd, String custoP, String custoI, String custoAca, String custoArt, String custoChap, String custoMdO, String desconto)
+    public double calcular(String valor, String qtd, String desconto)
     {
-        return (v.ConverteNumeroReal(valor) * v.ConverteNumeroInteiro(qtd)) + v.ConverteNumeroReal(custoI) + v.ConverteNumeroReal(custoAca) + v.ConverteNumeroReal(custoArt) + v.ConverteNumeroReal(custoChap) + v.ConverteNumeroReal(custoMdO) - v.ConverteNumeroReal(desconto);
+        return (v.ConverteNumeroReal(valor) * v.ConverteNumeroInteiro(qtd)) - v.ConverteNumeroReal(desconto);
     }
     
     public void excluirDetalheServico(JTable tabela, int linhaS, int linhaDS, boolean flag, String codigoO)
@@ -255,22 +256,22 @@ public class PedidoController {
             if(m.Pergunta("Este serviço contem Detalhes inseridos! Deseja Excluir?", "Atenção") == JOptionPane.YES_OPTION)
             {
                 model.removeRow(linha);
-                if(flag)//true   ->> reference to Novo
-                {
+//                if(flag)//true   ->> reference to Novo
+//                {
                     tempS.remove(linha);
                     p.setLista(tempS);
                     return true;
-                }
-                else
-                {
-                    p.getLista().get(linha).getLista().forEach((lista) -> {
-                        excluirSD.add(lista.getSequence());
-                    });
-                    excluirS.add(p.getLista().get(linha));
-                    tempS.remove(linha);
-                    p.setLista(tempS);
-                    return true;
-                }
+//                }
+//                else
+//                {
+////                    p.getLista().get(linha).getLista().forEach((lista) -> {
+////                        excluirSD.add(lista.getSequence());
+////                    });
+////                    excluirS.add(p.getLista().get(linha));
+//                    tempS.remove(linha);
+//                    p.setLista(tempS);
+//                    return true;
+//                }
             }
             else
                 return false;
@@ -278,18 +279,18 @@ public class PedidoController {
         else// DetalheServicoがない時。
         {
             model.removeRow(linha);
-            if(flag)//true   ->> reference to Novo
-            {
+//            if(flag)//true   ->> reference to Novo
+//            {
                 tempS.remove(linha);
                 p.setLista(tempS);
                 return true;
-            }
-            else
-            {
-                tempS.remove(linha);
-                p.setLista(tempS);
-                return true;
-            }
+//            }
+//            else
+//            {
+//                tempS.remove(linha);
+//                p.setLista(tempS);
+//                return true;
+//            }
         }
     }
     

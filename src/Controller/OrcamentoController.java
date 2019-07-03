@@ -41,6 +41,7 @@ public class OrcamentoController {
     private int sequenceOS;
     private ArrayList<Orcamento_Servico> excluirS;
     private ArrayList<Integer> excluirSD;
+    private ArrayList<Integer> excluirSDCodigo;
     private ArrayList<String> excluirDetalhes;
 
     public OrcamentoController() {
@@ -50,6 +51,7 @@ public class OrcamentoController {
         sd = new DetalheServico();
         excluirS = new ArrayList<>();
         excluirSD = new ArrayList<>();
+        excluirSDCodigo = new ArrayList<>();
         excluirDetalhes = new ArrayList<>();
         sequenceOS = 1;
     }
@@ -273,6 +275,7 @@ public class OrcamentoController {
                 {
                     o.getLista().get(linha).getLista().forEach((lista) -> {
                         excluirSD.add(lista.getSequence());
+                        excluirSDCodigo.add(lista.getDs().getCodigo());
                     });
                     excluirS.add(o.getLista().get(linha));
                     tempS.remove(linha);
@@ -295,6 +298,7 @@ public class OrcamentoController {
             else
             {
                 tempS.remove(linha);
+                excluirS.add(o.getLista().get(linha));
                 o.setLista(tempS);
                 return true;
             }
@@ -355,7 +359,30 @@ public class OrcamentoController {
     
     public boolean gravarOrcamento()
     {
+        /**
+         private ArrayList<Orcamento_Servico> excluirS;
+    private ArrayList<Integer> excluirSD;
+    private ArrayList<String> excluirDetalhes;*/
+ 
         return o.gravar();
+    }
+    
+    public void excluirListas(int codigoO)
+    {
+        Orcamento_Servico_Detalhe temposd = new Orcamento_Servico_Detalhe();
+        Orcamento_Servico os = new Orcamento_Servico();
+        for(int i = 0; i < excluirDetalhes.size(); i++)
+        {
+            temposd.executeDelete(excluirDetalhes.get(i));
+        }
+        for(int i = 0; i < excluirSD.size(); i++)
+        {
+            temposd.excluir(codigoO, excluirSD.get(i), excluirSDCodigo.get(i));
+        }
+        for(int i = 0; i < excluirS.size(); i++)
+        {
+            os.excluir(codigoO, excluirS.get(i).getSequence());
+        }
     }
     
     public boolean gravarOrcemntoServico()
@@ -418,7 +445,13 @@ public class OrcamentoController {
     public void buscarDados(int codigo) throws SQLException
     {
         Orcamento temp = o.buscar(codigo);
-        o = temp == null ? new Orcamento() : temp;
+        if(temp != null)
+        {   
+            o = temp;
+            sequenceOS = temp.getLista().get(temp.getLista().size()-1).getSequence();
+        }
+        else
+            o = new Orcamento();
     }
     
     public void carregarTabelaServico(JTable tabela)

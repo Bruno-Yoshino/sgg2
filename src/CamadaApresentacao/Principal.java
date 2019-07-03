@@ -22,6 +22,9 @@ import javax.swing.ImageIcon;
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * @author 巴御前
+ * @author 高村　結衣
+ * @author 里川　麗奈
  * @author 海女
  * @author 御子
  * @author 稲荷

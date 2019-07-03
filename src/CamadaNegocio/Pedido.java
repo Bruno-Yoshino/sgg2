@@ -13,6 +13,9 @@ import javax.swing.JTable;
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * @author 巴御前
+ * @author 高村　結衣
+ * @author 里川　麗奈
  * @author 鳳翔
  * @author 川村
  * @author 磐手
@@ -167,7 +170,7 @@ public class Pedido {
         Pedido temp = new Pedido();
         String sql = "SELECT pe_codigo, cli_codigo, func_codigo, pe_valortotal, pe_datapedido, pe_entrega, fpg_codigo, orc_numero " +
                      " FROM pedido "
-                    + " WHERE pe_codigo = "+codigo+"";
+                    +" WHERE pe_codigo = "+codigo+"";
         ResultSet rs=Banco.getCon().consultar(sql);
         if(rs.next())
         {
@@ -188,9 +191,9 @@ public class Pedido {
         String query = null;
         if (valor.equals(""))
         {
-            query = "SELECT o.pe_codigo, c.cli_nome, o.pe_valortotal, o.pe_datapedido, o.pe_entrega "
-                + " FROM pedido o, cliente c "
-                + " WHERE o.cli_codigo = c.cli_codigo ";
+            query = "SELECT p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_entrega "
+                + " FROM pedido p, cliente c "
+                + " WHERE p.cli_codigo = c.cli_codigo ";
         }
         else
         {
@@ -198,30 +201,30 @@ public class Pedido {
             {
                 case 0:// Tudo
                 {
-                    query = "SELECT o.pe_codigo, c.cli_nome, o.pe_valortotal, o.pe_datapedido, o.pe_entrega "
-                          + " FROM pedido o, cliente c "
-                          + " WHERE o.cli_codigo = c.cli_codigo ";
+                    query = "SELECT p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_entrega "
+                          + " FROM pedido p, cliente c "
+                          + " WHERE p.cli_codigo = c.cli_codigo ";
                     break;
                 }
                 case 1:// Data
                 {
-                    query = "SELECT o.pe_codigo, c.cli_nome, o.pe_valortotal, o.pe_datapedido, o.pe_entrega "
-                          + " FROM pedido o, cliente c "
-                          + " WHERE o.pe_datapedido = '"+valor+"' and o.cli_codigo = c.cli_codigo ";
+                    query = "SELECT p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_entrega "
+                          + " FROM pedido p, cliente c "
+                          + " WHERE p.pe_datapedido = '"+valor+"' and p.cli_codigo = c.cli_codigo ";
                     break;
                 }
                 case 2:// Periodo
                 {
-                    query = "SELECT o.pe_codigo, c.cli_nome, o.pe_valortotal, o.pe_datapedido, o.pe_entrega "
-                             + " FROM pedido o, cliente c "
-                            + " WHERE o.pe_datapedido BETWEEN '"+dataI+"' and '"+dataF+"' and o.cli_codigo = c.cli_codigo";
+                    query = "SELECT p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_entrega "
+                             + " FROM pedido p, cliente c "
+                            + " WHERE p.pe_datapedido BETWEEN '"+dataI+"' and '"+dataF+"' and p.cli_codigo = c.cli_codigo";
                     break;
                 }
                 case 3:// Numero
                 {
-                    query = "select o.pe_codigo, c.cli_nome, o.pe_valortotal, o.pe_datapedido, o.pe_entrega "
-                             + " FROM pedido o, cliente c "
-                            + "where o.pe_codigo = '"+valor+"' and o.cli_codigo = c.cli_codigo";
+                    query = "select p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_entrega "
+                             + " FROM pedido p, cliente c "
+                            + "where p.pe_codigo = '"+valor+"' and p.cli_codigo = c.cli_codigo";
                     break;
                 }
             }
@@ -260,19 +263,14 @@ public class Pedido {
     
     public static void configuraModelPedidoS(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
     {
-        String colunas[] = new String [] {"Serviço", "Valor", "Quantidade", "C. Papel", "C. Arte", "C. Impressão", "C. Acabamento", "C. Chapa", "C. MdO", "Desconto", "Valor Total", "Descrição"};
+        String colunas[] = new String [] {"Serviço", "Valor", "Quantidade", "Desconto", "Valor Total", "Descrição"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));
         jTable.getColumnModel().getColumn(0).setPreferredWidth(250);
         jTable.getColumnModel().getColumn(1).setPreferredWidth(70);
         jTable.getColumnModel().getColumn(2).setPreferredWidth(70);
         jTable.getColumnModel().getColumn(3).setPreferredWidth(70);
         jTable.getColumnModel().getColumn(4).setPreferredWidth(70);
-        jTable.getColumnModel().getColumn(5).setPreferredWidth(70);
-        jTable.getColumnModel().getColumn(6).setPreferredWidth(70);
-        jTable.getColumnModel().getColumn(7).setPreferredWidth(70);
-        jTable.getColumnModel().getColumn(8).setPreferredWidth(70);
-        jTable.getColumnModel().getColumn(9).setPreferredWidth(70);
-        jTable.getColumnModel().getColumn(10).setPreferredWidth(250);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(250);
     }
     
     public static void configuraModelPedidoSD(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
