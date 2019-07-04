@@ -5,6 +5,8 @@
  */
 package CamadaNegocio;
 
+import CamadaLogica.Banco;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -131,5 +133,112 @@ public class Producao
     public int qtdReservaP()
     {
         return 0;
+    }
+    
+    public static ResultSet BuscarPedidoNaoEntregue(String valor, int tipo)
+    {
+        String query = null;
+        if (valor.equals(""))
+        {
+            query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_entrega "
+                + " FROM pedido p, cliente c "
+                + " WHERE p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_entrega";
+        }
+        else
+        {
+            switch (tipo)
+            {
+                case 1:// Mome
+                {
+                    query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_entrega "
+                          + " FROM pedido p, cliente c "
+                          + " WHERE c.cli_nome ilike '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_entrega";
+                    break;
+                }
+                case 2:// Numero
+                {
+                    query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_entrega "
+                             + " FROM pedido p, cliente c "
+                            + "where p.pe_codigo = '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_entrega";
+                    break;
+                }
+            }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
+    public static ResultSet BuscarPedidoEntregue(String valor, int tipo)
+    {
+        String query = null;
+        if (valor.equals(""))
+        {
+            query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_entrega "
+                + " FROM pedido p, cliente c "
+                + " WHERE p.cli_codigo = c.cli_codigo and p.pe_datapedido < p.pe_entrega";
+        }
+        else
+        {
+            switch (tipo)
+            {
+                case 1:// Mome
+                {
+                    query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_entrega "
+                          + " FROM pedido p, cliente c "
+                          + " WHERE c.cli_nome ilike '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido < p.pe_entrega";
+                    break;
+                }
+                case 2:// Numero
+                {
+                    query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_entrega "
+                             + " FROM pedido p, cliente c "
+                            + "where p.pe_codigo = '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido < p.pe_entrega";
+                    break;
+                }
+            }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
+    public static ResultSet BuscarProducao(String valor, int tipo, boolean flag)
+    {
+        String query = null;
+        if (valor.equals(""))
+        {
+            query = "SELECT p.prod_codigo, s.serv_nome, p.prod_status "
+                + " FROM producao p, servico s "
+                + " WHERE p.serv_codigo = s.serv_codigo and p.prod_status = "+flag+"";
+        }
+        else
+        {
+            switch (tipo)
+            {
+                case 1:// Numero
+                {
+                    query = "SELECT p.prod_codigo, s.serv_nome, p.prod_status "
+                          + " FROM producao p, servico s "
+                          + " WHERE p.prod_codigo = "+valor+" and p.serv_codigo = s.serv_codigo and p.prod_status = "+flag+"";
+                    break;
+                }
+            }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
+    public static ResultSet BuscarProducaoItemFolha(int codigoP)
+    {
+        String query = "SELECT f.fo_codigo, f.fo_tamanho, f.fo_descricao, pf.pf_qtd "
+                        + " FROM producao_folha pf, folha f "
+                        + " WHERE pf.prod_codigo = "+codigoP+" and pf.fo_codigo = f.fo_codigo ";
+
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
+    public static ResultSet BuscarProducaoItemProduto(int codigoP)
+    {
+        String query = "SELECT p.pro_codigo, p.pro_nome, pp.prod_qtd "
+                     + " FROM producao_produto pp, produto p "
+                     + " WHERE pp.prod_codigo = "+codigoP+" and pp.pro_codigo = p.pro_qtd ";
+
+        return Banco.getCon().retornaResultSet(query);
     }
 }

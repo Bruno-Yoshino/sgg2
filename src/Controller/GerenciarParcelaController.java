@@ -94,7 +94,7 @@ public class GerenciarParcelaController {
             {
                 if(inter >0)
                 {
-                    calendar.add(Calendar.DAY_OF_MONTH, 1);
+                    calendar.add(Calendar.DAY_OF_MONTH, inter);
                 }
                 else
                 {
@@ -117,6 +117,8 @@ public class GerenciarParcelaController {
         double resto = valor % qtd;
         if(resto > 0)
         {
+            resto = valor / qtd;
+            resto = valor - resto * 3;
             return valor / qtd + resto;
         }
         return valor / qtd;

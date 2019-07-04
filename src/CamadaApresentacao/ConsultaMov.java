@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import CamadaNegocio.Compra;
 import CamadaNegocio.Orcamento;
+import CamadaNegocio.Pedido;
 import java.util.ArrayList;
 
 /**
@@ -436,6 +437,9 @@ public class ConsultaMov extends javax.swing.JDialog {
                     case "Orçamento":
                         OrcamentoServico();
                         break;
+                    case "Pedido":
+                        PedidoServico();
+                        break;
                 }
             }
         }
@@ -462,7 +466,8 @@ public class ConsultaMov extends javax.swing.JDialog {
         switch(tabela)
         {
             case "Compra": Compra(); break; 
-            case "Orçamento": Orcamento(); break;
+            case "Orcamento": Orcamento(); break;
+            case "Pedido": Pedido(); break;
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
@@ -472,9 +477,13 @@ public class ConsultaMov extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
-        switch(tabela)
+        if (jTable3.getSelectedRow() >= 0)
         {
-            case "Orçamento": OrcamentoServicoDetalhe(); break;
+            switch(tabela)
+            {
+                case "Orçamento": OrcamentoServicoDetalhe(); break;
+                case "Pedido": PedidoServicoDetalhe(); break;
+            }
         }
     }//GEN-LAST:event_jTable3MouseClicked
 
@@ -518,6 +527,33 @@ public class ConsultaMov extends javax.swing.JDialog {
             Orcamento.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             rs = Orcamento.ConsultaOrcamento(txtValor.getText(), tipo, dateInicio.getData(), dateFim.getData());
+            while (rs.next())
+            {
+                model.addRow(new Object[]
+                {//"Número", "Cliente", "Data Pedido", "Data Vencimento", "Valor Total"
+                    rs.getInt(1), 
+                    rs.getString(2),
+                    rs.getDate(3),
+                    rs.getDate(4),
+                    rs.getDouble(5)
+                });
+            }
+        } 
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void Pedido() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            Pedido.configuraModel(jTable1);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            rs = Pedido.ConsultaPedido(txtValor.getText(), tipo, dateInicio.getData(), dateFim.getData());
             while (rs.next())
             {
                 model.addRow(new Object[]
@@ -597,7 +633,7 @@ public class ConsultaMov extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Orcamento.configuraModelOrcamentoS(jTable3);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable3.getModel();
-            rs = Orcamento.ConsultaOrcamentoServico(codigo); //1 == produto 2 == folha
+            rs = Orcamento.ConsultaOrcamentoServico(codigo); 
             while (rs.next())
             {
                 model.addRow(new Object[]
@@ -612,7 +648,7 @@ public class ConsultaMov extends javax.swing.JDialog {
                     rs.getDouble(8),
                     rs.getDouble(9),
                     rs.getDouble(10),
-                    rs.getDouble(2)*rs.getInt(3)+rs.getDouble(4)+rs.getDouble(5)+rs.getDouble(6)+rs.getDouble(7)+rs.getDouble(8)+rs.getDouble(9)+rs.getDouble(10),
+                    rs.getDouble(2)*rs.getInt(3)+rs.getDouble(4)+rs.getDouble(5)+rs.getDouble(6)+rs.getDouble(7)+rs.getDouble(8)+rs.getDouble(9)-rs.getDouble(10),
                     rs.getString(11)
                 });
                 listaSequence.add(rs.getInt(12));
@@ -632,13 +668,70 @@ public class ConsultaMov extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Orcamento.configuraModelOrcamentoSD(jTable4);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable4.getModel();
-            rs = Orcamento.ConsultaOrcamentoServicoD(codigo, listaSequence.get(jTable3.getSelectedRow())); //1 == produto 2 == folha
+            rs = Orcamento.ConsultaOrcamentoServicoD(codigo, listaSequence.get(jTable3.getSelectedRow())); 
             while (rs.next())
             {
                 
                 model.addRow(new Object[]
                 {//ds.ds_descricao, osd.osd_numeracaoini, osd.osd_numeracaofim, osd.osd_vias, osd.osd_outros, osd.os_sequence
                  //"Descrição", "Vias", "Numeração I.", "Numeração F", "Outros"   
+                    rs.getString(1),
+                    rs.getInt(4),
+                    rs.getInt(2),
+                    rs.getInt(3),
+                    rs.getString(5),
+                });
+            }
+        } 
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void PedidoServico() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            Pedido.configuraModelPedidoS(jTable3);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable3.getModel();
+            rs = Pedido.ConsultaPedidoServico(codigo); 
+            while (rs.next())
+            {
+                model.addRow(new Object[]
+                {
+                    rs.getString(1),
+                    rs.getDouble(2),
+                    rs.getInt(3),
+                    rs.getDouble(4),
+                    rs.getDouble(2)*rs.getInt(3)-rs.getDouble(4),
+                    rs.getString(5)
+                });
+                listaSequence.add(rs.getInt(12));
+            }
+        } 
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void PedidoServicoDetalhe() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            Pedido.configuraModelPedidoSD(jTable4);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable4.getModel();
+            rs = Pedido.ConsultaPedidoServicoD(codigo, listaSequence.get(jTable3.getSelectedRow())); 
+            while (rs.next())
+            {
+                
+                model.addRow(new Object[]
+                {
                     rs.getString(1),
                     rs.getInt(4),
                     rs.getInt(2),

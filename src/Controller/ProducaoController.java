@@ -12,7 +12,11 @@ import CamadaNegocio.Producao;
 import CamadaNegocio.Producao_Folha;
 import CamadaNegocio.Producao_Produto;
 import CamadaNegocio.Produto;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import util.Validacao;
 import util.mensagens;
@@ -114,7 +118,7 @@ public class ProducaoController {
 
         return 0;
     }
-    
+    //-------------------------------------------------------------------------------------------------------------------
     
     public void addTabela(JTable tabela, boolean flagF, boolean flagP)
     {
@@ -177,18 +181,137 @@ public class ProducaoController {
         p.setF(new Funcionario().buscarCodigo(codigo));
     }
     
-    public void carregarListaCliente(int op)
+    public void carregarListaCliente(int op, String valor, JTable tabela)
     {
-        
+        ResultSet rs;
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        switch(op)
+        {
+            case 1: 
+                if(valor.equals("Nome Cliente ou Numero pedido"))
+                {
+                    rs =  Producao.BuscarPedidoNaoEntregue("", 0);
+                }
+                else
+                    if(v.ConverteNumeroInteiro(valor) > 0)
+                    {
+                        rs =  Producao.BuscarPedidoNaoEntregue(valor, 2);
+                    }
+                    else
+                    {
+                        rs =  Producao.BuscarPedidoNaoEntregue(valor, 1);
+                    }
+                break;
+            case 2: 
+                if(valor.equals("Nome Cliente ou Numero pedido"))
+                {
+                    rs =  Producao.BuscarPedidoEntregue("", 0);
+                }
+                else
+                    if(v.ConverteNumeroInteiro(valor) > 0)
+                    {
+                        rs =  Producao.BuscarPedidoEntregue(valor, 2);
+                    }
+                    else
+                    {
+                        rs =  Producao.BuscarPedidoEntregue(valor, 1);
+                    }
+                break;
+                
+            default: rs =  Producao.BuscarPedidoNaoEntregue("", 0);
+        }
+        try {
+            while(rs.next())
+            {
+                model.addRow(new Object[]{
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getInt(3),
+                    rs.getDate(4)
+                });
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProducaoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    public void carregarListaPedido(int op)
+    public void carregarListaPedido(int op, String valor, JTable tabela)
     {
-        
+        ResultSet rs;
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        if(valor.equals("Nome Cliente ou Numero pedido"))
+        {
+            rs =  Producao.BuscarProducao("", 1, (op==1));
+        }
+        else
+        {
+            if(v.ConverteNumeroInteiro(valor) > 0)
+                rs =  Producao.BuscarProducao(valor, 1, (op==1));
+            else
+                rs =  Producao.BuscarProducao("", 1, (op==1));
+        }
+        try {
+            while(rs.next())
+            {
+                model.addRow(new Object[]{
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getBoolean(3) ? "Pronto" : "Não Pronto"
+                });
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProducaoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    public void carregarListaItens(int codigoPed, int codigoP)// pedido && producao
+    public void carregarListaItens(int codigoP, JTable tabela)// pedido && producao
     {
+        ResultSet rs;
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        try {
+            rs = Producao.BuscarProducaoItemFolha(codigoP);
+            while(rs.next())
+            {
+                model.addRow(new Object[]{
+                    0,
+                    rs.getInt(1),
+                    rs.getString(2) +"/"+ rs.getString(3),
+                    rs.getInt(4)
+                });
+            }
+            rs = Producao.BuscarProducaoItemProduto(codigoP);
+            while(rs.next())
+            {
+                model.addRow(new Object[]{
+                    0,
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getInt(3)
+                });
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProducaoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public int varidarAddItem(String produto, String folha, String qtdP, String qtdF, String reservaP, String ReservaF)
+    {///まだ
+        if(produto.equals("") && folha.equals(""))
+            return 1;
+        if(!produto.equals(""))
+        {
+            //Check Produto
+            //Check Stock
+            // ADD Lista
+        }
         
+        if(!folha.equals(""))
+        {
+            //Check Folha
+            //Check Stock
+            // ADD Lista
+        }
+        
+        return 0;
     }
 }

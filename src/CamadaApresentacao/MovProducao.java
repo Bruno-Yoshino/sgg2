@@ -1,5 +1,6 @@
 package CamadaApresentacao;
 
+import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Funcionario;
 import Controller.ProducaoController;
 import javax.swing.JOptionPane;
@@ -41,11 +42,17 @@ public class MovProducao extends javax.swing.JDialog {
         btnaddProduto.setText("btnaddProduto");
         btnlocProduto.setText("btnlocProduto");
         pc.getP().setF(f);
+        txtFuncionario.setText(""+f.getNome());
         sc.Initialize(jPanel3.getComponents());
         sc.HabilityComponents(jPanel2.getComponents(), false);
         sc.HabilityComponents(jPanel4.getComponents(), false);
     }
-
+/*
+    Rog:
+    2019年07月03日：
+        今日の担当：吉野　廉、　羽根川　翼、　里川　麗奈、　阿賀野
+        明日の仕事：MovProducao及びその他のメッソッドの終了。　
+    */
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,6 +67,7 @@ public class MovProducao extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
         rbClienteOP2 = new javax.swing.JRadioButton();
         rbClienteOP3 = new javax.swing.JRadioButton();
+        txtFiltro = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -70,10 +78,11 @@ public class MovProducao extends javax.swing.JDialog {
         cbStatus = new javax.swing.JCheckBox();
         rbPedidoOP3 = new javax.swing.JRadioButton();
         rbPedidoOP2 = new javax.swing.JRadioButton();
-        jTextField10 = new javax.swing.JTextField();
+        txtFuncionario = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         btnlocFuncionario = new javax.swing.JButton();
         btnaddFuncionario = new javax.swing.JButton();
+        txtFiltroProducao = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         btnAlterar = new javax.swing.JButton();
         btnGravar = new javax.swing.JButton();
@@ -130,9 +139,30 @@ public class MovProducao extends javax.swing.JDialog {
         rbClienteOP2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         rbClienteOP2.setSelected(true);
         rbClienteOP2.setText("Clientes com pedidos não entregue");
+        rbClienteOP2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbClienteOP2MouseClicked(evt);
+            }
+        });
 
         rbClienteOP3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         rbClienteOP3.setText("Clientes com pedidos faltando");
+        rbClienteOP3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbClienteOP3MouseClicked(evt);
+            }
+        });
+
+        txtFiltro.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtFiltro.setText("Nome Cliente ou Numero pedido");
+        txtFiltro.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtFiltroFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtFiltroFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -145,7 +175,9 @@ public class MovProducao extends javax.swing.JDialog {
                         .addComponent(rbClienteOP2)
                         .addGap(18, 18, 18)
                         .addComponent(rbClienteOP3)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(txtFiltro)
+                        .addContainerGap())
                     .addComponent(jScrollPane1)))
         );
         jPanel1Layout.setVerticalGroup(
@@ -153,7 +185,8 @@ public class MovProducao extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbClienteOP2)
-                    .addComponent(rbClienteOP3))
+                    .addComponent(rbClienteOP3)
+                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(8, 8, 8)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -194,9 +227,21 @@ public class MovProducao extends javax.swing.JDialog {
         rbPedidoOP3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         rbPedidoOP3.setSelected(true);
         rbPedidoOP3.setText("Pedidos ainda não entregue");
+        rbPedidoOP3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbPedidoOP3MouseClicked(evt);
+            }
+        });
 
         rbPedidoOP2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         rbPedidoOP2.setText("Pedidos ja entregue");
+        rbPedidoOP2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbPedidoOP2MouseClicked(evt);
+            }
+        });
+
+        txtFuncionario.setEditable(false);
 
         jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel12.setText("Funcionario Responsavel:");
@@ -215,6 +260,17 @@ public class MovProducao extends javax.swing.JDialog {
             }
         });
 
+        txtFiltroProducao.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtFiltroProducao.setText("Filtro para Numero da producao");
+        txtFiltroProducao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtFiltroProducaoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtFiltroProducaoFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -223,42 +279,47 @@ public class MovProducao extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(rbPedidoOP3)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbPedidoOP2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbStatus)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                         .addComponent(btnaddFuncionario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnlocFuncionario))))
+                        .addComponent(btnlocFuncionario))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(rbPedidoOP3)
+                                .addGap(18, 18, 18)
+                                .addComponent(rbPedidoOP2)
+                                .addGap(36, 36, 36)
+                                .addComponent(txtFiltroProducao))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cbStatus)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbPedidoOP2)
-                    .addComponent(rbPedidoOP3))
+                    .addComponent(rbPedidoOP3)
+                    .addComponent(txtFiltroProducao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel12))
                             .addComponent(btnaddFuncionario))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -293,6 +354,11 @@ public class MovProducao extends javax.swing.JDialog {
         btnGravar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Gravar16.png"))); // NOI18N
         btnGravar.setText("Gravar");
+        btnGravar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGravarActionPerformed(evt);
+            }
+        });
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Sair.png"))); // NOI18N
         btnSair.addActionListener(new java.awt.event.ActionListener() {
@@ -354,6 +420,8 @@ public class MovProducao extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Produto:");
 
+        txtProduto.setEditable(false);
+
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("Quantidade:");
 
@@ -374,14 +442,20 @@ public class MovProducao extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Qtd no estoque:");
 
+        txtEstoqueP.setEditable(false);
+
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Folha:");
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel7.setText("Qtd no estoque:");
 
+        txtEstoqueF.setEditable(false);
+
         jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel8.setText("Quantidade:");
+
+        txtFolha.setEditable(false);
 
         btnaddFolha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
         btnaddFolha.addActionListener(new java.awt.event.ActionListener() {
@@ -403,11 +477,15 @@ public class MovProducao extends javax.swing.JDialog {
 
         btnremoveAll.setText("Cancerar a inserção de Itens");
 
+        txtReservadoP.setEditable(false);
+
         jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel10.setText("Qtd Reservado:");
 
         jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel11.setText("Qtd Reservado:");
+
+        txtReservadoF.setEditable(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -564,6 +642,7 @@ public class MovProducao extends javax.swing.JDialog {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        ReadOnlyTableModel model = (ReadOnlyTableModel) jTable2.getModel();
         if(evt.getClickCount() == 1)
         {
             if(jTable2.getSelectedRow() >= 0)
@@ -571,6 +650,7 @@ public class MovProducao extends javax.swing.JDialog {
                 sc.HabilityComponents(jPanel4.getComponents(), true);
                 sc.Alter(jPanel3.getComponents());
                 //carregar os Itens Folha e produto
+                pc.carregarListaItens(Integer.valueOf((String) model.getValueAt(jTable2.getSelectedRow(), 0)), jTable3);
             }
             else
             {
@@ -580,7 +660,7 @@ public class MovProducao extends javax.swing.JDialog {
         }
         else
         {
-            
+            //Creating new form for DetalheServico.
         }
     }//GEN-LAST:event_jTable2MouseClicked
 
@@ -667,7 +747,17 @@ public class MovProducao extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        sc.Edity(jPanel3.getComponents());
+        ReadOnlyTableModel model = (ReadOnlyTableModel) jTable2.getModel();
+        if(!model.getValueAt(jTable2.getSelectedRow(), 2).equals("Pronto"))
+        {
+            sc.Edity(jPanel3.getComponents());
+            sc.HabilityComponents(jPanel4.getComponents(), true);
+        }
+        else
+        {
+            jTable3.setEnabled(true);
+            btnCancelar.setEnabled(true);
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -675,6 +765,67 @@ public class MovProducao extends javax.swing.JDialog {
         sc.limpar(jPanel2.getComponents());
         sc.Initialize(jPanel3.getComponents());
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void rbClienteOP2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbClienteOP2MouseClicked
+        if(rbClienteOP2.isSelected())
+        {
+            pc.carregarListaCliente(rbClienteOP2.isSelected() ? 1 : 2, txtFiltro.getText(), jTable1);
+            rbClienteOP3.setSelected(false);
+        }
+    }//GEN-LAST:event_rbClienteOP2MouseClicked
+
+    private void rbClienteOP3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbClienteOP3MouseClicked
+        if(rbClienteOP3.isSelected())
+        {
+            pc.carregarListaCliente(rbClienteOP2.isSelected() ? 1 : 2, txtFiltro.getText(), jTable1);
+            rbClienteOP2.setSelected(false);
+        }
+    }//GEN-LAST:event_rbClienteOP3MouseClicked
+
+    private void rbPedidoOP3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbPedidoOP3MouseClicked
+        if(rbPedidoOP3.isSelected())
+        {
+            
+            rbPedidoOP2.setSelected(false);
+        }
+    }//GEN-LAST:event_rbPedidoOP3MouseClicked
+
+    private void rbPedidoOP2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbPedidoOP2MouseClicked
+        if(rbPedidoOP2.isSelected())
+        {
+            rbPedidoOP3.setSelected(false);
+        }
+    }//GEN-LAST:event_rbPedidoOP2MouseClicked
+
+    private void txtFiltroFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroFocusGained
+        txtFiltro.setText("");
+    }//GEN-LAST:event_txtFiltroFocusGained
+
+    private void txtFiltroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroFocusLost
+        if(txtFiltro.equals("") || txtFiltro.equals("Nome Cliente ou Numero pedido"))
+        {
+            txtFiltro.setText("Nome Cliente ou Numero pedido");
+        }
+        pc.carregarListaCliente(rbClienteOP2.isSelected() ? 1 : 2, txtFiltro.getText(), jTable1);
+    }//GEN-LAST:event_txtFiltroFocusLost
+
+    private void txtFiltroProducaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroProducaoFocusGained
+        txtFiltroProducao.setText("");
+    }//GEN-LAST:event_txtFiltroProducaoFocusGained
+
+    private void txtFiltroProducaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroProducaoFocusLost
+        if(txtFiltroProducao.equals("") || txtFiltroProducao.equals("Filtro para Numero da producao"))
+        {
+            txtFiltroProducao.setText("Filtro para Numero da producao");
+        }
+    }//GEN-LAST:event_txtFiltroProducaoFocusLost
+
+    private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
+        if(m.Pergunta("Confirma a Gravação?", "Atenção") == JOptionPane.YES_OPTION)
+        {
+            
+        }
+    }//GEN-LAST:event_btnGravarActionPerformed
 
 
 
@@ -715,14 +866,16 @@ public class MovProducao extends javax.swing.JDialog {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTextField jTextField10;
     private javax.swing.JRadioButton rbClienteOP2;
     private javax.swing.JRadioButton rbClienteOP3;
     private javax.swing.JRadioButton rbPedidoOP2;
     private javax.swing.JRadioButton rbPedidoOP3;
     private javax.swing.JTextField txtEstoqueF;
     private javax.swing.JTextField txtEstoqueP;
+    private javax.swing.JTextField txtFiltro;
+    private javax.swing.JTextField txtFiltroProducao;
     private javax.swing.JTextField txtFolha;
+    private javax.swing.JTextField txtFuncionario;
     private javax.swing.JTextArea txtOBS;
     private javax.swing.JTextField txtProduto;
     private javax.swing.JTextField txtQtdF;

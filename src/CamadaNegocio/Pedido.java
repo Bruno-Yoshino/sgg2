@@ -235,18 +235,18 @@ public class Pedido {
     public static ResultSet ConsultaPedidoServico(int codigo)
     {
         String query = null;
-        query = "SELECT s.serv_nome, os.os_valor, os.os_qtd, os.os_custopapel, os.os_custoarte, os.os_custoimpressao, os.os_custoacabamento, os.os_custochapa, os.os_customdo, os.os_desconto, os.os_descricao, os.os_sequence " +
-                " FROM pedido_servico os, servico s "
-              + " WHERE os.pe_codigo = "+codigo+" and os.serv_codigo = s.serv_codigo;";
+        query = "SELECT s.serv_nome, ps.ps_valor, ps.ps_qtd, ps.ps_desconto, ps.ps_descricao, ps.ps_sequence " +
+                " FROM pedido_servico ps, servico s "
+              + " WHERE ps.pe_codigo = "+codigo+" and ps.serv_codigo = s.serv_codigo;";
         return Banco.getCon().retornaResultSet(query);
     }
     
     public static ResultSet ConsultaPedidoServicoD(int codigo, int sequence)
     {
         String query = null;
-        query = "SELECT ds.ds_descricao, osd.osd_numeracaoini, osd.osd_numeracaofim, osd.osd_vias, osd.osd_outros, osd.os_sequence " +
-                " FROM pedido_servico_detalhe osd, detalhe_serv ds "
-              + " WHERE osd.pe_codigo = "+codigo+" and os_sequence = "+sequence+" and osd.ds_codigo = ds.ds_codigo;";
+        query = "SELECT ds.ds_descricao, psd.psd_numeracaoini, psd.psd_numeracaofim, psd.psd_vias, psd.psd_outros, psd.os_sequence " +
+                " FROM pedido_servico_detalhe psd, detalhe_serv ds "
+              + " WHERE psd.pe_codigo = "+codigo+" and os_sequence = "+sequence+" and psd.ds_codigo = ds.ds_codigo;";
         return Banco.getCon().retornaResultSet(query);
     }
     

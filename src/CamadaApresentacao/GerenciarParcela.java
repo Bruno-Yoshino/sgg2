@@ -425,7 +425,7 @@ public class GerenciarParcela extends javax.swing.JDialog {
     }//GEN-LAST:event_txtValorNFocusGained
 
     private void txtValorNKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorNKeyPressed
-        if(evt.getKeyCode() == evt.VK_ENTER)
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER)
             btnAtualizarActionPerformed(null);
     }//GEN-LAST:event_txtValorNKeyPressed
 
