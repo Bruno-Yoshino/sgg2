@@ -52,6 +52,10 @@ public class MovProducao extends javax.swing.JDialog {
     2019年07月03日：
         今日の担当：吉野　廉、　羽根川　翼、　里川　麗奈、　阿賀野
         明日の仕事：MovProducao及びその他のメッソッドの終了。　
+    2019年07月04日：
+        今日の担当：吉野　廉、　羽根川　翼、　阿賀野, 矢矧
+        明日の仕事：MovProducao及びその他のメッソッドの終了。
+        今日のメモ：　里川　麗奈　ふざけるな！どうやって、何をすれば今日中に終わるんだよ？
     */
     /**
      * This method is called from within the constructor to initialize the form.
@@ -75,7 +79,6 @@ public class MovProducao extends javax.swing.JDialog {
         jScrollPane3 = new javax.swing.JScrollPane();
         txtOBS = new javax.swing.JTextArea();
         jLabel9 = new javax.swing.JLabel();
-        cbStatus = new javax.swing.JCheckBox();
         rbPedidoOP3 = new javax.swing.JRadioButton();
         rbPedidoOP2 = new javax.swing.JRadioButton();
         txtFuncionario = new javax.swing.JTextField();
@@ -83,6 +86,7 @@ public class MovProducao extends javax.swing.JDialog {
         btnlocFuncionario = new javax.swing.JButton();
         btnaddFuncionario = new javax.swing.JButton();
         txtFiltroProducao = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         btnAlterar = new javax.swing.JButton();
         btnGravar = new javax.swing.JButton();
@@ -220,9 +224,7 @@ public class MovProducao extends javax.swing.JDialog {
         jScrollPane3.setViewportView(txtOBS);
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel9.setText("Entregue?:");
-
-        cbStatus.setLabel("Sim");
+        jLabel9.setText("Status:");
 
         rbPedidoOP3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         rbPedidoOP3.setSelected(true);
@@ -271,6 +273,8 @@ public class MovProducao extends javax.swing.JDialog {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pronto", "Pausado", "Desenvolvomento", "Aguardando" }));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -298,13 +302,15 @@ public class MovProducao extends javax.swing.JDialog {
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel1)
+                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(cbStatus)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
@@ -331,7 +337,7 @@ public class MovProducao extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel9)
-                                    .addComponent(cbStatus)))
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnlocFuncionario)
@@ -748,7 +754,7 @@ public class MovProducao extends javax.swing.JDialog {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable2.getModel();
-        if(!model.getValueAt(jTable2.getSelectedRow(), 2).equals("Pronto"))
+        if(model.getValueAt(jTable2.getSelectedRow(), 2).equals("Aguardando"))
         {
             sc.Edity(jPanel3.getComponents());
             sc.HabilityComponents(jPanel4.getComponents(), true);
@@ -843,7 +849,7 @@ public class MovProducao extends javax.swing.JDialog {
     private javax.swing.JButton btnlocFuncionario;
     private javax.swing.JButton btnlocProduto;
     private javax.swing.JButton btnremoveAll;
-    private javax.swing.JCheckBox cbStatus;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

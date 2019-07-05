@@ -45,16 +45,20 @@ public class PedidoController {
     private Servico ser;
     private DetalheServico sd; 
     private int sequenceOS;
-
+    private final ArrayList<Pedido_Servico> excluirS;
+    private final ArrayList<Integer> excluirSD;
+    private final ArrayList<Integer> excluirSDCodigo;
+    private final ArrayList<String> excluirDetalhes;
 
     public PedidoController() {
         p = new Pedido();
         v = new Validacao();
         ser = new Servico();
         sd = new DetalheServico();
-//        excluirS = new ArrayList<>();
-//        excluirSD = new ArrayList<>();
-//        excluirDetalhes = new ArrayList<>();
+        excluirS = new ArrayList<>();
+        excluirSD = new ArrayList<>();
+        excluirSDCodigo = new ArrayList<>();
+        excluirDetalhes = new ArrayList<>();
         sequenceOS = 1;
     }
 
@@ -239,10 +243,10 @@ public class PedidoController {
         ArrayList<Pedido_Servico> tempS = p.getLista();
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
         model.removeRow(linhaDS);
-//        if(!flag) // False -> Alterar
-//        {
-//            excluirDetalhes.add(new Pedido_Servico_Detalhe().CreatingDeleteSQLComand(v.ConverteNumeroInteiro(codigoO), tempS.get(linhaS).getServ().getCodigo(), p.getLista().get(linhaS).getLista().get(linhaDS).getDs().getCodigo(), p.getLista().get(linhaS).getLista().get(linhaDS).getSequence()));
-//        }
+        if(!flag) // False -> Alterar
+        {
+            excluirDetalhes.add(new Pedido_Servico_Detalhe().CreatingDeleteSQLComand(v.ConverteNumeroInteiro(codigoO), tempS.get(linhaS).getServ().getCodigo(), p.getLista().get(linhaS).getLista().get(linhaDS).getDs().getCodigo(), p.getLista().get(linhaS).getLista().get(linhaDS).getSequence()));
+        }
         p.getLista().get(linhaS).getLista().remove(linhaDS);
     }
     
@@ -256,22 +260,22 @@ public class PedidoController {
             if(m.Pergunta("Este serviço contem Detalhes inseridos! Deseja Excluir?", "Atenção") == JOptionPane.YES_OPTION)
             {
                 model.removeRow(linha);
-//                if(flag)//true   ->> reference to Novo
-//                {
+                if(flag)//true   ->> reference to Novo
+                {
                     tempS.remove(linha);
                     p.setLista(tempS);
                     return true;
-//                }
-//                else
-//                {
-////                    p.getLista().get(linha).getLista().forEach((lista) -> {
-////                        excluirSD.add(lista.getSequence());
-////                    });
-////                    excluirS.add(p.getLista().get(linha));
-//                    tempS.remove(linha);
-//                    p.setLista(tempS);
-//                    return true;
-//                }
+                }
+                else
+                {
+                    p.getLista().get(linha).getLista().forEach((lista) -> {
+                        excluirSD.add(lista.getSequence());
+                    });
+                    excluirS.add(p.getLista().get(linha));
+                    tempS.remove(linha);
+                    p.setLista(tempS);
+                    return true;
+                }
             }
             else
                 return false;
@@ -279,18 +283,18 @@ public class PedidoController {
         else// DetalheServicoがない時。
         {
             model.removeRow(linha);
-//            if(flag)//true   ->> reference to Novo
-//            {
+            if(flag)//true   ->> reference to Novo
+            {
                 tempS.remove(linha);
                 p.setLista(tempS);
                 return true;
-//            }
-//            else
-//            {
-//                tempS.remove(linha);
-//                p.setLista(tempS);
-//                return true;
-//            }
+            }
+            else
+            {
+                tempS.remove(linha);
+                p.setLista(tempS);
+                return true;
+            }
         }
     }
     
@@ -431,4 +435,15 @@ public class PedidoController {
         }
     }
     
+    public boolean checarStatusProducao(int codigoP, int codigoS, int linha)
+    {
+        if(linha == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

@@ -6,7 +6,6 @@
 package util;
 
 import br.com.marciorl.beans.DateChooser;
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import java.awt.Component;
 import java.awt.image.BufferedImage;
 import java.io.File;

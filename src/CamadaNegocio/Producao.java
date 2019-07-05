@@ -28,13 +28,13 @@ public class Producao
     private Pedido p;
     private Servico s;
     private Funcionario f;
-    private boolean status;
+    private int status;
     private Date data;
     private int sequence;
     private ArrayList<Producao_Folha> listaF;
     private ArrayList<Producao_Produto> listaP;
 
-    public Producao(int codigo, Pedido p, Servico s, Funcionario f, boolean status, Date data, int sequence, ArrayList<Producao_Folha> listaF, ArrayList<Producao_Produto> listaP) {
+    public Producao(int codigo, Pedido p, Servico s, Funcionario f, int status, Date data, int sequence, ArrayList<Producao_Folha> listaF, ArrayList<Producao_Produto> listaP) {
         this.codigo = codigo;
         this.p = p;
         this.s = s;
@@ -83,11 +83,11 @@ public class Producao
         this.f = f;
     }
 
-    public boolean isStatus() {
+    public int isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -199,7 +199,7 @@ public class Producao
         return Banco.getCon().retornaResultSet(query);
     }
     
-    public static ResultSet BuscarProducao(String valor, int tipo, boolean flag)
+    public static ResultSet BuscarProducao(String valor, int tipo, int flag)
     {
         String query = null;
         if (valor.equals(""))

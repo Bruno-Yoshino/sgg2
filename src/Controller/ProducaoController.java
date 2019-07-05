@@ -241,14 +241,14 @@ public class ProducaoController {
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
         if(valor.equals("Nome Cliente ou Numero pedido"))
         {
-            rs =  Producao.BuscarProducao("", 1, (op==1));
+            rs =  Producao.BuscarProducao("", 1, op);
         }
         else
         {
             if(v.ConverteNumeroInteiro(valor) > 0)
-                rs =  Producao.BuscarProducao(valor, 1, (op==1));
+                rs =  Producao.BuscarProducao(valor, 1, op);
             else
-                rs =  Producao.BuscarProducao("", 1, (op==1));
+                rs =  Producao.BuscarProducao("", 1, op);
         }
         try {
             while(rs.next())
@@ -256,7 +256,7 @@ public class ProducaoController {
                 model.addRow(new Object[]{
                     rs.getInt(1),
                     rs.getString(2),
-                    rs.getBoolean(3) ? "Pronto" : "Não Pronto"
+                    rs.getInt(3) == 1 ? "Pronto" : rs.getInt(3) == 2 ? "Pausado" : rs.getInt(3) == 3 ? "Desenvolvimento" : "Aguardando"
                 });
             }
         } catch (SQLException ex) {
@@ -313,5 +313,22 @@ public class ProducaoController {
         }
         
         return 0;
+    }
+    
+    public int ReturnIndexComboBox(String texto)
+    {
+        switch(texto)
+        {
+            case "Pronto": return 0;
+            case "Pausado": return 1;
+            case "Desenvolvimento": return 2;
+            case "Aguardando": return 3;
+            default: return 0;
+        }
+    }
+    
+    public void Gravar()
+    {
+        
     }
 }
