@@ -85,8 +85,7 @@ public class MovProducao extends javax.swing.JDialog {
         jLabel12 = new javax.swing.JLabel();
         btnlocFuncionario = new javax.swing.JButton();
         btnaddFuncionario = new javax.swing.JButton();
-        txtFiltroProducao = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbStatus = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         btnAlterar = new javax.swing.JButton();
         btnGravar = new javax.swing.JButton();
@@ -179,9 +178,9 @@ public class MovProducao extends javax.swing.JDialog {
                         .addComponent(rbClienteOP2)
                         .addGap(18, 18, 18)
                         .addComponent(rbClienteOP3)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtFiltro)
-                        .addContainerGap())
+                        .addGap(22, 22, 22))
                     .addComponent(jScrollPane1)))
         );
         jPanel1Layout.setVerticalGroup(
@@ -262,18 +261,7 @@ public class MovProducao extends javax.swing.JDialog {
             }
         });
 
-        txtFiltroProducao.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtFiltroProducao.setText("Filtro para Numero da producao");
-        txtFiltroProducao.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtFiltroProducaoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtFiltroProducaoFocusLost(evt);
-            }
-        });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pronto", "Pausado", "Desenvolvomento", "Aguardando" }));
+        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pronto", "Pausado", "Desenvolvomento", "Aguardando" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -296,8 +284,7 @@ public class MovProducao extends javax.swing.JDialog {
                                 .addComponent(rbPedidoOP3)
                                 .addGap(18, 18, 18)
                                 .addComponent(rbPedidoOP2)
-                                .addGap(36, 36, 36)
-                                .addComponent(txtFiltroProducao))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -310,7 +297,7 @@ public class MovProducao extends javax.swing.JDialog {
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel9)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                        .addComponent(cbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
@@ -318,8 +305,7 @@ public class MovProducao extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbPedidoOP2)
-                    .addComponent(rbPedidoOP3)
-                    .addComponent(txtFiltroProducao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rbPedidoOP3))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -337,7 +323,7 @@ public class MovProducao extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel9)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnlocFuncionario)
@@ -478,10 +464,20 @@ public class MovProducao extends javax.swing.JDialog {
         });
 
         btnadd.setText("Adicionar");
+        btnadd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaddActionPerformed(evt);
+            }
+        });
 
         btnexcluir.setText("Excluir");
 
-        btnremoveAll.setText("Cancerar a inserção de Itens");
+        btnremoveAll.setText("Remover todos Itens");
+        btnremoveAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnremoveAllActionPerformed(evt);
+            }
+        });
 
         txtReservadoP.setEditable(false);
 
@@ -638,8 +634,11 @@ public class MovProducao extends javax.swing.JDialog {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         if(jTable1.getSelectedRow() >= 0)
         {
+            jTable2.removeAll();
             sc.HabilityComponents(jPanel2.getComponents(), true);
-            //carregar os Itens de pedido
+            //carregar os Itens de pedido OK
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            pc.carregarListaPedido(2, jTable2, Integer.valueOf((String) model.getValueAt(jTable1.getSelectedRow(), 2)));
         }
         else
         {
@@ -651,6 +650,7 @@ public class MovProducao extends javax.swing.JDialog {
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable2.getModel();
         if(evt.getClickCount() == 1)
         {
+            jTable3.removeAll();
             if(jTable2.getSelectedRow() >= 0)
             {
                 sc.HabilityComponents(jPanel4.getComponents(), true);
@@ -687,6 +687,7 @@ public class MovProducao extends javax.swing.JDialog {
         if (consFuncionario.getCodigo() != 0)
         {
             pc.buscarFuncionario(consFuncionario.getCodigo());
+            txtFuncionario.setText(""+pc.getP().getF().getNome());
             consFuncionario.dispose();
         }
         else
@@ -714,6 +715,7 @@ public class MovProducao extends javax.swing.JDialog {
             pc.buscaProduto(consP.getCodigo());
             txtEstoqueP.setText(pc.getProd().getNome());
             txtEstoqueP.setText(""+pc.getProd().getQtd());
+            txtReservadoP.setText(""+pc.qtdReservaP());
             consP.dispose();
         }
         else
@@ -738,8 +740,10 @@ public class MovProducao extends javax.swing.JDialog {
         consFolha.setVisible(true);
         if (consFolha.getCodigo() != 0)
         {
+            pc.buscaFolha(consFolha.getCodigo());
             txtFolha.setText(pc.getF().getTamanho()+ "/" +pc.getF().getDescricao());
             txtQtdF.setText(""+pc.getF().getQtd());
+            txtReservadoF.setText(""+pc.qtdReservaF());
             consFolha.dispose();
         }
         else
@@ -758,11 +762,13 @@ public class MovProducao extends javax.swing.JDialog {
         {
             sc.Edity(jPanel3.getComponents());
             sc.HabilityComponents(jPanel4.getComponents(), true);
+            jPanel3.setEnabled(false);
         }
         else
         {
             jTable3.setEnabled(true);
             btnCancelar.setEnabled(true);
+            btnGravar.setEnabled(true);
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -783,7 +789,7 @@ public class MovProducao extends javax.swing.JDialog {
     private void rbClienteOP3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbClienteOP3MouseClicked
         if(rbClienteOP3.isSelected())
         {
-            pc.carregarListaCliente(rbClienteOP2.isSelected() ? 1 : 2, txtFiltro.getText(), jTable1);
+            pc.carregarListaCliente(rbClienteOP3.isSelected() ? 1 : 2, txtFiltro.getText(), jTable1);
             rbClienteOP2.setSelected(false);
         }
     }//GEN-LAST:event_rbClienteOP3MouseClicked
@@ -791,7 +797,7 @@ public class MovProducao extends javax.swing.JDialog {
     private void rbPedidoOP3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbPedidoOP3MouseClicked
         if(rbPedidoOP3.isSelected())
         {
-            
+            //Jtable2 更新
             rbPedidoOP2.setSelected(false);
         }
     }//GEN-LAST:event_rbPedidoOP3MouseClicked
@@ -799,6 +805,7 @@ public class MovProducao extends javax.swing.JDialog {
     private void rbPedidoOP2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbPedidoOP2MouseClicked
         if(rbPedidoOP2.isSelected())
         {
+            //Jtable2 更新
             rbPedidoOP3.setSelected(false);
         }
     }//GEN-LAST:event_rbPedidoOP2MouseClicked
@@ -815,23 +822,37 @@ public class MovProducao extends javax.swing.JDialog {
         pc.carregarListaCliente(rbClienteOP2.isSelected() ? 1 : 2, txtFiltro.getText(), jTable1);
     }//GEN-LAST:event_txtFiltroFocusLost
 
-    private void txtFiltroProducaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroProducaoFocusGained
-        txtFiltroProducao.setText("");
-    }//GEN-LAST:event_txtFiltroProducaoFocusGained
-
-    private void txtFiltroProducaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroProducaoFocusLost
-        if(txtFiltroProducao.equals("") || txtFiltroProducao.equals("Filtro para Numero da producao"))
-        {
-            txtFiltroProducao.setText("Filtro para Numero da producao");
-        }
-    }//GEN-LAST:event_txtFiltroProducaoFocusLost
-
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         if(m.Pergunta("Confirma a Gravação?", "Atenção") == JOptionPane.YES_OPTION)
         {
-            
+            switch(pc.atualizaProduto(cbStatus.getSelectedIndex()+1))
+            {
+                case 1: m.InformationMessage("A producao ja existe itens, favor atualize o estoque utilizando o AjustarEstoqueProduto ou AjustarEstoqueFolha!", "Atenção"); break;
+                default:
+                    pc.Atualizar();
+            }
         }
     }//GEN-LAST:event_btnGravarActionPerformed
+
+    private void btnremoveAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnremoveAllActionPerformed
+        jTable3.removeAll();
+        pc.limpaLista();
+    }//GEN-LAST:event_btnremoveAllActionPerformed
+
+    private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
+        switch(pc.varidarAddItem(txtProduto.getText(), txtFolha.getText(), txtQtdP.getText(), txtQtdF.getText(), txtReservadoP.getText(), txtReservadoF.getText(), jTable3))
+        {
+            case 1: m.InformationMessage("Informe o produto ou/e folha!", "Atenção"); btnlocProduto.requestFocus(); break;
+            case 2: m.InformationMessage("Informe a quantidade de Produto", "Atenção"); txtQtdP.requestFocus(); break;
+            case 3: m.InformationMessage("A quantidade de produto informado é maior do que esta reservado e no estoque!", "Atenção"); txtQtdP.requestFocus(); break;
+            case 4: m.InformationMessage("Informe a quantidade de Folha", "Atenção"); txtQtdF.requestFocus(); break;
+            case 5: m.InformationMessage("A quantidade de folha informada é maior do que esta reservado e no estoque!", "Atenção"); txtQtdF.requestFocus(); break;
+            case 6: m.InformationMessage("Produto ja esta inselido!", "Atenção"); break;
+            case 7: m.InformationMessage("Folha ja inselido!", "Atenção"); break;
+            default:
+                
+        }
+    }//GEN-LAST:event_btnaddActionPerformed
 
 
 
@@ -849,7 +870,7 @@ public class MovProducao extends javax.swing.JDialog {
     private javax.swing.JButton btnlocFuncionario;
     private javax.swing.JButton btnlocProduto;
     private javax.swing.JButton btnremoveAll;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cbStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -879,7 +900,6 @@ public class MovProducao extends javax.swing.JDialog {
     private javax.swing.JTextField txtEstoqueF;
     private javax.swing.JTextField txtEstoqueP;
     private javax.swing.JTextField txtFiltro;
-    private javax.swing.JTextField txtFiltroProducao;
     private javax.swing.JTextField txtFolha;
     private javax.swing.JTextField txtFuncionario;
     private javax.swing.JTextArea txtOBS;

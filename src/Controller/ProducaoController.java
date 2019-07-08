@@ -235,21 +235,11 @@ public class ProducaoController {
         }
     }
     
-    public void carregarListaPedido(int op, String valor, JTable tabela)
+    public void carregarListaPedido(int op, JTable tabela, int codigo)
     {
         ResultSet rs;
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
-        if(valor.equals("Nome Cliente ou Numero pedido"))
-        {
-            rs =  Producao.BuscarProducao("", 1, op);
-        }
-        else
-        {
-            if(v.ConverteNumeroInteiro(valor) > 0)
-                rs =  Producao.BuscarProducao(valor, 1, op);
-            else
-                rs =  Producao.BuscarProducao("", 1, op);
-        }
+        rs =  Producao.BuscarProducao(op, codigo);
         try {
             while(rs.next())
             {
@@ -294,22 +284,37 @@ public class ProducaoController {
         }
     }
     
-    public int varidarAddItem(String produto, String folha, String qtdP, String qtdF, String reservaP, String ReservaF)
-    {///まだ
+    public int varidarAddItem(String produto, String folha, String qtdP, String qtdF, String reservaP, String reservaF, JTable tabela)
+    {
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
         if(produto.equals("") && folha.equals(""))
             return 1;
         if(!produto.equals(""))
         {
-            //Check Produto
-            //Check Stock
-            // ADD Lista
+            if(v.ConverteNumeroInteiro(qtdP) <= 0)
+                return 2;
+            if(v.ConverteNumeroInteiro(qtdP) > prod.getQtd()+v.ConverteNumeroInteiro(reservaP))
+                return 3;
+            for (int i = 0; i < model.getRowCount(); i++) 
+            {
+                if(v.ConverteNumeroInteiro(model.getValueAt(i, 0)) == prod.getCodigo())
+                    return 6;
+            }
+            p.getListaP().add(new Producao_Produto(prod, v.ConverteNumeroInteiro(qtdP)));
         }
         
         if(!folha.equals(""))
         {
-            //Check Folha
-            //Check Stock
-            // ADD Lista
+            if(v.ConverteNumeroInteiro(qtdF) <= 0)
+                return 4;
+            if(v.ConverteNumeroInteiro(qtdF) > f.getQtd()+v.ConverteNumeroInteiro(reservaF))
+                return 5;
+            for (int i = 0; i < model.getRowCount(); i++) 
+            {
+                if(v.ConverteNumeroInteiro(model.getValueAt(i, 1)) == f.getCodigo())
+                    return 7;
+            }
+            p.getListaF().add(new Producao_Folha(f, v.ConverteNumeroInteiro(qtdF)));
         }
         
         return 0;
@@ -327,8 +332,46 @@ public class ProducaoController {
         }
     }
     
-    public void Gravar()
+    public int qtdReservaP()
     {
-        
+        try {
+            return new Producao_Produto().qtdReserva(prod.getCodigo());
+        } catch (SQLException ex) {
+            Logger.getLogger(Producao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    public int qtdReservaF()
+    {
+        try {
+            return new Producao_Folha().qtdReserva(f.getCodigo());
+        } catch (SQLException ex) {
+            Logger.getLogger(Producao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    public void limpaLista()
+    {
+        p.getListaF().clear();
+        p.getListaP().clear();
+    }
+    
+    public int atualizaProduto(int status)
+    {
+        if(status == 4 && p.VerificaItens(p.getCodigo()))
+            return 1;
+        p.setStatus(status);
+        return 0;
+    }
+    
+    public boolean Atualizar()
+    {
+        if(p.getStatus() == 4)
+        {
+            //insere os itens
+        }
+        return p.alterar();
     }
 }

@@ -5,6 +5,10 @@
  */
 package CamadaNegocio;
 
+import CamadaLogica.Banco;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author 吉野　廉
@@ -47,4 +51,14 @@ public class Producao_Produto {
     
     //--------------------------------------------------------------------------
     
+    public int qtdReserva(int codigo) throws SQLException
+    {
+        String sql = "select count(pp_qtd) from producao_produto where pro_codigo = "+codigo+"";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        if(rs.next())
+        {
+            return rs.getInt(1);
+        }
+        return 0;
+    }
 }

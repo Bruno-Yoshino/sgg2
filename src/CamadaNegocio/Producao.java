@@ -7,8 +7,11 @@ package CamadaNegocio;
 
 import CamadaLogica.Banco;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -83,7 +86,7 @@ public class Producao
         this.f = f;
     }
 
-    public int isStatus() {
+    public int getStatus() {
         return status;
     }
 
@@ -125,14 +128,10 @@ public class Producao
     
     //--------------------------------------------------------------------------
     
-    public int qtdReservaF()
+    public boolean alterar()
     {
-        return 0;
-    }
-    
-    public int qtdReservaP()
-    {
-        return 0;
+        String sql = "";
+        return Banco.getCon().manipular(sql);
     }
     
     public static ResultSet BuscarPedidoNaoEntregue(String valor, int tipo)
@@ -199,28 +198,18 @@ public class Producao
         return Banco.getCon().retornaResultSet(query);
     }
     
-    public static ResultSet BuscarProducao(String valor, int tipo, int flag)
+    public static ResultSet BuscarProducao(int flag, int codigo)
     {
         String query = null;
-        if (valor.equals(""))
-        {
+        if(flag == 1)
             query = "SELECT p.prod_codigo, s.serv_nome, p.prod_status "
                 + " FROM producao p, servico s "
-                + " WHERE p.serv_codigo = s.serv_codigo and p.prod_status = "+flag+"";
-        }
+                + " WHERE p.prod_codigo = "+codigo+" and p.serv_codigo = s.serv_codigo and p.prod_status = 1";
         else
-        {
-            switch (tipo)
-            {
-                case 1:// Numero
-                {
-                    query = "SELECT p.prod_codigo, s.serv_nome, p.prod_status "
-                          + " FROM producao p, servico s "
-                          + " WHERE p.prod_codigo = "+valor+" and p.serv_codigo = s.serv_codigo and p.prod_status = "+flag+"";
-                    break;
-                }
-            }
-        }
+            query = "SELECT p.prod_codigo, s.serv_nome, p.prod_status "
+                + " FROM producao p, servico s "
+                + " WHERE p.prod_codigo = "+codigo+" and p.serv_codigo = s.serv_codigo and p.prod_status != 1";
+        
         return Banco.getCon().retornaResultSet(query);
     }
     
@@ -241,4 +230,20 @@ public class Producao
 
         return Banco.getCon().retornaResultSet(query);
     }
+    
+    public boolean VerificaItens(int codigo)
+    {
+        String sql = "select pp.pp_qtd, pf.pf_qtd from producao_folha pf, producao_produto pp where pp.prod_codigo = "+codigo+" and pf.prod_codigo = "+codigo+"";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try {
+            if(rs.next())
+            {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Producao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
 }
