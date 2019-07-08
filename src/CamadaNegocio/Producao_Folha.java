@@ -51,6 +51,12 @@ public class Producao_Folha {
     
     //--------------------------------------------------------------------------
     
+    public boolean gravar(int codigo)
+    {
+        String sql = "insert into producao_folha (prod_codigo, fo_codigo, pf_qtd) values ("+codigo+","+f.getCodigo()+","+qtd+")";
+        return Banco.getCon().manipular(sql);
+    }
+    
     public int qtdReserva(int codigo) throws SQLException
     {
         String sql = "select count(pf_qtd) from producao_folha where fo_codigo = "+codigo+"";

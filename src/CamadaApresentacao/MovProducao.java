@@ -56,6 +56,9 @@ public class MovProducao extends javax.swing.JDialog {
         今日の担当：吉野　廉、　羽根川　翼、　阿賀野, 矢矧
         明日の仕事：MovProducao及びその他のメッソッドの終了。
         今日のメモ：　里川　麗奈　ふざけるな！どうやって、何をすれば今日中に終わるんだよ？
+    2019年07月08日：
+        今日の担当：吉野　廉、　羽根川　翼、　モニカ、　橋立
+        今日のメモ：　まだ別のJDialog（詳細）を呼んでいないが通常機能はすべて終了。
     */
     /**
      * This method is called from within the constructor to initialize the form.
@@ -655,7 +658,7 @@ public class MovProducao extends javax.swing.JDialog {
             {
                 sc.HabilityComponents(jPanel4.getComponents(), true);
                 sc.Alter(jPanel3.getComponents());
-                //carregar os Itens Folha e produto
+                //carregar os Itens Folha e produto  OK 
                 pc.carregarListaItens(Integer.valueOf((String) model.getValueAt(jTable2.getSelectedRow(), 0)), jTable3);
             }
             else
@@ -797,7 +800,10 @@ public class MovProducao extends javax.swing.JDialog {
     private void rbPedidoOP3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbPedidoOP3MouseClicked
         if(rbPedidoOP3.isSelected())
         {
-            //Jtable2 更新
+            //Jtable2 更新  OK
+            jTable2.removeAll();
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            pc.carregarListaPedido(2, jTable2, (Integer) model.getValueAt(jTable1.getSelectedRow(), 2));
             rbPedidoOP2.setSelected(false);
         }
     }//GEN-LAST:event_rbPedidoOP3MouseClicked
@@ -805,7 +811,10 @@ public class MovProducao extends javax.swing.JDialog {
     private void rbPedidoOP2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbPedidoOP2MouseClicked
         if(rbPedidoOP2.isSelected())
         {
-            //Jtable2 更新
+            //Jtable2 更新  OK
+            jTable2.removeAll();
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            pc.carregarListaPedido(1, jTable2, (Integer) model.getValueAt(jTable1.getSelectedRow(), 2));
             rbPedidoOP3.setSelected(false);
         }
     }//GEN-LAST:event_rbPedidoOP2MouseClicked
@@ -829,7 +838,20 @@ public class MovProducao extends javax.swing.JDialog {
             {
                 case 1: m.InformationMessage("A producao ja existe itens, favor atualize o estoque utilizando o AjustarEstoqueProduto ou AjustarEstoqueFolha!", "Atenção"); break;
                 default:
-                    pc.Atualizar();
+                    if(pc.Atualizar())
+                    {
+                        m.InformationMessage("Atualizado com sucesso", "");
+                        sc.limpar(jPanel4.getComponents());
+                        sc.limpar(jPanel2.getComponents());
+                        sc.Edity(jPanel3.getComponents());
+                        sc.Initialize(jPanel3.getComponents());
+                        sc.HabilityComponents(jPanel2.getComponents(), false);
+                        sc.HabilityComponents(jPanel4.getComponents(), false);
+                    }
+                    else
+                    {
+                        m.ErroMessage("ERRO ao Gravar!", "ERRO");
+                    }
             }
         }
     }//GEN-LAST:event_btnGravarActionPerformed
@@ -850,7 +872,15 @@ public class MovProducao extends javax.swing.JDialog {
             case 6: m.InformationMessage("Produto ja esta inselido!", "Atenção"); break;
             case 7: m.InformationMessage("Folha ja inselido!", "Atenção"); break;
             default:
-                
+                pc.addTabela(jTable3, !txtFolha.getText().equals(""), !txtProduto.getText().equals(""));
+                txtFolha.setText("");
+                txtProduto.setText("");
+                txtQtdF.setText("");
+                txtQtdP.setText("");
+                txtEstoqueF.setText("");
+                txtEstoqueP.setText("");
+                txtReservadoF.setText("");
+                txtReservadoP.setText("");
         }
     }//GEN-LAST:event_btnaddActionPerformed
 

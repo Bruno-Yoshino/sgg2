@@ -168,12 +168,12 @@ public class ProducaoController {
     
     public void buscaFolha(int codigo)
     {
-        f = f.buscarCodigo(codigo);
+        f = new Folha().buscarCodigo(codigo);
     }
     
     public void buscaProduto(int codigo)
     {
-        prod = prod.buscarCodigo(codigo);
+        prod = new Produto().buscarCodigo(codigo);
     }
     
     public void buscarFuncionario(int codigo)
@@ -371,6 +371,14 @@ public class ProducaoController {
         if(p.getStatus() == 4)
         {
             //insere os itens
+            for(int i = 0; i < p.getListaF().size(); i++)//Folha
+            {
+                p.getListaF().get(i).gravar(p.getCodigo());
+            }
+            for(int i = 0; i < p.getListaP().size(); i++)//Produto
+            {
+                p.getListaP().get(i).gravar(p.getCodigo());
+            }
         }
         return p.alterar();
     }

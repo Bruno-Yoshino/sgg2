@@ -8,6 +8,7 @@ package CamadaNegocio;
 import CamadaLogica.Banco;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -130,7 +131,7 @@ public class Producao
     
     public boolean alterar()
     {
-        String sql = "";
+        String sql = "update producao set prod_status = '"+status+"', prod_date = '"+(status==1 ? Date.from(Instant.now()) : null)+"' where prod_codigo = "+codigo+"";
         return Banco.getCon().manipular(sql);
     }
     
@@ -204,11 +205,11 @@ public class Producao
         if(flag == 1)
             query = "SELECT p.prod_codigo, s.serv_nome, p.prod_status "
                 + " FROM producao p, servico s "
-                + " WHERE p.prod_codigo = "+codigo+" and p.serv_codigo = s.serv_codigo and p.prod_status = 1";
+                + " WHERE p.pe_codigo = "+codigo+" and p.serv_codigo = s.serv_codigo and p.prod_status = 1";
         else
             query = "SELECT p.prod_codigo, s.serv_nome, p.prod_status "
                 + " FROM producao p, servico s "
-                + " WHERE p.prod_codigo = "+codigo+" and p.serv_codigo = s.serv_codigo and p.prod_status != 1";
+                + " WHERE p.pe_codigo = "+codigo+" and p.serv_codigo = s.serv_codigo and p.prod_status != 1";
         
         return Banco.getCon().retornaResultSet(query);
     }
@@ -244,6 +245,21 @@ public class Producao
             Logger.getLogger(Producao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+    
+    public int MaxCodigo()
+    {
+        String sql = "select max(prod_codigo) from producao";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try {
+            if(rs.next())
+            {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Producao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 
 }

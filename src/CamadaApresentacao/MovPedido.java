@@ -984,6 +984,7 @@ public class MovPedido extends javax.swing.JDialog {
                                     pc.clearSequenceNumber();
                                     lbEntrega.setVisible(false);
                                     dcEntrega.setVisible(false);
+                                    //ここ、後でPedidoが保存された時(保存内容)の処理 Producao, Contas Receber, Pedido, Cheque
                                 }
                         }
                         else
