@@ -8,6 +8,7 @@ package CamadaApresentacao;
 import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Compra;
 import CamadaNegocio.ContaPagar;
+import CamadaNegocio.Pedido;
 import Controller.GerenciarParcelaController;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
@@ -35,12 +36,13 @@ public class GerenciarParcela extends javax.swing.JDialog {
         return flag;
     }
     
-    public GerenciarParcela(java.awt.Frame parent, boolean modal, ContaPagar cp, Compra c) {//Contas a apagar "Pedido"
+    public GerenciarParcela(java.awt.Frame parent, boolean modal, ContaPagar cp, Compra c, Pedido p) {//Contas a apagar "Pedido"
         super(parent, modal);
         initComponents();
         flag = false;
         gpc.setC(c);
         gpc.setCp(cp);
+        gpc.setP(p);
         txtQtdP.setText("1");
         txtIntervalo.setText("0");
         if(c != null)
@@ -48,11 +50,16 @@ public class GerenciarParcela extends javax.swing.JDialog {
             dtData.setEditable(true);
             txtValorT.setText(""+c.getValort());
         }
-        else
+        if(cp != null)
         {
             dtData.setEditable(false);
             dtData.setData(cp.getDataV());
             txtValorT.setText(""+cp.getValorC());
+        }
+        if(p != null)
+        {
+            dtData.setEditable(true);
+            txtValorT.setText(""+p.getValorTotal());
         }
         GerenciarParcelaController.configuraModelItem(jTable1);
     }

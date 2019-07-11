@@ -936,7 +936,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         if(lcc.gravar(txtCodigo.getText(), txtvalorF.getText(), tbP, tbF))
         {
             m.InformationMessage("Gravado com sucesso! Sera redirecionado para gerar as parcelas!", "Atenção");
-            GerenciarParcela frm = new GerenciarParcela(null, true, null, lcc.getC());
+            GerenciarParcela frm = new GerenciarParcela(null, true, null, lcc.getC(), null);
             frm.setVisible(true);
             if(frm.isFlag())
             {

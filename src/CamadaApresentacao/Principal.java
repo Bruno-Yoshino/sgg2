@@ -25,6 +25,10 @@ import javax.swing.ImageIcon;
  * @author 巴御前
  * @author 高村　結衣
  * @author 里川　麗奈
+ * @author 川波　愁子
+ * @author 水川　鈴奈
+ * @author 嶌田　治奈
+ * @author 小枩　夏輝
  * @author 海女
  * @author 御子
  * @author 稲荷
@@ -57,6 +61,13 @@ import javax.swing.ImageIcon;
  * @author 川村
  * @author 磐手
  * @author イントレピッド
+ * @author ウィリアム
+ * @author アルトリア
+ * @author ミシェル
+ * @author レア
+ * @author レレイナ
+ * @author レオナ
+ * @author 明石
  * 
  * Tester
  * @author 吉野　廉
@@ -92,6 +103,9 @@ import javax.swing.ImageIcon;
  * @author 八条
  * @author 伊弉冉
  * @author 伊弉諾
+ * @author 瀬戸雪
+ * @author 島雪
+ * @author 山雪
  */
 public class Principal extends javax.swing.JFrame {
 

@@ -426,7 +426,7 @@ public class MovDespesa extends javax.swing.JDialog {
                 m.InformationMessage("Lançado com Sucesso!", "Informação");
                 break;
             default: 
-                GerenciarParcela frm = new GerenciarParcela(null, true, ldc.getCp(), null);
+                GerenciarParcela frm = new GerenciarParcela(null, true, ldc.getCp(), null, null);
                 frm.setVisible(true);
                 if(frm.isFlag())
                 {

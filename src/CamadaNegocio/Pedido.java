@@ -25,6 +25,7 @@ import javax.swing.JTable;
  * @author 御子
  * @author 稲荷
  */
+
 public class Pedido {
     private int codigo;
     private Cliente cli;

@@ -8,6 +8,8 @@ package Controller;
 import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Compra;
 import CamadaNegocio.ContaPagar;
+import CamadaNegocio.ContaReceber;
+import CamadaNegocio.Pedido;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JTable;
@@ -22,11 +24,16 @@ import util.mensagens;
  * @author 夕張
  * @author 香取 
  * @author 鹿島
+ * @author 海女
+ * @author 御子
+ * @author 稲荷
  */
 public class GerenciarParcelaController {
     
     private Compra c;
     private ContaPagar cp;
+    private Pedido p;
+    private ContaReceber cr;
     private final util.Validacao v = new Validacao(); 
     private final util.mensagens m = new mensagens(); 
     
@@ -48,6 +55,14 @@ public class GerenciarParcelaController {
 
     public void setCp(ContaPagar cp) {
         this.cp = cp;
+    }
+
+    public Pedido getP() {
+        return p;
+    }
+
+    public void setP(Pedido p) {
+        this.p = p;
     }
     
     public static void configuraModelItem(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
@@ -172,6 +187,19 @@ public class GerenciarParcelaController {
     {
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable.getModel();
         boolean x = true;
+        if(p != null)
+        {
+            cr.setValor((Double) model.getValueAt(0, 1));
+            cr.setDataV((Date) model.getValueAt(0, 2));
+            x = cr.gravar();
+            for (int i = 1; i < model.getRowCount() && x; i++) 
+            {
+                cr.setValor((Double) model.getValueAt(i, 1));
+                cr.setDataV((Date) model.getValueAt(i, 2));
+                x = cr.gravar();
+            }
+            return x;
+        }
         cp.setParcela(0);
         cp.setValorC((Double) model.getValueAt(0, 1));
         cp.setDataV((Date) model.getValueAt(0, 2));
