@@ -1,24 +1,52 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CamadaApresentacao;
+
+import CamadaLogica.ReadOnlyTableModel;
+import Controller.ReceberContaController;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import util.SystemControl;
+import util.mensagens;
 
 /**
  *
- * @author Bruno Yoshino
+ * @author 吉野　廉
+ * @author 羽根川　翼
+ * @author モニカ
+ * @author 巴御前
+ * @author 高村　結衣
+ * @author 里川　麗奈
+ * @author 川波　愁子
+ * @author 水川　鈴奈
+ * @author 嶌田　治奈
+ * @author 小枩　夏輝
+ * @author ウィリアム
+ * @author レレイナ
  */
 public class MovReceberContas extends javax.swing.JDialog {
 
-    /**
-     * Creates new form MovReceberContas
-     */
+    private final SystemControl sc = new SystemControl();
+    private final mensagens m = new mensagens();
+    private final ReceberContaController rcc = new ReceberContaController();
+    
     public MovReceberContas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        btnAlterar.setName("btnAlterar");
+        btnCancelar.setName("btnCancelar");
+        btnGravar.setName("btnGravar");
+        btnSair.setName("btnSair");
+        btnImprimir.setName("btnImprimir");
+        
+        sc.Initialize(jPanel3.getComponents());
+        sc.HabilityComponents(jPanel2.getComponents(), false);
     }
-
+    
+    /*
+        2019年07月12日
+            メモ：テーブルの封入がまだ行われていません。
+    */
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,25 +59,26 @@ public class MovReceberContas extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        rbOP1 = new javax.swing.JRadioButton();
+        rbOP2 = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        txtcli_nome = new javax.swing.JTextField();
+        txtValor = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        txtDataVencimento1 = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtcli_cod1 = new javax.swing.JTextField();
+        txtCliente = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtObs = new javax.swing.JTextArea();
+        dcPagamento = new br.com.marciorl.beans.DateChooser();
+        jLabel6 = new javax.swing.JLabel();
+        txtValorP = new br.com.ikeda.beans.jTextFieldMonetario();
         jPanel3 = new javax.swing.JPanel();
         btnGravar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        btnCancelar1 = new javax.swing.JButton();
-        btnCancelar2 = new javax.swing.JButton();
+        btnImprimir = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -59,25 +88,35 @@ public class MovReceberContas extends javax.swing.JDialog {
         jTable1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Cliente", "Pedido", "Valor a ser cobrado", "Data do Pedido", "Data da Quitação"
+                "Cliente", "Numero Pedido", "Valor a ser cobrado", "Data de Vencimento", "Data do Pedido", "Numero da Conta"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        jRadioButton1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jRadioButton1.setText("Ordenar por nome");
+        rbOP1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        rbOP1.setSelected(true);
+        rbOP1.setText("Ordenar por nome");
+        rbOP1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbOP1ActionPerformed(evt);
+            }
+        });
 
-        jRadioButton2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jRadioButton2.setText("Ordenar por data do Pedido");
-
-        jRadioButton3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jRadioButton3.setText("Todos");
+        rbOP2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        rbOP2.setText("Ordenar por data de Vencimento");
+        rbOP2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbOP2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -86,13 +125,11 @@ public class MovReceberContas extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
+                        .addComponent(rbOP1)
                         .addGap(18, 18, 18)
-                        .addComponent(jRadioButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jRadioButton3)
+                        .addComponent(rbOP2)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -100,9 +137,8 @@ public class MovReceberContas extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3))
+                    .addComponent(rbOP1)
+                    .addComponent(rbOP2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -114,29 +150,32 @@ public class MovReceberContas extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Valor:");
 
-        txtcli_nome.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtValor.setEditable(false);
+        txtValor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel10.setText("Data da quitação:");
-
-        try {
-            txtDataVencimento1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtDataVencimento1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel10.setText("Data do Pagamento:");
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Cliente:");
 
-        txtcli_cod1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtCliente.setEditable(false);
+        txtCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel11.setText("Observação:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txtObs.setColumns(20);
+        txtObs.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txtObs.setRows(5);
+        jScrollPane2.setViewportView(txtObs);
+
+        dcPagamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel6.setText("Valor Pago:");
+
+        txtValorP.setText(".0");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -148,23 +187,27 @@ public class MovReceberContas extends javax.swing.JDialog {
                         .addGap(11, 11, 11)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtcli_cod1))
+                        .addComponent(txtCliente))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDataVencimento1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtcli_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(38, 38, 38)
-                                .addComponent(jLabel11)))
+                                .addComponent(jLabel11))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtValorP, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dcPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -172,20 +215,23 @@ public class MovReceberContas extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtcli_cod1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtcli_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
                             .addComponent(jLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txtValorP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(txtDataVencimento1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(dcPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10)))
                     .addComponent(jScrollPane2))
                 .addContainerGap())
         );
@@ -193,30 +239,54 @@ public class MovReceberContas extends javax.swing.JDialog {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Gravar16.png"))); // NOI18N
         btnGravar.setText("Gravar");
+        btnGravar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGravarActionPerformed(evt);
+            }
+        });
 
-        btnSair.setText("Sair");
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Sair.png"))); // NOI18N
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Cancelar16.png.jpg"))); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
-        btnCancelar1.setText("Localizar");
+        btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Imprimir16.png"))); // NOI18N
+        btnImprimir.setText("Imprimir");
 
-        btnCancelar2.setText("Imprimir");
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
+        btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(23, 23, 23)
+                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCancelar2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(82, 82, 82)
+                .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(156, 156, 156)
+                .addGap(57, 57, 57)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -227,9 +297,9 @@ public class MovReceberContas extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSair, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
                     .addComponent(btnGravar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancelar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancelar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnImprimir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -260,29 +330,133 @@ public class MovReceberContas extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void rbOP1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbOP1ActionPerformed
+        if(rbOP1.isSelected())
+        {
+            rbOP2.setSelected(false);
+            try {
+                rcc.carregarTabela(jTable1, 1);
+            } catch (SQLException ex) {
+                Logger.getLogger(MovReceberContas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_rbOP1ActionPerformed
+
+    private void rbOP2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbOP2ActionPerformed
+        if(rbOP2.isSelected())
+        {
+            rbOP1.setSelected(false);
+            try {
+                rcc.carregarTabela(jTable1, 2);
+            } catch (SQLException ex) {
+                Logger.getLogger(MovReceberContas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_rbOP2ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if(evt.getClickCount() == 2)
+        {
+            btnAlterarActionPerformed(null);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+       if(jTable1.getSelectedRow() >= 0)
+       {
+         sc.Edity(jPanel3.getComponents());
+         sc.HabilityComponents(jPanel1.getComponents(), false);
+         sc.HabilityComponents(jPanel2.getComponents(), true);
+       }
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        sc.limpar(jPanel2.getComponents());
+        sc.Initialize(jPanel3.getComponents());
+        sc.HabilityComponents(jPanel2.getComponents(), false);
+        sc.HabilityComponents(jPanel1.getComponents(), true);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
+        ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+        //String codigoC, String valorPag, Date pagamento, String obs
+        switch(rcc.validarContasReceber((String) model.getValueAt(jTable1.getSelectedRow(), 5), txtValorP.getText(), dcPagamento.getData(), txtObs.getText()))
+        {
+            case 1: m.InformationMessage("Informe o valor a ser Recebido!", "Atenção"); txtValorP.requestFocus(); break;
+            case 2: m.InformationMessage("Valor precisa ser maior ou igual a 0!", "Atenção"); txtValorP.requestFocus(); break;
+            case 3: m.InformationMessage("Altera o valor Recebido", "Atenção"); txtValorP.requestFocus(); break;
+            case 5: 
+                rcc.alterar();
+                if(rcc.SeocndInserting())
+                {
+                    m.InformationMessage("Lançado e Alterado com Sucesso!", "Atenção");
+                    btnCancelarActionPerformed(null);
+                    try {
+                        rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MovPagarContas.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else
+                {
+                   m.ErroMessage("ERRO1", "ERRO1"); 
+                }
+                if(m.Pergunta("Pagamento em Cheque?", "Pergunta") == JOptionPane.YES_OPTION)
+                {
+                    
+                }
+                break;
+            default: 
+                if(rcc.alterar())
+                {
+                    m.InformationMessage("Alterado com Sucesso!", "Atenção");
+                    sc.limpar(jPanel2.getComponents());
+                    btnCancelarActionPerformed(null);
+                    try {
+                        rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MovPagarContas.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    if(m.Pergunta("Pagamento em Cheque?", "Pergunta") == JOptionPane.YES_OPTION)
+                    {
+
+                    }
+                }
+                else
+                {
+                   m.ErroMessage("ERRO", "ERRO"); 
+                }
+        }
+    }//GEN-LAST:event_btnGravarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnCancelar1;
-    private javax.swing.JButton btnCancelar2;
     private javax.swing.JButton btnGravar;
+    private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnSair;
+    private br.com.marciorl.beans.DateChooser dcPagamento;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JFormattedTextField txtDataVencimento1;
-    private javax.swing.JTextField txtcli_cod1;
-    private javax.swing.JTextField txtcli_nome;
+    private javax.swing.JRadioButton rbOP1;
+    private javax.swing.JRadioButton rbOP2;
+    private javax.swing.JTextField txtCliente;
+    private javax.swing.JTextArea txtObs;
+    private javax.swing.JTextField txtValor;
+    private br.com.ikeda.beans.jTextFieldMonetario txtValorP;
     // End of variables declaration//GEN-END:variables
 }

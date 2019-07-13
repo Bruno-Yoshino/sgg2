@@ -143,7 +143,7 @@ public class LancarDespesaController
             resp = JOptionPane.showInputDialog(null, "Informe apos quantos dias: ", "Atenção", JOptionPane.INFORMATION_MESSAGE);
             add = v.ConverteNumeroInteiro(resp);
         }while (add < 0);
-        cp.setValorC(cp.getValorC()-cp.getValorC());
+        cp.setValorC(cp.getValorC()-cp.getValorP());
         cp.setValorP(0);
         cp.setDataP(null);
         Calendar calendar = Calendar.getInstance();
@@ -151,7 +151,7 @@ public class LancarDespesaController
         calendar.add(Calendar.DAY_OF_MONTH, add);
         cp.setDataV(calendar.getTime());
         cp.setLocal("");
-        cp.setObs("Conta nova pelo fato de ter faltado.");
+        cp.setObs("Nova Parcela.");
         return cp.gravar();
     }
     

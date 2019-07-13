@@ -330,6 +330,9 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="btnAlterar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Icon/Alterar16.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Alterar"/>
           </Properties>
           <Events>
@@ -338,6 +341,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnGravar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Icon/Gravar16.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Gravar"/>
           </Properties>
           <Events>
@@ -346,7 +352,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnSair">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Sair"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Icon/Sair.png"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSairActionPerformed"/>
@@ -354,6 +362,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnCancelar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Icon/Cancelar16.png.jpg"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>
           <Events>

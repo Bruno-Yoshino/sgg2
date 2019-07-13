@@ -1,6 +1,8 @@
 package CamadaNegocio;
 
 import CamadaLogica.Banco;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -92,10 +94,37 @@ public class ContaReceber {
     //--------------------------------------------------------------------------
     public boolean gravar()
     {
-        String sql = "INSERT INTO  " +
-                     " VALUES ();";
-        
+        String sql = "INSERT INTO conta_receber (pe_codigo, cr_datavenc, cr_obs, cr_valor, cr_datapago, cr_vlorp) "
+                   + " values ("+p.getCodigo()+", '"+dataV+"', '', "+valor+", '"+null+"', "+0+");";
         return Banco.getCon().manipular(sql);
     }
     
+    public boolean alterar()
+    {
+        String sql = "update conta_receber set  cr_obs = '"+obs+"', cr_datapago = "+dataP+", cr_vlorp = "+valorP+" "
+                   + " where cr_codigo = "+codigo+";";
+        return Banco.getCon().manipular(sql);
+    }
+    
+    public void buscaContaReceber(int codigo) throws SQLException
+    {
+        p = new Pedido().buscar(codigo);
+    }
+    
+    public static ResultSet buscarDados(int op)
+    {
+        String sql;
+        switch(op)
+        {
+            case 1:
+                sql = "";
+                break;
+            case 2:
+                sql = "";
+                break;
+            default:
+                sql = null;
+        }
+        return Banco.getCon().retornaResultSet(sql);
+    }
 }

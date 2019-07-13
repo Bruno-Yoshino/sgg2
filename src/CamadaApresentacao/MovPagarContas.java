@@ -203,6 +203,7 @@ public class MovPagarContas extends javax.swing.JDialog {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,6 +211,7 @@ public class MovPagarContas extends javax.swing.JDialog {
             }
         });
 
+        btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Gravar16.png"))); // NOI18N
         btnGravar.setText("Gravar");
         btnGravar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,13 +219,14 @@ public class MovPagarContas extends javax.swing.JDialog {
             }
         });
 
-        btnSair.setText("Sair");
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Sair.png"))); // NOI18N
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
             }
         });
 
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Cancelar16.png.jpg"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -344,7 +347,7 @@ public class MovPagarContas extends javax.swing.JDialog {
         {
             case 1: m.InformationMessage("Informe o valor a ser pago!", "Atenção"); txtValorP.requestFocus(); break;
             case 2: m.InformationMessage("Valor precisa ser maior ou igual a 0!", "Atenção"); txtValorP.requestFocus(); break;
-            case 3: m.InformationMessage("Alterer o valor Pago", "Atenção"); txtValorP.requestFocus(); break;
+            case 3: m.InformationMessage("Altera o valor Pago", "Atenção"); txtValorP.requestFocus(); break;
             case 5: 
                 ldc.alterar();
                 ldc.getCp().setFunc(f);
