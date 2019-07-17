@@ -216,7 +216,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="btnAbrir" min="-2" pref="85" max="-2" attributes="0"/>
+                  <Component id="btnAbrir" min="-2" pref="115" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   <Component id="btnSair" min="-2" pref="61" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -239,6 +239,9 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="btnAbrir">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Icon/Gravar16.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Gravar"/>
           </Properties>
           <Events>
@@ -247,7 +250,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnSair">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Voltar"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Icon/Sair.png"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>

@@ -206,4 +206,23 @@ public class ContaPagar {
                     + "WHERE cp_codigo = "+codigo+";";
         return Banco.getCon().retornaResultSet(sql);
     }
+    
+    public double saldoRetirado(int codigo)
+    {
+        String sql = "select sum(cp_valorc) from conta_pagar "
+                   + " where caixa_codigo = "+codigo+"";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
 }

@@ -70,7 +70,7 @@ public class ReceberContaController {
         return cr.alterar();
     }
     
-    public int validarContasReceber(String codigoC, String valorPag, Date pagamento, String obs)
+    public int validarContasReceber(String codigoC, String valorPag, Date pagamento, String obs) throws SQLException
     {
         cr.buscaContaReceber(v.ConverteNumeroInteiro(codigoC));
         if(valorPag.equals(""))

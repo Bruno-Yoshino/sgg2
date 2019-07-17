@@ -67,34 +67,33 @@
                       <Component id="jScrollPane1" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtTamnho" min="-2" pref="528" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="txtValorAtual" min="-2" pref="117" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="lbTexto2" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="txtData" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="lbTexto" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="txtValorRetirada" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="txtFuncionario" min="-2" pref="528" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jButton4" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtQtdAtual" min="-2" pref="117" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="lbTexto2" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="dateChooser1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="lbTexto" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtqtd" min="-2" pref="117" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="txtqtd1" min="-2" pref="16" max="-2" attributes="0"/>
+                                  <Component id="btnlocFunc" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="118" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -108,19 +107,18 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtTamnho" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtFuncionario" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jButton4" max="32767" attributes="0"/>
+                      <Component id="btnlocFunc" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtQtdAtual" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtValorAtual" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lbTexto2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="dateChooser1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtData" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lbTexto" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtqtd" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtqtd1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtValorRetirada" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
@@ -139,7 +137,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="txaObs">
+            <Component class="javax.swing.JTextArea" name="txtMotivo">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
@@ -163,15 +161,17 @@
             <Property name="text" type="java.lang.String" value="Funcionario:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtTamnho">
+        <Component class="javax.swing.JTextField" name="txtFuncionario">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtQtdAtual">
+        <Component class="javax.swing.JTextField" name="txtValorAtual">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
@@ -182,14 +182,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Valor Atual"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtqtd">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="0"/>
-            </Property>
+            <Property name="text" type="java.lang.String" value="Saldo Atual"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbTexto">
@@ -208,15 +201,24 @@
             <Property name="text" type="java.lang.String" value="Data:"/>
           </Properties>
         </Component>
-        <Component class="br.com.marciorl.beans.DateChooser" name="dateChooser1">
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton4">
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtqtd1">
+        <Component class="br.com.marciorl.beans.DateChooser" name="txtData">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="0"/>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnlocFunc">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Icon/Localizar 16.png"/>
             </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnlocFuncActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="br.com.ikeda.beans.jTextFieldMonetario" name="txtValorRetirada">
+          <Properties>
+            <Property name="text" type="java.lang.String" value=".0"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -237,12 +239,10 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" pref="98" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jButton2" min="-2" pref="98" max="-2" attributes="0"/>
+                  <Component id="btnGravar" min="-2" pref="98" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="145" max="-2" attributes="0"/>
-                  <Component id="jButton3" min="-2" pref="98" max="-2" attributes="0"/>
+                  <Component id="btnSair" min="-2" pref="98" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -251,12 +251,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="jButton2" alignment="3" pref="72" max="32767" attributes="0"/>
-                          <Component id="jButton3" alignment="3" pref="72" max="32767" attributes="0"/>
-                      </Group>
-                      <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnGravar" alignment="3" pref="72" max="32767" attributes="0"/>
+                      <Component id="btnSair" alignment="3" pref="72" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -264,22 +261,25 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnGravar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Localizar"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
-          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Icon/Gravar16.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Gravar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGravarActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
+        <Component class="javax.swing.JButton" name="btnSair">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Voltar"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Icon/Sair.png"/>
+            </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSairActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

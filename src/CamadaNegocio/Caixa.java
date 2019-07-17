@@ -18,7 +18,14 @@ import javax.swing.JTable;
  * Programers
  * @author 吉野　廉
  * @author 羽根川　翼
- * 
+ * @author モニカ
+ * @author 巴御前
+ * @author 水川　鈴奈
+ * @author 嶌田　治奈
+ * @author 小枩　夏輝
+ * @author ミシェル
+ * @author レア
+ * @author レレイナ
  * 
  */
 public class Caixa 

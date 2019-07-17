@@ -29,8 +29,9 @@ public class MovReceberContas extends javax.swing.JDialog {
     private final SystemControl sc = new SystemControl();
     private final mensagens m = new mensagens();
     private final ReceberContaController rcc = new ReceberContaController();
+    private boolean pagamento;
     
-    public MovReceberContas(java.awt.Frame parent, boolean modal) {
+    public MovReceberContas(java.awt.Frame parent, boolean modal, boolean pagamento) {
         super(parent, modal);
         initComponents();
         btnAlterar.setName("btnAlterar");
@@ -38,7 +39,7 @@ public class MovReceberContas extends javax.swing.JDialog {
         btnGravar.setName("btnGravar");
         btnSair.setName("btnSair");
         btnImprimir.setName("btnImprimir");
-        
+        this.pagamento = pagamento;
         sc.Initialize(jPanel3.getComponents());
         sc.HabilityComponents(jPanel2.getComponents(), false);
     }
@@ -405,7 +406,7 @@ public class MovReceberContas extends javax.swing.JDialog {
                 {
                    m.ErroMessage("ERRO1", "ERRO1"); 
                 }
-                if(m.Pergunta("Pagamento em Cheque?", "Pergunta") == JOptionPane.YES_OPTION)
+                if(pagamento)
                 {
                     
                 }
@@ -421,7 +422,7 @@ public class MovReceberContas extends javax.swing.JDialog {
                     } catch (SQLException ex) {
                         Logger.getLogger(MovPagarContas.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    if(m.Pergunta("Pagamento em Cheque?", "Pergunta") == JOptionPane.YES_OPTION)
+                    if(pagamento)//m.Pergunta("Pagamento em Cheque?", "Pergunta") == JOptionPane.YES_OPTION
                     {
 
                     }
