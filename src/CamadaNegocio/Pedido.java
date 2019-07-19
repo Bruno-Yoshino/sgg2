@@ -35,6 +35,7 @@ public class Pedido {
     private FormaPagamento fp;
     private Date pedido, entrega;
     private ArrayList<Pedido_Servico> lista;
+    private Caixa c;
 
     public Pedido(int codigo, Cliente cli, Orcamento orc, Funcionario f, double valorTotal, FormaPagamento fp, Date pedido, Date entrega, ArrayList<Pedido_Servico> lista) {
         this.codigo = codigo;
@@ -122,6 +123,14 @@ public class Pedido {
     public void setLista(ArrayList<Pedido_Servico> lista) {
         this.lista = lista;
     }
+
+    public Caixa getC() {
+        return c;
+    }
+
+    public void setC(Caixa c) {
+        this.c = c;
+    }
     
     public boolean gravar()
     {
@@ -134,8 +143,8 @@ public class Pedido {
             calendar.add(Calendar.DAY_OF_MONTH, -1);
             entrega = calendar.getTime();
             sql = "INSERT INTO pedido( " +
-                  " cli_codigo, func_codigo, pe_valortotal, pe_datapedido, pe_entrega, fpg_codigo, orc_numero) " +
-                  " VALUES ("+cli.getCodigo()+", "+f.getCodigo()+", "+valorTotal+", '"+pedido+"', '"+entrega+"', "+fp.getCodigo()+", "+(orc.getCodigo() == 0 ? null : orc.getCodigo())+");";
+                  " cli_codigo, func_codigo, pe_valortotal, pe_datapedido, pe_entrega, fpg_codigo, orc_numero, caixa_codigo) " +
+                  " VALUES ("+cli.getCodigo()+", "+f.getCodigo()+", "+valorTotal+", '"+pedido+"', '"+entrega+"', "+fp.getCodigo()+", "+(orc.getCodigo() == 0 ? null : orc.getCodigo())+", "+c.getCodigo()+");";
         }
         else
         {

@@ -1,6 +1,8 @@
 package CamadaNegocio;
 
 import CamadaLogica.Banco;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -170,17 +172,42 @@ public class Cheque {
    public boolean gravar()
    {
         String sql;
-        if(this.codigo == 0) // Abrir
+        if(this.codigo == 0)
         {
-            sql = "";
+            sql = "INSERT INTO cheque (cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo) VALUES "
+                    + " ("+cr == null ? null : cr.getCodigo()+", '"+dono+"', '"+cpf+"', "+valor+", '"+data+"', '"+predata+"', '"+nAgencia+"', '"+nConta+"', '"+nBanco+"', '"+nCheque+"', '"+obs+"', '"+null+"', '')";
         }
         else
         {
-            sql = "";
+            sql = "UPDATE cheque set c_datacomp = '"+dataComp+"', c_motivo = '"+motivo+"' where c_codigo = "+codigo+"";
         }
         return Banco.getCon().manipular(sql);
    }
    
+   public boolean excluir()
+   {
+        String sql = "delete from cheque where c_codigo = "+codigo+"";
+        return Banco.getCon().manipular(sql);
+   }
    
+   public Cheque buscar(int codigo)
+   {
+        String sql;
+        sql = "select c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo "
+                + " from cheque where c_codigo = "+codigo+"";
+                ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return new Cheque(rs.getInt(1), new ContaReceber().buscar(rs.getInt(2)), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getDate(6), rs.getDate(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getDate(13), rs.getString(14));
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return null;
+   }
    
 }

@@ -5,18 +5,53 @@
  */
 package CamadaApresentacao;
 
+import CamadaNegocio.Funcionario;
+import Controller.CaixaController;
+import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.time.Instant;
+import java.util.Date;
+import util.SystemControl;
+import util.mensagens;
+
 /**
  *
- * @author Bruno Yoshino
+ * @author 吉野　廉
+ * @author 羽根川　翼
+ * @author モニカ
+ * @author 巴御前
+ * @author 高村　結衣
+ * @author 里川　麗奈
+ * @author 川波　愁子
+ * @author 水川　鈴奈
+ * @author 嶌田　治奈
+ * @author 小枩　夏輝
+ * @author 海女
+ * @author 御子
+ * @author 稲荷
  */
 public class MovCaixaFechar extends javax.swing.JDialog {
 
-    /**
-     * Creates new form MovCaixaFechar
-     */
-    public MovCaixaFechar(java.awt.Frame parent, boolean modal) {
+    private final SystemControl sc = new SystemControl();
+    private final mensagens m = new mensagens();
+    private final CaixaController cc = new CaixaController();
+    
+    public MovCaixaFechar(java.awt.Frame parent, boolean modal, Funcionario func) {
         super(parent, modal);
         initComponents();
+        cc.setF(func);
+        if(!cc.OpenExist())
+        {
+            m.InformationMessage("Não existe um caixa Aberto! A pagina sera fechada!", "Atenção");
+            dispose();
+        }
+        cc.buscarCaixa();
+        txtDataFechado.setText(""+ Date.from(Instant.now()));
+        txtDataAberto.setText(""+cc.getC().getData());
+        txtHorarioAberto.setText(""+cc.getC().getData().getHour());
+        txtFuncionario.setText(cc.getC().getFuncI().getNome());
+        txtValor.setText(""+cc.getC().getSaldoI());
+        txtValorTotalDesconto.setText(""+cc.buscaDesconto(txtDataAberto.getText()));
     }
 
     /**
@@ -35,26 +70,23 @@ public class MovCaixaFechar extends javax.swing.JDialog {
         txtDataAberto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtFuncionario = new javax.swing.JTextField();
-        txtValorTotal = new br.com.ikeda.beans.jTextFieldMonetario();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtValorRetirado = new br.com.ikeda.beans.jTextFieldMonetario();
         jLabel6 = new javax.swing.JLabel();
         txtValorTotalDesconto = new br.com.ikeda.beans.jTextFieldMonetario();
-        jLabel7 = new javax.swing.JLabel();
-        txtValorTotalCDesconto = new br.com.ikeda.beans.jTextFieldMonetario();
         jLabel8 = new javax.swing.JLabel();
-        txtValorCaixa = new br.com.ikeda.beans.jTextFieldMonetario();
         txtDataFechado = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txtValorReal = new br.com.ikeda.beans.jTextFieldMonetario();
         jLabel11 = new javax.swing.JLabel();
         txtDiferenca = new javax.swing.JTextField();
-        txtDataAberto1 = new javax.swing.JTextField();
-        txtDataAberto2 = new javax.swing.JTextField();
+        txtHorarioAberto = new javax.swing.JTextField();
+        relogio1 = new br.com.marciorl.beans.Relogio();
+        txtValorCaixa = new br.com.ikeda.beans.jTextFieldMonetario();
+        btnInformation = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        btnFechar = new javax.swing.JButton();
+        btnGravar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -80,12 +112,6 @@ public class MovCaixaFechar extends javax.swing.JDialog {
         txtFuncionario.setEditable(false);
         txtFuncionario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        txtValorTotal.setEditable(false);
-        txtValorTotal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel4.setText("Valor Total do Caixa:");
-
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Valor da(s) Retiradas(s) durante o dia:");
 
@@ -97,22 +123,9 @@ public class MovCaixaFechar extends javax.swing.JDialog {
 
         txtValorTotalDesconto.setEditable(false);
         txtValorTotalDesconto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtValorTotalDesconto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtValorTotalDescontoActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel7.setText("Valor Total com desconto:");
-
-        txtValorTotalCDesconto.setEditable(false);
-        txtValorTotalCDesconto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel8.setText("Valor em Caixa:");
-
-        txtValorCaixa.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         txtDataFechado.setEditable(false);
         txtDataFechado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -133,11 +146,30 @@ public class MovCaixaFechar extends javax.swing.JDialog {
         txtDiferenca.setEditable(false);
         txtDiferenca.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        txtDataAberto1.setEditable(false);
-        txtDataAberto1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtHorarioAberto.setEditable(false);
+        txtHorarioAberto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        txtDataAberto2.setEditable(false);
-        txtDataAberto2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        relogio1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        relogio1.setEnabled(false);
+
+        txtValorCaixa.setText("jTextFieldMonetario1");
+        txtValorCaixa.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtValorCaixaFocusLost(evt);
+            }
+        });
+        txtValorCaixa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtValorCaixaKeyPressed(evt);
+            }
+        });
+
+        btnInformation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Information16.png"))); // NOI18N
+        btnInformation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInformationActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -159,7 +191,7 @@ public class MovCaixaFechar extends javax.swing.JDialog {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(txtDataAberto, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtDataAberto1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtHorarioAberto, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -170,30 +202,25 @@ public class MovCaixaFechar extends javax.swing.JDialog {
                                     .addComponent(jLabel9)
                                     .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel7)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtValorReal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtDataFechado, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtValorCaixa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtValorTotalCDesconto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtDiferenca)
-                                    .addComponent(txtValorTotalDesconto, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)))
+                                    .addComponent(txtValorTotalDesconto, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                                    .addComponent(txtValorCaixa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel4))
+                                .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtValorRetirado, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtValorRetirado, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDataAberto2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(relogio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnInformation))
+                        .addGap(23, 23, 23)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -203,7 +230,7 @@ public class MovCaixaFechar extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtDataAberto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDataAberto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtHorarioAberto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -214,34 +241,29 @@ public class MovCaixaFechar extends javax.swing.JDialog {
                     .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(9, 9, 9)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtValorRetirado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtValorTotalDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtValorTotalCDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtValorCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel8))
+                        .addGap(25, 25, 25))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(txtValorCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtDataFechado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDataAberto2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(txtDataFechado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(relogio1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtValorReal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
+                    .addComponent(jLabel10)
+                    .addComponent(btnInformation, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDiferenca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -252,9 +274,20 @@ public class MovCaixaFechar extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        btnFechar.setText("Gravar");
+        btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Gravar16.png"))); // NOI18N
+        btnGravar.setText("Gravar");
+        btnGravar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGravarActionPerformed(evt);
+            }
+        });
 
-        btnSair.setText("Voltar");
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Sair.png"))); // NOI18N
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -262,7 +295,7 @@ public class MovCaixaFechar extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -273,7 +306,7 @@ public class MovCaixaFechar extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                    .addComponent(btnFechar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnGravar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -301,43 +334,84 @@ public class MovCaixaFechar extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtValorTotalDescontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorTotalDescontoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtValorTotalDescontoActionPerformed
+    private void txtValorCaixaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorCaixaFocusLost
+        txtValorReal.setText(""+cc.buscaValorReal(txtDataAberto.getText(), txtValor.getText(), txtValorRetirado.getText()));
+        txtDiferenca.setText(""+cc.diferenca(txtValor.getText(), txtValorRetirado.getText()));
+        Color c = cc.verificaDiferenca(txtValor.getText(), txtValorRetirado.getText());
+        txtValorReal.setBackground(c);
+        if(c.equals(Color.yellow))
+        {
+            m.WarmingMessage("Esta sobrando Dinheiro no caixa!", "Atenção");
+        }
+        else
+        {
+            if(c.equals(Color.red))
+            {
+                m.WarmingMessage("Esta faltando dinheiro no Caixa!", "Atenção");
+            } 
+        }
+    }//GEN-LAST:event_txtValorCaixaFocusLost
 
-    /**
-     * @param args the command line arguments
-     */
+    private void txtValorCaixaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorCaixaKeyPressed
+        if(evt.getKeyChar() == KeyEvent.VK_ENTER)
+        {
+            txtValorCaixaFocusLost(null);
+        }
+    }//GEN-LAST:event_txtValorCaixaKeyPressed
+
+    private void btnInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformationActionPerformed
+        m.InformationMessage("Após informar o valor atual da caixa, o sistema ira verificar e\n demostrar atraves da cor e exibe mensagem quando saldo está diferente!\n Cor Branco: Tudo Certo\n Cor Amarelo: Esta Sobrando Dinheiro\n Cor Vermelho: Esta faltando Dinheiro.", "Informação");
+    }//GEN-LAST:event_btnInformationActionPerformed
+
+    private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
+        switch(cc.validar(txtValorCaixa.getText(), txtDiferenca.getText(), txtValorRetirado.getText()))
+        {
+            case 1: m.InformationMessage("Informe o Valor atual do Caixa!", "Atenção"); txtValorCaixa.requestFocus(); break;
+            case 2: m.InformationMessage("Altere o Valor!", "Atenção"); txtValorCaixa.requestFocus(); break;
+            default:
+                if(cc.fechar())
+                {
+                    m.InformationMessage("O Caixa foi fechado com sucesso!", "Atenção"); 
+                }
+                else
+                {
+                    m.ErroMessage("ERRO", "ERRO");
+                }
+        }
+    }//GEN-LAST:event_btnGravarActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
+
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnFechar;
+    private javax.swing.JButton btnGravar;
+    private javax.swing.JButton btnInformation;
     private javax.swing.JButton btnSair;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private br.com.marciorl.beans.Relogio relogio1;
     private javax.swing.JTextField txtDataAberto;
-    private javax.swing.JTextField txtDataAberto1;
-    private javax.swing.JTextField txtDataAberto2;
     private javax.swing.JTextField txtDataFechado;
     private javax.swing.JTextField txtDiferenca;
     private javax.swing.JTextField txtFuncionario;
+    private javax.swing.JTextField txtHorarioAberto;
     private br.com.ikeda.beans.jTextFieldMonetario txtValor;
     private br.com.ikeda.beans.jTextFieldMonetario txtValorCaixa;
     private br.com.ikeda.beans.jTextFieldMonetario txtValorReal;
     private br.com.ikeda.beans.jTextFieldMonetario txtValorRetirado;
-    private br.com.ikeda.beans.jTextFieldMonetario txtValorTotal;
-    private br.com.ikeda.beans.jTextFieldMonetario txtValorTotalCDesconto;
     private br.com.ikeda.beans.jTextFieldMonetario txtValorTotalDesconto;
     // End of variables declaration//GEN-END:variables
 }

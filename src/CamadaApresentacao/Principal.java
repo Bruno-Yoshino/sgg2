@@ -16,6 +16,54 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 
+/*
+Important Data Base
+Add data base (2019/06/08): Status: Not Aplication
+desp_datapagamento   date
+desp_valorp          Double Precision
+--------------------------------------------------------------------------------------------------------------
+Type chenge necessary date -> TimeStamp (2019/06/09): Status: Cancel
+--------------------------------------------------------------------------------------------------------------
+Ajusting (2019/06/13): Status: Not Aplication
+1- Deleting Table "despesa"; Fase Status: Not Aplication
+2- Conecting "Tipo_Conta" in "Conta_pagar" and creating FK tc_codigo in "Conta_pagar"; Fase Status: Not Aplication
+3- Conecting "Funcionario" in "Conta_pagar" and creating FK func_codigo in "Conta_pagar"; Fase Status: Not Aplication
+4- Conecting "Caixa" in "Conta_pagar" and Creating FK caixa_codigo in "Conta_pagar"; Fase Status: Not Aplication
+5- Deleting Field "cp_nparcelat" in Table "Conta_pagar"; Fase Status: Not Aplication
+6- Creating mew Camp "cp_datavencimento" in "Conta_pagar" is type Date; Fase Status: Not Aplication
+7- Creating mew Camp "cp_obs" in "Conta_pagar" is type Character Varying[100];  Fase Status: Not Aplication
+
+8- Deleting Table "movi_caixa" however in programing its released automatically in Table "Conta_pagar"; Fase Status: Not Aplication
+
+9- Creating new Field in Table "Funcionario" with "forn_status" of type Boolean; Fase Status: Not Aplication
+
+10- Creating new Conection in Table "Producao" of "Funcionario" and Creating FK func_codigo in "Producao"; Fase Status: Not Aplication
+
+11- Creating new Table "faixa_preco" and conecting with Table "servico", view detals in create script or Dezing Data Base; Fase Status: Not Aplication
+
+12- Creating new Table "forma_pagamento" and conecting with Table "orcamento" and "pedido", view detals in create script or Dezing Data Base; Fase Status: Not Aplication
+--------------------------------------------------------------------------------------------------------------
+Ajusting (2019/06/18): Status: Not Aplication
+Ajusting in Table "Conta_Pagar", atribute "cp_vlorp" -> "cp_valorp"
+--------------------------------------------------------------------------------------------------------------
+Ajusting (2019/06/22): Status: Not Aplication
+Exclusing Coluns "pe_formaPago" and "orc_fomaPago" in Table "Pedido" and "Orcamento"
+--------------------------------------------------------------------------------------------------------------
+Ajusting (2019/07/01): Status: Not Aplication
+Add new colum in Producao: "ps_sequence" type Integer
+Add new colum in Producao: "func_codigo" type Integer
+--------------------------------------------------------------------------------------------------------------
+Ajusting (2019/07/04): Status: Not Aplication
+Alter type prod_status for Integer
+Creating colum func_codigo and your conection
+--------------------------------------------------------------------------------------------------------------
+Ajusting (2019/07/17): Status: Not Aplication
+Alter CharacterVarying for cheque_numero 25 -> 40
+Alter Type nAgencia for CharacterVarying size 15
+--------------------------------------------------------------------------------------------------------------
+Ajusting (2019/07/18): Status: Not Aplication
+Add conection Caixa -- Pedido and constraint FK caixa_codigo in Pedido
+*/
 
 /**
  * Programer

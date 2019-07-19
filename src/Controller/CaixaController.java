@@ -7,7 +7,9 @@ package Controller;
 
 import CamadaNegocio.Caixa;
 import CamadaNegocio.Funcionario;
+import java.awt.Color;
 import java.time.LocalDateTime;
+import javax.swing.JOptionPane;
 import util.*;
 
 /**
@@ -21,11 +23,13 @@ public class CaixaController
     private Caixa c;
     private Funcionario f;
     private Validacao v;
+    private final mensagens m;
 
     public CaixaController() {
         this.c = new Caixa();
         f = new Funcionario();
         v = new Validacao();
+        m = new mensagens();
     }
 
     public Caixa getC() {
@@ -70,5 +74,72 @@ public class CaixaController
         return c.gravar();
     }
     
-    ///-------------------------------------------------------------------- OPEN --------------------------------------
+    ///-------------------------------------------------------------------- CLOSE --------------------------------------
+    
+    public void buscarCaixa()
+    {
+        c = new Caixa().buscaCaixa();
+    }
+    
+    public double buscaDesconto(String data)
+    {
+        return c.TotalDesconto(data);
+    }
+    
+    public double buscaValorReal(String data, String valorC, String valorR)
+    {
+        return c.TotalPedido(data) + v.ConverteNumeroReal(valorC) - v.ConverteNumeroReal(valorR);
+    }
+    
+    public double SaldoRetirado()
+    {
+        return c.SaldoRetirado();
+    }
+    
+    public Color verificaDiferenca(String valor, String valorR)
+    {
+        if(v.ConverteNumeroReal(valor) == v.ConverteNumeroReal(valorR))
+        {
+            return Color.blue;
+        }
+        else
+        {
+            if(v.ConverteNumeroReal(valor) > v.ConverteNumeroReal(valorR))
+            {
+                return Color.yellow;
+            }
+            else
+            {    
+                return Color.red;
+            }
+        }
+    }
+    
+    public double diferenca(String valor, String valorR)
+    {
+        return v.ConverteNumeroReal(valor) - v.ConverteNumeroReal(valorR);
+    }
+    
+    public int validar(String valor, String diferenca, String valorR)
+    {
+        if(v.ConverteNumeroReal(valor) < 0)
+        {
+            return 1;
+        }
+        if(v.ConverteNumeroReal(valor) != v.ConverteNumeroReal(diferenca))
+        {
+            if(m.Pergunta("Existe Diferença! Deseja Continuar?", "Informação") != JOptionPane.YES_OPTION)
+            {
+                return 2;
+            }
+        }
+        c.setValorR(v.ConverteNumeroReal(valorR));
+        c.setSaldoF(v.ConverteNumeroReal(valor));
+        return 0;
+    }
+    
+    public boolean fechar()
+    {
+        return c.gravar();
+    }
 }

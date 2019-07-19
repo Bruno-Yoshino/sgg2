@@ -1,6 +1,7 @@
 package CamadaApresentacao;
 
 import Controller.ChequeController;
+import javax.swing.JOptionPane;
 import util.SystemControl;
 import util.mensagens;
 
@@ -24,6 +25,10 @@ import util.mensagens;
     2019年07月17日
         今日のメモ：消去とサーチのコマンド及びSQLがまだ、また保存と変更のSQLもまだ。
         今日の担当：吉野　廉, 羽根川　翼, モニカ, 巴御前, 高村　結衣, 川波　愁子, 高村　結衣, 阿賀野, 矢矧
+
+    2019年07月18日
+        今日のメモ：消去とサーチのコマンド及びSQLの作成と終了。
+        今日の担当：吉野　廉, 川波　愁子, 高村　結衣
 */
 public class MovCheque extends javax.swing.JDialog {
 
@@ -490,11 +495,46 @@ public class MovCheque extends javax.swing.JDialog {
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
+        if(m.Pergunta("Deseja excluir este Cheque? Não pode ser mais recuperado!", "Atenção") == JOptionPane.YES_OPTION)
+        {
+            if(cc.excluir())
+            {
+                m.InformationMessage("Excluido com Sucesso!", "Atenção");
+            }
+            else
+            {
+                m.ErroMessage("ERRO ao Excluir!", "ERRO");
+            }
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
-        // TODO add your handling code here:
+        ConsultaPadrao consCheque = new ConsultaPadrao(null, true);
+        String[] vet = new String[3];
+        vet[0] = "Dono";
+        vet[1] = "Data";
+        consCheque.configuraOpcoes(vet, 2, 0, "Cheque", false);
+        consCheque.verificaconsulta(true);
+        consCheque.setVisible(true);
+        if (consCheque.getCodigo() != 0)
+        {
+            cc.buscaConta(consCheque.getCodigo());
+            txtCliente.setText(cc.getC().getCr().getP().getCli().getNome());
+            txtAgencia.setText(cc.getC().getnAgencia());
+            txtBanco.setText(cc.getC().getnBanco());
+            txtConta.setText(cc.getC().getnConta());
+            txtCpf.setText(cc.getC().getCpf());
+            txtNumeroCheque.setText(cc.getC().getnCheque());
+            txtObs.setText(cc.getC().getObs());
+            txtPessoa.setText(cc.getC().getDono());
+            txtValor.setText(""+cc.getC().getValor());
+            dcData.setData(cc.getC().getData());
+            dcPredata.setData(cc.getC().getPredata());
+        }
+        else
+        {
+            btnLocalizar.requestFocus();
+        }
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
 

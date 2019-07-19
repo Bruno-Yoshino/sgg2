@@ -111,6 +111,26 @@ public class ContaReceber {
         p = new Pedido().buscar(codigo);
     }
     
+    public ContaReceber buscar(int codigo)
+    {
+        String sql;
+        sql = "select cr_codigo, pe_codigo, cr_datavenc, cr_obs, cr_valor, cr_datapago, cr_vlorp "
+                + " from conta_receber where cr_codigo = "+codigo+"";
+                ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return new ContaReceber(rs.getInt(1), new Pedido().buscar(rs.getInt(2)), rs.getDate(3), rs.getString(4), rs.getDouble(5), rs.getDate(6), rs.getDouble(7));
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+    
     public static ResultSet buscarDados(int op)
     {
         String sql;

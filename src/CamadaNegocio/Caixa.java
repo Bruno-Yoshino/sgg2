@@ -20,19 +20,22 @@ import javax.swing.JTable;
  * @author 羽根川　翼
  * @author モニカ
  * @author 巴御前
+ * @author 川波　愁子
  * @author 水川　鈴奈
  * @author 嶌田　治奈
  * @author 小枩　夏輝
  * @author ミシェル
  * @author レア
  * @author レレイナ
- * 
+ * @author 海女
+ * @author 御子
+ * @author 稲荷
  */
 public class Caixa 
 {
     private int codigo;
     private Funcionario funcI, funcF;
-    private double saldoI, saldoF, valorR;
+    private double saldoI, saldoF, valorR;  //ValorR --> Valor Real
     private LocalDateTime data;
 
     public Caixa(int codigo, Funcionario funcI, Funcionario funcF, double saldoI, double saldoF, double valorR, LocalDateTime data) {
@@ -114,11 +117,11 @@ public class Caixa
         String sql;
         if(this.codigo == 0) // Abrir
         {
-            sql = "insert into caixa (func_abrir, caixa_saldoinicial, caixa_data, func_fechar) values ("+this.funcI+", "+this.saldoI+", '"+this.data+"', "+null+")";
+            sql = "insert into caixa (func_abrir, caixa_saldoinicial, caixa_data, func_fechar) values ("+this.funcI.getCodigo()+", "+this.saldoI+", '"+this.data+"', "+null+")";
         }
-        else
+        else // Fechar
         {
-            sql = "update caixa set func_fechar = "+this.funcF+", caixa_saldofinal = "+this.saldoF+", caixa_valorreal = "+this.valorR+" where caixa_codigo = "+this.codigo+"";
+            sql = "update caixa set func_fechar = "+this.funcF.getCodigo()+", caixa_saldofinal = "+this.saldoF+", caixa_valorreal = "+this.valorR+" where caixa_codigo = "+this.codigo+"";
         }
         return Banco.getCon().manipular(sql);
     }
@@ -134,7 +137,7 @@ public class Caixa
     {
         String sql;
         sql = "select max(caixa_codigo) "
-                + " from caixa where func_fechar == null";
+                + " from caixa where func_fechar = null";
                 ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
@@ -155,7 +158,7 @@ public class Caixa
         //int codigo, Funcionario funcI, Funcionario funcF, double saldoI, double saldoF, double valorR, LocalDateTime data
         String sql;
         sql = "select caixa_codigo, func_abrir, func_fechar, caixa_saldoinicial, caixa_saldofinal, caixa_valorreal, caixa_data, max(caixa_codigo) "
-                + " from caixa "
+                + " from caixa " //成功しなかった場合　Where文でfunc_fechar＝nullの確認。
                 + " group by caixa_codigo, func_abrir, func_fechar, caixa_saldoinicial, caixa_saldofinal, caixa_valorreal, caixa_data ";
                 ResultSet rs=Banco.getCon().consultar(sql);
         try 
@@ -171,6 +174,69 @@ public class Caixa
             System.out.println(e.getMessage());
         }
         return null;
+    }
+    
+    public double SaldoRetirado()
+    {
+        String sql;
+        sql = "select sum(cp_valorc) "
+                + " from conta_pagar "
+                + " where caixa_codigo = "+codigo+" ";
+                ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return rs.getDouble(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+    
+    public double TotalDesconto(String data)
+    {
+        String sql;
+        sql = "select sum(ps.ps_desconto) "
+                + " from pedido p, pedido_servico ps "
+                + " where p.caixa_codigo = "+codigo+" and p.pe_datapedido = '"+data+"' and p.pe_codigo = ps.pe_codigo";
+                ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return rs.getDouble(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+    
+    public double TotalPedido(String data)
+    {
+        String sql;
+        sql = "select sum(pe_valortotal) "
+                + " from pedido "
+                + " where caixa_codigo = "+codigo+" and pe_datapedido = '"+data+"' ";
+                ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return rs.getDouble(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
     }
     
     public ArrayList<Caixa> buscarPPeriodo(LocalDateTime dataI, LocalDateTime dataF)

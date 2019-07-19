@@ -1,6 +1,7 @@
 package Controller;
 
 import CamadaLogica.ReadOnlyTableModel;
+import CamadaNegocio.Caixa;
 import CamadaNegocio.Cliente;
 import CamadaNegocio.DetalheServico;
 import CamadaNegocio.FormaPagamento;
@@ -437,7 +438,7 @@ public class PedidoController {
     
     public boolean checarStatusProducao(int codigoP, int codigoS, int linha)
     {
-        if(linha == 0)
+        if(linha == -1)
         {
             return true;
         }
@@ -445,5 +446,10 @@ public class PedidoController {
         {
             return false;
         }
+    }
+    
+    public void buscaCaixa()
+    {
+        p.setC(new Caixa().buscaCaixa());
     }
 }

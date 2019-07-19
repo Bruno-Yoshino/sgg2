@@ -1,6 +1,7 @@
 package CamadaApresentacao;
 
 import CamadaLogica.ReadOnlyTableModel;
+import CamadaNegocio.Funcionario;
 import Controller.OrcamentoController;
 import Controller.PedidoController;
 import java.sql.SQLException;
@@ -40,11 +41,19 @@ public class MovPedido extends javax.swing.JDialog {
     private boolean flag;
     private int linha;
     
-    public MovPedido(java.awt.Frame parent, boolean modal) throws SQLException {
+    public MovPedido(java.awt.Frame parent, boolean modal, Funcionario f) throws SQLException {
         super(parent, modal);
         initComponents();
         
         setLocationRelativeTo(null);
+        pc.buscaCaixa();
+        if(pc.getO().getC() == null)
+        {
+            m.InformationMessage("Não existe Caixa Aberto! Sera redirecionado para o menu!", "Atenção");
+            dispose();
+        }
+        
+        pc.getO().setF(f);
         
         btnNovo.setName("btnNovo");
         btnEntregar.setName("btnAlterar");

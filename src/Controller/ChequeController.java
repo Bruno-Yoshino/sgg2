@@ -119,8 +119,11 @@ public class ChequeController {
     
     public void buscaConta(int codigo)
     {
-        
+        c = new Cheque().buscar(codigo);
     }
     
-    
+    public boolean excluir()
+    {
+        return c.excluir();
+    }
 }
