@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 
 /**
@@ -134,7 +136,6 @@ public class Pedido {
     
     public boolean gravar()
     {
-
         String sql = "";
         if(codigo == 0)
         {
@@ -258,6 +259,24 @@ public class Pedido {
                 " FROM pedido_servico_detalhe psd, detalhe_serv ds "
               + " WHERE psd.pe_codigo = "+codigo+" and os_sequence = "+sequence+" and psd.ds_codigo = ds.ds_codigo;";
         return Banco.getCon().retornaResultSet(query);
+    }
+    
+    public boolean verificaStatusProducao(int codigo, int sequencia)
+    {
+        String sql = "SELECT pe_codigo " +
+                     " FROM producao "
+                    +" WHERE pe_codigo = "+codigo+" and ps_sequence = "+sequencia+"";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if(rs.next())
+            {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Pedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
     
     public static void configuraModel(JTable jTable) // Configurar Tabela Para consulta ou para Alterar

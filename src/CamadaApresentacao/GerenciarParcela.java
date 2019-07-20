@@ -36,7 +36,7 @@ public class GerenciarParcela extends javax.swing.JDialog {
         return flag;
     }
     
-    public GerenciarParcela(java.awt.Frame parent, boolean modal, ContaPagar cp, Compra c, Pedido p) {//Contas a apagar "Pedido"
+    public GerenciarParcela(java.awt.Frame parent, boolean modal, ContaPagar cp, Compra c, Pedido p) {//Contas a Receber "Pedido"
         super(parent, modal);
         initComponents();
         flag = false;

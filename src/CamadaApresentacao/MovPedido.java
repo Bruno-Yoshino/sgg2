@@ -2,7 +2,6 @@ package CamadaApresentacao;
 
 import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Funcionario;
-import Controller.OrcamentoController;
 import Controller.PedidoController;
 import java.sql.SQLException;
 import java.time.Instant;
@@ -35,7 +34,6 @@ public class MovPedido extends javax.swing.JDialog {
 
     private final util.SystemControl sc = new SystemControl();
     private final mensagens m = new mensagens();
-    //private final OrcamentoController pc = new OrcamentoController();
     private final PedidoController pc = new PedidoController();
     private final Validacao v = new Validacao(); 
     private boolean flag;
@@ -894,12 +892,19 @@ public class MovPedido extends javax.swing.JDialog {
         {
             linha = jTable1.getSelectedRow();
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
-            txtServico.setText(""+model.getValueAt(jTable1.getSelectedRow(), 0));
-            txtValor.setText(""+model.getValueAt(jTable1.getSelectedRow(), 1));
-            spQtd.setValue(model.getValueAt(jTable1.getSelectedRow(), 2));
-            txtDesconto.setText(""+model.getValueAt(jTable1.getSelectedRow(), 9));
-            txtValor_total.setText(""+model.getValueAt(jTable1.getSelectedRow(), 10));
-            txtDescricao.setText(""+model.getValueAt(jTable1.getSelectedRow(), 11));
+            if(pc.verificaStatus(Integer.parseInt(txtCodigo.getText()), linha) || flag)
+            {
+                txtServico.setText(""+model.getValueAt(jTable1.getSelectedRow(), 0));
+                txtValor.setText(""+model.getValueAt(jTable1.getSelectedRow(), 1));
+                spQtd.setValue(model.getValueAt(jTable1.getSelectedRow(), 2));
+                txtDesconto.setText(""+model.getValueAt(jTable1.getSelectedRow(), 9));
+                txtValor_total.setText(""+model.getValueAt(jTable1.getSelectedRow(), 10));
+                txtDescricao.setText(""+model.getValueAt(jTable1.getSelectedRow(), 11));
+            }
+            else
+            {
+                m.WarmingMessage("Não pode ser alterado por estar em execução na Produção", "Atenção");
+            }
         }
         else
         {
@@ -988,22 +993,27 @@ public class MovPedido extends javax.swing.JDialog {
                                 {
                                     m.InformationMessage("Gravado com Sucesso", "Informação");
                                     sc.limpar(jPanel1.getComponents());
-                                    //flag = true;
+                                    flag = true;
                                     linha = -1;
                                     pc.clearSequenceNumber();
                                     lbEntrega.setVisible(false);
                                     dcEntrega.setVisible(false);
-                                    //ここ、後でPedidoが保存された時(保存内容)の処理 Producao, Contas Receber, Pedido, Cheque
+                                    //ここ、後でPedidoが保存された時(保存内容)の処理 Producao , Contas Receber OK, Cheque 
+                                    
+                                    GerenciarParcela formGP = new GerenciarParcela(null, true, null, null, pc.getO());
+                                    formGP.setVisible(true);
+                                    
+                                    //Cheque 今登録するか確認。
                                 }
                         }
                         else
                         {
                             m.ErroMessage("ERRO", "ERRO1");
                         }
-                        
                     }
                     else
                     {
+                        pc.clearSequenceNumber();
                          //ここ、後でPedidoが変更された時(内容変更)の処理 Producao, Contas Receber, Pedido, Cheque
                     }
             }

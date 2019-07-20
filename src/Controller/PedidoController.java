@@ -260,22 +260,31 @@ public class PedidoController {
         {
             if(m.Pergunta("Este serviço contem Detalhes inseridos! Deseja Excluir?", "Atenção") == JOptionPane.YES_OPTION)
             {
-                model.removeRow(linha);
                 if(flag)//true   ->> reference to Novo
                 {
+                    model.removeRow(linha);
                     tempS.remove(linha);
                     p.setLista(tempS);
                     return true;
                 }
                 else
                 {
-                    p.getLista().get(linha).getLista().forEach((lista) -> {
-                        excluirSD.add(lista.getSequence());
-                    });
-                    excluirS.add(p.getLista().get(linha));
-                    tempS.remove(linha);
-                    p.setLista(tempS);
-                    return true;
+                    if(p.verificaStatusProducao(p.getCodigo(), p.getLista().get(linha).getSequence()))
+                    {
+                        model.removeRow(linha);
+                        //Producaoでの消去
+                        p.getLista().get(linha).getLista().forEach((lista) -> {
+                            excluirSD.add(lista.getSequence());
+                        });
+                        excluirS.add(p.getLista().get(linha));
+                        tempS.remove(linha);
+                        p.setLista(tempS);
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             else
@@ -292,11 +301,24 @@ public class PedidoController {
             }
             else
             {
-                tempS.remove(linha);
-                p.setLista(tempS);
-                return true;
+                if(p.verificaStatusProducao(p.getCodigo(), p.getLista().get(linha).getSequence()))
+                {
+                    //Producaoでの消去
+                    tempS.remove(linha);
+                    p.setLista(tempS);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
+    }
+    
+    public boolean verificaStatus(int codigo, int sequencia)//Pedido
+    {
+        return p.verificaStatusProducao(codigo, sequencia);
     }
     
     public double calculoTotal(JTable tabela)
