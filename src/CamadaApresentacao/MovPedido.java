@@ -39,19 +39,24 @@ public class MovPedido extends javax.swing.JDialog {
     private boolean flag;
     private int linha;
     
+    /*
+        2019年07月20日
+            作業終了。
+    */
+    
     public MovPedido(java.awt.Frame parent, boolean modal, Funcionario f) throws SQLException {
         super(parent, modal);
         initComponents();
         
         setLocationRelativeTo(null);
         pc.buscaCaixa();
-        if(pc.getO().getC() == null)
+        if(pc.getP().getC() == null)
         {
             m.InformationMessage("Não existe Caixa Aberto! Sera redirecionado para o menu!", "Atenção");
             dispose();
         }
         
-        pc.getO().setF(f);
+        pc.getP().setF(f);
         
         btnNovo.setName("btnNovo");
         btnEntregar.setName("btnAlterar");
@@ -835,7 +840,7 @@ public class MovPedido extends javax.swing.JDialog {
         if (consCliente.getCodigo() != 0)
         {
             pc.buscaClietne(consCliente.getCodigo());
-            txtCliente.setText(""+pc.getO().getCli().getNome());
+            txtCliente.setText(""+pc.getP().getCli().getNome());
             consCliente.dispose();
         }
         else
@@ -998,12 +1003,19 @@ public class MovPedido extends javax.swing.JDialog {
                                     pc.clearSequenceNumber();
                                     lbEntrega.setVisible(false);
                                     dcEntrega.setVisible(false);
-                                    //ここ、後でPedidoが保存された時(保存内容)の処理 Producao , Contas Receber OK, Cheque 
+                                    //OK OK ここ、後でPedidoが保存された時(保存内容)の処理 Producao OK, Contas Receber OK 
                                     
-                                    GerenciarParcela formGP = new GerenciarParcela(null, true, null, null, pc.getO());
+                                    if(pc.gerarProducao())
+                                    {
+                                        m.InformationMessage("Producão gerado com Sucesso!", "Informação");
+                                    }
+                                    else
+                                    {
+                                        m.ErroMessage("ERRO", "ERRO2");
+                                    }
+                                    GerenciarParcela formGP = new GerenciarParcela(null, true, null, null, pc.getP());
                                     formGP.setVisible(true);
                                     
-                                    //Cheque 今登録するか確認。
                                 }
                         }
                         else
@@ -1013,8 +1025,28 @@ public class MovPedido extends javax.swing.JDialog {
                     }
                     else
                     {
+                         //OK, OK ここ、後でPedidoが変更された時(内容変更)の処理 Producao OK, Pedido OK
                         pc.clearSequenceNumber();
-                         //ここ、後でPedidoが変更された時(内容変更)の処理 Producao, Contas Receber, Pedido, Cheque
+                        if(pc.exculir())
+                        {
+                            if(pc.alterar())
+                            {
+                                if(pc.alterarPedidoServico())
+                                {
+                                    if(pc.alterarPedidoServicoDetalhe())
+                                    {
+                                        if(pc.alterarValorReceber())
+                                        {
+                                            m.InformationMessage("Alterardo com Sucesso!", "Informação");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            m.ErroMessage("ERRO", "ERRO3");
+                        }
                     }
             }
         } catch (SQLException ex) {
@@ -1060,14 +1092,14 @@ public class MovPedido extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(MovOrcamneto.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if(pc.getO() != null)
+            if(pc.getP() != null)
             {
-                txtCodigo.setText(""+pc.getO().getCodigo());
-                txtCliente.setText(""+pc.getO().getCli().getNome());
-                txtValorT.setText(""+pc.getO().getValorTotal());
-                dcPedido.setData(pc.getO().getPedido());
-                dcEntrega.setData(pc.getO().getEntrega());
-                cbForma.setSelectedItem(pc.getO().getFp().getNome());
+                txtCodigo.setText(""+pc.getP().getCodigo());
+                txtCliente.setText(""+pc.getP().getCli().getNome());
+                txtValorT.setText(""+pc.getP().getValorTotal());
+                dcPedido.setData(pc.getP().getPedido());
+                dcEntrega.setData(pc.getP().getEntrega());
+                cbForma.setSelectedItem(pc.getP().getFp().getNome());
                 pc.carregarTabelaServico(jTable1);
                 pc.carregarTabelaDetalheServico(jTable2, 0);
             }

@@ -8,6 +8,7 @@ package Controller;
 import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Folha;
 import CamadaNegocio.Funcionario;
+import CamadaNegocio.Pedido_Servico;
 import CamadaNegocio.Producao;
 import CamadaNegocio.Producao_Folha;
 import CamadaNegocio.Producao_Produto;
@@ -381,5 +382,10 @@ public class ProducaoController {
             }
         }
         return p.alterar();
+    }
+    
+    public boolean gerarProducao(Pedido_Servico ps)
+    {
+        return p.gravar(ps);
     }
 }

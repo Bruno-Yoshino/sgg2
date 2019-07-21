@@ -132,8 +132,8 @@ public class GerenciarParcelaController {
         double resto = valor % qtd;
         if(resto > 0)
         {
-            resto = valor / qtd;
-            resto = valor - resto * 3;
+//            resto = valor / qtd;
+//            resto = valor - resto * qtd;
             return valor / qtd + resto;
         }
         return valor / qtd;

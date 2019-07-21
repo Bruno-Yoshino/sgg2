@@ -10,6 +10,7 @@ import CamadaNegocio.Pedido_Servico;
 import CamadaNegocio.Pedido_Servico_Detalhe;
 import CamadaNegocio.Pedido;
 import CamadaNegocio.Pedido_Servico;
+import CamadaNegocio.Producao;
 import CamadaNegocio.Servico;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,7 +46,7 @@ public class PedidoController {
     private final mensagens m = new mensagens(); 
     private Servico ser;
     private DetalheServico sd; 
-    private int sequenceOS;
+    private int sequencePS;
     private final ArrayList<Pedido_Servico> excluirS;
     private final ArrayList<Integer> excluirSD;
     private final ArrayList<Integer> excluirSDCodigo;
@@ -60,14 +61,14 @@ public class PedidoController {
         excluirSD = new ArrayList<>();
         excluirSDCodigo = new ArrayList<>();
         excluirDetalhes = new ArrayList<>();
-        sequenceOS = 1;
+        sequencePS = 1;
     }
 
-    public Pedido getO() {
+    public Pedido getP() {
         return p;
     }
 
-    public void setO(Pedido p) {
+    public void setP(Pedido p) {
         this.p = p;
     }
 
@@ -128,7 +129,7 @@ public class PedidoController {
             return 3;
         if(v.ConverteNumeroReal(total) <= 0)
         if(linha == -1)
-            temp.add(new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd),  v.ConverteNumeroReal(desconto), descricao, sequenceOS++, new ArrayList<>()));
+            temp.add(new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd),  v.ConverteNumeroReal(desconto), descricao, sequencePS++, new ArrayList<>()));
         else
             temp.add(linha, new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>()));
         p.setLista(temp);
@@ -316,9 +317,9 @@ public class PedidoController {
         }
     }
     
-    public boolean verificaStatus(int codigo, int sequencia)//Pedido
+    public boolean verificaStatus(int codigo, int linha)//Pedido
     {
-        return p.verificaStatusProducao(codigo, sequencia);
+        return p.verificaStatusProducao(codigo, p.getLista().get(linha).getSequence());
     }
     
     public double calculoTotal(JTable tabela)
@@ -354,7 +355,7 @@ public class PedidoController {
         p.setCodigo(new Pedido().UltimoCodigo());
     }
            
-    public void carregarFormaPagamento()
+    public void carregarFormaPagamento(JComboBox cb)
     {
         
     }
@@ -370,7 +371,7 @@ public class PedidoController {
     
     public void clearSequenceNumber()
     {
-        sequenceOS = 1;
+        sequencePS = 1;
     }
     
     public boolean gravarPedido()
@@ -439,6 +440,7 @@ public class PedidoController {
     {
         Pedido temp = p.buscar(codigo);
         p = temp == null ? new Pedido() : temp;
+        sequencePS = p.getLista().get(p.getLista().size()-1).getSequence();
     }
     
     public void carregarTabelaServico(JTable tabela)
@@ -458,20 +460,65 @@ public class PedidoController {
         }
     }
     
-    public boolean checarStatusProducao(int codigoP, int codigoS, int linha)
-    {
-        if(linha == -1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+//    public boolean checarStatusProducao(int codigoP, int linha)
+//    {
+//        if(linha == -1)
+//        {
+//            return false;
+//        }
+//        else
+//        {
+//            return p.verificaStatusProducao(codigoP, p.getLista().get(linha).getSequence());
+//        }
+//    }
     
     public void buscaCaixa()
     {
         p.setC(new Caixa().buscaCaixa());
+    }
+    
+    public boolean gerarProducao()
+    {
+        boolean x = true;
+        for(int i = 0; i < p.getLista().size() && x; i++)
+        {
+            x = new ProducaoController().gerarProducao(p.getLista().get(i));
+        }
+        return x;
+    }
+    
+    public boolean exculir()
+    {
+        boolean x = true;
+        /*
+            private final ArrayList<Pedido_Servico> excluirS;
+        */
+        for(int i = 0; i < excluirDetalhes.size() && x; i++)
+        {
+            x = new Pedido_Servico_Detalhe().executeDelete(excluirDetalhes.get(i));
+        }
+        for(int i = 0; i < excluirSD.size() && x; i++)
+        {
+            x = new Pedido_Servico_Detalhe().excluir(p.getCodigo(), excluirSD.get(i));
+        }
+        for(int i = 0; i < excluirS.size() && x; i++)
+        {
+            
+            x = new Producao().excluir(p.getCodigo(), excluirS.get(i).getSequence());
+            x = new Pedido_Servico().excluir(p.getCodigo(), excluirS.get(i).getSequence());
+        }
+        return x;
+    }
+    
+    public boolean alterar()
+    {
+        return p.alterar();
+    }
+    
+    public boolean alterarValorReceber()
+    {
+        ReceberContaController rcc = new ReceberContaController();
+        rcc.setP(p);
+        return rcc.atualizarValor();
     }
 }

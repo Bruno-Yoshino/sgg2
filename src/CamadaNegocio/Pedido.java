@@ -156,6 +156,14 @@ public class Pedido {
         return Banco.getCon().manipular(sql);
     }
     
+    public boolean alterar()
+    {
+        String sql = "UPDATE pedido " +
+                     " SET  cli_codigo = "+cli.getCodigo()+", func_codigo = "+f.getCodigo()+", pe_valortotal = "+valorTotal+", pe_datapedido = '"+pedido+"', fpg_codigo = "+fp.getCodigo()+" " +
+                     " WHERE pe_codigo="+codigo+";";
+        return Banco.getCon().manipular(sql);
+    }
+    
     public boolean excluir(int codigo)
     {
         String sql = "UPDATE pedido " +
@@ -175,6 +183,22 @@ public class Pedido {
         }
         return 0;
     }
+    
+//    public boolean statusProducao(int codigoP, int codigoS)
+//    {
+//        String sql = "select prod_codigo from producao "
+//                   + " where pe_codigo = "+codigoP+" and ps_sequence = "+codigoS+"; ";
+//        ResultSet rs=Banco.getCon().consultar(sql);
+//        try {
+//            if(rs.next())
+//            {
+//                return true;
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Pedido.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return false;
+//    }
     
     public Pedido buscar(int codigo) throws SQLException
     {
@@ -265,7 +289,7 @@ public class Pedido {
     {
         String sql = "SELECT pe_codigo " +
                      " FROM producao "
-                    +" WHERE pe_codigo = "+codigo+" and ps_sequence = "+sequencia+"";
+                    +" WHERE pe_codigo = "+codigo+" and ps_sequence = "+sequencia+" and prod_status = 4";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {

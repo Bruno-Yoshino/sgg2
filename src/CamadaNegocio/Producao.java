@@ -129,9 +129,21 @@ public class Producao
     
     //--------------------------------------------------------------------------
     
+    public boolean gravar(Pedido_Servico ps)
+    {
+        String sql = "INSERT INTO producao (pe_codigo, serv_codigo, prod_status, ps_sequence) VALUES ("+p.getCodigo()+", "+ps.getServ().getCodigo()+", 4, "+ps.getSequence()+")";
+        return Banco.getCon().manipular(sql);
+    }
+    
     public boolean alterar()
     {
-        String sql = "update producao set prod_status = '"+status+"', prod_date = '"+(status==1 ? Date.from(Instant.now()) : null)+"' where prod_codigo = "+codigo+"";
+        String sql = "update producao set func_codigo = "+f.getCodigo()+", prod_status = '"+status+"', prod_date = '"+(status==1 ? Date.from(Instant.now()) : null)+"' where prod_codigo = "+codigo+"";
+        return Banco.getCon().manipular(sql);
+    }
+    
+    public boolean excluir(int codigo, int sequencia)
+    {
+        String sql = "delete form producao where pe_codigo = "+codigo+" and ps_sequence = "+sequencia+"";
         return Banco.getCon().manipular(sql);
     }
     

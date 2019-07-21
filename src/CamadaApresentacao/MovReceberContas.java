@@ -29,9 +29,8 @@ public class MovReceberContas extends javax.swing.JDialog {
     private final SystemControl sc = new SystemControl();
     private final mensagens m = new mensagens();
     private final ReceberContaController rcc = new ReceberContaController();
-    private boolean pagamento;
     
-    public MovReceberContas(java.awt.Frame parent, boolean modal, boolean pagamento) {
+    public MovReceberContas(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
         btnAlterar.setName("btnAlterar");
@@ -39,9 +38,9 @@ public class MovReceberContas extends javax.swing.JDialog {
         btnGravar.setName("btnGravar");
         btnSair.setName("btnSair");
         btnImprimir.setName("btnImprimir");
-        this.pagamento = pagamento;
         sc.Initialize(jPanel3.getComponents());
         sc.HabilityComponents(jPanel2.getComponents(), false);
+        rcc.carregarTabela(jTable1, 1);
     }
     
     /*
@@ -384,53 +383,65 @@ public class MovReceberContas extends javax.swing.JDialog {
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
-        //String codigoC, String valorPag, Date pagamento, String obs
-        switch(rcc.validarContasReceber((String) model.getValueAt(jTable1.getSelectedRow(), 5), txtValorP.getText(), dcPagamento.getData(), txtObs.getText()))
-        {
-            case 1: m.InformationMessage("Informe o valor a ser Recebido!", "Atenção"); txtValorP.requestFocus(); break;
-            case 2: m.InformationMessage("Valor precisa ser maior ou igual a 0!", "Atenção"); txtValorP.requestFocus(); break;
-            case 3: m.InformationMessage("Altera o valor Recebido", "Atenção"); txtValorP.requestFocus(); break;
-            case 5: 
-                rcc.alterar();
-                if(rcc.SeocndInserting())
-                {
-                    m.InformationMessage("Lançado e Alterado com Sucesso!", "Atenção");
-                    btnCancelarActionPerformed(null);
-                    try {
-                        rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(MovPagarContas.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                else
-                {
-                   m.ErroMessage("ERRO1", "ERRO1"); 
-                }
-                if(pagamento)
-                {
-                    
-                }
-                break;
-            default: 
-                if(rcc.alterar())
-                {
-                    m.InformationMessage("Alterado com Sucesso!", "Atenção");
-                    sc.limpar(jPanel2.getComponents());
-                    btnCancelarActionPerformed(null);
-                    try {
-                        rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(MovPagarContas.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    if(pagamento)//m.Pergunta("Pagamento em Cheque?", "Pergunta") == JOptionPane.YES_OPTION
+        try {
+            //String codigoC, String valorPag, Date pagamento, String obs
+            switch(rcc.validarContasReceber((String) model.getValueAt(jTable1.getSelectedRow(), 5), txtValorP.getText(), dcPagamento.getData(), txtObs.getText()))
+            {
+                case 1: m.InformationMessage("Informe o valor a ser Recebido!", "Atenção"); txtValorP.requestFocus(); break;
+                case 2: m.InformationMessage("Valor precisa ser maior ou igual a 0!", "Atenção"); txtValorP.requestFocus(); break;
+                case 3: m.InformationMessage("Altera o valor Recebido", "Atenção"); txtValorP.requestFocus(); break;
+                case 5:
+                    rcc.alterar();
+                    if(rcc.SeocndInserting())
                     {
-
+                        m.InformationMessage("Lançado e Alterado com Sucesso!", "Atenção");
+                        btnCancelarActionPerformed(null);
+                        try {
+                            rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(MovPagarContas.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
-                }
-                else
-                {
-                   m.ErroMessage("ERRO", "ERRO"); 
-                }
+                    else
+                    {
+                        m.ErroMessage("ERRO1", "ERRO1");
+                    }
+                    if(rcc.getCr().getP().getFp().getCodigo() == 4)
+                    {
+                        if(m.Pergunta("Deseja lançar o cheque agora?", "Pergunta") == JOptionPane.YES_OPTION)
+                        {
+                            MovCheque frmCheque = new MovCheque(null, true, rcc.getCr().getCodigo());
+                            frmCheque.setVisible(true);
+                        }
+                    }
+                    break;
+                default:
+                    if(rcc.alterar())
+                    {
+                        m.InformationMessage("Alterado com Sucesso!", "Atenção");
+                        sc.limpar(jPanel2.getComponents());
+                        btnCancelarActionPerformed(null);
+                        try {
+                            rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(MovPagarContas.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        if(rcc.getCr().getP().getFp().getCodigo() == 4)
+                        {
+                            if(m.Pergunta("Deseja lançar o cheque agora?", "Pergunta") == JOptionPane.YES_OPTION)
+                            {
+                                MovCheque frmCheque = new MovCheque(null, true, rcc.getCr().getCodigo());
+                                frmCheque.setVisible(true);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m.ErroMessage("ERRO", "ERRO");
+                    }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MovReceberContas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnGravarActionPerformed
 

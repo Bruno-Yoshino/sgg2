@@ -3,11 +3,15 @@ package Controller;
 import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.ContaPagar;
 import CamadaNegocio.ContaReceber;
+import CamadaNegocio.Pedido;
 import CamadaNegocio.TipoConta;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import util.Validacao;
@@ -31,11 +35,13 @@ import util.mensagens;
 public class ReceberContaController {
     private Validacao v = new Validacao();
     private ContaReceber cr;
+    private Pedido p;
     private final mensagens m;
 
     public ReceberContaController() {
         cr = new ContaReceber();
         m = new mensagens();
+        p = new Pedido();
     }
 
     public ContaReceber getCr() {
@@ -44,6 +50,14 @@ public class ReceberContaController {
 
     public void setCr(ContaReceber cr) {
         this.cr = cr;
+    }
+
+    public Pedido getP() {
+        return p;
+    }
+
+    public void setP(Pedido p) {
+        this.p = p;
     }
     
     public boolean SeocndInserting()
@@ -143,5 +157,38 @@ public class ReceberContaController {
                 rs.getInt(6)// Numero Conta
             });
         }
+    }
+    
+    public boolean atualizarValor()
+    {
+        int qtd = cr.QtdParcela();
+        boolean x = true;
+        ArrayList<Integer> lista = cr.CodigoContaReceber(p.getCodigo());
+        if(qtd == 1)
+        {
+             x = cr.alterarvalorConta(lista.get(0));
+        }
+        else
+        {
+            double valor = PrimeiraParcela(qtd, p.getValorTotal());
+            cr.setValor(valor);
+            cr.alterarvalorConta(lista.get(0));
+            for(int i = 1; lista.size() < i; i++)
+            {
+                cr.setValor(valor/qtd);
+                x = cr.alterarvalorConta(lista.get(i));
+            }
+        }
+        return x;
+    }
+    
+    private double PrimeiraParcela(int qtd, double valor)
+    {
+        double resto = valor % qtd;
+        if(resto > 0)
+        {
+            return valor / qtd + resto;
+        }
+        return valor / qtd;
     }
 }
