@@ -3,6 +3,9 @@ package CamadaApresentacao;
 import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Funcionario;
 import Controller.ProducaoController;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import util.SystemControl;
 import util.mensagens;
@@ -52,13 +55,19 @@ public class MovProducao extends javax.swing.JDialog {
     2019年07月03日：
         今日の担当：吉野　廉、　羽根川　翼、　里川　麗奈、　阿賀野
         明日の仕事：MovProducao及びその他のメッソッドの終了。　
+    
     2019年07月04日：
         今日の担当：吉野　廉、　羽根川　翼、　阿賀野, 矢矧
         明日の仕事：MovProducao及びその他のメッソッドの終了。
         今日のメモ：　里川　麗奈　ふざけるな！どうやって、何をすれば今日中に終わるんだよ？
+    
     2019年07月08日：
         今日の担当：吉野　廉、　羽根川　翼、　モニカ、　橋立
         今日のメモ：　まだ別のJDialog（詳細）を呼んでいないが通常機能はすべて終了。
+    
+    2019年07月21日：
+        今日の担当：吉野　廉、　羽根川　翼、　モニカ、　高村　結衣、　里川　麗奈
+        今日のメモ：　JDialog（詳細）の処理。完了。テスト待機中。
     */
     /**
      * This method is called from within the constructor to initialize the form.
@@ -669,7 +678,15 @@ public class MovProducao extends javax.swing.JDialog {
         }
         else
         {
-            //Creating new form for DetalheServico.
+            //OK Creating new form for DetalheServico.  OK
+            CheckDetalheServico formCDS;
+            try {
+                formCDS = new CheckDetalheServico(null, false, (Integer) model.getValueAt(jTable2.getSelectedRow(), 0));
+                formCDS.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(MovProducao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           
         }
     }//GEN-LAST:event_jTable2MouseClicked
 
@@ -761,6 +778,7 @@ public class MovProducao extends javax.swing.JDialog {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable2.getModel();
+        cbStatus.setSelectedItem(model.getValueAt(jTable2.getSelectedRow(), 2)); 
         if(model.getValueAt(jTable2.getSelectedRow(), 2).equals("Aguardando"))
         {
             sc.Edity(jPanel3.getComponents());

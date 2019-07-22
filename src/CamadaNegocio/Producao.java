@@ -239,7 +239,7 @@ public class Producao
     {
         String query = "SELECT p.pro_codigo, p.pro_nome, pp.prod_qtd "
                      + " FROM producao_produto pp, produto p "
-                     + " WHERE pp.prod_codigo = "+codigoP+" and pp.pro_codigo = p.pro_qtd ";
+                     + " WHERE pp.prod_codigo = "+codigoP+" and pp.pro_codigo = p.pro_codigo ";
 
         return Banco.getCon().retornaResultSet(query);
     }
@@ -273,5 +273,12 @@ public class Producao
         }
         return 0;
     }
-
+    
+    public static ResultSet carregarServico(int codigoP)
+    {
+        String query = "SELECT s.serv_nome, p.pe_codigo, p.ps_sequence "
+                     + " FROM producao p, servico s "
+                     + " WHERE p.prod_codigo = "+codigoP+" and p.serv_codigo = s.serv_codigo ";
+        return Banco.getCon().retornaResultSet(query);
+    }
 }

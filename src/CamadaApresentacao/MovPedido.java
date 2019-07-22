@@ -78,7 +78,7 @@ public class MovPedido extends javax.swing.JDialog {
         btnlocCliente.setName("btnlocCliente");
         btnlocServico.setName("btnlocServico");
         btnPDF.setName("btnPDF"); 
-        
+        btnOrcamento.setName("btnOrcamento");
         txtCodigo.setEditable(false);
         txtDescServi.setVisible(false);
         
@@ -163,6 +163,7 @@ public class MovPedido extends javax.swing.JDialog {
         btnaddDetalhe = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         cbForma = new javax.swing.JComboBox<>();
+        btnOrcamento = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -681,6 +682,15 @@ public class MovPedido extends javax.swing.JDialog {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        btnOrcamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnOrcamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
+        btnOrcamento.setText("Selecionar Orcamento");
+        btnOrcamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrcamentoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -696,7 +706,9 @@ public class MovPedido extends javax.swing.JDialog {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnOrcamento))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -735,7 +747,8 @@ public class MovPedido extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnOrcamento))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1106,6 +1119,33 @@ public class MovPedido extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtCodigoFocusLost
 
+    private void btnOrcamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrcamentoActionPerformed
+        ConsultaMov consOrcamento = new ConsultaMov(null, true);
+        String[] vet = new String[3];
+        vet[0] = "Tudo";
+        vet[1] = "Data";
+        vet[2] = "Periodo";
+        vet[3] = "Numero";
+        consOrcamento.configuraOpcoes(vet, 4, 0, "Orçamento", false);
+        consOrcamento.verificaconsulta(true);
+        consOrcamento.setVisible(true);
+        if (consOrcamento.getCodigo() != 0)
+        {
+            switch(pc.carregarOrcamento(consOrcamento.getCodigo()))
+            {
+                case 1: m.WarmingMessage("Este orcamento esta Vencido!", "Atenção"); break;
+                default:
+                    jTable1.removeAll();
+                    pc.carregarTabelaServico(jTable1);
+            }
+            consOrcamento.dispose();
+        }
+        else
+        {
+            consOrcamento.dispose();
+        }
+    }//GEN-LAST:event_btnOrcamentoActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1121,6 +1161,7 @@ public class MovPedido extends javax.swing.JDialog {
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnLocalizar;
     private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnOrcamento;
     private javax.swing.JButton btnPDF;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnaddCliente;

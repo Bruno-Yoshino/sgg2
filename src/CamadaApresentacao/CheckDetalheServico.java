@@ -1,19 +1,32 @@
 package CamadaApresentacao;
 
+import CamadaLogica.ReadOnlyTableModel;
+import CamadaNegocio.Pedido;
+import CamadaNegocio.Producao;
 import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * @author 高村　結衣
+ * @author 里川　麗奈
  */
-public class CheckDetalheServico extends javax.swing.JDialog {
+public class CheckDetalheServico extends javax.swing.JDialog 
+{
+    private final int codigoP;
+    private final int sequence;
 
-
-    public CheckDetalheServico(java.awt.Frame parent, boolean modal, int codigoProd) {
+    public CheckDetalheServico(java.awt.Frame parent, boolean modal, int codigoPe) throws SQLException {
         super(parent, modal);
         initComponents();
+        ResultSet rs =  Producao.carregarServico(codigoPe);
+        lbServico.setText(rs.getString(1));
+        codigoP = rs.getInt(2);
+        sequence = rs.getInt(3);
     }
 
     /**
@@ -142,9 +155,35 @@ public class CheckDetalheServico extends javax.swing.JDialog {
     }//GEN-LAST:event_formKeyPressed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       
+       carregaTabela();
     }//GEN-LAST:event_formWindowOpened
 
+    private void carregaTabela()
+    {
+        try
+        {
+            ResultSet rs;
+            Pedido.configuraModelPedidoSD(jTable1);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            rs = Pedido.ConsultaPedidoServicoD(codigoP, sequence); 
+            while (rs.next())
+            {
+                
+                model.addRow(new Object[]
+                {
+                    rs.getString(1),
+                    rs.getInt(4),
+                    rs.getInt(2),
+                    rs.getInt(3),
+                    rs.getString(5),
+                });
+            }
+        } 
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
