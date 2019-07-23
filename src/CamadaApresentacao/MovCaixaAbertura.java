@@ -18,6 +18,15 @@ import util.mensagens;
  * @author 吉野　廉
  * @author 磐手
  * @author イントレピッド
+ * 
+ * Tester 2019年07月22日
+ * LOG: dispose追加
+ * LOG: 二番目のreturnの直し。
+ * LOG: Insertの修復
+ * LOG: OpenExistSelect修復
+ * LOG:上記のエラー修復完了、現時点2019年07月22日21：55をもって終了といたします。
+ * @author 弐条
+ * @author 七草
  */
 public class MovCaixaAbertura extends javax.swing.JDialog {
 
@@ -28,12 +37,8 @@ public class MovCaixaAbertura extends javax.swing.JDialog {
     public MovCaixaAbertura(java.awt.Frame parent, boolean modal, Funcionario func) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         cc.setF(func);
-        if(cc.OpenExist())
-        {
-            m.InformationMessage("Já existe um caixa Aberto! Favor fechar o caixa que esta aberto!", "Atenção");
-            dispose();
-        }
         ImageIcon icon = new ImageIcon(cc.getF().getCaminho());
         jLabel2.setIcon(new ImageIcon(icon.getImage().getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_DEFAULT))); // Utilizado para recuperar imagem.
         txtTamnho.setText(cc.getF().getNome()); 
@@ -63,6 +68,11 @@ public class MovCaixaAbertura extends javax.swing.JDialog {
         btnSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -158,6 +168,11 @@ public class MovCaixaAbertura extends javax.swing.JDialog {
         });
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Sair.png"))); // NOI18N
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -221,6 +236,18 @@ public class MovCaixaAbertura extends javax.swing.JDialog {
                  }
         }
     }//GEN-LAST:event_btnAbrirActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        if(cc.OpenExist())
+        {
+            m.InformationMessage("Já existe um caixa Aberto! Favor fechar o caixa que esta aberto!", "Atenção");
+            btnSairActionPerformed(null);
+        }
+    }//GEN-LAST:event_formWindowActivated
 
 
 

@@ -37,7 +37,7 @@ public class MovAjusteProduto extends javax.swing.JDialog {
         btnaddServico.setName("btnaddServico");
         btnlocProduto.setName("btnlocProduto");
         btnlocServico.setName("btnlocServico");
-        
+        apc.getAp().setServ(null);
         btnAlterar.setVisible(false);
         btnLocalizar.setVisible(false);
         
@@ -101,7 +101,7 @@ public class MovAjusteProduto extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel2.setText("Observação:");
 
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setText("Produto:");
 
         txtProduto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N

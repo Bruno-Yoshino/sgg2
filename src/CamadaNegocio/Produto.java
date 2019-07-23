@@ -150,7 +150,7 @@ public class Produto {
     public boolean VerificaProduto(String nome)
     {
         String sql;
-        sql = "select * from prouto where pro_nome = '"+nome.toUpperCase()+"'";
+        sql = "select * from produto where pro_nome = '"+nome.toUpperCase()+"'";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {

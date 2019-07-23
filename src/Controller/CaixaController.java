@@ -57,15 +57,16 @@ public class CaixaController
     
     public int varidar(String valor, LocalDateTime data, int codigo)
     {
-        valor = valor.replaceAll("\\.", "");
-        valor = valor.replace(',', '.');
+//        valor = valor.replaceAll("\\.", "");
+//        valor = valor.replace(',', '.');
         c.setSaldoI(v.ConverteNumeroReal(valor));
         if(c.getSaldoI() == -999)
             return 1;
-        if(c.getSaldoI() >= 0)
+        if(c.getSaldoI() <= 0)
             return 2;
         c.setData(data);
         c.setCodigo(0);
+        c.setFuncI(f);
         return 0;
     }
     
@@ -126,13 +127,14 @@ public class CaixaController
         {
             return 1;
         }
-        if(v.ConverteNumeroReal(valor) != v.ConverteNumeroReal(diferenca))
+        if(v.ConverteNumeroReal(diferenca) > 0)
         {
             if(m.Pergunta("Existe Diferença! Deseja Continuar?", "Informação") != JOptionPane.YES_OPTION)
             {
                 return 2;
             }
         }
+        c.setFuncF(f);
         c.setValorR(v.ConverteNumeroReal(valorR));
         c.setSaldoF(v.ConverteNumeroReal(valor));
         return 0;

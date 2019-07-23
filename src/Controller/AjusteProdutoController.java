@@ -44,7 +44,7 @@ public class AjusteProdutoController
     
     public void buscaServico(int codigo)
     {
-        ap.setServ(serv.buscarCodigo(codigo));
+        ap.setServ(new Servico().buscarCodigo(codigo));
     }
     
     public void buscaProduto(int codigo)

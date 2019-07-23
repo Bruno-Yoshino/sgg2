@@ -64,7 +64,7 @@ public class CaixaRetiradaController {
     
     public double saldoAtual()
     {
-        return new AtualizarCaixaController().saldoAtualizado(c.getCodigo());
+        return new AtualizarCaixaController().saldoAtualizado(cp.getC().getCodigo());
     }
     
     public int validar(String valor, Date data, String motivo, String valorAtual)
@@ -73,7 +73,7 @@ public class CaixaRetiradaController {
         {
             return 1;
         }
-        if(v.ConverteNumeroReal(valor) <= v.ConverteNumeroReal(valorAtual))
+        if(v.ConverteNumeroReal(valor) > v.ConverteNumeroReal(valorAtual))
         {
             return 2;
         }
@@ -86,8 +86,8 @@ public class CaixaRetiradaController {
         cp.setValorC(v.ConverteNumeroReal(valor));
         cp.setObs(motivo);
         cp.setLocal("");
-        cp.setDataP(null);
-        cp.setDataV(null);
+        cp.setDataP(cp.getDataL());
+        cp.setDataV(cp.getDataL());
         cp.setParcela(0);
         cp.setLocal("");
         cp.setValorP(0);

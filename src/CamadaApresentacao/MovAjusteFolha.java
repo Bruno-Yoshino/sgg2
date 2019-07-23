@@ -42,7 +42,7 @@ public class MovAjusteFolha extends javax.swing.JDialog
         
         btnAlterar.setVisible(false);
         btnLocalizar.setVisible(false);
-        
+        afc.getAf().setServ(null);
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents());
     }

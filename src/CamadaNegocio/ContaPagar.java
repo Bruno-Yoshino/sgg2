@@ -222,6 +222,7 @@ public class ContaPagar {
         catch (SQLException e) 
         {
             System.out.println(e.getMessage());
+            return 0;
         }
         return 0;
     }

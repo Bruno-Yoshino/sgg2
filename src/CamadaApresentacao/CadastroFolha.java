@@ -197,7 +197,7 @@ public class CadastroFolha extends javax.swing.JDialog {
         });
 
         btnGravar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Excluir16.png"))); // NOI18N
+        btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Gravar16.png"))); // NOI18N
         btnGravar.setText("Gravar");
         btnGravar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

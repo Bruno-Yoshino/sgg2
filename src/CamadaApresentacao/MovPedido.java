@@ -548,11 +548,13 @@ public class MovPedido extends javax.swing.JDialog {
         jLabel11.setText("Numeração de:");
 
         txtNumeracaoI.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtNumeracaoI.setText("0");
 
         jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel12.setText("a");
 
         txtNumeracaoF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtNumeracaoF.setText("0");
 
         btnAddDetalhe.setText("Adicionar");
         btnAddDetalhe.addActionListener(new java.awt.event.ActionListener() {
@@ -572,6 +574,7 @@ public class MovPedido extends javax.swing.JDialog {
         jLabel15.setText("Vias:");
 
         txtVia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtVia.setText("0");
 
         txtOutros.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -943,6 +946,9 @@ public class MovPedido extends javax.swing.JDialog {
            case 8: m.InformationMessage("Informe o campo Outros", "Informação"); txtOutros.requestFocus(); break;
            default:
                pc.addTabelaServicoDetalhe(jTable2, jTable1.getSelectedRow());
+               txtNumeracaoI.setText("0");
+               txtNumeracaoF.setText("0");
+               txtVia.setText("0");
        }
     }//GEN-LAST:event_btnAddDetalheActionPerformed
 

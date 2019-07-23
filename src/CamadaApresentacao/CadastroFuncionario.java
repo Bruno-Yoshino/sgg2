@@ -113,7 +113,6 @@ public class CadastroFuncionario extends javax.swing.JDialog {
         txtUf = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         txtCpf = new javax.swing.JFormattedTextField();
-        txtRg = new javax.swing.JFormattedTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         txtOrgemi = new javax.swing.JTextField();
@@ -136,6 +135,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
         txtCodCid = new javax.swing.JTextField();
         txtSenha1 = new javax.swing.JPasswordField();
         jLabel16 = new javax.swing.JLabel();
+        txtRg = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
@@ -250,13 +250,6 @@ public class CadastroFuncionario extends javax.swing.JDialog {
             ex.printStackTrace();
         }
         txtCpf.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-
-        try {
-            txtRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtRg.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel13.setText("RG:");
@@ -517,10 +510,10 @@ public class CadastroFuncionario extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12)
-                            .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13)
                             .addComponent(jLabel14)
-                            .addComponent(txtOrgemi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtOrgemi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
@@ -1060,6 +1053,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
         txtNome.setText(""); 
         txtUsuario.setText(""); 
         txtSenha.setText(""); 
+        txtSenha1.setText(""); 
         soma = 0; 
         txtCpf.setText(""); 
         txtRg.setText(""); 
@@ -1182,7 +1176,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtOrgemi;
-    private javax.swing.JFormattedTextField txtRg;
+    private javax.swing.JTextField txtRg;
     private javax.swing.JPasswordField txtSenha;
     private javax.swing.JPasswordField txtSenha1;
     private javax.swing.JFormattedTextField txtTelefone;

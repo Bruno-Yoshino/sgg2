@@ -121,7 +121,7 @@ public class AjustarProduto {
         {
             sql = "UPDATE ajuste_produto " +
                   " SET serv_codigo="+serv == null ? null : serv.getCodigo()+", pro_codigo="+p.getCodigo()+", func_codigo="+func.getCodigo()+", af_qtd="+qtd+", af_data='"+data+"', af_flag="+flag+", af_obs='"+obs+"' " +
-                  " WHERE af_codigo="+codigo+"";
+                  " WHERE ap_codigo="+codigo+"";
         }
         return Banco.getCon().manipular(sql);
     }
@@ -129,10 +129,10 @@ public class AjustarProduto {
     public AjustarProduto buscarCodigo(int i)
     {
         String sql;
-        sql = "SELECT ap.af_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.af_qtd, ap.af_data, ap.af_flag, ap.af_obs " +
+        sql = "SELECT ap.ap_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.af_qtd, ap.af_data, ap.af_flag, ap.af_obs " +
               "FROM ajuste_produto ap, servico s, folha p, funcionario func "
             + "Where ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo "
-            + "and ap.af_codigo = "+i+"";
+            + "and ap.ap_codigo = "+i+"";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
@@ -154,7 +154,7 @@ public class AjustarProduto {
         String query = null;
         if (valor.equals(""))
         {
-            query = "SELECT ap.af_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.af_qtd, ap.af_data, ap.af_flag, ap.af_obs " +
+            query = "SELECT ap.ap_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.af_qtd, ap.af_data, ap.af_flag, ap.af_obs " +
                     "FROM ajuste_produto ap, servico s, folha p, funcionario func "
                     + "Where ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo "
                     + "Order by ap.af_data";
@@ -174,20 +174,20 @@ public class AjustarProduto {
 //                }
                 case 0:
                 {
-                    query = "SELECT ap.af_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.af_qtd, ap.af_data, ap.af_flag, ap.af_obs " +
+                    query = "SELECT ap.ap_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.af_qtd, ap.af_data, ap.af_flag, ap.af_obs " +
                             "FROM ajuste_produto ap, servico s, folha p, funcionario func "
                             + "Where ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo and func.func_nome ilike '%"+valor+"%' "
                             + "Order by ap.af_data";
                     break;
                 }
                 case 1:
-                    query = "SELECT ap.af_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.af_qtd, ap.af_data, ap.af_flag, ap.af_obs " +
+                    query = "SELECT ap.ap_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.af_qtd, ap.af_data, ap.af_flag, ap.af_obs " +
                             "FROM ajuste_produto ap, servico s, folha p, funcionario func "
                             + "Where ap.af_data = '"+data1+"' and ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo "
                             + "Order by ap.af_data";
                     break;
                 case 2:
-                    query = "SELECT ap.af_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.af_qtd, ap.af_data, ap.af_flag, ap.af_obs " +
+                    query = "SELECT ap.ap_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.af_qtd, ap.af_data, ap.af_flag, ap.af_obs " +
                             "FROM ajuste_produto ap, servico s, folha p, funcionario func "
                             + "Where ap.af_data BETWEEN '"+data1+"' and '"+data2+"' and  ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo "
                             + "Order by ap.af_data";

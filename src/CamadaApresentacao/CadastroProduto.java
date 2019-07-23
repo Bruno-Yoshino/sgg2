@@ -41,6 +41,7 @@ public class CadastroProduto extends javax.swing.JDialog {
         btnGravar.setName("btnGravar");
         btnLocalizar.setName("btnLocalizar");
         btnSair.setName("btnSair");
+        txtCaminho.setVisible(false);
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents());
     }

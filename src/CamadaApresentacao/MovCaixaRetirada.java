@@ -17,6 +17,12 @@ import util.mensagens;
  * @author ミシェル
  * @author レア
  * @author レレイナ
+ * 
+ * Tester 2019年07月22日
+ * LOG: ページが開くときエラー OK
+ * LOG: 修復点：日付と時刻
+ * @author 弐条
+ * @author 七草
  */
 public class MovCaixaRetirada extends javax.swing.JDialog {
     
@@ -27,17 +33,7 @@ public class MovCaixaRetirada extends javax.swing.JDialog {
     public MovCaixaRetirada(java.awt.Frame parent, boolean modal, Funcionario f) {
         super(parent, modal);
         initComponents();
-        if(!crc.verificaCaixa())
-        {
-            m.InformationMessage("Não existe caixa aberto! A pagina sera fechada e retornara ao menu!", "Atenção");
-            btnSairActionPerformed(null);
-        }
-        crc.buscaCaixa();
-        crc.getCp().setComp(null);
-        crc.getCp().setTc(null);
-        btnGravar.setName("btnGravar");
-        btnSair.setName("btnSair");
-        txtValorAtual.setText(""+crc.saldoAtual());
+        setLocationRelativeTo(null);
         crc.getCp().setFunc(f);
         txtFuncionario.setText(""+f.getNome());
     }
@@ -69,6 +65,11 @@ public class MovCaixaRetirada extends javax.swing.JDialog {
         btnSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -108,6 +109,11 @@ public class MovCaixaRetirada extends javax.swing.JDialog {
         });
 
         txtValorRetirada.setText(".0");
+        txtValorRetirada.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtValorRetiradaFocusGained(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -244,6 +250,10 @@ public class MovCaixaRetirada extends javax.swing.JDialog {
                 if(crc.gravar())
                 {
                     m.InformationMessage("Lançado com Sucesso!" , "Atenção");
+                    txtValorAtual.setText(""+crc.saldoAtual());
+                    txtValorRetirada.setText("");
+                    txtMotivo.setText("");
+                    //btnSairActionPerformed(null);
                 }
                 else
                 {
@@ -271,6 +281,27 @@ public class MovCaixaRetirada extends javax.swing.JDialog {
             consFuncionario.dispose();
         }
     }//GEN-LAST:event_btnlocFuncActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        if(!crc.verificaCaixa())
+        {
+            m.InformationMessage("Não existe caixa aberto! A pagina sera fechada e retornara ao menu!", "Atenção");
+            btnSairActionPerformed(null);
+        }
+        else
+        {
+            crc.buscaCaixa();
+            crc.getCp().setComp(null);
+            crc.getCp().setTc(null);
+            btnGravar.setName("btnGravar");
+            btnSair.setName("btnSair");
+            txtValorAtual.setText(""+crc.saldoAtual());
+        }
+    }//GEN-LAST:event_formWindowActivated
+
+    private void txtValorRetiradaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorRetiradaFocusGained
+        txtValorRetirada.setText("");
+    }//GEN-LAST:event_txtValorRetiradaFocusGained
 
 
 

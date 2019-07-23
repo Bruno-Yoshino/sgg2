@@ -44,7 +44,7 @@ public class AjusteFolhaController
     
     public void buscaServico(int codigo)
     {
-        af.setServ(serv.buscarCodigo(codigo));
+        af.setServ(new Servico().buscarCodigo(codigo));
     }
     
     public void buscaFolha(int codigo)

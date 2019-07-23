@@ -19,6 +19,10 @@ import util.mensagens;
  * @author 阿武隈
  * @author 長門
  * @author 大和
+ * 
+ * Tester
+ * @author 伊勢
+ * @author 日向
  */
 public class CadastroCliente extends javax.swing.JDialog {
 
@@ -27,6 +31,12 @@ public class CadastroCliente extends javax.swing.JDialog {
     private final ClienteController cc = new ClienteController();
     float x, y;
     boolean flagG;
+    
+    /*
+        2019年07月22日
+        テスター担当：　伊勢、　日向
+        問題点：　地域(UF)の選択場面でエラー及び町の検索が被る。
+    */
     
     public CadastroCliente(java.awt.Frame parent, boolean modal) 
     {
@@ -100,11 +110,11 @@ public class CadastroCliente extends javax.swing.JDialog {
         txtcli_cpf = new javax.swing.JFormattedTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        txtcli_rg = new javax.swing.JFormattedTextField();
         jLabel14 = new javax.swing.JLabel();
         txtcli_orgEmi = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         txtcli_datanasc = new br.com.marciorl.beans.DateChooser();
+        txtcli_rg = new javax.swing.JTextField();
         panejuridica = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -263,13 +273,6 @@ public class CadastroCliente extends javax.swing.JDialog {
         jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel13.setText("RG:");
 
-        try {
-            txtcli_rg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtcli_rg.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-
         jLabel14.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel14.setText("Örg. Emissor:");
 
@@ -292,8 +295,8 @@ public class CadastroCliente extends javax.swing.JDialog {
                         .addGap(33, 33, 33)
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtcli_rg, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(txtcli_rg, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtcli_orgEmi, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -301,7 +304,7 @@ public class CadastroCliente extends javax.swing.JDialog {
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtcli_datanasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(178, Short.MAX_VALUE))
         );
         panefisicaLayout.setVerticalGroup(
             panefisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,10 +312,10 @@ public class CadastroCliente extends javax.swing.JDialog {
                 .addGroup(panefisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtcli_cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
-                    .addComponent(txtcli_rg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
                     .addComponent(jLabel14)
-                    .addComponent(txtcli_orgEmi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtcli_orgEmi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcli_rg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panefisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
@@ -1076,7 +1079,7 @@ public class CadastroCliente extends javax.swing.JDialog {
     private javax.swing.JTextField txtcli_nome;
     private javax.swing.JTextField txtcli_numero;
     private javax.swing.JTextField txtcli_orgEmi;
-    private javax.swing.JFormattedTextField txtcli_rg;
+    private javax.swing.JTextField txtcli_rg;
     private javax.swing.JTextField txtcli_rs;
     private javax.swing.JFormattedTextField txtcli_telefone;
     private javax.swing.JFormattedTextField txtcli_telefone1;

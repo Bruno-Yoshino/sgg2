@@ -117,7 +117,7 @@ public class Caixa
         String sql;
         if(this.codigo == 0) // Abrir
         {
-            sql = "insert into caixa (func_abrir, caixa_saldoinicial, caixa_data, func_fechar) values ("+this.funcI.getCodigo()+", "+this.saldoI+", '"+this.data+"', "+null+")";
+            sql = "insert into caixa (func_abrir, caixa_saldoinicio, caixa_datainicio, func_fechar) values ("+this.funcI.getCodigo()+", "+this.saldoI+", '"+this.data+"', "+null+")";
         }
         else // Fechar
         {
@@ -136,9 +136,10 @@ public class Caixa
     public boolean VerificaCaixaAberto()
     {
         String sql;
-        sql = "select max(caixa_codigo) "
-                + " from caixa where func_fechar = null";
-                ResultSet rs=Banco.getCon().consultar(sql);
+        sql = "select caixa_codigo, max(caixa_codigo) "
+            + " from caixa where func_fechar is null"
+            + " group by caixa_codigo";
+        ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
             if (rs.next()) 
@@ -157,16 +158,17 @@ public class Caixa
     {
         //int codigo, Funcionario funcI, Funcionario funcF, double saldoI, double saldoF, double valorR, LocalDateTime data
         String sql;
-        sql = "select caixa_codigo, func_abrir, func_fechar, caixa_saldoinicial, caixa_saldofinal, caixa_valorreal, caixa_data, max(caixa_codigo) "
-                + " from caixa " //成功しなかった場合　Where文でfunc_fechar＝nullの確認。
-                + " group by caixa_codigo, func_abrir, func_fechar, caixa_saldoinicial, caixa_saldofinal, caixa_valorreal, caixa_data ";
+        sql = "select caixa_codigo, func_abrir, func_fechar, caixa_saldoinicio, caixa_saldofinal, caixa_valorreal, caixa_datainicio, max(caixa_codigo) "
+                + " from caixa "
+                + " where func_fechar is null" //成功しなかった場合　Where文でfunc_fechar＝nullの確認。
+                + " group by caixa_codigo, func_abrir, func_fechar, caixa_saldoinicio, caixa_saldofinal, caixa_valorreal, caixa_datainicio ";
                 ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
             if (rs.next()) 
             {
-                return new Caixa(rs.getInt(1), new Funcionario().buscarCodigo(rs.getInt(2)), new Funcionario().buscarCodigo(rs.getInt(3)), 
-                rs.getDouble(4), rs.getDouble(5), rs.getDouble(6), rs.getTimestamp(7).toLocalDateTime());//rs.getTimestamp(7)
+                return new Caixa(rs.getInt(1), new Funcionario().buscarCodigo(rs.getInt(2)), null, 
+                rs.getDouble(4), 0, 0, rs.getTimestamp(7).toLocalDateTime());//rs.getTimestamp(7)
             }
         } 
         catch (SQLException e) 
@@ -214,6 +216,7 @@ public class Caixa
         catch (SQLException e) 
         {
             System.out.println(e.getMessage());
+            return 0;
         }
         return 0;
     }
@@ -244,7 +247,7 @@ public class Caixa
         String sql;
         sql = "select * "
                 + " from caixa "
-                + " where caixa_data between '"+dataI+"' and '"+dataF+"'";
+                + " where caixa_datainicio between '"+dataI+"' and '"+dataF+"'";
         return null;
     }
 

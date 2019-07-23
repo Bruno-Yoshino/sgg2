@@ -77,5 +77,5 @@ public class FormaPagamento {
         }
         return null;
     }
-    
+    //insert into forma_pagamento (fpg_nome, fpg_status) values ('Dinheiro', true), ('Catão Credito', true), ('Cartão Debito', true), ('Cheque', true), ('Fiado', true);
 }

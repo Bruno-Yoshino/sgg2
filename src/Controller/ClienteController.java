@@ -211,6 +211,7 @@ public class ClienteController {
     
     public void CarregaCidade(JComboBox c, String uf)
     {
+        c.removeAll();
         ArrayList<Cidade> lista;
         lista = cid.buscarPEstado(uf);
         for(int i = 0; i < lista.size(); i++)

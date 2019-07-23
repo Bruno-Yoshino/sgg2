@@ -280,6 +280,28 @@ public class SystemControl
         return temp;
     }
     
+    public final double verificaValor(String valor)
+    {
+        int indx = 0;
+        boolean flag = true;
+        for(int i = 0; i < valor.length() && flag; i++)
+        {
+            if('.' == valor.charAt(i))
+            {
+                flag = false;
+                indx = i + 1;
+            }
+        }
+        if(valor.length() - indx == 2)
+        {
+            return new Validacao().ConverteNumeroReal(valor);
+        }
+        else
+        {
+            return new Validacao().ConverteNumeroReal(valor)*10;
+        }
+    }
+    
     public final String BankCheck(String number)
     {
         switch(number)
