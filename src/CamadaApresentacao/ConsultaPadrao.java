@@ -419,6 +419,8 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             case "DetalheServico": DetalheServico(); break;
             case "Servico": Servico(); break;
             case "Fornecedor": Fornecedor(); break;
+            case "AProduto": AProduto(); break;
+            case "AFolha": AFolha(); break;
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
@@ -509,7 +511,35 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                     rs.getString("fo_descricao"),
                     rs.getDouble("fo_altura"),
                     rs.getString("fo_largura"),
-                    rs.getBoolean("fo_status")
+                    rs.getBoolean("fo_status") ? "Ativo" : "Não Ativo"
+                });
+            }
+        } 
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void AFolha() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            Folha.configuraModel(jTable1);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            rs = Folha.buscarDados2(txtValor.getText(), tipo);
+            while (rs.next())
+            {
+                model.addRow(new Object[]
+                {
+                    rs.getInt("fo_codigo"), 
+                    rs.getString("fo_tamanho"),
+                    rs.getString("fo_descricao"),
+                    rs.getDouble("fo_altura"),
+                    rs.getString("fo_largura"),
+                    rs.getBoolean("fo_status") ? "Ativo" : "Não Ativo"
                 });
             }
         } 
@@ -528,6 +558,32 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             Produto.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             rs = Produto.buscarDados(txtValor.getText(), tipo);
+            while (rs.next())
+            {
+                model.addRow(new Object[]
+                {//pro_codigo, pro_nome, pro_tipo, pro_status, pro_caminho
+                    rs.getInt(1), 
+                    rs.getString(2),
+                    rs.getString(3).charAt(0) == 'i' ? "Interno" : "Externo",
+                    rs.getBoolean(4) ? "Ativo" : "Não Ativo"
+                });
+            }
+        } 
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void AProduto() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            Produto.configuraModel(jTable1);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            rs = Produto.buscarDados2(txtValor.getText(), tipo);
             while (rs.next())
             {
                 model.addRow(new Object[]

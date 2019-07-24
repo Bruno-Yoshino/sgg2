@@ -92,10 +92,18 @@ public class GerenciarParcelaController {
         {
             return 2;
         }
-        
+        double temp;
+        if(par != 1)
+        {
+            temp = PrimeiraParcela(par, valor);
+        }
+        else
+        {
+            temp = valor;
+        }
         model.addRow(new Object[]{
             1,
-            PrimeiraParcela(par, valor),
+            temp,
             data
         });
         
@@ -130,10 +138,11 @@ public class GerenciarParcelaController {
     private double PrimeiraParcela(int qtd, double valor)
     {
         double resto = valor % qtd;
-        if(resto > 0)
+        if(valor / qtd != 0)
         {
 //            resto = valor / qtd;
 //            resto = valor - resto * qtd;
+            
             return valor / qtd + resto;
         }
         return valor / qtd;
@@ -175,9 +184,9 @@ public class GerenciarParcelaController {
         double tot = 0;
         for (int i = 0; i < model.getRowCount(); i++) 
         {
-            tot += (double) model.getValueAt(i, 1);
+            tot += v.ConverteNumeroReal(model.getValueAt(i, 1));
         }
-        if(tot != v.ConverteNumeroReal(total))
+        if(tot != v.ConverteNumeroReal(total.getText()))
             return 1;
         
         return 0;
@@ -201,7 +210,7 @@ public class GerenciarParcelaController {
             return x;
         }
         cp.setParcela(0);
-        cp.setValorC((Double) model.getValueAt(0, 1));
+        cp.setValorC(v.ConverteNumeroReal(model.getValueAt(0, 1)));
         cp.setDataV((Date) model.getValueAt(0, 2));
         x = cp.gravar();
         cp.setParcela(cp.maxCodigo());
@@ -213,5 +222,13 @@ public class GerenciarParcelaController {
         }
         return x;
     }
-        
+    
+    public void RemoveAll(JTable jTable)
+    {
+        ReadOnlyTableModel model = (ReadOnlyTableModel) jTable.getModel();
+        for(int i = 0; i < model.getRowCount(); i++)
+        {
+            model.removeRow(i);
+        }
+    }
 }

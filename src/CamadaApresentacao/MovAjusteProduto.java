@@ -14,7 +14,13 @@ import util.mensagens;
 
 /**
  *
- * @author Bruno Yoshino
+ * @author 羽根川　翼
+ * @author 阿賀野
+ * @author 矢矧
+ * 
+ * Tester 2019年07月23日
+ * @author 海雪
+ * @author 海春
  */
 public class MovAjusteProduto extends javax.swing.JDialog {
 
@@ -25,7 +31,7 @@ public class MovAjusteProduto extends javax.swing.JDialog {
     public MovAjusteProduto(java.awt.Frame parent, boolean modal, Funcionario f) {
         super(parent, modal);
         initComponents();
-        
+        setLocationRelativeTo(null);
         apc.getAp().setFunc(f);
         btnNovo.setName("btnNovo");
         btnAlterar.setName("btnAlterar");
@@ -40,7 +46,7 @@ public class MovAjusteProduto extends javax.swing.JDialog {
         apc.getAp().setServ(null);
         btnAlterar.setVisible(false);
         btnLocalizar.setVisible(false);
-        
+        rbincrement.setSelected(true);
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents());
     }
@@ -104,8 +110,10 @@ public class MovAjusteProduto extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setText("Produto:");
 
+        txtProduto.setEditable(false);
         txtProduto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
+        txtQtdAtual.setEditable(false);
         txtQtdAtual.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -116,9 +124,10 @@ public class MovAjusteProduto extends javax.swing.JDialog {
         lbTexto.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lbTexto.setText("Quantidade a ser retirado:");
 
-        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel5.setText("Em que Servioço:");
 
+        txtServico.setEditable(false);
         txtServico.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         btnaddServico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
@@ -413,10 +422,9 @@ public class MovAjusteProduto extends javax.swing.JDialog {
 
     private void btnlocProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlocProdutoActionPerformed
         ConsultaPadrao consP = new ConsultaPadrao(null, true);
-        String[] vet = new String[2];
-        vet[0] = "Tamanho";
-        vet[1] = "Descrição";
-        consP.configuraOpcoes(vet, 2, 0, "Folha", false);
+        String[] vet = new String[1];
+        vet[0] = "Nome";
+        consP.configuraOpcoes(vet, 1, 0, "AProduto", false);
         consP.verificaconsulta(true);
         consP.setVisible(true);
         if (consP.getCodigo() != 0)
@@ -424,6 +432,7 @@ public class MovAjusteProduto extends javax.swing.JDialog {
             apc.buscaProduto(consP.getCodigo());
             consP.dispose();
             txtProduto.setText(apc.getAp().getP().getNome());
+            txtQtdAtual.setText(""+apc.getAp().getP().getQtd());
         }
         else
         {
@@ -470,12 +479,18 @@ public class MovAjusteProduto extends javax.swing.JDialog {
 
     private void rbincrementStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbincrementStateChanged
         if(rbincrement.isSelected())
+        {    
             rbdecrement.setSelected(false);
+            lbTexto.setText("Quantidade a ser colocado:");
+        }
     }//GEN-LAST:event_rbincrementStateChanged
 
     private void rbdecrementStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbdecrementStateChanged
         if(rbdecrement.isSelected())
+        {
             rbincrement.setSelected(false);
+            lbTexto.setText("Quantidade a ser retirado:");
+        }
     }//GEN-LAST:event_rbdecrementStateChanged
 
     private void limpar()

@@ -116,7 +116,7 @@ public class AjustarFolha {
         {
             sql = "INSERT INTO ajuste_folha( " +
                   " serv_codigo, fo_codigo, func_codigo, af_qtd, af_data, af_flag, af_obs) " +
-                  " VALUES ("+serv == null ? null : serv.getCodigo()+", "+f.getCodigo()+", "+func.getCodigo()+", "+qtd+", '"+data+"', "+flag+", '"+obs+"')";
+                  " VALUES ("+(serv == null ? null : serv.getCodigo())+", "+f.getCodigo()+", "+func.getCodigo()+", "+qtd+", '"+data+"', "+flag+", '"+obs+"')";
         }
         else
         {

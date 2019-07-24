@@ -55,22 +55,19 @@ public class LancarDespesaController
         
     public int validar(String codigo, String tipo, String conta, String barCode, String valorDoc, Date vencimento, String valorPag, Date pagamento, boolean flag, String banco, String local)
     {
-        String var;
-        var = valorDoc.replaceAll("\\.", "");
-        var = var.replace(',', '.');
         String texto = "";
         cp.setCodigo(v.ConverteNumeroInteiro(codigo));
         cp.setTc(new TipoConta().buscarTipo(tipo));
-        if(v.ConverteNumeroReal(var) <= 0)
+        if(v.ConverteNumeroReal(valorDoc) <= 0)
             return 1;
-        cp.setValorC(v.ConverteNumeroReal(var));
+        cp.setValorC(v.ConverteNumeroReal(valorDoc));
         cp.setDataV(vencimento);
         if(!conta.equals(""))
             texto = texto + "Nome da Conta: "+conta+"\n";
         if(!banco.equals(""))
         {
             texto = texto + "Boleto referente a Banco: "+banco+"\n";
-            texto = texto + "Codigo de barras: "+banco+"\n";
+            texto = texto + "Codigo de barras: "+barCode+"\n";
         }
         cp.setLocal(local);
         cp.setValorP(0);
@@ -88,7 +85,7 @@ public class LancarDespesaController
             if(v.ConverteNumeroReal(var2) <= 0)
                 return 2;
             
-            if(v.ConverteNumeroReal(var) < v.ConverteNumeroReal(var2))
+            if(v.ConverteNumeroReal(valorDoc) < v.ConverteNumeroReal(var2))
             {
                 i = m.Pergunta("O valor pago é maior! Deseja Continuar?", "Atenção");
                 if(null == i)
@@ -104,7 +101,7 @@ public class LancarDespesaController
                 }
             }
             
-            if(v.ConverteNumeroReal(var2) < v.ConverteNumeroReal(var))
+            if(v.ConverteNumeroReal(var2) < v.ConverteNumeroReal(valorDoc))
             {
                 if(m.Pergunta("O valor pago é menor! Deseja Continuar?", "Atenção") == JOptionPane.NO_OPTION)
                     return 3;
@@ -201,23 +198,23 @@ public class LancarDespesaController
     
     public int validarContasPagar(String codigo, String valorPag, Date pagamento, String local, String total)
     {
+        cp.setCodigo(v.ConverteNumeroInteiro(codigo));
         if(valorPag.equals(""))
         {
             return 1;
         }
-        String var;
-        var = valorPag.replaceAll("\\.", "");
-        var = var.replace(',', '.');
-        if(v.ConverteNumeroReal(var) < 0)
+
+        if(v.ConverteNumeroReal(valorPag) < 0)
         {
             return 2;
         }
         
         Integer i;
-        cp.setValorP(v.ConverteNumeroReal(var));
+        cp.setValorP(v.ConverteNumeroReal(valorPag));
         cp.setDataP(pagamento);
+        cp.setLocal(local);
 
-        if(v.ConverteNumeroReal(total) < v.ConverteNumeroReal(var))
+        if(v.ConverteNumeroReal(total) < v.ConverteNumeroReal(valorPag))
         {
             i = m.Pergunta("O valor pago é maior! Deseja Continuar?", "Atenção");
             if(null == i)
@@ -233,7 +230,7 @@ public class LancarDespesaController
             }
         }
 
-        if(v.ConverteNumeroReal(var) < v.ConverteNumeroReal(total))
+        if(v.ConverteNumeroReal(valorPag) < v.ConverteNumeroReal(total))
         {
             if(m.Pergunta("O valor pago é menor! Deseja Continuar?", "Atenção") == JOptionPane.NO_OPTION)
                 return 3;
@@ -261,4 +258,14 @@ public class LancarDespesaController
         return cp.alterar();
     }
     
+    public static void configuraModelItem(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
+    {
+        String colunas[] = new String [] {"Tipo", "Observação", "Valor", "Data de Vencimento", "Codigo C."};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(250);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+    }
 }

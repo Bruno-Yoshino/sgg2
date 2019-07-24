@@ -20,14 +20,12 @@ import util.Validacao;
  */
 public class AjusteFolhaController 
 {
-    private Folha f;
     private Funcionario func;    
     private Servico serv;
     private final util.Validacao v;
     private AjustarFolha af;
 
     public AjusteFolhaController() {
-        f = new Folha();
         func  = new Funcionario();
         v = new Validacao();
         af = new AjustarFolha();
@@ -49,7 +47,7 @@ public class AjusteFolhaController
     
     public void buscaFolha(int codigo)
     {
-        af.setF(f.buscarCodigo(codigo));
+        af.setF(new Folha().buscarCodigo(codigo));
     }
     
     public int validar(String codigo, String qtd, Date data, boolean flag, String obs, String tamanho, String servico)
@@ -85,7 +83,7 @@ public class AjusteFolhaController
     public void atualizaEstoque()
     {
         AtualizarEstoqueController aec = new AtualizarEstoqueController();
-        aec.setF(f);
+        aec.setF(af.getF());
         aec.atualizarEstoqueFolha(af.isFlag(), af.getQtd());
     }
 }

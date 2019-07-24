@@ -17,6 +17,11 @@ import util.mensagens;
  * @author 羽根川　翼
  * @author 阿賀野
  * @author 矢矧
+ * 
+ * Tester 2019年07月23日
+ * @author 海雪
+ * @author 海春
+ * 
  */
 public class MovAjusteFolha extends javax.swing.JDialog 
 {
@@ -28,6 +33,7 @@ public class MovAjusteFolha extends javax.swing.JDialog
     public MovAjusteFolha(java.awt.Frame parent, boolean modal, Funcionario f) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         afc.getAf().setFunc(f);
         btnNovo.setName("btnNovo");
         btnAlterar.setName("btnAlterar");
@@ -39,7 +45,7 @@ public class MovAjusteFolha extends javax.swing.JDialog
         btnaddServico.setName("btnaddServico");
         btnlocFolha.setName("btnlocFolha");
         btnlocServico.setName("btnlocServico");
-        
+        rbincrement.setSelected(true);
         btnAlterar.setVisible(false);
         btnLocalizar.setVisible(false);
         afc.getAf().setServ(null);
@@ -124,7 +130,7 @@ public class MovAjusteFolha extends javax.swing.JDialog
         lbTexto.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lbTexto.setText("Quantidade a ser retirado:");
 
-        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel5.setText("Servioço utilizado:");
 
         txtServico.setEditable(false);
@@ -424,7 +430,7 @@ public class MovAjusteFolha extends javax.swing.JDialog
         String[] vet = new String[2];
         vet[0] = "Tamanho";
         vet[1] = "Descrição";
-        consFolha.configuraOpcoes(vet, 2, 0, "Folha", false);
+        consFolha.configuraOpcoes(vet, 2, 0, "AFolha", false);
         consFolha.verificaconsulta(true);
         consFolha.setVisible(true);
         if (consFolha.getCodigo() != 0)
@@ -432,6 +438,7 @@ public class MovAjusteFolha extends javax.swing.JDialog
             afc.buscaFolha(consFolha.getCodigo());
             consFolha.dispose();
             txtTamnho.setText(afc.getAf().getF().getTamanho()+ "/" +afc.getAf().getF().getDescricao());
+            txtQtdAtual.setText(""+afc.getAf().getF().getQtd());
         }
         else
         {
@@ -464,12 +471,18 @@ public class MovAjusteFolha extends javax.swing.JDialog
 
     private void rbincrementStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbincrementStateChanged
         if(rbincrement.isSelected())
+        {
             rbdecrement.setSelected(false);
+            lbTexto.setText("Quantidade a ser colocado:");
+        }
     }//GEN-LAST:event_rbincrementStateChanged
 
     private void rbdecrementStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbdecrementStateChanged
         if(rbdecrement.isSelected())
+        {
             rbincrement.setSelected(false);
+            lbTexto.setText("Quantidade a ser retirado:");
+        }
     }//GEN-LAST:event_rbdecrementStateChanged
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed

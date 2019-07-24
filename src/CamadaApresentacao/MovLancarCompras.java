@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CamadaApresentacao;
 
 import CamadaNegocio.Funcionario;
@@ -24,6 +19,10 @@ import util.mensagens;
  * @author 海女
  * @author 御子
  * @author 稲荷
+ * 
+ * Tester 2019/07/23
+ * @author 弐条
+ * @author 七草
 */
 public class MovLancarCompras extends javax.swing.JDialog {
 
@@ -44,6 +43,8 @@ public class MovLancarCompras extends javax.swing.JDialog {
         btnSair.setName("btnSair");
         
         btnAlterar.setVisible(false);
+        btnExcluir.setVisible(false);
+        btnLocalizar.setVisible(false);
         
         btnaddDF.setName("btnaddDF");
         btnExcluirF.setName("btnExcluirF");
@@ -63,7 +64,8 @@ public class MovLancarCompras extends javax.swing.JDialog {
         lcc.getForn().setCodigo(0);
         
         lcc.getC().setFunc(f);
-        
+        LancarCompraController.configuraModelItem(tbF);
+        LancarCompraController.configuraModelItem(tbP);
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents());
     }
@@ -149,6 +151,11 @@ public class MovLancarCompras extends javax.swing.JDialog {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -166,10 +173,10 @@ public class MovLancarCompras extends javax.swing.JDialog {
 
         tbP.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null}
+                {}
             },
             new String [] {
-                "Codigo", "Nome", "Quantidade", "Valor unitario", "Valor total"
+
             }
         ));
         jScrollPane1.setViewportView(tbP);
@@ -337,10 +344,10 @@ public class MovLancarCompras extends javax.swing.JDialog {
 
         tbF.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null}
+                {}
             },
             new String [] {
-                "Codigo", "Nome", "Quantidade", "Valor", "Valor total"
+
             }
         ));
         jScrollPane2.setViewportView(tbF);
@@ -725,6 +732,9 @@ public class MovLancarCompras extends javax.swing.JDialog {
         sc.HabilityComponents(jPanel1.getComponents(), true);
         sc.Edity(jPanel2.getComponents());
         txtCodigo.setText("0");
+        txtValorTF.setText("0"); 
+        txtvalorTotF.setText("0"); 
+        txtvalorF.setText("0");
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -757,7 +767,6 @@ public class MovLancarCompras extends javax.swing.JDialog {
             txtprecoP.setText("1");
             txtvalortP.setText("0");
             consProduto.dispose();
-            
         }
         else
         {
@@ -825,25 +834,29 @@ public class MovLancarCompras extends javax.swing.JDialog {
     }//GEN-LAST:event_btnLocFornActionPerformed
 
     private void btnaddDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddDFActionPerformed
-       switch(lcc.validar(txtcodP.getText(), txtproduto.getText(), txtqtdP.getText(), txtprecoP.getText(), tbP))
+       switch(lcc.validar(txtCodigoF.getText(), txtFolha.getText(), txtQtdF.getText(), txtPrecoF.getText(), tbF))
        {
-           case 3: m.InformationMessage("Informe o Produto!", "Atenção"); btnLocProd.requestFocus(); break;
+           case 3: m.InformationMessage("Informe a Folha!", "Atenção"); btnLocProd.requestFocus(); break;
            case 4: m.InformationMessage("O item não pode ser inserido!", "Atenção"); break;
-           default:lcc.CalculaTotal(txtvalortP, txtvalorTotP, txtvalorF);
-                    txtCodigoF.setText("");
-                    txtFolha.setText("");
-                    txtQtdF.setText("0");
-                    txtPrecoF.setText("1");
-                    txtValorTF.setText("0");
+           default:
+                lcc.CalculaTotalI(txtvalorTotF, tbF);
+                lcc.CalculaTotal(txtvalortP, txtvalorTotP, txtvalorF);
+                txtCodigoF.setText("");
+                txtFolha.setText("");
+                txtQtdF.setText("0");
+                txtPrecoF.setText("1");
+                txtValorTF.setText("0");
        }
     }//GEN-LAST:event_btnaddDFActionPerformed
 
     private void btnaddDPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddDPActionPerformed
-       switch(lcc.validar(txtCodigoF.getText(), txtFolha.getText(), txtQtdF.getText(), txtPrecoF.getText(), tbF))
+       switch(lcc.validar(txtcodP.getText(), txtproduto.getText(), txtqtdP.getText(), txtprecoP.getText(), tbP))
        {
-           case 3: m.InformationMessage("Informe a Folha!", "Atenção"); btnlocF.requestFocus(); break;
+           case 3: m.InformationMessage("Informe o Produto!", "Atenção"); btnlocF.requestFocus(); break;
            case 4: m.InformationMessage("O item não pode ser inserido!", "Atenção"); break;
-           default:lcc.CalculaTotal(txtValorTF, txtvalorTotF, txtvalorF);
+           default: 
+                    lcc.CalculaTotalI(txtvalorTotP, tbP);
+                    lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
                     txtcodP.setText("");
                     txtproduto.setText("");
                     txtqtdP.setText("0");
@@ -901,13 +914,14 @@ public class MovLancarCompras extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAltFActionPerformed
 
     private void btnaltPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaltPActionPerformed
+        m.WarmingMessage("teste", "");
         if(tbP.getSelectedRow() >= 0)
         {
-            txtcodP.setText(""+tbF.getValueAt(tbP.getSelectedRow(), 0));
-            txtproduto.setText(""+tbF.getValueAt(tbP.getSelectedRow(), 1));
-            txtqtdP.setText(""+tbF.getValueAt(tbP.getSelectedRow(), 2));
-            txtprecoP.setText(""+tbF.getValueAt(tbP.getSelectedRow(), 3));
-            txtvalortP.setText(""+tbF.getValueAt(tbP.getSelectedRow(), 4));
+            txtcodP.setText(""+tbP.getValueAt(tbP.getSelectedRow(), 0));
+            txtproduto.setText(""+tbP.getValueAt(tbP.getSelectedRow(), 1));
+            txtqtdP.setText(""+tbP.getValueAt(tbP.getSelectedRow(), 2));
+            txtprecoP.setText(""+tbP.getValueAt(tbP.getSelectedRow(), 3));
+            txtvalortP.setText(""+tbP.getValueAt(tbP.getSelectedRow(), 4));
         }
         else
         {
@@ -920,6 +934,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         if(m.Pergunta("Deseja realmente Excluir esta Linha?", "Atenção") == JOptionPane.YES_OPTION)
         {
             lcc.ExcluirLinha(tbP, txtvalorTotP, txtValorTF);
+            lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
             m.InformationMessage("Excluido com Sucesso!", "Atenção");
         }
     }//GEN-LAST:event_btnexcPActionPerformed
@@ -928,6 +943,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         if(m.Pergunta("Deseja realmente Excluir esta Linha?", "Atenção") == JOptionPane.YES_OPTION)
         {
             lcc.ExcluirLinha(tbF, txtvalorTotF, txtValorTF);
+            lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
             m.InformationMessage("Excluido com Sucesso!", "Atenção");
         }
     }//GEN-LAST:event_btnExcluirFActionPerformed
@@ -1004,6 +1020,10 @@ public class MovLancarCompras extends javax.swing.JDialog {
     private void txtPrecoFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecoFFocusGained
         txtPrecoF.setText("");
     }//GEN-LAST:event_txtPrecoFFocusGained
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+
+    }//GEN-LAST:event_formWindowActivated
 
 
 

@@ -1142,6 +1142,7 @@ public class MovPedido extends javax.swing.JDialog {
                 case 1: m.WarmingMessage("Este orcamento esta Vencido!", "Atenção"); break;
                 default:
                     jTable1.removeAll();
+                    txtCliente.setText(pc.getP().getCli().getNome());
                     pc.carregarTabelaServico(jTable1);
             }
             consOrcamento.dispose();

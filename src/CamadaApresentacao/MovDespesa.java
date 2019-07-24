@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
-manic mondey
- */
 package CamadaApresentacao;
 
 import CamadaNegocio.Funcionario;
@@ -11,7 +5,6 @@ import Controller.LancarDespesaController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import util.SystemControl;
 import util.mensagens;
 
@@ -25,6 +18,12 @@ import util.mensagens;
  * @author 林道
  * @author 香取 
  * @author 鹿島
+ * 
+ * Tester 2019/07/23
+ * @author 海星
+ * @author 海流
+ * @author 伊弉冉
+ * @author 伊弉諾
  */
 public class MovDespesa extends javax.swing.JDialog {
 
@@ -35,8 +34,8 @@ public class MovDespesa extends javax.swing.JDialog {
     public MovDespesa(java.awt.Frame parent, boolean modal, Funcionario func) throws SQLException {
         super(parent, modal);
         initComponents();
-        this.setSize(this.getWidth(), this.getHeight()-115);
-        
+        //this.setSize(this.getWidth(), this.getHeight()-115);
+        setLocationRelativeTo(null);
         ldc.getCp().setFunc(func);
         
         btnNovo.setName("btnNovo");
@@ -54,7 +53,7 @@ public class MovDespesa extends javax.swing.JDialog {
         
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents()); 
-        
+        labelBanco.setVisible(true);
         dcDataPagamento.setEditable(false);
         txtValorPago.setEditable(false);
         
@@ -74,7 +73,6 @@ public class MovDespesa extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
-        txtValor = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         cbOp = new javax.swing.JCheckBox();
@@ -88,11 +86,12 @@ public class MovDespesa extends javax.swing.JDialog {
         btnaddTipo = new javax.swing.JButton();
         dcDataVencimento = new br.com.marciorl.beans.DateChooser();
         dcDataPagamento = new br.com.marciorl.beans.DateChooser();
-        jLabel6 = new javax.swing.JLabel();
+        labelTexto1 = new javax.swing.JLabel();
         txtValorPago = new javax.swing.JTextField();
         labelBanco = new javax.swing.JLabel();
         txtLocal = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
+        labelTexto2 = new javax.swing.JLabel();
+        txtValor = new br.com.ikeda.beans.jTextFieldMonetario();
         jPanel2 = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
@@ -111,8 +110,6 @@ public class MovDespesa extends javax.swing.JDialog {
         jLabel1.setText("Codigo:");
 
         txtCodigo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-
-        txtValor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel5.setText("Valor do Documento:");
@@ -136,6 +133,9 @@ public class MovDespesa extends javax.swing.JDialog {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtCodBarraFocusGained(evt);
             }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCodBarraFocusLost(evt);
+            }
         });
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -158,17 +158,18 @@ public class MovDespesa extends javax.swing.JDialog {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel6.setText("Valor Pago:");
+        labelTexto1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        labelTexto1.setText("Valor Pago:");
 
         txtValorPago.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         labelBanco.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        labelBanco.setText(" ");
 
         txtLocal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel9.setText("Local:");
+        labelTexto2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        labelTexto2.setText("Local:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -178,55 +179,52 @@ public class MovDespesa extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnaddTipo)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtCodBarra, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(dcDataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbOp)
-                                .addGap(18, 18, 18)
-                                .addComponent(labelBanco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(308, 308, 308)))
-                        .addGap(15, 15, 15))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnaddTipo)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dcDataPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbOp)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelBanco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dcDataPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(labelTexto1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(labelTexto2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtLocal))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtCodBarra, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel8)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(dcDataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(15, 15, 15))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,19 +251,19 @@ public class MovDespesa extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)
-                            .addComponent(dcDataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(dcDataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnaddTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel9)
+                        .addComponent(labelTexto2)
                         .addComponent(txtLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel10)
                         .addComponent(dcDataPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6)
+                        .addComponent(labelTexto1)
                         .addComponent(txtValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -296,6 +294,11 @@ public class MovDespesa extends javax.swing.JDialog {
         });
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Sair.png"))); // NOI18N
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Cancelar16.png.jpg"))); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -373,11 +376,19 @@ public class MovDespesa extends javax.swing.JDialog {
         {
             dcDataPagamento.setEditable(true);
             txtValorPago.setEditable(true);
+            labelTexto1.setVisible(true);
+            labelTexto2.setVisible(true);
+            txtValorPago.setVisible(true);
+            txtLocal.setVisible(true);
         }
         else
         {
             dcDataPagamento.setEditable(false);
             txtValorPago.setEditable(false);
+            labelTexto1.setVisible(false);
+            labelTexto2.setVisible(false);
+            txtValorPago.setVisible(false);
+            txtLocal.setVisible(false);
         }
     }//GEN-LAST:event_cbOpActionPerformed
 
@@ -437,11 +448,31 @@ public class MovDespesa extends javax.swing.JDialog {
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void txtCodBarraFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodBarraFocusGained
-        if(txtCodBarra.getText().length() == 3)
+//        if(txtCodBarra.getText().trim().length() == 3)
+//        {
+//            String texto, temp;
+//            texto = txtCodBarra.getText();
+//            temp = sc.BankCheck(texto);
+//            if(temp.equals("Desconhecido"))
+//            {
+//                texto = "" + texto.charAt(0) + texto.charAt(1);
+//                temp = sc.BankCheck(texto);
+//            }
+//            labelBanco.setText(temp);
+//        }
+    }//GEN-LAST:event_txtCodBarraFocusGained
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void txtCodBarraFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodBarraFocusLost
+        if(txtCodBarra.getText().trim().length() >= 3)
         {
-            String texto, temp;
+            String texto, temp, temp2;
             texto = txtCodBarra.getText();
-            temp = sc.BankCheck(texto);
+            temp2 = ""+ texto.charAt(0) + texto.charAt(1) + texto.charAt(2);
+            temp = sc.BankCheck(temp2);
             if(temp.equals("Desconhecido"))
             {
                 texto = "" + texto.charAt(0) + texto.charAt(1);
@@ -449,7 +480,7 @@ public class MovDespesa extends javax.swing.JDialog {
             }
             labelBanco.setText(temp);
         }
-    }//GEN-LAST:event_txtCodBarraFocusGained
+    }//GEN-LAST:event_txtCodBarraFocusLost
 
     private void carregaTipo() throws SQLException
     {
@@ -474,19 +505,19 @@ public class MovDespesa extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JLabel labelBanco;
+    private javax.swing.JLabel labelTexto1;
+    private javax.swing.JLabel labelTexto2;
     private javax.swing.JTextField txtCodBarra;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtLocal;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtValor;
+    private br.com.ikeda.beans.jTextFieldMonetario txtValor;
     private javax.swing.JTextField txtValorPago;
     // End of variables declaration//GEN-END:variables
 }

@@ -280,7 +280,12 @@ public class SystemControl
         return temp;
     }
     
-    public final double verificaValor(String valor)
+    public final String converteString(double valor)
+    {
+        return String.valueOf(valor);
+    }
+    
+    public final String verificaValor(String valor)
     {
         int indx = 0;
         boolean flag = true;
@@ -294,11 +299,11 @@ public class SystemControl
         }
         if(valor.length() - indx == 2)
         {
-            return new Validacao().ConverteNumeroReal(valor);
+            return valor;
         }
         else
         {
-            return new Validacao().ConverteNumeroReal(valor)*10;
+            return valor+"0";
         }
     }
     

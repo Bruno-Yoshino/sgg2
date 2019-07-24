@@ -127,6 +127,9 @@ public class LancarCompraController
                 break;
             case 0:
                 return 4;
+            
+            default:
+                
         }
         return 0;
     }
@@ -180,7 +183,7 @@ public class LancarCompraController
     
     public void buscFornecedor(int codigo)
     {
-        forn = new Fornecedor().buscarCodigo(codigo);
+        c.setF(new Fornecedor().buscarCodigo(codigo));
     }
     
     public void buscaCompra(int codigo)
@@ -211,6 +214,17 @@ public class LancarCompraController
     public void CalculaTotal(JTextField total, JTextField valorTM, JTextField valorTF)
     {
         valorTF.setText(""+(v.ConverteNumeroReal(valorTM.getText()) + v.ConverteNumeroReal(total.getText())));
+    }
+    
+    public void CalculaTotalI(JTextField valorT, JTable tabela)
+    {
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        double tot = 0;
+        for(int i = 0; i < model.getRowCount(); i++)
+        {
+            tot += v.ConverteNumeroReal(model.getValueAt(i, 4));
+        }
+        valorT.setText(""+tot);
     }
     
     public void ExcluirLinha(JTable tabela, JTextField valorTM, JTextField valorTF)
@@ -262,4 +276,16 @@ public class LancarCompraController
         }
         valorTP.setText(""+valort);
     }
+    
+        public static void configuraModelItem(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
+    {
+        String colunas[] = new String [] {"Codigo", "Nome", "Quantidade", "Valor Unitario", "Valor Total"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(350);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+    }
+
 }

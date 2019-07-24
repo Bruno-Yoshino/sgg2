@@ -190,6 +190,38 @@ public class Folha {
         return Banco.getCon().retornaResultSet(query);
     }
     
+    public static ResultSet buscarDados2(String valor, int tipo)//Para consulta
+    {
+      
+        String query = null;
+        if (valor.equals(""))
+        {
+            query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao from folha where fo_status = true";
+        }
+        else
+        {
+            switch (tipo)
+            {
+//                case 0:
+//                {
+//                    query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao from folha where fo_codigo = "+valor+"";
+//                    break;
+//                }
+                case 0:
+                {
+                    query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao from folha where fo_tamanho ilike '%"+valor+"%' and where fo_status = true";
+                    break;
+                }
+                case 1:
+                {
+                    query = "select fo_codigo, fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao from folha where fo_descricao ilike '%"+valor+"%' and where fo_status = true";
+                    break;
+                }
+            }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
     public static void configuraModel(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
     {
         String colunas[] = new String [] {"Código", "Tamanho", "Descrição", "Altura", "Largura", "Ativo"};
@@ -208,7 +240,7 @@ public class Folha {
     //-------------------------------------------------------------   ↓ Para Atualizar Estoque
     public boolean atualizarEstoque()
     {
-        String sql = "update folha set fo_estoque = "+this.qtd+" where fo_codigo = "+codigo+"";
+        String sql = "update folha set fo_qtd = "+this.qtd+" where fo_codigo = "+codigo+"";
         return Banco.getCon().manipular(sql);
     }
 }

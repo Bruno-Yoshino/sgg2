@@ -20,14 +20,13 @@ import util.Validacao;
  */
 public class AjusteProdutoController 
 {
-    private Produto p;
+
     private Funcionario func;    
     private Servico serv;
     private final util.Validacao v;
     private AjustarProduto ap;
 
     public AjusteProdutoController() {
-        p = new Produto();
         func  = new Funcionario();
         v = new Validacao();
         ap = new AjustarProduto();
@@ -49,16 +48,9 @@ public class AjusteProdutoController
     
     public void buscaProduto(int codigo)
     {
-        ap.setP(p.buscarCodigo(codigo));
+        ap.setP(new Produto().buscarCodigo(codigo));
     }
 
-    public Produto getP() {
-        return p;
-    }
-
-    public void setP(Produto p) {
-        this.p = p;
-    }
 
     public Funcionario getFunc() {
         return func;
@@ -110,7 +102,7 @@ public class AjusteProdutoController
     public void atualizaEstoque()
     {
         AtualizarEstoqueController aec = new AtualizarEstoqueController();
-        aec.setP(p);
+        aec.setP(ap.getP());
         aec.atualizarEstoqueProduto(ap.isFlag(), ap.getQtd());
     }
 }

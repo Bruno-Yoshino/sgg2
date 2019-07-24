@@ -131,13 +131,13 @@ public class Produto {
     public Produto buscarCodigo(int c)
     {
         String sql;
-        sql = "select pro_codigo, pro_nome, pro_tipo, pro_status, pro_caminho from produto where pro_codigo = "+c+"";
+        sql = "select pro_codigo, pro_nome, pro_tipo, pro_status, pro_caminho, pro_qtd from produto where pro_codigo = "+c+"";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
             if (rs.next()) 
             {
-                return new Produto(rs.getInt(1), rs.getString(2), rs.getString(5), rs.getBoolean(4), rs.getString(3).charAt(0), 0);
+                return new Produto(rs.getInt(1), rs.getString(2), rs.getString(5), rs.getBoolean(4), rs.getString(3).charAt(0), rs.getInt(6));
             }
         } 
         catch (SQLException e) 
@@ -194,6 +194,33 @@ public class Produto {
         return Banco.getCon().retornaResultSet(query);
     }
     
+    public static ResultSet buscarDados2(String valor, int tipo)//Para consulta
+    {
+      
+        String query = null;
+        if (valor.equals(""))
+        {
+            query = "select pro_codigo, pro_nome, pro_tipo, pro_status, pro_caminho from produto where pro_status = true order by pro_nome";
+        }
+        else
+        {
+            switch (tipo)
+            {
+//                case 0:
+//                {
+//                    query = "select pro_codigo, pro_nome, pro_tipo, pro_status, pro_caminho from produto where prod_codigo = " + Integer.parseInt(valor) + " order by pro_nome";
+//                    break;
+//                }
+                case 0:
+                {
+                    query = "select pro_codigo, pro_nome, pro_tipo, pro_status, pro_caminho from produto where pro_nome ilike '%" + valor + "%' and where pro_status = true order by pro_nome";
+                    break;
+                }
+            }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
     public static void configuraModel(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
     {
         String colunas[] = new String [] {"Código", "Nome", "Tipo Consumo", "Status"};
@@ -210,7 +237,7 @@ public class Produto {
     
     public boolean atualizarEstoque()
     {
-        String sql = "update produto set pro_estoque = "+this.qtd+" where pro_codigo = "+this.codigo+"";
+        String sql = "update produto set pro_qtd = "+this.qtd+" where pro_codigo = "+this.codigo+"";
         return Banco.getCon().manipular(sql);
     }
 }

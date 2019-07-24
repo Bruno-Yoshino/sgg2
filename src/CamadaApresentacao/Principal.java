@@ -188,7 +188,8 @@ public class Principal extends javax.swing.JFrame {
         
         
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/Rekotyoku.wav").getAbsoluteFile());
+            //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/Rekotyoku.wav").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/05 - Eight Minutes.wav").getAbsoluteFile());
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
@@ -981,13 +982,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btn10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10ActionPerformed
-        try {
-            MovPagarContas frm = new MovPagarContas(this, true, funcL);
-            frm.setTitle("Pagar Conta");
-            frm.setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        MovPagarContas frm = new MovPagarContas(this, true, funcL);
+        frm.setTitle("Pagar Conta");
+        frm.setVisible(true);
     }//GEN-LAST:event_btn10ActionPerformed
 
     private void btn11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn11ActionPerformed
@@ -1190,13 +1187,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem28ActionPerformed
 
     private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
-        try {
-            MovPagarContas frm = new MovPagarContas(this, true, funcL);
-            frm.setTitle("Pagar Conta");
-            frm.setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        MovPagarContas frm = new MovPagarContas(this, true, funcL);
+        frm.setTitle("Pagar Conta");
+        frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem27ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed

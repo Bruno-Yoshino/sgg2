@@ -24,6 +24,12 @@ import util.mensagens;
  * @author 林道
  * @author 香取 
  * @author 鹿島
+ * 
+ * Tester 2019/07/23
+ * @author 海星
+ * @author 海流
+ * @author 伊弉冉
+ * @author 伊弉諾
  */
 public class GerenciarParcela extends javax.swing.JDialog {
 
@@ -39,6 +45,7 @@ public class GerenciarParcela extends javax.swing.JDialog {
     public GerenciarParcela(java.awt.Frame parent, boolean modal, ContaPagar cp, Compra c, Pedido p) {//Contas a Receber "Pedido"
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         flag = false;
         gpc.setC(c);
         gpc.setCp(cp);
@@ -49,17 +56,20 @@ public class GerenciarParcela extends javax.swing.JDialog {
         {
             dtData.setEditable(true);
             txtValorT.setText(""+c.getValort());
+            txtValorT.setText(""+sc.verificaValor(sc.converteString(c.getValort())));
         }
         if(cp != null)
         {
             dtData.setEditable(false);
             dtData.setData(cp.getDataV());
             txtValorT.setText(""+cp.getValorC());
+            //txtValorT.setText(""+sc.verificaValor(sc.converteString(cp.getValorC())));
         }
         if(p != null)
         {
             dtData.setEditable(true);
             txtValorT.setText(""+p.getValorTotal());
+            //txtValorT.setText(""+sc.verificaValor(sc.converteString(p.getValorTotal())));
         }
         GerenciarParcelaController.configuraModelItem(jTable1);
     }
@@ -130,10 +140,7 @@ public class GerenciarParcela extends javax.swing.JDialog {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -441,6 +448,7 @@ public class GerenciarParcela extends javax.swing.JDialog {
     }//GEN-LAST:event_btnGravar3ActionPerformed
 
     private void btnGerarParcelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarParcelaActionPerformed
+        gpc.RemoveAll(jTable1);
         switch(gpc.gerarParcelas(txtQtdP.getText(), txtIntervalo.getText(), jTable1, Double.parseDouble(txtValorT.getText()), dtData.getData()))
         {
             case 1: m.InformationMessage("A Quantidade de Parcelas precisa ser maior que 0!", "Informação"); txtQtdP.requestFocus(); break;

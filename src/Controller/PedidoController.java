@@ -537,6 +537,7 @@ public class PedidoController {
                 return 1;
             }
             p.setOrc(temp);
+             p.setCli(temp.getCli());
             for(int i = 0; i < temp.getLista().size(); i++)
             {
                 for(int x = 0; x < temp.getLista().get(i).getLista().size(); x++)
@@ -552,6 +553,7 @@ public class PedidoController {
             Logger.getLogger(PedidoController.class.getName()).log(Level.SEVERE, null, ex);
         }
         p.setLista(listaPS);
+       
         return 0;
     }
 }

@@ -121,10 +121,10 @@ public class Compra
         if(codigo == 0)
             sql = "INSERT INTO compra( " +
               " forn_codigo, comp_valortotal, comp_data, func_codigo) " +
-              " VALUES ("+(f.getCodigo() == 0 ? "" : f.getCodigo())+", "+valort+", '"+data+"', "+func.getCodigo()+");";
+              " VALUES ("+(f.getCodigo() == 0 ? null : f.getCodigo())+", "+valort+", '"+data+"', "+func.getCodigo()+");";
         else
             sql = "UPDATE compra\n" +
-                  "SET forn_codigo="+f == null ? null : f.getCodigo()+", comp_valortotal="+valort+", comp_data='"+data+"', func_codigo="+func.getCodigo()+"\n" +
+                  "SET forn_codigo="+(f == null ? null : f.getCodigo())+", comp_valortotal="+valort+", comp_data='"+data+"', func_codigo="+func.getCodigo()+"\n" +
                   "WHERE comp_codigo="+codigo+";";
         return Banco.getCon().manipular(sql);
     }
