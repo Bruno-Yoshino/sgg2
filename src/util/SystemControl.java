@@ -5,11 +5,14 @@
  */
 package util;
 
+import CamadaLogica.ReadOnlyTableModel;
+import CamadaNegocio.ContaPagar;
 import br.com.marciorl.beans.DateChooser;
 import java.awt.Component;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.time.Instant;
 import java.util.Date;
 import java.util.logging.Level;
@@ -46,6 +49,9 @@ public class SystemControl
     {
         for (Component c1 : c) 
         {
+            if(c1 instanceof JPanel)
+                HabilityComponents(((JPanel) c1).getComponents(), flag);
+            else
                 c1.setEnabled(flag);
         }
     }
@@ -272,6 +278,15 @@ public class SystemControl
         }
     }
     
+    public final void limparTabela(JTable tabela)
+    {
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        for(int i = 0; i < model.getRowCount(); i++)
+        {
+            model.removeRow(i);
+        }
+    }
+    
     public final String removeCharacter(String texto, int posicao)//posicao = texto.lenght() - 1
     {
         String temp = "";
@@ -299,11 +314,12 @@ public class SystemControl
         }
         if(valor.length() - indx == 2)
         {
-            return valor;
+            return valor.replace(".", "");
         }
         else
         {
-            return valor+"0";
+            String replace = valor.replace(".", "");
+            return replace+"0";
         }
     }
     

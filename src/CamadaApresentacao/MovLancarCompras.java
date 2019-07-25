@@ -1,5 +1,6 @@
 package CamadaApresentacao;
 
+import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Funcionario;
 import Controller.LancarCompraController;
 import java.awt.event.KeyEvent;
@@ -96,12 +97,12 @@ public class MovLancarCompras extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         txtqtdP = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        txtprecoP = new javax.swing.JTextField();
         txtvalortP = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         btnaddDP = new javax.swing.JButton();
         btnexcP = new javax.swing.JButton();
         btnaltP = new javax.swing.JButton();
+        txtprecoP = new br.com.ikeda.beans.jTextFieldMonetario();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbF = new javax.swing.JTable();
@@ -113,13 +114,13 @@ public class MovLancarCompras extends javax.swing.JDialog {
         txtCodigoF = new javax.swing.JTextField();
         txtFolha = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        txtPrecoF = new javax.swing.JTextField();
         btnaddF = new javax.swing.JButton();
         btnlocF = new javax.swing.JButton();
         txtQtdF = new javax.swing.JTextField();
         btnAltF = new javax.swing.JButton();
         btnExcluirF = new javax.swing.JButton();
         btnaddDF = new javax.swing.JButton();
+        txtPrecoF = new br.com.ikeda.beans.jTextFieldMonetario();
         jLabel18 = new javax.swing.JLabel();
         txtvalorTotP = new javax.swing.JTextField();
         txtvalorTotF = new javax.swing.JTextField();
@@ -220,16 +221,6 @@ public class MovLancarCompras extends javax.swing.JDialog {
         jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel9.setText("Preço Unitario:");
 
-        txtprecoP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtprecoP.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtprecoPFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtprecoPFocusLost(evt);
-            }
-        });
-
         txtvalortP.setEditable(false);
         txtvalortP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -257,6 +248,12 @@ public class MovLancarCompras extends javax.swing.JDialog {
             }
         });
 
+        txtprecoP.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtprecoPFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -264,27 +261,6 @@ public class MovLancarCompras extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtvalortP, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnaddDP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnexcP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnaltP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtqtdP, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtprecoP, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,7 +273,29 @@ public class MovLancarCompras extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtproduto, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnaddProd)))))
+                                .addComponent(btnaddProd))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtqtdP, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtprecoP, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtvalortP, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnaddDP)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnexcP)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnaltP)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(btnLocProd)
                 .addContainerGap(18, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
@@ -376,16 +374,6 @@ public class MovLancarCompras extends javax.swing.JDialog {
         jLabel16.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel16.setText("Preço Unitario:");
 
-        txtPrecoF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtPrecoF.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtPrecoFFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPrecoFFocusLost(evt);
-            }
-        });
-
         btnaddF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
         btnaddF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -428,6 +416,12 @@ public class MovLancarCompras extends javax.swing.JDialog {
             }
         });
 
+        txtPrecoF.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPrecoFFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -451,25 +445,27 @@ public class MovLancarCompras extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnlocF))
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtQtdF, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtPrecoF, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtValorTF, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnaddDF)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnExcluirF)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                        .addComponent(jLabel13)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtQtdF, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(12, 12, 12)
+                                        .addComponent(jLabel16)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtPrecoF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                        .addGap(4, 4, 4)
+                                        .addComponent(jLabel12)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtValorTF, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnaddDF)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnExcluirF)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnAltF)))
-                        .addGap(0, 49, Short.MAX_VALUE)))
+                        .addGap(0, 19, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -490,8 +486,8 @@ public class MovLancarCompras extends javax.swing.JDialog {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(jLabel16)
-                    .addComponent(txtPrecoF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtQtdF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtQtdF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPrecoF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
@@ -720,7 +716,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -735,6 +731,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         txtValorTF.setText("0"); 
         txtvalorTotF.setText("0"); 
         txtvalorF.setText("0");
+        txtvalortP.setText("0");
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -743,6 +740,8 @@ public class MovLancarCompras extends javax.swing.JDialog {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         sc.limpar(jPanel1.getComponents());
+        sc.limparTabela(tbF);
+        sc.limparTabela(tbP);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnaddProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddProdActionPerformed
@@ -840,7 +839,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
            case 4: m.InformationMessage("O item não pode ser inserido!", "Atenção"); break;
            default:
                 lcc.CalculaTotalI(txtvalorTotF, tbF);
-                lcc.CalculaTotal(txtvalortP, txtvalorTotP, txtvalorF);
+                lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
                 txtCodigoF.setText("");
                 txtFolha.setText("");
                 txtQtdF.setText("0");
@@ -873,14 +872,6 @@ public class MovLancarCompras extends javax.swing.JDialog {
        }
     }//GEN-LAST:event_txtqtdPFocusLost
 
-    private void txtprecoPFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtprecoPFocusLost
-       switch(lcc.Calcula(txtqtdP, txtprecoP, txtvalortP))
-       {
-           case 1: m.InformationMessage("Informe a quantidade! A Quantidade precisa ser mairo que 0!", "Atenção"); txtqtdP.requestFocus(); break;
-           case 2: m.InformationMessage("Informe o valor! O Valor precisa ser mairo que 0!", "Atenção"); txtprecoP.requestFocus(); break;
-       }
-    }//GEN-LAST:event_txtprecoPFocusLost
-
     private void txtQtdFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQtdFFocusLost
        switch(lcc.Calcula(txtQtdF, txtPrecoF, txtValorTF))
        {
@@ -889,22 +880,16 @@ public class MovLancarCompras extends javax.swing.JDialog {
        }  
     }//GEN-LAST:event_txtQtdFFocusLost
 
-    private void txtPrecoFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecoFFocusLost
-       switch(lcc.Calcula(txtQtdF, txtPrecoF, txtValorTF))
-       {
-           case 1: m.InformationMessage("Informe a quantidade! A Quantidade precisa ser mairo que 0!", "Atenção"); txtQtdF.requestFocus(); break;
-           case 2: m.InformationMessage("Informe o valor! O Valor precisa ser mairo que 0!", "Atenção"); txtPrecoF.requestFocus(); break;
-       }
-    }//GEN-LAST:event_txtPrecoFFocusLost
-
     private void btnAltFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltFActionPerformed
         if(tbF.getSelectedRow() >= 0)
         {
             txtCodigoF.setText(""+tbF.getValueAt(tbF.getSelectedRow(), 0));
             txtFolha.setText(""+tbF.getValueAt(tbF.getSelectedRow(), 1));
             txtQtdF.setText(""+tbF.getValueAt(tbF.getSelectedRow(), 2));
-            txtvalorF.setText(""+tbF.getValueAt(tbF.getSelectedRow(), 3));
+            txtPrecoF.setText(""+sc.verificaValor(String.valueOf(tbF.getValueAt(tbF.getSelectedRow(), 3))));
             txtValorTF.setText(""+tbF.getValueAt(tbF.getSelectedRow(), 4));
+            ReadOnlyTableModel model = (ReadOnlyTableModel) tbF.getModel();
+            model.removeRow(tbF.getSelectedRow());
         }
         else
         {
@@ -914,14 +899,15 @@ public class MovLancarCompras extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAltFActionPerformed
 
     private void btnaltPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaltPActionPerformed
-        m.WarmingMessage("teste", "");
         if(tbP.getSelectedRow() >= 0)
         {
             txtcodP.setText(""+tbP.getValueAt(tbP.getSelectedRow(), 0));
             txtproduto.setText(""+tbP.getValueAt(tbP.getSelectedRow(), 1));
             txtqtdP.setText(""+tbP.getValueAt(tbP.getSelectedRow(), 2));
-            txtprecoP.setText(""+tbP.getValueAt(tbP.getSelectedRow(), 3));
+            txtprecoP.setText(""+sc.verificaValor(String.valueOf(tbP.getValueAt(tbP.getSelectedRow(), 3))));
             txtvalortP.setText(""+tbP.getValueAt(tbP.getSelectedRow(), 4));
+            ReadOnlyTableModel model = (ReadOnlyTableModel) tbP.getModel();
+            model.removeRow(tbP.getSelectedRow());
         }
         else
         {
@@ -957,6 +943,8 @@ public class MovLancarCompras extends javax.swing.JDialog {
             if(frm.isFlag())
             {
                 sc.limpar(jPanel1.getComponents());
+                sc.limparTabela(tbF);
+                sc.limparTabela(tbP);
                 sc.Initialize(jPanel2.getComponents());
             }
         }
@@ -1013,17 +1001,25 @@ public class MovLancarCompras extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
-    private void txtprecoPFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtprecoPFocusGained
-        txtprecoP.setText("");
-    }//GEN-LAST:event_txtprecoPFocusGained
-
-    private void txtPrecoFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecoFFocusGained
-        txtPrecoF.setText("");
-    }//GEN-LAST:event_txtPrecoFFocusGained
-
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
 
     }//GEN-LAST:event_formWindowActivated
+
+    private void txtprecoPFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtprecoPFocusLost
+       switch(lcc.Calcula(txtqtdP, txtprecoP, txtvalortP))
+       {
+           case 1: m.InformationMessage("Informe a quantidade! A Quantidade precisa ser mairo que 0!", "Atenção"); txtqtdP.requestFocus(); break;
+           case 2: m.InformationMessage("Informe o valor! O Valor precisa ser mairo que 0!", "Atenção"); txtprecoP.requestFocus(); break;
+       }
+    }//GEN-LAST:event_txtprecoPFocusLost
+
+    private void txtPrecoFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecoFFocusLost
+        switch(lcc.Calcula(txtQtdF, txtPrecoF, txtValorTF))
+       {
+           case 1: m.InformationMessage("Informe a quantidade! A Quantidade precisa ser mairo que 0!", "Atenção"); txtQtdF.requestFocus(); break;
+           case 2: m.InformationMessage("Informe o valor! O Valor precisa ser mairo que 0!", "Atenção"); txtPrecoF.requestFocus(); break;
+       }  
+    }//GEN-LAST:event_txtPrecoFFocusLost
 
 
 
@@ -1075,12 +1071,12 @@ public class MovLancarCompras extends javax.swing.JDialog {
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtCodigoF;
     private javax.swing.JTextField txtFolha;
-    private javax.swing.JTextField txtPrecoF;
+    private br.com.ikeda.beans.jTextFieldMonetario txtPrecoF;
     private javax.swing.JTextField txtQtdF;
     private javax.swing.JTextField txtValorTF;
     private javax.swing.JTextField txtcodP;
     private javax.swing.JTextField txtforn;
-    private javax.swing.JTextField txtprecoP;
+    private br.com.ikeda.beans.jTextFieldMonetario txtprecoP;
     private javax.swing.JTextField txtproduto;
     private javax.swing.JTextField txtqtdP;
     private javax.swing.JTextField txtvalorF;

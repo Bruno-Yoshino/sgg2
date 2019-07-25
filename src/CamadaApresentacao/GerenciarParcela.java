@@ -56,7 +56,7 @@ public class GerenciarParcela extends javax.swing.JDialog {
         {
             dtData.setEditable(true);
             txtValorT.setText(""+c.getValort());
-            txtValorT.setText(""+sc.verificaValor(sc.converteString(c.getValort())));
+//            txtValorT.setText(""+sc.verificaValor(sc.converteString(c.getValort())));
         }
         if(cp != null)
         {

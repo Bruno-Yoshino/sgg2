@@ -56,7 +56,7 @@ public class MovDespesa extends javax.swing.JDialog {
         labelBanco.setVisible(true);
         dcDataPagamento.setEditable(false);
         txtValorPago.setEditable(false);
-        
+        cbOpActionPerformed(null);
         carregaTipo();
     }
 
@@ -80,7 +80,7 @@ public class MovDespesa extends javax.swing.JDialog {
         txtCodBarra = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
+        labelTexto3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         cbTipo = new javax.swing.JComboBox<>();
         btnaddTipo = new javax.swing.JButton();
@@ -109,6 +109,7 @@ public class MovDespesa extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("Codigo:");
 
+        txtCodigo.setEditable(false);
         txtCodigo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -143,8 +144,8 @@ public class MovDespesa extends javax.swing.JDialog {
 
         txtNome.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel10.setText("Data Pagamento:");
+        labelTexto3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        labelTexto3.setText("Data Pagamento:");
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Tipo:");
@@ -199,7 +200,7 @@ public class MovDespesa extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
+                                .addComponent(labelTexto3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(dcDataPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -261,7 +262,7 @@ public class MovDespesa extends javax.swing.JDialog {
                         .addComponent(labelTexto2)
                         .addComponent(txtLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel10)
+                        .addComponent(labelTexto3)
                         .addComponent(dcDataPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(labelTexto1)
                         .addComponent(txtValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -380,6 +381,8 @@ public class MovDespesa extends javax.swing.JDialog {
             labelTexto2.setVisible(true);
             txtValorPago.setVisible(true);
             txtLocal.setVisible(true);
+            labelTexto3.setVisible(true);
+            dcDataPagamento.setVisible(true);
         }
         else
         {
@@ -389,6 +392,8 @@ public class MovDespesa extends javax.swing.JDialog {
             labelTexto2.setVisible(false);
             txtValorPago.setVisible(false);
             txtLocal.setVisible(false);
+            labelTexto3.setVisible(false);
+            dcDataPagamento.setVisible(false);
         }
     }//GEN-LAST:event_cbOpActionPerformed
 
@@ -433,7 +438,7 @@ public class MovDespesa extends javax.swing.JDialog {
             case 3: m.InformationMessage("Altere o Valor do Docuemnto ou o valor que foi Pago!", "Atenção"); break;
             case 5: 
                 ldc.gravar();
-                ldc.SeocndInserting();
+                ldc.SeocndInserting(txtValor.getText(), txtValorPago.getText());
                 m.InformationMessage("Lançado com Sucesso!", "Informação");
                 break;
             default: 
@@ -501,7 +506,6 @@ public class MovDespesa extends javax.swing.JDialog {
     private br.com.marciorl.beans.DateChooser dcDataPagamento;
     private br.com.marciorl.beans.DateChooser dcDataVencimento;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -513,6 +517,7 @@ public class MovDespesa extends javax.swing.JDialog {
     private javax.swing.JLabel labelBanco;
     private javax.swing.JLabel labelTexto1;
     private javax.swing.JLabel labelTexto2;
+    private javax.swing.JLabel labelTexto3;
     private javax.swing.JTextField txtCodBarra;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtLocal;

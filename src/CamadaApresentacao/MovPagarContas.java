@@ -4,6 +4,8 @@ import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Funcionario;
 import Controller.LancarDespesaController;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -353,10 +355,11 @@ public class MovPagarContas extends javax.swing.JDialog {
             case 5: 
                 ldc.alterar();
                 ldc.getCp().setFunc(f);
-                if(ldc.SeocndInserting())
+                if(ldc.SeocndInserting(txtValor.getText(), txtValorP.getText()))
                 {
                     m.InformationMessage("Lançado e Alterado com Sucesso!", "Atenção");
                     sc.limpar(jPanel2.getComponents());
+                    dcDataPagamento.setData(Date.from(Instant.now())); 
                     LocalComponentsCtrl(false);
                     lbData.setText("");
                     try {

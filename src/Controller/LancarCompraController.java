@@ -195,25 +195,25 @@ public class LancarCompraController
     
     public int Calcula(JTextField qtd, JTextField valor, JTextField total)//.replaceAll("\\.", "");
     {
-        String var = valor.getText();
-        var = var.replaceAll("\\.", "");
-        var = var.replace(',', '.');
-        valor.setText(var);
+//        String var = valor.getText();
+////        var = var.replaceAll("\\.", "");
+////        var = var.replace(',', '.');
+//        valor.setText(var);
         if(v.ConverteNumeroInteiro(qtd.getText()) <= 0)
         {
             return 1;
         }
-        if(v.ConverteNumeroReal(var) <= 0)
+        if(v.ConverteNumeroReal(valor.getText()) <= 0)
         {
             return 2;
         }
-        total.setText(""+(Double)(v.ConverteNumeroInteiro(qtd.getText()) * v.ConverteNumeroReal(var)));
+        total.setText(""+(Double)(v.ConverteNumeroInteiro(qtd.getText()) * v.ConverteNumeroReal(valor.getText())));
         return 0;
     }
     
-    public void CalculaTotal(JTextField total, JTextField valorTM, JTextField valorTF)
+    public void CalculaTotal(JTextField total, JTextField valorTP, JTextField valorTF)
     {
-        valorTF.setText(""+(v.ConverteNumeroReal(valorTM.getText()) + v.ConverteNumeroReal(total.getText())));
+        valorTF.setText(""+(v.ConverteNumeroReal(valorTP.getText()) + v.ConverteNumeroReal(total.getText())));
     }
     
     public void CalculaTotalI(JTextField valorT, JTable tabela)

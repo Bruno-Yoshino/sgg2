@@ -10,6 +10,7 @@ import CamadaNegocio.Compra;
 import CamadaNegocio.ContaPagar;
 import CamadaNegocio.ContaReceber;
 import CamadaNegocio.Pedido;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JTable;
@@ -38,7 +39,8 @@ public class GerenciarParcelaController {
     private final util.mensagens m = new mensagens(); 
     
     public GerenciarParcelaController() {
-
+        cp = new ContaPagar();
+        cr = new ContaReceber();
     }
 
     public Compra getC() {
@@ -47,6 +49,7 @@ public class GerenciarParcelaController {
 
     public void setC(Compra c) {
         this.c = c;
+        cp.setComp(c);
     }
 
     public ContaPagar getCp() {
@@ -63,6 +66,7 @@ public class GerenciarParcelaController {
 
     public void setP(Pedido p) {
         this.p = p;
+        cr.setP(p);
     }
     
     public static void configuraModelItem(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
@@ -137,13 +141,12 @@ public class GerenciarParcelaController {
     
     private double PrimeiraParcela(int qtd, double valor)
     {
-        double resto = valor % qtd;
         if(valor / qtd != 0)
         {
 //            resto = valor / qtd;
 //            resto = valor - resto * qtd;
-            
-            return valor / qtd + resto;
+            double x = valor - ((valor / qtd)*qtd);
+            return valor / qtd + x;
         }
         return valor / qtd;
     }
@@ -208,6 +211,15 @@ public class GerenciarParcelaController {
                 x = cr.gravar();
             }
             return x;
+        }
+        if(cp == null)// == null reference Compra
+        {
+            cp = new ContaPagar();
+            cp.setComp(c);
+            cp.setC(null);
+            cp.setTc(null);
+            cp.setFunc(c.getFunc());
+            cp.setDataL(Date.from(Instant.now()));
         }
         cp.setParcela(0);
         cp.setValorC(v.ConverteNumeroReal(model.getValueAt(0, 1)));

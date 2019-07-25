@@ -69,7 +69,7 @@ public class MovPedido extends javax.swing.JDialog {
         btnSair.setName("btnSair");
         
         btnAlterarServico.setName("btnAlterarServico");
-        btnAlterarServico.setVisible(false);
+//        btnAlterarServico.setVisible(false);
         
         btnAddServico.setName("btnAddServico");
         btnaddCliente.setName("btnaddCliente");
@@ -84,6 +84,9 @@ public class MovPedido extends javax.swing.JDialog {
         
         lbEntrega.setVisible(false);
         dcEntrega.setVisible(false);
+        
+        PedidoController.configuraModelServico(jTable1);
+        PedidoController.configuraModelDetalhe(jTable2);
         
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents());
@@ -328,7 +331,7 @@ public class MovPedido extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Serviço", "Valor", "Quantidade", "Desconto", "Valor Total", "Descrição"
+
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -534,7 +537,7 @@ public class MovPedido extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Descrição", "Vias", "Numeração Inicio", "Numeração Fim", "Outros", "Codigo D"
+
             }
         ));
         jScrollPane3.setViewportView(jTable2);
@@ -720,7 +723,7 @@ public class MovPedido extends javax.swing.JDialog {
                                         .addComponent(btnaddCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnlocCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel14)
@@ -781,12 +784,10 @@ public class MovPedido extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -830,6 +831,7 @@ public class MovPedido extends javax.swing.JDialog {
          case 1: m.InformationMessage("Informe o Serviço!", "Atenção"); btnlocServico.requestFocus(); break;
          case 2: m.InformationMessage("Informe a Quantidade!", "Atenção"); spQtd.requestFocus(); break;
          case 3: m.InformationMessage("Informe o Valor!", "Atenção"); txtValor.requestFocus(); break;
+         case 4: m.InformationMessage("Informe o Valor e a Quantidade!", "Atenção"); break;
          default: 
              pc.addTabelaServico(jTable1, linha);
              txtValorT.setText(""+pc.calculoTotal(jTable1));

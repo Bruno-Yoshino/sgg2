@@ -119,10 +119,12 @@ public class OrcamentoController {
         if(v.ConverteNumeroReal(valor) <= 0)
             return 3;
         if(v.ConverteNumeroReal(total) <= 0)
+            return 4;
         if(linha == -1)
             temp.add(new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, sequenceOS++, new ArrayList<>()));
         else
             temp.add(linha, new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>()));
+        
         o.setLista(temp);
         return 0;
     }
@@ -475,5 +477,35 @@ public class OrcamentoController {
                 temp.get(i).getDescricao()
             });
         }
+    }
+    
+    public static void configuraModelServico(JTable jTable) // Configurar Tabela Servico
+    {
+        String colunas[] = new String [] {"Serviço", "Valor", "Quantidade", "Valor Papel", "Valor Arte", "Valor Implessão", "Valor Acabameto", "Valor Chapa", "Valor MDO", "Desconto", "Valor Total", "Descrição"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(6).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(7).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(8).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(9).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(10).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(11).setPreferredWidth(150);
+    }
+    
+    public static void configuraModelDetalhe(JTable jTable) // Configurar Tabela Detalhe
+    {
+        String colunas[] = new String [] {"Descrição", "Vias", "Numeração Inicio", "Numeração Fim", "Outros", "Codigo D"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(250);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
     }
 }

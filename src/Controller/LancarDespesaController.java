@@ -132,23 +132,29 @@ public class LancarDespesaController
         return cp.gravar();
     }
     
-    public boolean SeocndInserting()
+    public boolean SeocndInserting(String valor, String valorP)
     {
         int add = 0;
         String resp;
         do{
-            resp = JOptionPane.showInputDialog(null, "Informe apos quantos dias: ", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+            resp = JOptionPane.showInputDialog(null, "Informe apos quantos dias apos esta data "+Date.from(Instant.now())+": ", "Atenção", JOptionPane.INFORMATION_MESSAGE);
             add = v.ConverteNumeroInteiro(resp);
         }while (add < 0);
-        cp.setValorC(cp.getValorC()-cp.getValorP());
+        cp.setValorC(v.ConverteNumeroReal(valor)-v.ConverteNumeroReal(valorP));
         cp.setValorP(0);
         cp.setDataP(null);
+        cp.setComp(null);
+        cp.setC(null);
+        cp.setTc(null);
+        cp.setFunc(cp.getFunc());
+        cp.setDataL(Date.from(Instant.now()));
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(cp.getDataV());
+        calendar.setTime(Date.from(Instant.now()));
         calendar.add(Calendar.DAY_OF_MONTH, add);
         cp.setDataV(calendar.getTime());
         cp.setLocal("");
         cp.setObs("Nova Parcela.");
+        
         return cp.gravar();
     }
     
@@ -194,6 +200,8 @@ public class LancarDespesaController
         cp.setParcela(rs.getInt(8));
         cp.setDataV(rs.getDate(12));
         cp.setObs(rs.getString(13));
+        //cp_codigo, comp_codigo, cp_data, cp_local, cp_valorc, cp_dtpago, cp_valorp, cp_nparcela, 
+        //tc_codigo, func_codigo, caixa_codigo, cp_datavencimento, cp_obs
     }
     
     public int validarContasPagar(String codigo, String valorPag, Date pagamento, String local, String total)

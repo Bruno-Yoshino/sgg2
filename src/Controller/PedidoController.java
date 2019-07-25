@@ -6,8 +6,6 @@ import CamadaNegocio.Cliente;
 import CamadaNegocio.DetalheServico;
 import CamadaNegocio.FormaPagamento;
 import CamadaNegocio.Orcamento;
-import CamadaNegocio.Pedido;
-import CamadaNegocio.Pedido_Servico;
 import CamadaNegocio.Pedido_Servico_Detalhe;
 import CamadaNegocio.Pedido;
 import CamadaNegocio.Pedido_Servico;
@@ -132,6 +130,7 @@ public class PedidoController {
         if(v.ConverteNumeroReal(valor) <= 0)
             return 3;
         if(v.ConverteNumeroReal(total) <= 0)
+            return 4;
         if(linha == -1)
             temp.add(new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd),  v.ConverteNumeroReal(desconto), descricao, sequencePS++, new ArrayList<>()));
         else
@@ -555,5 +554,28 @@ public class PedidoController {
         p.setLista(listaPS);
        
         return 0;
+    }
+    
+    public static void configuraModelServico(JTable jTable) // Configurar Tabela Servico
+    {
+        String colunas[] = new String [] {"Serviço", "Valor", "Quantidade", "Valor Total", "Descrição"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+    }
+    
+    public static void configuraModelDetalhe(JTable jTable) // Configurar Tabela Detalhe
+    {
+        String colunas[] = new String [] {"Descrição", "Vias", "Numeração Inicio", "Numeração Fim", "Outros", "Codigo D"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(250);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
     }
 }
