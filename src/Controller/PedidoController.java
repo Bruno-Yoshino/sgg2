@@ -360,7 +360,18 @@ public class PedidoController {
            
     public void carregarFormaPagamento(JComboBox cb)
     {
-        
+        try 
+        {
+            ResultSet rs = new FormaPagamento().carregar();
+            while (rs.next())
+            {
+                cb.addItem(rs.getString(1));
+            }
+        } 
+        catch (SQLException ex) 
+        {
+            Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void carregarDetalhes(JComboBox cb) throws SQLException

@@ -754,7 +754,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         ConsultaPadrao consProduto = new ConsultaPadrao(null, true);
         String[] vet = new String[1];
         vet[0] = "Nome";
-        consProduto.configuraOpcoes(vet, 1, 0, "Produto", false);
+        consProduto.configuraOpcoes(vet, 1, 0, "AProduto", false);
         consProduto.verificaconsulta(true);
         consProduto.setVisible(true);
         if (consProduto.getCodigo() != 0)
@@ -785,7 +785,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         String[] vet = new String[2];
         vet[0] = "Tamanho";
         vet[1] = "Descrição";
-        consFolha.configuraOpcoes(vet, 2, 0, "Folha", false);
+        consFolha.configuraOpcoes(vet, 2, 0, "AFolha", false);
         consFolha.verificaconsulta(true);
         consFolha.setVisible(true);
         if (consFolha.getCodigo() != 0)

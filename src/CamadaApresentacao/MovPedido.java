@@ -3,6 +3,7 @@ package CamadaApresentacao;
 import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Funcionario;
 import Controller.PedidoController;
+import java.awt.Font;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.Date;
@@ -29,6 +30,13 @@ import util.mensagens;
  * @author 海女
  * @author 御子
  * @author 稲荷
+ * 
+ * Tester 2019年07月25日
+ * @author 吹雪
+ * @author 白雪
+ * @author 東雲
+ * @author 曙
+ * @author 漣
  */
 public class MovPedido extends javax.swing.JDialog {
 
@@ -50,11 +58,6 @@ public class MovPedido extends javax.swing.JDialog {
         
         setLocationRelativeTo(null);
         pc.buscaCaixa();
-        if(pc.getP().getC() == null)
-        {
-            m.InformationMessage("Não existe Caixa Aberto! Sera redirecionado para o menu!", "Atenção");
-            dispose();
-        }
         
         pc.getP().setF(f);
         
@@ -92,6 +95,7 @@ public class MovPedido extends javax.swing.JDialog {
         sc.Initialize(jPanel2.getComponents());
         //サービスの詳細を追加して下さい ===>>> 追加済み.
         pc.carregarDetalhes(cbDescricao);
+        pc.carregarFormaPagamento(cbForma);
     }
 
     /**
@@ -153,22 +157,27 @@ public class MovPedido extends javax.swing.JDialog {
         txtDescServi = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         cbDescricao = new javax.swing.JComboBox<>();
-        jLabel11 = new javax.swing.JLabel();
+        labelTexto1 = new javax.swing.JLabel();
         txtNumeracaoI = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         txtNumeracaoF = new javax.swing.JTextField();
         btnAddDetalhe = new javax.swing.JButton();
         btnExcluirDetalhe = new javax.swing.JButton();
-        jLabel15 = new javax.swing.JLabel();
+        labelTexto2 = new javax.swing.JLabel();
         txtVia = new javax.swing.JTextField();
         txtOutros = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
+        labelTexto3 = new javax.swing.JLabel();
         btnaddDetalhe = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         cbForma = new javax.swing.JComboBox<>();
         btnOrcamento = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -334,6 +343,11 @@ public class MovPedido extends javax.swing.JDialog {
 
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -547,8 +561,19 @@ public class MovPedido extends javax.swing.JDialog {
         jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel10.setText("Descricao Serviço:");
 
-        jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel11.setText("Numeração de:");
+        cbDescricao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cbDescricaoFocusLost(evt);
+            }
+        });
+        cbDescricao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbDescricaoActionPerformed(evt);
+            }
+        });
+
+        labelTexto1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        labelTexto1.setText("Numeração de:");
 
         txtNumeracaoI.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtNumeracaoI.setText("0");
@@ -573,16 +598,16 @@ public class MovPedido extends javax.swing.JDialog {
             }
         });
 
-        jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel15.setText("Vias:");
+        labelTexto2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        labelTexto2.setText("Vias:");
 
         txtVia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtVia.setText("0");
 
         txtOutros.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        jLabel17.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel17.setText("Outros:");
+        labelTexto3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        labelTexto3.setText("Outros:");
 
         btnaddDetalhe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
         btnaddDetalhe.addActionListener(new java.awt.event.ActionListener() {
@@ -598,41 +623,44 @@ public class MovPedido extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel17)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtOutros, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
+                                        .addComponent(labelTexto3)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtNumeracaoI, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtOutros, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(jLabel15)
+                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                                .addComponent(labelTexto1)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtNumeracaoI, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                                .addComponent(labelTexto2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtVia, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(16, 16, 16)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel12)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtVia, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(16, 16, 16)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel12)
+                                        .addComponent(txtNumeracaoF, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(47, 47, 47)
+                                .addComponent(txtDescServi, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(btnAddDetalhe)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNumeracaoF, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(47, 47, 47)
-                        .addComponent(txtDescServi, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(btnAddDetalhe)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluirDetalhe, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnaddDetalhe))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnExcluirDetalhe, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnaddDetalhe)))
+                        .addGap(0, 2, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -645,18 +673,18 @@ public class MovPedido extends javax.swing.JDialog {
                     .addComponent(btnaddDetalhe))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
+                    .addComponent(labelTexto1)
                     .addComponent(txtNumeracaoI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
                     .addComponent(txtNumeracaoF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDescServi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
+                    .addComponent(labelTexto2)
                     .addComponent(txtVia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
+                    .addComponent(labelTexto3)
                     .addComponent(txtOutros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -802,7 +830,7 @@ public class MovPedido extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtValorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusGained
-        txtValor_total.setText(""+pc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtDesconto.getText()));
+        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
     }//GEN-LAST:event_txtValorFocusGained
 
     private void txtValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorActionPerformed
@@ -814,11 +842,11 @@ public class MovPedido extends javax.swing.JDialog {
         {
             spQtd.setValue(sc.removeCharacter(String.valueOf(spQtd.getValue()), String.valueOf(spQtd.getValue()).length()-1));
         }
-        txtValor_total.setText(""+pc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtDesconto.getText()));
+        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
     }//GEN-LAST:event_spQtdFocusGained
 
     private void txtDescontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescontoFocusGained
-        txtValor_total.setText(""+pc.calcular(txtValor.getText(), (String) spQtd.getValue(), txtDesconto.getText()));
+        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
     }//GEN-LAST:event_txtDescontoFocusGained
 
     private void txtDescontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescontoActionPerformed
@@ -826,7 +854,7 @@ public class MovPedido extends javax.swing.JDialog {
     }//GEN-LAST:event_txtDescontoActionPerformed
 
     private void btnAddServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddServicoActionPerformed
-     switch(pc.varidarAddServico(txtServico.getText(), txtValor.getText(), (String) spQtd.getValue(), txtDescricao.getText(), txtDesconto.getText(), linha, txtValor_total.getText()))
+     switch(pc.varidarAddServico(txtServico.getText(), txtValor.getText(), String.valueOf(spQtd.getValue()), txtDescricao.getText(), txtDesconto.getText(), linha, txtValor_total.getText()))
      {
          case 1: m.InformationMessage("Informe o Serviço!", "Atenção"); btnlocServico.requestFocus(); break;
          case 2: m.InformationMessage("Informe a Quantidade!", "Atenção"); spQtd.requestFocus(); break;
@@ -871,7 +899,7 @@ public class MovPedido extends javax.swing.JDialog {
         ConsultaPadrao consServico = new ConsultaPadrao(null, true);
         String[] vet = new String[1];
         vet[0] = "Nome";
-        consServico.configuraOpcoes(vet, 1, 0, "Servico", false);
+        consServico.configuraOpcoes(vet, 1, 0, "AServico", false);
         consServico.verificaconsulta(true);
         consServico.setVisible(true);
         if (consServico.getCodigo() != 0)
@@ -948,14 +976,13 @@ public class MovPedido extends javax.swing.JDialog {
            case 8: m.InformationMessage("Informe o campo Outros", "Informação"); txtOutros.requestFocus(); break;
            default:
                pc.addTabelaServicoDetalhe(jTable2, jTable1.getSelectedRow());
-               txtNumeracaoI.setText("0");
-               txtNumeracaoF.setText("0");
-               txtVia.setText("0");
+               startDescricao();
        }
     }//GEN-LAST:event_btnAddDetalheActionPerformed
 
     private void btnExcluirDetalheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirDetalheActionPerformed
         pc.excluirDetalheServico(jTable2, jTable1.getSelectedRow(), jTable2.getSelectedRow(), flag, txtCodigo.getText());
+        startDescricao();
     }//GEN-LAST:event_btnExcluirDetalheActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
@@ -963,6 +990,7 @@ public class MovPedido extends javax.swing.JDialog {
         flag = true;
         sc.HabilityComponents(jPanel1.getComponents(), true);
         sc.Edity(jPanel2.getComponents());
+        txtCodigo.setText("0");
         txtValorT.setText("0");
     }//GEN-LAST:event_btnNovoActionPerformed
 
@@ -990,6 +1018,8 @@ public class MovPedido extends javax.swing.JDialog {
        sc.limpar(jPanel1.getComponents());
        sc.HabilityComponents(jPanel1.getComponents(), false);
        sc.Initialize(jPanel2.getComponents());
+       sc.limparTabela(jTable1);
+       sc.limparTabela(jTable2);
        flag = true;
        linha = -1;
        lbEntrega.setVisible(false);
@@ -1015,29 +1045,36 @@ public class MovPedido extends javax.swing.JDialog {
                         {
                             pc.UpdateNumberPedido();
                             if(pc.gravarPedidoServico() && !dcEntrega.isVisible())
+                            {
                                 if(pc.gravarPedidoServicoDetalhe())
                                 {
                                     m.InformationMessage("Gravado com Sucesso", "Informação");
                                     sc.limpar(jPanel1.getComponents());
+                                    sc.limparTabela(jTable1);
+                                    sc.limparTabela(jTable2);
+                                    sc.HabilityComponents(jPanel1.getComponents(), false);
                                     flag = true;
                                     linha = -1;
                                     pc.clearSequenceNumber();
                                     lbEntrega.setVisible(false);
                                     dcEntrega.setVisible(false);
+                                    
                                     //OK OK ここ、後でPedidoが保存された時(保存内容)の処理 Producao OK, Contas Receber OK 
-                                    
-                                    if(pc.gerarProducao())
+                                    if(txtCodigo.getText().equals("0"))
                                     {
-                                        m.InformationMessage("Producão gerado com Sucesso!", "Informação");
+                                        if(pc.gerarProducao())
+                                        {
+                                            m.InformationMessage("Producão gerado com Sucesso!", "Informação");
+                                        }
+                                        else
+                                        {
+                                            m.ErroMessage("ERRO", "ERRO2");
+                                        }
+                                        GerenciarParcela formGP = new GerenciarParcela(null, true, null, null, pc.getP());
+                                        formGP.setVisible(true);
                                     }
-                                    else
-                                    {
-                                        m.ErroMessage("ERRO", "ERRO2");
-                                    }
-                                    GerenciarParcela formGP = new GerenciarParcela(null, true, null, null, pc.getP());
-                                    formGP.setVisible(true);
-                                    
                                 }
+                            }
                         }
                         else
                         {
@@ -1059,6 +1096,9 @@ public class MovPedido extends javax.swing.JDialog {
                                         if(pc.alterarValorReceber())
                                         {
                                             m.InformationMessage("Alterardo com Sucesso!", "Informação");
+                                            sc.limparTabela(jTable1);
+                                            sc.limparTabela(jTable2);
+                                            sc.HabilityComponents(jPanel1.getComponents(), false);
                                         }
                                     }
                                 }
@@ -1155,7 +1195,58 @@ public class MovPedido extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnOrcamentoActionPerformed
 
+    private void cbDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDescricaoActionPerformed
+        enableComponents(String.valueOf(cbDescricao.getSelectedItem()));
+    }//GEN-LAST:event_cbDescricaoActionPerformed
 
+    private void cbDescricaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbDescricaoFocusLost
+        enableComponents(String.valueOf(cbDescricao.getSelectedItem()));
+    }//GEN-LAST:event_cbDescricaoFocusLost
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if (jTable1.getSelectedRow() >= 0)
+        {
+            sc.limparTabela(jTable2);
+            sc.HabilityComponents(jPanel4.getComponents(), true);
+            pc.carregarTabelaDetalheServico(jTable2, jTable1.getSelectedRow());
+            startDescricao();
+            cbDescricao.requestFocus();
+            cbDescricaoActionPerformed(null);
+        }
+        else
+        {
+            sc.HabilityComponents(jPanel4.getComponents(), false);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        if(pc.getP().getC() == null)
+        {
+            m.InformationMessage("Não existe Caixa Aberto! Sera redirecionado para o menu!", "Atenção");
+            dispose();
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void startDescricao()
+    {
+        txtNumeracaoI.setText("0");
+        txtNumeracaoF.setText("0");
+        txtOutros.setText("");
+        txtVia.setText("0");
+    }
+    
+    private void enableComponents(String valor)
+    {
+        switch(valor.toUpperCase())
+        {
+            case "NUMERAÇÃO": txtNumeracaoI.setEnabled(true); txtNumeracaoF.setEnabled(true); txtVia.setEnabled(false); txtOutros.setEnabled(false); labelTexto1.setFont(new Font("Arial", Font.BOLD, 14)); labelTexto2.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto3.setFont(new Font("Arial", Font.PLAIN, 14)); break;
+            case "OUTROS": txtNumeracaoI.setEnabled(false); txtNumeracaoF.setEnabled(false); txtVia.setEnabled(false); txtOutros.setEnabled(true); labelTexto1.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto2.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto3.setFont(new Font("Arial", Font.BOLD, 14)); break;
+            case "VIAS": txtNumeracaoI.setEnabled(false); txtNumeracaoF.setEnabled(false); txtVia.setEnabled(true); txtOutros.setEnabled(false); labelTexto1.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto2.setFont(new Font("Arial", Font.BOLD, 14)); labelTexto3.setFont(new Font("Arial", Font.PLAIN, 14)); break;
+            default:
+                txtNumeracaoI.setEnabled(false); txtNumeracaoF.setEnabled(false); txtVia.setEnabled(false); txtOutros.setEnabled(false);
+                labelTexto1.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto2.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto3.setFont(new Font("Arial", Font.PLAIN, 14));
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddDetalhe;
@@ -1184,12 +1275,9 @@ public class MovPedido extends javax.swing.JDialog {
     private br.com.marciorl.beans.DateChooser dcPedido;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1207,6 +1295,9 @@ public class MovPedido extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JLabel labelTexto1;
+    private javax.swing.JLabel labelTexto2;
+    private javax.swing.JLabel labelTexto3;
     private javax.swing.JLabel lbEntrega;
     private javax.swing.JSpinner spQtd;
     private javax.swing.JTextField txtCliente;

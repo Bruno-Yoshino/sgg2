@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -87,7 +89,8 @@ public class OrcamentoController {
     
     public String exibirServico(int codigo)
     {
-        return new Servico().buscarCodigo(codigo).getNome();
+        ser = new Servico().buscarCodigo(codigo);
+        return ser.getNome();
     }
     
     public int varidarOrcamento(String codigo, String cliente, String formaPag, String valorT, Date dataorc, Date varidade) throws SQLException
@@ -242,7 +245,7 @@ public class OrcamentoController {
     
     public double calcular(String valor, String qtd, String custoP, String custoI, String custoAca, String custoArt, String custoChap, String custoMdO, String desconto)
     {
-        return (v.ConverteNumeroReal(valor) * v.ConverteNumeroInteiro(qtd)) + v.ConverteNumeroReal(custoI) + v.ConverteNumeroReal(custoAca) + v.ConverteNumeroReal(custoArt) + v.ConverteNumeroReal(custoChap) + v.ConverteNumeroReal(custoMdO) - v.ConverteNumeroReal(desconto);
+        return (v.ConverteNumeroReal(valor) * v.ConverteNumeroInteiro(qtd)) + v.ConverteNumeroReal(custoP) + v.ConverteNumeroReal(custoI) + v.ConverteNumeroReal(custoAca) + v.ConverteNumeroReal(custoArt) + v.ConverteNumeroReal(custoChap) + v.ConverteNumeroReal(custoMdO) - v.ConverteNumeroReal(desconto);
     }
     
     public void excluirDetalheServico(JTable tabela, int linhaS, int linhaDS, boolean flag, String codigoO)
@@ -322,7 +325,7 @@ public class OrcamentoController {
     {
         ArrayList<Orcamento_Servico> temp = o.getLista();
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
-        for (int i = 0; i < temp.size(); i++) 
+        for (int i = 0; i < temp.get(linha).getLista().size(); i++) 
         {
                 model.addRow(new Object[]{
                 temp.get(linha).getLista().get(i).getDs().getDescricao(),
@@ -340,9 +343,20 @@ public class OrcamentoController {
         o.setCodigo(new Orcamento().UltimoCodigo());
     }
            
-    public void carregarFormaPagamento()
+    public void carregarFormaPagamento(JComboBox cb)
     {
-        
+        try 
+        {
+            ResultSet rs = new FormaPagamento().carregar();
+            while (rs.next())
+            {
+                cb.addItem(rs.getString(1));
+            }
+        } 
+        catch (SQLException ex) 
+        {
+            Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void carregarDetalhes(JComboBox cb) throws SQLException
@@ -350,7 +364,7 @@ public class OrcamentoController {
         ResultSet rs = new DetalheServico().buscarDetalhes();
         while (rs.next()) 
         {
-                 cb.addItem(rs.getString(2));
+            cb.addItem(rs.getString(2));
         }
     }
     

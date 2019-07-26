@@ -418,6 +418,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             case "Produto": Produto(); break;
             case "DetalheServico": DetalheServico(); break;
             case "Servico": Servico(); break;
+            case "AServico": AServico(); break;
             case "Fornecedor": Fornecedor(); break;
             case "AProduto": AProduto(); break;
             case "AFolha": AFolha(); break;
@@ -635,6 +636,31 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             Servico.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             rs = Servico.buscarDados(txtValor.getText(), tipo);
+            while (rs.next())
+            {
+                model.addRow(new Object[]
+                {//"Código", "Nome", "Status"}
+                    rs.getInt(1), 
+                    rs.getString(2),
+                    rs.getBoolean(3) ? "Ativo" : "Não Ativo"
+                });
+            }
+        } 
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void AServico() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            Servico.configuraModel(jTable1);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            rs = Servico.buscarDados2(txtValor.getText(), tipo);
             while (rs.next())
             {
                 model.addRow(new Object[]

@@ -58,7 +58,7 @@ public class FormaPagamento {
     //--------------------------------------------------------------------------
     public FormaPagamento buscaForma(String texto) throws SQLException
     {
-        String sql = "select fpg_codigo, fpg_nome, fpg_status forma_pagamento where fpg_nome = '"+texto+"'";
+        String sql = "select fpg_codigo, fpg_nome, fpg_status from forma_pagamento where fpg_nome = '"+texto+"'";
         ResultSet rs=Banco.getCon().consultar(sql);
         if(rs.next())
         {
@@ -69,13 +69,19 @@ public class FormaPagamento {
     
     public FormaPagamento buscaForma(int codigo) throws SQLException
     {
-        String sql = "select fpg_codigo, fpg_nome, fpg_status forma_pagamento where fpg_codigo = "+codigo+"";
+        String sql = "select fpg_codigo, fpg_nome, fpg_status from forma_pagamento where fpg_codigo = "+codigo+"";
         ResultSet rs=Banco.getCon().consultar(sql);
         if(rs.next())
         {
             return new FormaPagamento(rs.getInt(1), rs.getString(2), rs.getBoolean(3));
         }
         return null;
+    }
+    
+    public ResultSet carregar() throws SQLException
+    {
+        String sql = "select fpg_nome from forma_pagamento where fpg_status = true";
+        return Banco.getCon().consultar(sql);
     }
     //insert into forma_pagamento (fpg_nome, fpg_status) values ('Dinheiro', true), ('Catão Credito', true), ('Cartão Debito', true), ('Cheque', true), ('Fiado', true);
 }

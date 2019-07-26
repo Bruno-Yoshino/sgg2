@@ -168,6 +168,33 @@ public class Servico
         return Banco.getCon().retornaResultSet(query);
     }
     
+    public static ResultSet buscarDados2(String valor, int tipo)//Para consulta
+    {
+      
+        String query = null;
+        if (valor.equals(""))
+        {
+            query = "select serv_codigo, serv_nome, serv_status from servico where serv_status = true order by serv_nome";
+        }
+        else
+        {
+            switch (tipo)
+            {
+//                case 0:
+//                {
+//                    query = "select serv_codigo, serv_nome, serv_status from servico where prod_codigo = " + Integer.parseInt(valor) + " order by serv_nome";
+//                    break;
+//                }
+                case 0:
+                {
+                    query = "select serv_codigo, serv_nome, serv_status from servico where serv_nome ilike '%" + valor + "%' and serv_status = true order by serv_nome";
+                    break;
+                }
+            }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
     public static void configuraModel(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
     {
         String colunas[] = new String [] {"Código", "Nome", "Status"};

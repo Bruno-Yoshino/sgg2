@@ -85,7 +85,7 @@ public class DetalheServico {
     public DetalheServico buscarDescricao(String s)
     {
         String sql;
-        sql = "select ds_codigo, ds_descricao, ds_status from detalhe_serv where ds_descricao like '%"+s+"%'";
+        sql = "select ds_codigo, ds_descricao, ds_status from detalhe_serv where ds_descricao ilike '%"+s+"%'";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {

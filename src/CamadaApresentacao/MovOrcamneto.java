@@ -3,6 +3,7 @@ package CamadaApresentacao;
 import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Funcionario;
 import Controller.OrcamentoController;
+import java.awt.Font;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,12 +25,19 @@ import util.mensagens;
  * @author 天野
  * @author 紅葉
  * 
- * Tester
+ * Tester 1 2019年07月24～25日
  * @author 吹雪
  * @author 白雪
  * @author 東雲
  * @author 曙
  * @author 漣
+ * 
+ * Tester 2 2019年07月00日
+ * @author 織田
+ * @author 真田
+ * @author 服部
+ * @author 島雪
+ * @author 山雪
  */
 public class MovOrcamneto extends javax.swing.JDialog {
 
@@ -63,6 +71,8 @@ public class MovOrcamneto extends javax.swing.JDialog {
         btnlocServico.setName("btnlocServico");
         btnPDF.setName("btnPDF"); 
         
+        oc.getO().setF(F);
+        
         txtCodigo.setEditable(false);
         LCodigoServi.setVisible(false);
         txtDescServi.setVisible(false);
@@ -72,6 +82,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         sc.Initialize(jPanel2.getComponents());
         //サービスの詳細を追加して下さい ===>>> 追加済み.
         oc.carregarDetalhes(cbDescricao);
+        oc.carregarFormaPagamento(cbForma);
     }
 
     /**
@@ -143,16 +154,16 @@ public class MovOrcamneto extends javax.swing.JDialog {
         txtDescServi = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         cbDescricao = new javax.swing.JComboBox<>();
-        jLabel11 = new javax.swing.JLabel();
+        labelTexto1 = new javax.swing.JLabel();
         txtNumeracaoI = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         txtNumeracaoF = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jLabel15 = new javax.swing.JLabel();
+        labelTexto2 = new javax.swing.JLabel();
         txtVia = new javax.swing.JTextField();
         txtOutros = new javax.swing.JTextField();
-        jLabel24 = new javax.swing.JLabel();
+        labelTexto3 = new javax.swing.JLabel();
         btnaddDetalhe = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         cbForma = new javax.swing.JComboBox<>();
@@ -653,7 +664,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
                         .addComponent(jLabel23)
                         .addComponent(txtDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(LCodigoServi))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
@@ -664,8 +675,8 @@ public class MovOrcamneto extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAlterarServico)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -703,8 +714,19 @@ public class MovOrcamneto extends javax.swing.JDialog {
         jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel10.setText("Descricao Serviço:");
 
-        jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel11.setText("Numeração de:");
+        cbDescricao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cbDescricaoFocusLost(evt);
+            }
+        });
+        cbDescricao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbDescricaoActionPerformed(evt);
+            }
+        });
+
+        labelTexto1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        labelTexto1.setText("Numeração de:");
 
         txtNumeracaoI.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -727,15 +749,15 @@ public class MovOrcamneto extends javax.swing.JDialog {
             }
         });
 
-        jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel15.setText("Vias:");
+        labelTexto2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        labelTexto2.setText("Vias:");
 
         txtVia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         txtOutros.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        jLabel24.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel24.setText("Outros:");
+        labelTexto3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        labelTexto3.setText("Outros:");
 
         btnaddDetalhe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N
         btnaddDetalhe.addActionListener(new java.awt.event.ActionListener() {
@@ -766,17 +788,17 @@ public class MovOrcamneto extends javax.swing.JDialog {
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel24)
+                                    .addComponent(labelTexto3)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(txtOutros, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(jPanel4Layout.createSequentialGroup()
-                                            .addComponent(jLabel15)
+                                            .addComponent(labelTexto2)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(txtVia, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                                            .addComponent(jLabel11)
+                                            .addComponent(labelTexto1)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(txtNumeracaoI, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -800,26 +822,26 @@ public class MovOrcamneto extends javax.swing.JDialog {
                     .addComponent(btnaddDetalhe, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
+                    .addComponent(labelTexto1)
                     .addComponent(txtNumeracaoI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
                     .addComponent(txtNumeracaoF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
+                    .addComponent(labelTexto2)
                     .addComponent(txtVia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDescServi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel24)
+                    .addComponent(labelTexto3)
                     .addComponent(txtOutros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
                     .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -905,8 +927,8 @@ public class MovOrcamneto extends javax.swing.JDialog {
                         .addComponent(jLabel14)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -980,7 +1002,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         ConsultaPadrao consServico = new ConsultaPadrao(null, true);
         String[] vet = new String[1];
         vet[0] = "Nome";
-        consServico.configuraOpcoes(vet, 1, 0, "Servico", false);
+        consServico.configuraOpcoes(vet, 1, 0, "AServico", false);
         consServico.verificaconsulta(true);
         consServico.setVisible(true);
         if (consServico.getCodigo() != 0)
@@ -1009,6 +1031,8 @@ public class MovOrcamneto extends javax.swing.JDialog {
        sc.limpar(jPanel1.getComponents());
        sc.HabilityComponents(jPanel1.getComponents(), false);
        sc.Initialize(jPanel2.getComponents());
+       sc.limparTabela(jTable1);
+       sc.limparTabela(jTable2);
        flag = true;
        linha = -1;
        oc.clearSequenceNumber();
@@ -1108,8 +1132,10 @@ public class MovOrcamneto extends javax.swing.JDialog {
         linha = -1;
         flag = true;
         sc.HabilityComponents(jPanel1.getComponents(), true);
+        sc.HabilityComponents(jPanel4.getComponents(), false);
         sc.Edity(jPanel2.getComponents());
         txtValorT.setText("0");
+        txtCodigo.setText("0");
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnAlterarServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarServicoActionPerformed
@@ -1158,20 +1184,27 @@ public class MovOrcamneto extends javax.swing.JDialog {
            case 6: m.InformationMessage("Informe a quantidade de Via(s)", "Informação"); txtVia.requestFocus(); break;
            case 7: m.InformationMessage("A quantidade de Via(s) não pode ser menor ou igual a 0", "Informação"); txtVia.requestFocus(); break;
            case 8: m.InformationMessage("Informe o campo Outros", "Informação"); txtOutros.requestFocus(); break;
+           case 9: m.InformationMessage("Detalhe ja inserido!", "Informação"); break;
            default:
                oc.addTabelaServicoDetalhe(jTable2, jTable1.getSelectedRow());
+               startDescricao();
        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         oc.excluirDetalheServico(jTable2, jTable1.getSelectedRow(), jTable2.getSelectedRow(), flag, txtCodigo.getText());
+        startDescricao();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         if (jTable1.getSelectedRow() >= 0)
         {
+            sc.limparTabela(jTable2);
             sc.HabilityComponents(jPanel4.getComponents(), true);
             oc.carregarTabelaDetalheServico(jTable2, jTable1.getSelectedRow());
+            startDescricao();
+            cbDescricao.requestFocus();
+            cbDescricaoActionPerformed(null);
         }
         else
         {
@@ -1180,14 +1213,14 @@ public class MovOrcamneto extends javax.swing.JDialog {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-        if (jTable1.getSelectedRow() >= 0)
-        {
-            sc.HabilityComponents(jPanel4.getComponents(), true);
-        }
-        else
-        {
-            sc.HabilityComponents(jPanel4.getComponents(), false);
-        }
+//        if (jTable1.getSelectedRow() >= 0)
+//        {
+//            sc.HabilityComponents(jPanel4.getComponents(), true);
+//        }
+//        else
+//        {
+//            sc.HabilityComponents(jPanel4.getComponents(), false);
+//        }
     }//GEN-LAST:event_jTable2MouseClicked
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
@@ -1208,6 +1241,9 @@ public class MovOrcamneto extends javax.swing.JDialog {
                                 {
                                     m.InformationMessage("Gravado com Sucesso", "Informação");
                                     sc.limpar(jPanel1.getComponents());
+                                    sc.limparTabela(jTable1);
+                                    sc.limparTabela(jTable2);
+                                    sc.HabilityComponents(jPanel1.getComponents(), false);
                                     //flag = true;
                                     linha = -1;
                                     oc.clearSequenceNumber();
@@ -1233,6 +1269,9 @@ public class MovOrcamneto extends javax.swing.JDialog {
                                 {
                                     m.InformationMessage("Alterado com Sucesso", "Informação");
                                     sc.limpar(jPanel1.getComponents());
+                                    sc.limparTabela(jTable1);
+                                    sc.limparTabela(jTable2);
+                                    sc.HabilityComponents(jPanel1.getComponents(), false);
                                     flag = true;
                                     linha = -1;
                                     oc.clearSequenceNumber();
@@ -1351,7 +1390,34 @@ public class MovOrcamneto extends javax.swing.JDialog {
         txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
     }//GEN-LAST:event_txtDescontoFocusLost
 
+    private void cbDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDescricaoActionPerformed
+        enableComponents(String.valueOf(cbDescricao.getSelectedItem()));
+    }//GEN-LAST:event_cbDescricaoActionPerformed
+
+    private void cbDescricaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbDescricaoFocusLost
+        enableComponents(String.valueOf(cbDescricao.getSelectedItem()));
+    }//GEN-LAST:event_cbDescricaoFocusLost
+
+    private void startDescricao()
+    {
+        txtNumeracaoI.setText("0");
+        txtNumeracaoF.setText("0");
+        txtOutros.setText("");
+        txtVia.setText("0");
+    }
     
+    private void enableComponents(String valor)
+    {
+        switch(valor.toUpperCase())
+        {
+            case "NUMERAÇÃO": txtNumeracaoI.setEnabled(true); txtNumeracaoF.setEnabled(true); txtVia.setEnabled(false); txtOutros.setEnabled(false); labelTexto1.setFont(new Font("Arial", Font.BOLD, 14)); labelTexto2.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto3.setFont(new Font("Arial", Font.PLAIN, 14)); break;
+            case "OUTROS": txtNumeracaoI.setEnabled(false); txtNumeracaoF.setEnabled(false); txtVia.setEnabled(false); txtOutros.setEnabled(true); labelTexto1.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto2.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto3.setFont(new Font("Arial", Font.BOLD, 14)); break;
+            case "VIAS": txtNumeracaoI.setEnabled(false); txtNumeracaoF.setEnabled(false); txtVia.setEnabled(true); txtOutros.setEnabled(false); labelTexto1.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto2.setFont(new Font("Arial", Font.BOLD, 14)); labelTexto3.setFont(new Font("Arial", Font.PLAIN, 14)); break;
+            default:
+                txtNumeracaoI.setEnabled(false); txtNumeracaoF.setEnabled(false); txtVia.setEnabled(false); txtOutros.setEnabled(false);
+                labelTexto1.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto2.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto3.setFont(new Font("Arial", Font.PLAIN, 14));
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LCodigoServi;
@@ -1379,11 +1445,9 @@ public class MovOrcamneto extends javax.swing.JDialog {
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -1393,7 +1457,6 @@ public class MovOrcamneto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1409,6 +1472,9 @@ public class MovOrcamneto extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JLabel labelTexto1;
+    private javax.swing.JLabel labelTexto2;
+    private javax.swing.JLabel labelTexto3;
     private javax.swing.JSpinner spQtd;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtCodigo;
