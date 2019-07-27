@@ -98,7 +98,8 @@ public class PedidoController {
     
     public String exibirServico(int codigo)
     {
-        return new Servico().buscarCodigo(codigo).getNome();
+        ser = new Servico().buscarCodigo(codigo);
+        return ser.getNome();
     }
     
     public int varidarPedido(String codigo, String cliente, String formaPag, String valorT, Date dataP, Date varidade, boolean flag) throws SQLException
@@ -132,9 +133,9 @@ public class PedidoController {
         if(v.ConverteNumeroReal(total) <= 0)
             return 4;
         if(linha == -1)
-            temp.add(new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd),  v.ConverteNumeroReal(desconto), descricao, sequencePS++, new ArrayList<>()));
+            temp.add(new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd),  v.ConverteNumeroReal(desconto), descricao, sequencePS++, new ArrayList<>(), 0));
         else
-            temp.add(linha, new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>()));
+            temp.add(linha, new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>(), 0));
         p.setLista(temp);
         return 0;
     }
@@ -240,7 +241,7 @@ public class PedidoController {
     
     public double calcular(String valor, String qtd, String desconto)
     {
-        return (v.ConverteNumeroReal(valor) * v.ConverteNumeroInteiro(qtd)) - v.ConverteNumeroReal(desconto);
+        return ((v.ConverteNumeroReal(valor) * v.ConverteNumeroInteiro(qtd)) - v.ConverteNumeroReal(desconto));
     }
     
     public void excluirDetalheServico(JTable tabela, int linhaS, int linhaDS, boolean flag, String codigoO)
@@ -320,6 +321,11 @@ public class PedidoController {
         }
     }
     
+    public int ultimoCodigoInserido()
+    {
+        return new Pedido_Servico().buscarUltimoCodigo();
+    }
+    
     public boolean verificaStatus(int codigo, int linha)//Pedido
     {
         return p.verificaStatusProducao(codigo, p.getLista().get(linha).getSequence());
@@ -331,7 +337,7 @@ public class PedidoController {
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
         for(int i = 0; i < model.getRowCount(); i++)
         {
-            total += v.ConverteNumeroReal(model.getValueAt(i, 10));
+            total += v.ConverteNumeroReal(model.getValueAt(i, 4));
         }
         return total;
     }
@@ -340,7 +346,7 @@ public class PedidoController {
     {
         ArrayList<Pedido_Servico> temp = p.getLista();
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
-        for (int i = 0; i < temp.size(); i++) 
+        for (int i = 0; i < temp.get(i).getLista().size(); i++) 
         {
                 model.addRow(new Object[]{
                 temp.get(linha).getLista().get(i).getDs().getDescricao(),
@@ -399,6 +405,7 @@ public class PedidoController {
         for(int i = 0; i < p.getLista().size() && control; i++)
         {
             control = p.getLista().get(i).gravar(p.getCodigo());
+            p.getLista().get(i).setCodigo(ultimoCodigoInserido());
         }
         return control;
     }
@@ -410,7 +417,7 @@ public class PedidoController {
         {
             for(int y = 0; y < p.getLista().get(i).getLista().size() && control; y++)
             {
-                control = p.getLista().get(i).getLista().get(y).gravar(p.getCodigo(), p.getLista().get(i).getServ().getCodigo());
+                control = p.getLista().get(i).getLista().get(y).gravar2(p.getCodigo(), p.getLista().get(i).getServ().getCodigo(), p.getLista().get(i).getCodigo());
             }
         }
         return control;
@@ -437,9 +444,9 @@ public class PedidoController {
             for(int y = 0; y < p.getLista().get(i).getLista().size() && control; y++)
             {
                 if(p.getLista().get(i).getLista().get(y).ChecarExiste(p.getCodigo(), p.getLista().get(i).getSequence(), p.getLista().get(i).getLista().get(y).getDs().getCodigo()))
-                    control = p.getLista().get(i).getLista().get(y).alterar(p.getCodigo(), p.getLista().get(i).getServ().getCodigo());
+                    control = p.getLista().get(i).getLista().get(y).alterar(p.getCodigo(), p.getLista().get(i).getServ().getCodigo(), p.getLista().get(i).getCodigo());
                 else
-                    control = p.getLista().get(i).getLista().get(y).gravar(p.getCodigo(), p.getLista().get(i).getServ().getCodigo());
+                    control = p.getLista().get(i).getLista().get(y).gravar(p.getCodigo(), p.getLista().get(i).getServ().getCodigo(), p.getLista().get(i).getCodigo());
             }
         }
         return control;
@@ -496,7 +503,7 @@ public class PedidoController {
         boolean x = true;
         for(int i = 0; i < p.getLista().size() && x; i++)
         {
-            x = new ProducaoController().gerarProducao(p.getLista().get(i));
+            x = new ProducaoController().gerarProducao(p.getLista().get(i), p);
         }
         return x;
     }
@@ -547,7 +554,7 @@ public class PedidoController {
                 return 1;
             }
             p.setOrc(temp);
-             p.setCli(temp.getCli());
+            p.setCli(temp.getCli());
             for(int i = 0; i < temp.getLista().size(); i++)
             {
                 for(int x = 0; x < temp.getLista().get(i).getLista().size(); x++)
@@ -555,7 +562,7 @@ public class PedidoController {
                     listaPSD.add(new Pedido_Servico_Detalhe(temp.getLista().get(i).getLista().get(x).getDs(), temp.getLista().get(i).getLista().get(x).getNumeracaoI(), temp.getLista().get(i).getLista().get(x).getNumeracaoF(), temp.getLista().get(i).getLista().get(x).getVias(), temp.getLista().get(i).getLista().get(x).getOutros(), sequencePS));
                 }
                 //                                          Servico serv, double valor, int qtd, double desconto, String descricao, int sequence, ArrayList<Pedido_Servico_Detalhe> lista
-                listaPS.add(new Pedido_Servico(temp.getLista().get(i).getServ(), (temp.getLista().get(i).getValor()+temp.getLista().get(i).getCustoAcab()+temp.getLista().get(i).getCustoArte()+temp.getLista().get(i).getCustoChapa()+temp.getLista().get(i).getCustoImpre()+temp.getLista().get(i).getCustoMdO()+temp.getLista().get(i).getCustoPapel()), temp.getLista().get(i).getQtd(), temp.getLista().get(i).getDesconto(), temp.getLista().get(i).getDescricao(), sequencePS, listaPSD));
+                listaPS.add(new Pedido_Servico(temp.getLista().get(i).getServ(), (temp.getLista().get(i).getValor()+temp.getLista().get(i).getCustoAcab()+temp.getLista().get(i).getCustoArte()+temp.getLista().get(i).getCustoChapa()+temp.getLista().get(i).getCustoImpre()+temp.getLista().get(i).getCustoMdO()+temp.getLista().get(i).getCustoPapel()), temp.getLista().get(i).getQtd(), temp.getLista().get(i).getDesconto(), temp.getLista().get(i).getDescricao(), sequencePS, listaPSD, 0));
                 sequencePS++;
             }
         } catch (SQLException ex) 
@@ -569,13 +576,14 @@ public class PedidoController {
     
     public static void configuraModelServico(JTable jTable) // Configurar Tabela Servico
     {
-        String colunas[] = new String [] {"Serviço", "Valor", "Quantidade", "Valor Total", "Descrição"};
+        String colunas[] = new String [] {"Serviço", "Valor", "Quantidade", "Desconto", "Valor Total", "Descrição"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));
         jTable.getColumnModel().getColumn(0).setPreferredWidth(150);
         jTable.getColumnModel().getColumn(1).setPreferredWidth(100);
         jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
         jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(150);
     }
     
     public static void configuraModelDetalhe(JTable jTable) // Configurar Tabela Detalhe

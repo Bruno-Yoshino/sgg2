@@ -124,9 +124,9 @@ public class OrcamentoController {
         if(v.ConverteNumeroReal(total) <= 0)
             return 4;
         if(linha == -1)
-            temp.add(new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, sequenceOS++, new ArrayList<>()));
+            temp.add(new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, sequenceOS++, new ArrayList<>(), 0));
         else
-            temp.add(linha, new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>()));
+            temp.add(linha, new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>(), 0));
         
         o.setLista(temp);
         return 0;
@@ -407,6 +407,7 @@ public class OrcamentoController {
         for(int i = 0; i < o.getLista().size() && control; i++)
         {
             control = o.getLista().get(i).gravar(o.getCodigo());
+            o.getLista().get(i).setCodigo(new Orcamento_Servico().buscarUltimoCodigo());
         }
         return control;
     }
@@ -418,7 +419,7 @@ public class OrcamentoController {
         {
             for(int y = 0; y < o.getLista().get(i).getLista().size() && control; y++)
             {
-                control = o.getLista().get(i).getLista().get(y).gravar(o.getCodigo(), o.getLista().get(i).getServ().getCodigo());
+                control = o.getLista().get(i).getLista().get(y).gravar(o.getCodigo(), o.getLista().get(i).getServ().getCodigo(), o.getLista().get(i).getCodigo());
             }
         }
         return control;
@@ -447,7 +448,7 @@ public class OrcamentoController {
                 if(o.getLista().get(i).getLista().get(y).ChecarExiste(o.getCodigo(), o.getLista().get(i).getSequence(), o.getLista().get(i).getLista().get(y).getDs().getCodigo()))
                     control = o.getLista().get(i).getLista().get(y).alterar(o.getCodigo(), o.getLista().get(i).getServ().getCodigo());
                 else
-                    control = o.getLista().get(i).getLista().get(y).gravar(o.getCodigo(), o.getLista().get(i).getServ().getCodigo());
+                    control = o.getLista().get(i).getLista().get(y).gravar(o.getCodigo(), o.getLista().get(i).getServ().getCodigo(), o.getLista().get(i).getCodigo());
             }
         }
         return control;

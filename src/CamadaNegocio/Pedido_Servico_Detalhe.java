@@ -89,30 +89,38 @@ public class Pedido_Servico_Detalhe {
     
     public String CreatingDeleteSQLComand(int codigoP, int codigoS, int codigoD, int sequencia)
     {
-        String sql = "delete form pedido_servico_detalhe where orc_codigo = "+codigoP+" and serv_codigo = "+codigoS+" and ds_codigo = "+codigoD+" and os_sequence = "+sequencia+"";
+        String sql = "delete form pedido_servico_detalhe where orc_codigo = "+codigoP+" and serv_codigo = "+codigoS+" and ds_codigo = "+codigoD+" and ps_sequence = "+sequencia+"";
         return sql;
     }
     
-    public boolean gravar(int codigoP, int codigoS)
+    public boolean gravar(int codigoP, int codigoS, int codigoPS)
     {
-        String sql =  "INSERT INTO pedido_servico_detalhe( " +
-                    " pe_codigo, serv_codigo, ds_codigo, psd_numeracaoini, psd_numeracaofim, psd_vias, psd_outros, os_sequence) " +
-                    " VALUES ("+codigoP+", "+codigoS+", "+ds.getCodigo()+", "+numeracaoI+", "+numeracaoF+", "+vias+", '"+outros+"', "+sequence+");";
+        String sql =  "INSERT INTO pedido_servico_detalhe(" +
+                    " pe_codigo, serv_codigo, ds_codigo, psd_numeracaoini, psd_numeracaofim, psd_vias, psd_outros, ps_sequence, ps_codigo) " +
+                    " VALUES ("+codigoP+", "+codigoS+", "+ds.getCodigo()+", "+numeracaoI+", "+numeracaoF+", "+vias+", '"+outros+"', "+sequence+", "+codigoPS+");";
         return Banco.getCon().manipular(sql);
     }
     
-    public boolean alterar(int codigoP, int codigoS)
+    public boolean gravar2(int codigoP, int codigoS, int codigoPS)
+    {
+         String sql =  "INSERT INTO pedido_servico_detalhe( " +
+                    " pe_codigo, serv_codigo, ds_codigo, psd_numeracaoini, psd_numeracaofim, psd_vias, psd_outros, ps_sequence, ps_codigo) " +
+                    " VALUES ("+codigoP+", "+codigoS+", "+ds.getCodigo()+", "+numeracaoI+", "+numeracaoF+", "+vias+", '"+outros+"', "+sequence+", "+codigoPS+");";
+        return Banco.getCon().manipular(sql);
+    }
+    
+    public boolean alterar(int codigoP, int codigoS, int codigoPS)
     {
         String sql =  "UPDATE pedido_servico_detalhe" +
                       " SET serv_codigo="+codigoS+", ds_codigo="+ds.getCodigo()+", psd_numeracaoini="+numeracaoI+", psd_numeracaofim="+numeracaoF+", psd_vias="+vias+", psd_outros='"+outros+"' " +
-                      " WHERE pe_codigo="+codigoP+" and os_sequence="+sequence+";";
+                      " WHERE pe_codigo="+codigoP+" and ps_sequence="+sequence+"　and ps_codigo = "+codigoPS+";";
         return Banco.getCon().manipular(sql);
     }
     
     public boolean excluir(int codigoP, int sequence)
     {
         String sql = "DELETE FROM pedido_servico_detalhe " +
-                     " WHERE pe_codigo="+codigoP+" and os_sequence = "+sequence+";";
+                     " WHERE pe_codigo="+codigoP+" and ps_sequence = "+sequence+";";
         return Banco.getCon().manipular(sql); 
     }
     
@@ -131,7 +139,7 @@ public class Pedido_Servico_Detalhe {
     public boolean ChecarExiste(int codigoP, int sequence, int descCodigo)
     {
         String sql;
-        sql = "select * from pedido_servico_detalhe where pe_codigo="+codigoP+" and os_sequence = "+sequence+" and ds_codigo = "+descCodigo+"";
+        sql = "select * from pedido_servico_detalhe where pe_codigo="+codigoP+" and ps_sequence = "+sequence+" and ds_codigo = "+descCodigo+"";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
@@ -151,9 +159,9 @@ public class Pedido_Servico_Detalhe {
     {
         ArrayList<Pedido_Servico_Detalhe> lista = new ArrayList<>();
         String sql;
-        sql = "SELECT pe_codigo, serv_codigo, ds_codigo, psd_numeracaoini, psd_numeracaofim, psd_vias, psd_outros, os_sequence " +
+        sql = "SELECT pe_codigo, serv_codigo, ds_codigo, psd_numeracaoini, psd_numeracaofim, psd_vias, psd_outros, ps_sequence " +
               " FROM pedido_servico_detalhe"
-            + " WHERE pe_codigo = "+codigo+" and os_sequence = "+sequence+";";
+            + " WHERE pe_codigo = "+codigo+" and ps_sequence = "+sequence+";";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {

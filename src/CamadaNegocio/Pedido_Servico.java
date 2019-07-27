@@ -22,6 +22,7 @@ import java.util.ArrayList;
  * @author 稲荷
  */
 public class Pedido_Servico {
+    private int codigo;
     private Servico serv;
     private double valor;
     private int qtd;
@@ -30,7 +31,7 @@ public class Pedido_Servico {
     private int sequence;
     private ArrayList<Pedido_Servico_Detalhe> lista;
 
-    public Pedido_Servico(Servico serv, double valor, int qtd, double desconto, String descricao, int sequence, ArrayList<Pedido_Servico_Detalhe> lista) {
+    public Pedido_Servico(Servico serv, double valor, int qtd, double desconto, String descricao, int sequence, ArrayList<Pedido_Servico_Detalhe> lista, int codigo) {
         this.serv = serv;
         this.valor = valor;
         this.qtd = qtd;
@@ -38,9 +39,11 @@ public class Pedido_Servico {
         this.descricao = descricao;
         this.sequence = sequence;
         this.lista = lista;
+        this.codigo = codigo;
     }
 
     public Pedido_Servico() {
+        lista = new ArrayList<>();
     }
 
     public Servico getServ() {
@@ -98,11 +101,19 @@ public class Pedido_Servico {
     public void setLista(ArrayList<Pedido_Servico_Detalhe> lista) {
         this.lista = lista;
     }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
     
     public boolean gravar(int codigoP)
     {
         String sql =  "INSERT INTO pedido_servico( " +
-                  " pe_codigo, serv_codigo, pe_valor, pe_qtd, pe_desconto, pe_descricao, pe_sequence) " +
+                  " pe_codigo, serv_codigo, ps_valor, ps_qtd, ps_desconto, ps_descricao, ps_sequence) " +
                   " VALUES ("+codigoP+", "+serv.getCodigo()+", "+valor+", "+qtd+", "+desconto+", '"+descricao+"', "+sequence+");";
         return Banco.getCon().manipular(sql);
     }
@@ -110,15 +121,15 @@ public class Pedido_Servico {
     public boolean alterar(int codigoP)
     {
         String sql =  "UPDATE pedido_servico " +
-                  " SET serv_codigo="+serv.getCodigo()+", pe_valor="+valor+", pe_qtd="+qtd+", pe_desconto="+desconto+", pe_descricao='"+descricao+"' " +
-                  " WHERE pe_codigo="+codigoP+" and pe_sequence = "+sequence+";";
+                  " SET serv_codigo="+serv.getCodigo()+", ps_valor="+valor+", ps_qtd="+qtd+", ps_desconto="+desconto+", ps_descricao='"+descricao+"' " +
+                  " WHERE pe_codigo="+codigoP+" and ps_sequence = "+sequence+";";
         return Banco.getCon().manipular(sql);
     }
     
     public boolean excluir(int codigoP, int sequence)
     {
         String sql = "DELETE FROM pedido_servico " +
-                     " WHERE pe_codigo="+codigoP+" and pe_sequence = "+sequence+";";
+                     " WHERE pe_codigo="+codigoP+" and ps_sequence = "+sequence+";";
         return Banco.getCon().manipular(sql); 
     }
     
@@ -132,7 +143,7 @@ public class Pedido_Servico {
     public boolean ChecarExiste(int codigoP, int sequence)
     {
         String sql;
-        sql = "select * from pedido_servico where pe_codigo="+codigoP+" and pe_sequence = "+sequence+"";
+        sql = "select * from pedido_servico where pe_codigo="+codigoP+" and ps_sequence = "+sequence+"";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
@@ -152,15 +163,15 @@ public class Pedido_Servico {
     {
         ArrayList<Pedido_Servico> lista = new ArrayList<>();
         String sql;
-        sql = "SELECT pe_codigo, serv_codigo, pe_valor, pe_qtd, pe_desconto, pe_descricao, pe_sequence " +
-              " FROM public.pedido_servico"
+        sql = "SELECT pe_codigo, serv_codigo, ps_valor, ps_qtd, ps_desconto, ps_descricao, ps_sequence, ps_codigo " +
+              " FROM pedido_servico"
             + " WHERE pe_codigo = "+codigo+";";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
             while (rs.next()) 
             {
-                lista.add(new Pedido_Servico(new Servico().buscarCodigo(rs.getInt(2)), rs.getDouble(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getInt(7), new Pedido_Servico_Detalhe().buscar(rs.getInt(1), rs.getInt(7))));
+                lista.add(new Pedido_Servico(new Servico().buscarCodigo(rs.getInt(2)), rs.getDouble(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getInt(7), new Pedido_Servico_Detalhe().buscar(rs.getInt(1), rs.getInt(7)), rs.getInt(8)));
             }
         } 
         catch (SQLException e) 
@@ -168,5 +179,25 @@ public class Pedido_Servico {
             System.out.println(e.getMessage());
         }
         return lista;
+    }
+    
+    public int buscarUltimoCodigo()
+    {
+        String sql;
+        sql = "SELECT max(ps_codigo) " +
+              " FROM pedido_servico;";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
     }
 }

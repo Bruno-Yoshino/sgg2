@@ -90,7 +90,7 @@ public class MovPedido extends javax.swing.JDialog {
         
         PedidoController.configuraModelServico(jTable1);
         PedidoController.configuraModelDetalhe(jTable2);
-        
+        pc.getP().setOrc(null);
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents());
         //サービスの詳細を追加して下さい ===>>> 追加済み.
@@ -415,8 +415,8 @@ public class MovPedido extends javax.swing.JDialog {
 
         txtValor.setText(".0");
         txtValor.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtValorFocusGained(evt);
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtValorFocusLost(evt);
             }
         });
         txtValor.addActionListener(new java.awt.event.ActionListener() {
@@ -429,12 +429,15 @@ public class MovPedido extends javax.swing.JDialog {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 spQtdFocusGained(evt);
             }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                spQtdFocusLost(evt);
+            }
         });
 
         txtDesconto.setText(".0");
         txtDesconto.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtDescontoFocusGained(evt);
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDescontoFocusLost(evt);
             }
         });
         txtDesconto.addActionListener(new java.awt.event.ActionListener() {
@@ -829,25 +832,9 @@ public class MovPedido extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtValorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusGained
-        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
-    }//GEN-LAST:event_txtValorFocusGained
-
     private void txtValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorActionPerformed
         txtValor.setText("");
     }//GEN-LAST:event_txtValorActionPerformed
-
-    private void spQtdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spQtdFocusGained
-        if(v.ConverteNumeroInteiro(spQtd.getValue()) < 0)
-        {
-            spQtd.setValue(sc.removeCharacter(String.valueOf(spQtd.getValue()), String.valueOf(spQtd.getValue()).length()-1));
-        }
-        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
-    }//GEN-LAST:event_spQtdFocusGained
-
-    private void txtDescontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescontoFocusGained
-        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
-    }//GEN-LAST:event_txtDescontoFocusGained
 
     private void txtDescontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescontoActionPerformed
         txtDesconto.setText("");
@@ -989,6 +976,7 @@ public class MovPedido extends javax.swing.JDialog {
         linha = -1;
         flag = true;
         sc.HabilityComponents(jPanel1.getComponents(), true);
+        sc.HabilityComponents(jPanel4.getComponents(), false);
         sc.Edity(jPanel2.getComponents());
         txtCodigo.setText("0");
         txtValorT.setText("0");
@@ -1046,19 +1034,11 @@ public class MovPedido extends javax.swing.JDialog {
                             pc.UpdateNumberPedido();
                             if(pc.gravarPedidoServico() && !dcEntrega.isVisible())
                             {
-                                if(pc.gravarPedidoServicoDetalhe())
-                                {
+//                                if(pc.gravarPedidoServicoDetalhe())
+//                                {
+                                    pc.gravarPedidoServicoDetalhe();
                                     m.InformationMessage("Gravado com Sucesso", "Informação");
-                                    sc.limpar(jPanel1.getComponents());
-                                    sc.limparTabela(jTable1);
-                                    sc.limparTabela(jTable2);
-                                    sc.HabilityComponents(jPanel1.getComponents(), false);
-                                    flag = true;
-                                    linha = -1;
-                                    pc.clearSequenceNumber();
-                                    lbEntrega.setVisible(false);
-                                    dcEntrega.setVisible(false);
-                                    
+
                                     //OK OK ここ、後でPedidoが保存された時(保存内容)の処理 Producao OK, Contas Receber OK 
                                     if(txtCodigo.getText().equals("0"))
                                     {
@@ -1073,7 +1053,23 @@ public class MovPedido extends javax.swing.JDialog {
                                         GerenciarParcela formGP = new GerenciarParcela(null, true, null, null, pc.getP());
                                         formGP.setVisible(true);
                                     }
-                                }
+                                    sc.limpar(jPanel1.getComponents());
+                                    sc.limparTabela(jTable1);
+                                    sc.limparTabela(jTable2);
+                                    sc.HabilityComponents(jPanel1.getComponents(), false);
+                                    flag = true;
+                                    linha = -1;
+                                    pc.clearSequenceNumber();
+                                    lbEntrega.setVisible(false);
+                                    dcEntrega.setVisible(false);
+//                                }
+//                                else
+//                                    m.ErroMessage("ERRO3", "ERRO3");
+                            }
+                            else
+                            {
+                                //Alterar a data da entrega
+                                m.ErroMessage("ERRO2", "ERRO2");
                             }
                         }
                         else
@@ -1226,6 +1222,22 @@ public class MovPedido extends javax.swing.JDialog {
             dispose();
         }
     }//GEN-LAST:event_formWindowOpened
+
+    private void txtDescontoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescontoFocusLost
+        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
+    }//GEN-LAST:event_txtDescontoFocusLost
+
+    private void spQtdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spQtdFocusLost
+        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
+    }//GEN-LAST:event_spQtdFocusLost
+
+    private void txtValorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusLost
+        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
+    }//GEN-LAST:event_txtValorFocusLost
+
+    private void spQtdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spQtdFocusGained
+        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
+    }//GEN-LAST:event_spQtdFocusGained
 
     private void startDescricao()
     {

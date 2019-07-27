@@ -91,11 +91,11 @@ public class Orcamento_Servico_Detalhe {
         return sql;
     }
     
-    public boolean gravar(int codigoO, int codigoS)
+    public boolean gravar(int codigoO, int codigoS, int codigoOS)
     {
         String sql =  "INSERT INTO orcamento_servico_detalhe( " +
-                    " orc_numero, serv_codigo, ds_codigo, osd_numeracaoini, osd_numeracaofim, osd_vias, osd_outros, os_sequence) " +
-                    " VALUES ("+codigoO+", "+codigoS+", "+ds.getCodigo()+", "+numeracaoI+", "+numeracaoF+", "+vias+", '"+outros+"', "+sequence+");";
+                    " orc_numero, serv_codigo, ds_codigo, osd_numeracaoini, osd_numeracaofim, osd_vias, osd_outros, os_sequence, os_codigo) " +
+                    " VALUES ("+codigoO+", "+codigoS+", "+ds.getCodigo()+", "+numeracaoI+", "+numeracaoF+", "+vias+", '"+outros+"', "+sequence+", "+codigoOS+");";
         return Banco.getCon().manipular(sql);
     }
     

@@ -20,6 +20,7 @@ import java.util.ArrayList;
  * @author 紅葉
  */
 public class Orcamento_Servico {
+    private int codigo;
     private Servico serv;
     private double valor;
     private int qtd;
@@ -28,7 +29,7 @@ public class Orcamento_Servico {
     private int sequence;
     private ArrayList<Orcamento_Servico_Detalhe> lista;
 
-    public Orcamento_Servico(Servico serv, double valor, int qtd, double custoPapel, double custoImpre, double custoAcab, double custoArte, double custoChapa, double custoMdO, double desconto, String descricao, int sequence, ArrayList<Orcamento_Servico_Detalhe> lista) {
+    public Orcamento_Servico(Servico serv, double valor, int qtd, double custoPapel, double custoImpre, double custoAcab, double custoArte, double custoChapa, double custoMdO, double desconto, String descricao, int sequence, ArrayList<Orcamento_Servico_Detalhe> lista, int codigo) {
         this.serv = serv;
         this.valor = valor;
         this.qtd = qtd;
@@ -42,6 +43,7 @@ public class Orcamento_Servico {
         this.descricao = descricao;
         this.sequence = sequence;
         this.lista = lista;
+        this.codigo = codigo;
     }
 
     public Orcamento_Servico() {
@@ -151,6 +153,14 @@ public class Orcamento_Servico {
     public void setLista(ArrayList<Orcamento_Servico_Detalhe> lista) {
         this.lista = lista;
     }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
     
     public boolean gravar(int codigoO)
     {
@@ -165,7 +175,7 @@ public class Orcamento_Servico {
     {
         String sql =  "UPDATE orcamento_servico " +
                   " SET serv_codigo="+serv.getCodigo()+", os_valor="+valor+", os_qtd="+qtd+", os_custopapel="+custoPapel+", os_custoimpressao="+custoImpre+", os_custoacabamento="+custoAcab+", os_custoarte="+custoArte+", os_custochapa="+custoChapa+", os_customdo="+custoMdO+", os_desconto="+desconto+", os_descricao='"+descricao+"' " +
-                  " WHERE orc_numero="+codigoO+" and os_sequence = "+sequence+";";
+                  " WHERE orc_numero="+codigoO+" and os_sequence = "+sequence+" and os_codigo = "+codigo+";";
         return Banco.getCon().manipular(sql);
     }
     
@@ -206,7 +216,7 @@ public class Orcamento_Servico {
     {
         ArrayList<Orcamento_Servico> lista = new ArrayList<>();
         String sql;
-        sql = "SELECT orc_numero, serv_codigo, os_valor, os_qtd, os_custopapel, os_custoimpressao, os_custoacabamento, os_custoarte, os_custochapa, os_customdo, os_desconto, os_descricao, os_sequence " +
+        sql = "SELECT orc_numero, serv_codigo, os_valor, os_qtd, os_custopapel, os_custoimpressao, os_custoacabamento, os_custoarte, os_custochapa, os_customdo, os_desconto, os_descricao, os_sequence, os_codigo " +
               " FROM public.orcamento_servico"
             + " WHERE orc_numero = "+codigo+";";
         ResultSet rs=Banco.getCon().consultar(sql);
@@ -214,7 +224,7 @@ public class Orcamento_Servico {
         {
             while (rs.next()) 
             {
-                lista.add(new Orcamento_Servico(new Servico().buscarCodigo(rs.getInt(2)), rs.getDouble(3), rs.getInt(4), rs.getDouble(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8), rs.getDouble(9), rs.getDouble(10), rs.getDouble(11), rs.getString(12), rs.getInt(13), new Orcamento_Servico_Detalhe().buscar(rs.getInt(1), rs.getInt(13))));
+                lista.add(new Orcamento_Servico(new Servico().buscarCodigo(rs.getInt(2)), rs.getDouble(3), rs.getInt(4), rs.getDouble(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8), rs.getDouble(9), rs.getDouble(10), rs.getDouble(11), rs.getString(12), rs.getInt(13), new Orcamento_Servico_Detalhe().buscar(rs.getInt(1), rs.getInt(13)), rs.getInt(14)));
             }
         } 
         catch (SQLException e) 
@@ -222,5 +232,25 @@ public class Orcamento_Servico {
             System.out.println(e.getMessage());
         }
         return lista;
+    }
+    
+    public int buscarUltimoCodigo()
+    {
+        String sql;
+        sql = "SELECT max(os_codigo) " +
+              " FROM public.orcamento_servico;";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
     }
 }
