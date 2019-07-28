@@ -851,6 +851,10 @@ public class MovPedido extends javax.swing.JDialog {
              pc.addTabelaServico(jTable1, linha);
              txtValorT.setText(""+pc.calculoTotal(jTable1));
              linha = -1;
+             txtValor_total.setText("0");
+             txtValor.setText("0");
+             txtDesconto.setText("0");
+             spQtd.setValue(0);
      }
 
     }//GEN-LAST:event_btnAddServicoActionPerformed

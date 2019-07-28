@@ -1,9 +1,11 @@
 package CamadaNegocio;
 
 import CamadaLogica.Banco;
+import CamadaLogica.ReadOnlyTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import javax.swing.JTable;
 
 /**
  *
@@ -175,7 +177,7 @@ public class Cheque {
         if(this.codigo == 0)
         {
             sql = "INSERT INTO cheque (cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo) VALUES "
-                    + " ("+cr == null ? null : cr.getCodigo()+", '"+dono+"', '"+cpf+"', "+valor+", '"+data+"', '"+predata+"', '"+nAgencia+"', '"+nConta+"', '"+nBanco+"', '"+nCheque+"', '"+obs+"', '"+null+"', '')";
+                    + " ("+(cr == null ? null : cr.getCodigo())+", '"+dono+"', '"+cpf+"', "+valor+", '"+data+"', '"+predata+"', '"+nAgencia+"', '"+nConta+"', '"+nBanco+"', '"+nCheque+"', '"+obs+"', "+null+", '')";
         }
         else
         {
@@ -209,5 +211,53 @@ public class Cheque {
         }
         return null;
    }
+   
+    public static ResultSet buscarDados(String valor, int tipo)//Para consulta
+    {
+      
+        String query = null;
+        if (valor.equals(""))
+        {
+            query = "SELECT c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo\n" +
+                    " FROM cheque "
+                  + " WHERE c_datacomp is null"
+                  + " ORDER BY c_dono;";
+        }
+        else
+        {
+            switch (tipo)
+            {
+                case 0: //Dono
+                {
+                    query = "SELECT c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo\n" +
+                            " FROM cheque "
+                          + " Where c_dono ilike '"+valor+"' and c_datacomp is null"
+                          + " ORDER BY c_dono;"; 
+                    break;
+                }
+                case 1: //Data Lancado
+                {
+                    query = "SELECT c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo\n" +
+                            " FROM cheque "
+                          + " Where c_datal = '"+valor+"' and c_datacomp is null "
+                          + " ORDER BY c_dono;";
+                    break;
+                }
+            }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+   
+   public static void configuraModel(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
+    {
+        String colunas[] = new String [] {"Código", "Dono", "CPF", "Valor", "Data Lançado", "Pré Data"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(250);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(150);
+    }
    
 }

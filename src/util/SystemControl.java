@@ -281,7 +281,7 @@ public class SystemControl
     public final void limparTabela(JTable tabela)
     {
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
-        for(int i = 0; i < model.getRowCount(); i++)
+        for(int i = 0; i < tabela.getRowCount(); i++)
         {
             model.removeRow(i);
         }

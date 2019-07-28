@@ -3,6 +3,7 @@ package CamadaApresentacao;
 import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Funcionario;
 import Controller.ProducaoController;
+import Controller.ProdutoController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,10 @@ public class MovProducao extends javax.swing.JDialog {
     public MovProducao(java.awt.Frame parent, boolean modal, Funcionario f) {
         super(parent, modal);
         initComponents();
+        
+        ProducaoController.configuraModelTabela1(jTable1);
+        ProducaoController.configuraModelTabela2(jTable2);
+        ProducaoController.configuraModelTabela3(jTable3);
         
         btnAlterar.setName("btnAlterar");
         btnCancelar.setName("btnCancelar");
@@ -141,7 +146,7 @@ public class MovProducao extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Codigo Cliente", "Nome", "Número Pedido", "Data Pedido"
+
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -216,7 +221,7 @@ public class MovProducao extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Número Produção", "Serviço", "Status"
+
             }
         ));
         jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -416,7 +421,7 @@ public class MovProducao extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Codigo Produto", "Codigo Folha", "Descrição", "Quantidade"
+
             }
         ));
         jScrollPane4.setViewportView(jTable3);

@@ -241,7 +241,7 @@ public class PedidoController {
     
     public double calcular(String valor, String qtd, String desconto)
     {
-        return ((v.ConverteNumeroReal(valor) * v.ConverteNumeroInteiro(qtd)) - v.ConverteNumeroReal(desconto));
+        return (v.ConverteNumeroReal(valor) * v.ConverteNumeroInteiro(qtd) - v.ConverteNumeroReal(desconto));
     }
     
     public void excluirDetalheServico(JTable tabela, int linhaS, int linhaDS, boolean flag, String codigoO)
@@ -346,7 +346,7 @@ public class PedidoController {
     {
         ArrayList<Pedido_Servico> temp = p.getLista();
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
-        for (int i = 0; i < temp.get(i).getLista().size(); i++) 
+        for (int i = 0; i < temp.get(linha).getLista().size(); i++) 
         {
                 model.addRow(new Object[]{
                 temp.get(linha).getLista().get(i).getDs().getDescricao(),

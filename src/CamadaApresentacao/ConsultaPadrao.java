@@ -422,6 +422,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             case "Fornecedor": Fornecedor(); break;
             case "AProduto": AProduto(); break;
             case "AFolha": AFolha(); break;
+            case "Cheque": break;
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
@@ -798,6 +799,34 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                 {
                     rs.getInt("tc_codigo"), 
                     rs.getString("tc_tipo")
+                });
+            }
+        } 
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void Cheque() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            Cheque.configuraModel(jTable1);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            rs = Cheque.buscarDados(txtValor.getText(), tipo);
+            while (rs.next())
+            {//c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata,
+                model.addRow(new Object[]
+                {//"Código", "Dono", "CPF", "Valor", "Data Lançado", "Pré Data"
+                    rs.getInt(1), 
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getDouble(5),
+                    rs.getDate(6),
+                    rs.getDate(7)
                 });
             }
         } 

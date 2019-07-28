@@ -32,6 +32,7 @@ public class ChequeController {
 
     public ChequeController() {
         this.v = new Validacao();
+        this.c = new Cheque();
     }
 
     public Cheque getC() {
@@ -63,12 +64,14 @@ public class ChequeController {
         }
         c.setValor(v.ConverteNumeroReal(valor));
         
-        if(!v.ValidarDataDuasData(predata, data) || !v.ValidarDataDuasDataIgual(predata, data))
+        if(!v.ValidarDataDuasData(data, predata) && !v.ValidarDataDuasDataIgual(predata, data))
         {
             return 4;
         }
+        
         c.setData(data);
         c.setDataComp(dataComp);
+        c.setPredata(predata);
         
         if(nAgencia.trim().equals(""))
         {

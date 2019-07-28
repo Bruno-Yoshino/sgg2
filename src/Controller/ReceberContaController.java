@@ -86,7 +86,7 @@ public class ReceberContaController {
     
     public int validarContasReceber(String codigoC, String valorPag, Date pagamento, String obs) throws SQLException
     {
-        cr.buscaContaReceber(v.ConverteNumeroInteiro(codigoC));
+        cr = new ContaReceber().buscaContaReceber(v.ConverteNumeroInteiro(codigoC));
         if(valorPag.equals(""))
         {
             return 1;
@@ -95,15 +95,16 @@ public class ReceberContaController {
         {
             return 2;
         }
-        if(!v.ValidarDataDuasData(pagamento, cr.getP().getPedido()) && !v.ValidarDataDuasDataIgual(pagamento, cr.getP().getPedido()))
+        if(v.ValidarDataDuasData(cr.getP().getPedido(), pagamento) == false)
         {
-            return 4;
+            if(v.ValidarDataDuasDataIgual(pagamento, cr.getP().getPedido()) == false)
+                return 4;
         }
         Integer i;
         cr.setValorP(v.ConverteNumeroReal(valorPag));
         cr.setDataP(pagamento);
         cr.setObs(obs);
-        if(v.ConverteNumeroReal(cr.getValor()) < v.ConverteNumeroReal(valorPag))
+        if(cr.getValor() < v.ConverteNumeroReal(valorPag))
         {
             i = m.Pergunta("O valor Recebido é maior! Deseja Continuar?", "Atenção");
             if(null == i)
@@ -119,7 +120,7 @@ public class ReceberContaController {
             }
         }
 
-        if(v.ConverteNumeroReal(valorPag) < v.ConverteNumeroReal(cr.getValor()))
+        if(v.ConverteNumeroReal(valorPag) < cr.getValor())
         {
             if(m.Pergunta("O valor Recebido é menor! Deseja Continuar?", "Atenção") == JOptionPane.NO_OPTION)
                 return 3;
@@ -156,6 +157,7 @@ public class ReceberContaController {
                 rs.getDate(5),// Data Pedido
                 rs.getInt(6)// Numero Conta
             });
+            //cr.cr_codigo, cr.pe_codigo, cr.cr_datavenc, cr.cr_obs, cr.cr_valor, cr.cr_datapago, cr.cr_vlorp
         }
     }
     
@@ -190,5 +192,17 @@ public class ReceberContaController {
             return valor / qtd + resto;
         }
         return valor / qtd;
+    }
+    
+    public static void configuraModel(JTable jTable) // Configurar Tabela Detalhe
+    {
+        String colunas[] = new String [] {"Cliente", "Número Pedido", "Valor a ser Cobrado", "Data de Vencimento", "Data do Peido", "Numero da conta"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(250);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(125);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(125);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(125);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(50);
     }
 }

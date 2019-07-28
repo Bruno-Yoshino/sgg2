@@ -390,4 +390,34 @@ public class ProducaoController {
         p.setP(ped);
         return p.gravar(ps);
     }
+    
+    //------------------------------------------------------------------------------------------------------------------
+    public static void configuraModelTabela1(JTable jTable) // Configurar Tabela Detalhe
+    {
+        String colunas[] = new String [] {"Código do Cliente", "Nome", "Número do Pedido", "Data Pedido"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(250);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+    }
+    
+    public static void configuraModelTabela2(JTable jTable) // Configurar Tabela Detalhe
+    {
+        String colunas[] = new String [] {"Número Produção", "Serviço", "Status"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(250);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(150);
+    }
+    
+    public static void configuraModelTabela3(JTable jTable) // Configurar Tabela Detalhe
+    {
+        String colunas[] = new String [] {"Código Produto", "Código Folha", "Descrição", "Quantidade"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(250);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+    }
 }

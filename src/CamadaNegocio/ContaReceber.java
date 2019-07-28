@@ -1,10 +1,12 @@
 package CamadaNegocio;
 
 import CamadaLogica.Banco;
+import CamadaLogica.ReadOnlyTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JTable;
 
 /**
  *
@@ -96,13 +98,13 @@ public class ContaReceber {
     public boolean gravar()
     {
         String sql = "INSERT INTO conta_receber (pe_codigo, cr_datavenc, cr_obs, cr_valor, cr_datapago, cr_vlorp) "
-                   + " values ("+p.getCodigo()+", '"+dataV+"', '', "+valor+", '"+null+"', "+0+");";
+                   + " values ("+p.getCodigo()+", '"+dataV+"', '', "+valor+", "+null+", "+0+");";
         return Banco.getCon().manipular(sql);
     }
     
     public boolean alterar()
     {
-        String sql = "update conta_receber set  cr_obs = '"+obs+"', cr_datapago = "+dataP+", cr_vlorp = "+valorP+" "
+        String sql = "update conta_receber set  cr_obs = '"+obs+"', cr_datapago = '"+dataP+"', cr_vlorp = "+valorP+" "
                    + " where cr_codigo = "+codigo+";";
         return Banco.getCon().manipular(sql);
     }
@@ -114,17 +116,34 @@ public class ContaReceber {
         return Banco.getCon().manipular(sql);
     }
     
-    public void buscaContaReceber(int codigo) throws SQLException
+    public ContaReceber buscaContaReceber(int codigo) throws SQLException
     {
-        p = new Pedido().buscar(codigo);
+        //int codigo, Pedido p, Date dataV, String obs, double valor, Date dataP, double valorP
+        String sql = "SELECT cr_codigo, pe_codigo, cr_datavenc, cr_obs, cr_valor, cr_datapago, cr_vlorp " +
+                     " FROM public.conta_receber"
+                   + " WHERE cr_codigo = "+codigo+";";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return new ContaReceber(rs.getInt(1), new Pedido().buscar(rs.getInt(2)), rs.getDate(3), rs.getString(4), rs.getDouble(5), rs.getDate(6), rs.getDouble(7));
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return null;
+        //p = new Pedido().buscar(codigo);
     }
     
     public ContaReceber buscar(int codigo)
     {
         String sql;
-        sql = "select cr_codigo, pe_codigo, cr_datavenc, cr_obs, cr_valor, cr_datapago, cr_vlorp "
+        sql = "selectt cr_codigo, pe_codigo, cr_datavenc, cr_obs, cr_valor, cr_datapago, cr_vlorp "
                 + " from conta_receber where cr_codigo = "+codigo+"";
-                ResultSet rs=Banco.getCon().consultar(sql);
+        ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
             if (rs.next()) 
@@ -143,12 +162,12 @@ public class ContaReceber {
     {
         String sql;
         ArrayList<Integer> lista = new ArrayList<>();
-        sql = "select cr_codigo "
+        sql = "selectt cr_codigo "
                 + " from conta_receber where pe_codigo = "+codigoP+" order by cr_codigo";
                 ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
-            if (rs.next()) 
+            while (rs.next()) 
             {
                 lista.add(rs.getInt(1));
             }
@@ -163,7 +182,7 @@ public class ContaReceber {
     public int QtdParcela()
     {
         String sql;
-        sql = "select count(*) "
+        sql = "selectt count(*) "
                 + " from conta_receber where pe_codigo = "+p.getCodigo()+"";
                 ResultSet rs=Banco.getCon().consultar(sql);
         try 
@@ -184,15 +203,16 @@ public class ContaReceber {
     {
         String sql;
         switch(op)
-        {
+        {//"Cliente", "Número Pedido", "Valor a ser Cobrado", "Data de Vencimento", "Data do Peido", "Numero da conta"
             case 1: // nome
-                sql = "selec cr.cr_codigo, cr.pe_codigo, cr.cr_datavenc, cr.cr_obs, cr.cr_valor, cr.cr_datapago, cr.cr_vlorp "
+                sql = "select c.cli_nome, cr.pe_codigo, cr.cr_valor, cr.cr_datavenc, p.pe_datapedido, cr.cr_codigo "
                     + " from conta_receber cr, pedido p, cliente c"
                     + " where cr.cr_datapago is null and p.pe_codigo = cr.pe_codigo and p.cli_codigo = c.cli_codigo "
                     + " order by c.cli_nome;";
                 break;
             case 2: // data vencimento
-                sql = "selec cr.cr_codigo, cr.pe_codigo, cr.cr_datavenc, cr.cr_obs, cr.cr_valor, cr.cr_datapago, cr.cr_vlorp "
+                //sql = "select cr.cr_codigo, cr.pe_codigo, cr.cr_datavenc, cr.cr_obs, cr.cr_valor, cr.cr_datapago, cr.cr_vlorp "
+                sql = "select c.cli_nome, cr.pe_codigo, cr.cr_valor, cr.cr_datavenc, p.pe_datapedido, cr.cr_codigo "
                     + " from conta_receber cr "
                     + " where cr.cr_datapago is null"
                     + " order by cr.cr_datavenc;";

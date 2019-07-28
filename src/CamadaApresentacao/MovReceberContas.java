@@ -23,6 +23,11 @@ import util.mensagens;
  * @author 小枩　夏輝
  * @author ウィリアム
  * @author レレイナ
+ * 
+ * Tester 2019年07月27日
+ * @author 伊吹
+ * @author 雲龍
+ * @author 天城
  */
 public class MovReceberContas extends javax.swing.JDialog {
 
@@ -33,19 +38,22 @@ public class MovReceberContas extends javax.swing.JDialog {
     public MovReceberContas(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
+        ReceberContaController.configuraModel(jTable1);
         btnAlterar.setName("btnAlterar");
         btnCancelar.setName("btnCancelar");
         btnGravar.setName("btnGravar");
         btnSair.setName("btnSair");
         btnImprimir.setName("btnImprimir");
-        sc.Initialize(jPanel3.getComponents());
+        sc.Alter(jPanel3.getComponents());
         sc.HabilityComponents(jPanel2.getComponents(), false);
         rcc.carregarTabela(jTable1, 1);
+        
     }
     
     /*
         2019年07月12日
-            メモ：テーブルの封入がまだ行われていません。
+            メモ：テーブルの封入がまだ行われていません。 OK
+    
     */
     /**
      * This method is called from within the constructor to initialize the form.
@@ -91,7 +99,7 @@ public class MovReceberContas extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Cliente", "Numero Pedido", "Valor a ser cobrado", "Data de Vencimento", "Data do Pedido", "Numero da Conta"
+
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -364,6 +372,9 @@ public class MovReceberContas extends javax.swing.JDialog {
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
        if(jTable1.getSelectedRow() >= 0)
        {
+         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+         txtCliente.setText(""+model.getValueAt(jTable1.getSelectedRow(), 0));
+         txtValor.setText(""+model.getValueAt(jTable1.getSelectedRow(), 2));
          sc.Edity(jPanel3.getComponents());
          sc.HabilityComponents(jPanel1.getComponents(), false);
          sc.HabilityComponents(jPanel2.getComponents(), true);
@@ -372,7 +383,7 @@ public class MovReceberContas extends javax.swing.JDialog {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         sc.limpar(jPanel2.getComponents());
-        sc.Initialize(jPanel3.getComponents());
+        sc.Alter(jPanel3.getComponents());
         sc.HabilityComponents(jPanel2.getComponents(), false);
         sc.HabilityComponents(jPanel1.getComponents(), true);
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -385,11 +396,12 @@ public class MovReceberContas extends javax.swing.JDialog {
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
         try {
             //String codigoC, String valorPag, Date pagamento, String obs
-            switch(rcc.validarContasReceber((String) model.getValueAt(jTable1.getSelectedRow(), 5), txtValorP.getText(), dcPagamento.getData(), txtObs.getText()))
+            switch(rcc.validarContasReceber(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 5)), txtValorP.getText(), dcPagamento.getData(), txtObs.getText()))
             {
                 case 1: m.InformationMessage("Informe o valor a ser Recebido!", "Atenção"); txtValorP.requestFocus(); break;
                 case 2: m.InformationMessage("Valor precisa ser maior ou igual a 0!", "Atenção"); txtValorP.requestFocus(); break;
                 case 3: m.InformationMessage("Altera o valor Recebido", "Atenção"); txtValorP.requestFocus(); break;
+                case 4: m.InformationMessage("A data do pagamento não pode ser menor que a data do Pedido!", "Atenção"); txtValorP.requestFocus(); break;
                 case 5:
                     rcc.alterar();
                     if(rcc.SeocndInserting())
@@ -414,6 +426,8 @@ public class MovReceberContas extends javax.swing.JDialog {
                             frmCheque.setVisible(true);
                         }
                     }
+                    sc.limparTabela(jTable1);
+                    rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
                     break;
                 default:
                     if(rcc.alterar())
@@ -434,6 +448,8 @@ public class MovReceberContas extends javax.swing.JDialog {
                                 frmCheque.setVisible(true);
                             }
                         }
+                        sc.limparTabela(jTable1);
+                        rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
                     }
                     else
                     {

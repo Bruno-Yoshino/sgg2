@@ -144,6 +144,7 @@ Add conection Caixa -- Pedido and constraint FK caixa_codigo in Pedido
  * @author 弐条
  * @author 七草
  * @author 雲龍
+ * @author 天城
  * @author 志穂
  * @author 壱条
  * @author 織田
@@ -157,6 +158,7 @@ Add conection Caixa -- Pedido and constraint FK caixa_codigo in Pedido
  * @author 瀬戸雪
  * @author 島雪
  * @author 山雪
+ * @author 明石
  */
 public class Principal extends javax.swing.JFrame {
 
@@ -188,8 +190,8 @@ public class Principal extends javax.swing.JFrame {
         
         
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/Rekotyoku.wav").getAbsoluteFile());
-            //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/05 - Eight Minutes.wav").getAbsoluteFile());
+            //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/Rekotyoku.wav").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/05 - Eight Minutes.wav").getAbsoluteFile());
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
