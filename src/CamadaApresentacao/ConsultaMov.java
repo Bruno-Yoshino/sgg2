@@ -372,7 +372,7 @@ public class ConsultaMov extends javax.swing.JDialog {
             {
                 txtValor.setVisible(false);
                 dateInicio.setVisible(true);
-                dateInicio.setLocation(x+105,y-3);
+                dateInicio.setLocation(x+105,y+10);
                 jla.setVisible(true);
                 jla.setLocation(x+110,y-3);
                 dateFim.setVisible(true);
@@ -466,7 +466,7 @@ public class ConsultaMov extends javax.swing.JDialog {
         switch(tabela)
         {
             case "Compra": Compra(); break; 
-            case "Orcamento": Orcamento(); break;
+            case "Orçamento": Orcamento(); break;
             case "Pedido": Pedido(); break;
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed
@@ -531,11 +531,12 @@ public class ConsultaMov extends javax.swing.JDialog {
             {
                 model.addRow(new Object[]
                 {//"Número", "Cliente", "Data Pedido", "Data Vencimento", "Valor Total"
+                 //o.orc_numero, c.cli_nome, o.orc_valortotal, o.orc_dataorc, o.orc_validade
                     rs.getInt(1), 
                     rs.getString(2),
-                    rs.getDate(3),
                     rs.getDate(4),
-                    rs.getDouble(5)
+                    rs.getDate(5),
+                    rs.getDouble(3)
                 });
             }
         } 
@@ -560,9 +561,9 @@ public class ConsultaMov extends javax.swing.JDialog {
                 {//"Número", "Cliente", "Data Pedido", "Data Vencimento", "Valor Total"
                     rs.getInt(1), 
                     rs.getString(2),
-                    rs.getDate(3),
                     rs.getDate(4),
-                    rs.getDouble(5)
+                    rs.getDate(5),
+                    rs.getDouble(3)
                 });
             }
         } 
@@ -709,7 +710,7 @@ public class ConsultaMov extends javax.swing.JDialog {
                     rs.getDouble(2)*rs.getInt(3)-rs.getDouble(4),
                     rs.getString(5)
                 });
-                listaSequence.add(rs.getInt(12));
+                listaSequence.add(rs.getInt(6));
             }
         } 
         catch (SQLException sqlEmp)

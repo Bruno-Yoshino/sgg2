@@ -368,8 +368,9 @@ public class ProducaoController {
         return 0;
     }
     
-    public boolean Atualizar()
+    public boolean Atualizar(int codigo)
     {
+        p.setCodigo(codigo);
         if(p.getStatus() == 4)
         {
             //insere os itens
@@ -382,13 +383,36 @@ public class ProducaoController {
                 p.getListaP().get(i).gravar(p.getCodigo());
             }
         }
-        return p.alterar();
+        return p.alterar(codigo);
     }
     
     public boolean gerarProducao(Pedido_Servico ps, Pedido ped)
     {
         p.setP(ped);
         return p.gravar(ps);
+    }
+    
+    public boolean gravarItens(int codigo)
+    {
+        boolean x = true;
+        ArrayList<Producao_Folha> listaF = p.getListaF();
+        ArrayList<Producao_Produto> listaP = p.getListaP();
+        AtualizarEstoqueController aec = new AtualizarEstoqueController();
+        for(int i = 0; i < listaF.size() && x; i++)
+        {
+           x = listaF.get(i).gravar(codigo);
+           aec.setF(listaF.get(i).getF());
+           aec.atualizarEstoqueFolha(false, listaF.get(i).getQtd());
+        }
+        
+        for(int i = 0; i < listaP.size() && x; i++)
+        {
+            x = listaP.get(i).gravar(codigo);
+            aec.setP(listaP.get(i).getP());
+            aec.atualizarEstoqueProduto(false, listaP.get(i).getQtd());
+        }
+        
+        return x;
     }
     
     //------------------------------------------------------------------------------------------------------------------

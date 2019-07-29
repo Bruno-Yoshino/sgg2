@@ -359,6 +359,12 @@ public class PedidoController {
         }
     }
     
+    public boolean existPedioServicoDetalhe()
+    {
+        ArrayList<Pedido_Servico> temp = p.getLista();
+        return temp.size() > 0 && temp.get(0).getLista().size() > 0;
+    }
+    
     public void UpdateNumberPedido() throws SQLException
     {
         p.setCodigo(new Pedido().UltimoCodigo());
@@ -454,14 +460,23 @@ public class PedidoController {
     
     public boolean excluirPedido(int codigo)
     {
-        return new Pedido_Servico_Detalhe().excluir(codigo) && new Pedido_Servico().excluir(codigo) && new Pedido().excluir(codigo);
+        new Producao().excluir(codigo);
+        new Pedido_Servico_Detalhe().excluir(codigo);
+        new Pedido_Servico().excluir(codigo);
+        return new Pedido().excluir(codigo);
     }
     
     public void buscarDados(int codigo) throws SQLException
     {
         Pedido temp = p.buscar(codigo);
         p = temp == null ? new Pedido() : temp;
-        sequencePS = p.getLista().get(p.getLista().size()-1).getSequence();
+        if(temp != null)
+            if(p.getLista().size() > 0)
+                sequencePS = p.getLista().get(p.getLista().size()-1).getSequence();
+            else
+                sequencePS = 0;
+        else
+            sequencePS = 0;
     }
     
     public void carregarTabelaServico(JTable tabela)

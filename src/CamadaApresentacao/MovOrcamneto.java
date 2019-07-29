@@ -1304,7 +1304,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
         ConsultaMov consOrcamento = new ConsultaMov(null, true);
-        String[] vet = new String[3];
+        String[] vet = new String[4];
         vet[0] = "Tudo";
         vet[1] = "Data";
         vet[2] = "Periodo";

@@ -24,9 +24,17 @@ public class CheckDetalheServico extends javax.swing.JDialog
         super(parent, modal);
         initComponents();
         ResultSet rs =  Producao.carregarServico(codigoPe);
-        lbServico.setText(rs.getString(1));
-        codigoP = rs.getInt(2);
-        sequence = rs.getInt(3);
+        if(rs.next())
+        {    
+            lbServico.setText(rs.getString(1));
+            codigoP = rs.getInt(2);
+            sequence = rs.getInt(3);
+        }
+        else
+        {
+            codigoP = 0;
+            sequence = 0;
+        }
     }
 
     /**

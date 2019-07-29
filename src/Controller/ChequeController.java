@@ -99,7 +99,7 @@ public class ChequeController {
         
         if(codigo != 0)
         {
-            if(!v.ValidarDataDuasData(dataComp, data))
+            if(!v.ValidarDataDuasData(data, dataComp))
             {
                 return 9;
             }

@@ -135,15 +135,21 @@ public class Producao
         return Banco.getCon().manipular(sql);
     }
     
-    public boolean alterar()
+    public boolean alterar(int codigo)
     {
-        String sql = "update producao set func_codigo = "+f.getCodigo()+", prod_status = '"+status+"', prod_date = '"+(status==1 ? Date.from(Instant.now()) : null)+"' where prod_codigo = "+codigo+"";
+        String sql = "update producao set func_codigo = "+f.getCodigo()+", prod_status = "+status+", prod_data = '"+(status==1 ? Date.from(Instant.now()) : null)+"' where prod_codigo = "+codigo+"";
         return Banco.getCon().manipular(sql);
     }
     
     public boolean excluir(int codigo, int sequencia)
     {
-        String sql = "delete form producao where pe_codigo = "+codigo+" and ps_sequence = "+sequencia+"";
+        String sql = "delete from producao where pe_codigo = "+codigo+" and ps_sequence = "+sequencia+"";
+        return Banco.getCon().manipular(sql);
+    }
+    
+    public boolean excluir(int codigo)
+    {
+        String sql = "delete from producao where pe_codigo = "+codigo+"";
         return Banco.getCon().manipular(sql);
     }
     
@@ -152,9 +158,9 @@ public class Producao
         String query = null;
         if (valor.equals(""))
         {
-            query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_entrega "
+            query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_dataentrega "
                 + " FROM pedido p, cliente c "
-                + " WHERE p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_entrega";
+                + " WHERE p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_dataentrega";
         }
         else
         {
@@ -162,16 +168,16 @@ public class Producao
             {
                 case 1:// Mome
                 {
-                    query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_entrega "
+                    query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_dataentrega "
                           + " FROM pedido p, cliente c "
-                          + " WHERE c.cli_nome ilike '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_entrega";
+                          + " WHERE c.cli_nome ilike '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_dataentrega";
                     break;
                 }
                 case 2:// Numero
                 {
-                    query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_entrega "
+                    query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_dataentrega "
                              + " FROM pedido p, cliente c "
-                            + "where p.pe_codigo = '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_entrega";
+                            + "where p.pe_codigo = '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_dataentrega";
                     break;
                 }
             }
@@ -184,9 +190,9 @@ public class Producao
         String query = null;
         if (valor.equals(""))
         {
-            query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_entrega "
+            query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_dataentrega "
                 + " FROM pedido p, cliente c "
-                + " WHERE p.cli_codigo = c.cli_codigo and p.pe_datapedido < p.pe_entrega";
+                + " WHERE p.cli_codigo = c.cli_codigo and p.pe_datapedido < p.pe_dataentrega";
         }
         else
         {
@@ -194,16 +200,16 @@ public class Producao
             {
                 case 1:// Mome
                 {
-                    query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_entrega "
+                    query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_dataentrega "
                           + " FROM pedido p, cliente c "
-                          + " WHERE c.cli_nome ilike '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido < p.pe_entrega";
+                          + " WHERE c.cli_nome ilike '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido < p.pe_dataentrega";
                     break;
                 }
                 case 2:// Numero
                 {
-                    query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_entrega "
+                    query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_dataentrega "
                              + " FROM pedido p, cliente c "
-                            + "where p.pe_codigo = '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido < p.pe_entrega";
+                            + "where p.pe_codigo = '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido < p.pe_dataentrega";
                     break;
                 }
             }
@@ -237,7 +243,7 @@ public class Producao
     
     public static ResultSet BuscarProducaoItemProduto(int codigoP)
     {
-        String query = "SELECT p.pro_codigo, p.pro_nome, pp.prod_qtd "
+        String query = "SELECT p.pro_codigo, p.pro_nome, pp.pp_qtd "
                      + " FROM producao_produto pp, produto p "
                      + " WHERE pp.prod_codigo = "+codigoP+" and pp.pro_codigo = p.pro_codigo ";
 

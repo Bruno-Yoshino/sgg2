@@ -168,7 +168,7 @@ public class Pedido {
     public boolean excluir(int codigo)
     {
         String sql = "UPDATE pedido " +
-                  " SET  pe_dataentrega='"+null+"' " +
+                  " SET  pe_dataentrega="+null+" " +
                   " WHERE pe_codigo="+codigo+";";//"DELETE FROM pedido " +
                      //" WHERE pe_codigo="+codigo+";";
         return Banco.getCon().manipular(sql); 
@@ -280,9 +280,9 @@ public class Pedido {
     public static ResultSet ConsultaPedidoServicoD(int codigo, int sequence)
     {
         String query = null;
-        query = "SELECT ds.ds_descricao, psd.psd_numeracaoini, psd.psd_numeracaofim, psd.psd_vias, psd.psd_outros, psd.os_sequence " +
+        query = "SELECT ds.ds_descricao, psd.psd_numeracaoini, psd.psd_numeracaofim, psd.psd_vias, psd.psd_outros, psd.ps_sequence " +
                 " FROM pedido_servico_detalhe psd, detalhe_serv ds "
-              + " WHERE psd.pe_codigo = "+codigo+" and os_sequence = "+sequence+" and psd.ds_codigo = ds.ds_codigo;";
+              + " WHERE psd.pe_codigo = "+codigo+" and ps_sequence = "+sequence+" and psd.ds_codigo = ds.ds_codigo;";
         return Banco.getCon().retornaResultSet(query);
     }
     

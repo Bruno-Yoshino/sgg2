@@ -141,7 +141,7 @@ public class ContaReceber {
     public ContaReceber buscar(int codigo)
     {
         String sql;
-        sql = "selectt cr_codigo, pe_codigo, cr_datavenc, cr_obs, cr_valor, cr_datapago, cr_vlorp "
+        sql = "select cr_codigo, pe_codigo, cr_datavenc, cr_obs, cr_valor, cr_datapago, cr_vlorp "
                 + " from conta_receber where cr_codigo = "+codigo+"";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
@@ -162,7 +162,7 @@ public class ContaReceber {
     {
         String sql;
         ArrayList<Integer> lista = new ArrayList<>();
-        sql = "selectt cr_codigo "
+        sql = "select cr_codigo "
                 + " from conta_receber where pe_codigo = "+codigoP+" order by cr_codigo";
                 ResultSet rs=Banco.getCon().consultar(sql);
         try 
@@ -182,7 +182,7 @@ public class ContaReceber {
     public int QtdParcela()
     {
         String sql;
-        sql = "selectt count(*) "
+        sql = "select count(*) "
                 + " from conta_receber where pe_codigo = "+p.getCodigo()+"";
                 ResultSet rs=Banco.getCon().consultar(sql);
         try 

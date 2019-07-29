@@ -988,7 +988,7 @@ public class MovPedido extends javax.swing.JDialog {
 
     private void btnEntregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregarActionPerformed
         flag = true;
-        dcEntrega.setEditable(true);
+        dcEntrega.setEnabled(true);
         sc.Edity(jPanel2.getComponents());
         lbEntrega.setVisible(true);
         dcEntrega.setVisible(true);
@@ -997,10 +997,13 @@ public class MovPedido extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEntregarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        if(m.Pergunta("Deseja Cancelar esse Pedido? \n Observação: O pedido ficara desabilitado!", "Atenção") == JOptionPane.YES_OPTION)
+        if(m.Pergunta("Deseja Cancelar esse Pedido? \n Observação: Não podera ser mais recuperado!", "Atenção") == JOptionPane.YES_OPTION)
         {
             if(pc.excluirPedido(Integer.parseInt(txtCodigo.getText())))
+            {
                 m.InformationMessage("Cancelado com Sucesso!", "Informação");
+                sc.limpar(jPanel1.getComponents());
+            }
             else
                 m.ErroMessage("Erro ao Cancelar! O pedido ja foi entregue!", "Erro");
         }
@@ -1072,8 +1075,17 @@ public class MovPedido extends javax.swing.JDialog {
                             }
                             else
                             {
+                                sc.limpar(jPanel1.getComponents());
+                                sc.limparTabela(jTable1);
+                                sc.limparTabela(jTable2);
+                                sc.HabilityComponents(jPanel1.getComponents(), false);
+                                flag = true;
+                                linha = -1;
+                                pc.clearSequenceNumber();
+                                lbEntrega.setVisible(false);
+                                dcEntrega.setVisible(false);
                                 //Alterar a data da entrega
-                                m.ErroMessage("ERRO2", "ERRO2");
+                                //m.ErroMessage("ERRO2", "ERRO2");
                             }
                         }
                         else
@@ -1123,7 +1135,7 @@ public class MovPedido extends javax.swing.JDialog {
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
         ConsultaMov consPedido = new ConsultaMov(null, true);
-        String[] vet = new String[3];
+        String[] vet = new String[4];
         vet[0] = "Tudo";
         vet[1] = "Data";
         vet[2] = "Periodo";
@@ -1137,6 +1149,8 @@ public class MovPedido extends javax.swing.JDialog {
             consPedido.dispose();
             txtCodigoFocusLost(null);
             sc.Alter(jPanel2.getComponents());
+            jTable1.setEnabled(false);
+            jTable2.setEnabled(false);
         }
         else
         {
@@ -1162,7 +1176,8 @@ public class MovPedido extends javax.swing.JDialog {
                 dcEntrega.setData(pc.getP().getEntrega());
                 cbForma.setSelectedItem(pc.getP().getFp().getNome());
                 pc.carregarTabelaServico(jTable1);
-                pc.carregarTabelaDetalheServico(jTable2, 0);
+                if(pc.existPedioServicoDetalhe())
+                    pc.carregarTabelaDetalheServico(jTable2, 0);
             }
         }
     }//GEN-LAST:event_txtCodigoFocusLost

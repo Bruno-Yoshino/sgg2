@@ -422,7 +422,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             case "Fornecedor": Fornecedor(); break;
             case "AProduto": AProduto(); break;
             case "AFolha": AFolha(); break;
-            case "Cheque": break;
+            case "Cheque": Cheque(); break;
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
