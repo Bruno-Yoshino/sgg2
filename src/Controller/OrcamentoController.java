@@ -4,6 +4,7 @@ import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Cliente;
 import CamadaNegocio.DetalheServico;
 import CamadaNegocio.FormaPagamento;
+import CamadaNegocio.Funcionario;
 import CamadaNegocio.Orcamento;
 import CamadaNegocio.Orcamento_Servico;
 import CamadaNegocio.Orcamento_Servico_Detalhe;
@@ -373,6 +374,17 @@ public class OrcamentoController {
         sequenceOS = 1;
     }
     
+    public void limpaLista()
+    {
+        excluirS = new ArrayList<>();
+        excluirSD = new ArrayList<>();
+        excluirSDCodigo = new ArrayList<>();
+        excluirDetalhes = new ArrayList<>();
+        Funcionario temp = o.getF();
+        o = new Orcamento();
+        o.setF(temp);
+    }
+    
     public boolean gravarOrcamento()
     {
         /**
@@ -456,7 +468,13 @@ public class OrcamentoController {
     
     public boolean excluirOrcamento(int codigo)
     {
-        return new Orcamento_Servico_Detalhe().excluir(codigo) && new Orcamento_Servico().excluir(codigo) && new Orcamento().excluir(codigo);
+        if(o.verificaPedido(codigo))
+        {
+            return false;
+        }
+        new Orcamento_Servico_Detalhe().excluir(codigo);
+        new Orcamento_Servico().excluir(codigo);
+        return new Orcamento().excluir(codigo);
     }
     
     public void buscarDados(int codigo) throws SQLException
@@ -465,7 +483,7 @@ public class OrcamentoController {
         if(temp != null)
         {   
             o = temp;
-            sequenceOS = temp.getLista().get(temp.getLista().size()-1).getSequence();
+            sequenceOS = temp.getLista().get(temp.getLista().size()-1).getSequence() + 1;
         }
         else
             o = new Orcamento();

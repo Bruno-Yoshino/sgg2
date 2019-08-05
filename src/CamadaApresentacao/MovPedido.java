@@ -1003,6 +1003,9 @@ public class MovPedido extends javax.swing.JDialog {
             {
                 m.InformationMessage("Cancelado com Sucesso!", "Informação");
                 sc.limpar(jPanel1.getComponents());
+                sc.limparTabela(jTable1);
+                sc.limparTabela(jTable2);
+                sc.HabilityComponents(jPanel1.getComponents(), false);
             }
             else
                 m.ErroMessage("Erro ao Cancelar! O pedido ja foi entregue!", "Erro");
@@ -1184,10 +1187,10 @@ public class MovPedido extends javax.swing.JDialog {
 
     private void btnOrcamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrcamentoActionPerformed
         ConsultaMov consOrcamento = new ConsultaMov(null, true);
-        String[] vet = new String[3];
+        String[] vet = new String[4];
         vet[0] = "Tudo";
         vet[1] = "Data";
-        vet[2] = "Periodo";
+        vet[2] = "Orçamento";
         vet[3] = "Numero";
         consOrcamento.configuraOpcoes(vet, 4, 0, "Orçamento", false);
         consOrcamento.verificaconsulta(true);

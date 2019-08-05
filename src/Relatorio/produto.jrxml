@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2019-07-30T18:54:27 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="produto" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="abb089eb-cbdd-41f0-a074-b2e82cf98397">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[select * from produto]]>
+	</queryString>
+	<field name="pro_codigo" class="java.lang.Integer"/>
+	<field name="pro_nome" class="java.lang.String"/>
+	<field name="pro_tipo" class="java.lang.String"/>
+	<field name="pro_status" class="java.lang.Boolean"/>
+	<field name="pro_qtd" class="java.lang.Integer"/>
+	<field name="pro_caminho" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="800" height="79" uuid="184a60db-4d8e-4f21-a77e-418c40871a2b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Relatório de Cadastro de Produto]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="120" y="5" width="100" height="30" uuid="3d98c44d-3f08-4993-90ab-f67bc1dcdc20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="5" width="100" height="30" uuid="125b9c9e-1d74-49b7-84b8-df874d103a2d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Código:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="520" y="6" width="100" height="30" uuid="ae0e5c9e-3f94-4a20-b35f-6416d83145dc"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Tipo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="700" y="5" width="100" height="30" uuid="09cd568e-0f09-4616-a8c5-277ffa830fd2"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Status:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="53" splitType="Stretch">
+			<textField>
+				<reportElement x="120" y="0" width="370" height="30" uuid="3458fee2-fb2d-4c23-b8e3-65b12261a857"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pro_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="30" uuid="2fb223ad-90c2-4e56-b10a-d53e94aadc06"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pro_codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="520" y="0" width="100" height="30" uuid="d06f465d-1443-4637-a75d-de25fe463403"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{pro_tipo}.equals("e")) ? "Externo" : "Interno"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="700" y="0" width="100" height="30" uuid="738b5c20-930a-471e-b984-11ad1012cea2"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{pro_status} == true) ? "Ativo" : "Não Ativo"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement x="690" y="0" width="100" height="30" uuid="79d6c836-5da2-4107-914a-b6e0de2e5bde"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

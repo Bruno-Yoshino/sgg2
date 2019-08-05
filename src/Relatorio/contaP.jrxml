@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2019-07-31T21:43:25 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contaP" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="27434883-3336-40a2-9bc3-4eb571c1c3a8">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<queryString language="SQL">
+		<![CDATA[select * from conta_pagar, tipo_conta]]>
+	</queryString>
+	<field name="cp_codigo" class="java.lang.Integer"/>
+	<field name="comp_codigo" class="java.lang.Integer"/>
+	<field name="tc_codigo" class="java.lang.Integer"/>
+	<field name="func_codigo" class="java.lang.Integer"/>
+	<field name="caixa_codigo" class="java.lang.Integer"/>
+	<field name="cp_data" class="java.sql.Date"/>
+	<field name="cp_local" class="java.lang.String"/>
+	<field name="cp_valorc" class="java.lang.Double"/>
+	<field name="cp_dtpago" class="java.sql.Date"/>
+	<field name="cp_valorp" class="java.lang.Double"/>
+	<field name="cp_nparcela" class="java.lang.Integer"/>
+	<field name="cp_datavencimento" class="java.sql.Date"/>
+	<field name="cp_obs" class="java.lang.String"/>
+	<field name="COLUMN_14" class="java.lang.Integer"/>
+	<field name="tc_tipo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="800" height="79" uuid="ed1fd29c-1736-4518-b603-29f923359577"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Contas a Pagar]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="6" width="100" height="30" uuid="044bfd4e-37de-4f51-9e61-ca45f484312b"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Código:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="6" width="100" height="30" uuid="6836740b-79f9-410d-bffb-21edf3b2912b"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Valor:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="423" y="6" width="100" height="30" uuid="da549f87-a051-4636-896a-4e8da514102d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Vencimento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="560" y="6" width="100" height="30" uuid="6e350cb3-0000-4ebe-a5e1-9fba88fd8e16"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Valor Pago:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="700" y="6" width="100" height="30" uuid="071158b1-1066-4a8c-a646-8ae72f1a396f"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Situação:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="6" width="100" height="30" uuid="d3f37833-9acd-4045-851e-938796ba2221"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Tipo:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="106" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="30" uuid="e6619491-1b23-489e-aa59-e99b3831f8d0"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cp_codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="293" y="0" width="100" height="30" uuid="3becfeeb-99d8-4955-a069-8d4ca611cb35"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cp_valorc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="423" y="0" width="100" height="30" uuid="050815df-b11c-4ebf-9acd-cbfc0fe2bea8"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cp_datavencimento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="560" y="0" width="100" height="30" uuid="90d6b271-a37d-4c36-b3d4-048a6d8e69f9"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cp_valorp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="700" y="0" width="100" height="30" uuid="75a93d33-eba7-4506-8b7f-3ca35d04d1fa"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{cp_dtpago} == null) ? "Não Pago" : "Pago"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="50" width="100" height="30" uuid="208fd027-97bb-4823-a5e9-84592048d24d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cp_local}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="50" width="100" height="30" uuid="0ac353ba-f0c6-46aa-913b-ac5d727e12ef"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Local:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="360" y="47" width="440" height="52" uuid="bac01983-d3c3-46fa-8707-d78fd338db2c"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cp_obs}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="260" y="47" width="100" height="30" uuid="430150e1-516e-414a-a462-dc4e2eb60ca3"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[OBS:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="0" width="150" height="30" uuid="7c9134f3-108e-4117-92cb-3059c841a306"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tc_tipo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="690" y="0" width="100" height="30" uuid="87a550b0-76ae-44a0-9de8-d7d1491324c5"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -32,7 +32,7 @@ import util.mensagens;
  * @author 曙
  * @author 漣
  * 
- * Tester 2 2019年07月00日
+ * Tester 2 2019年08月03日
  * @author 織田
  * @author 真田
  * @author 服部
@@ -1036,6 +1036,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
        flag = true;
        linha = -1;
        oc.clearSequenceNumber();
+       oc.limpaLista();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -1246,12 +1247,14 @@ public class MovOrcamneto extends javax.swing.JDialog {
                                     sc.HabilityComponents(jPanel1.getComponents(), false);
                                     //flag = true;
                                     linha = -1;
+                                    oc.limpaLista();
                                     oc.clearSequenceNumber();
+                                    sc.Initialize(jPanel2.getComponents());
                                 }
-                                else
-                                    m.ErroMessage("ERRO", "ERRO3");
-                            else
-                             m.ErroMessage("ERRO", "ERRO2");   
+//                                else
+//                                    m.ErroMessage("ERRO", "ERRO3");
+//                            else
+//                             m.ErroMessage("ERRO", "ERRO2");   
                         }
                         else
                         {
@@ -1269,17 +1272,19 @@ public class MovOrcamneto extends javax.swing.JDialog {
                                 {
                                     m.InformationMessage("Alterado com Sucesso", "Informação");
                                     sc.limpar(jPanel1.getComponents());
+                                    oc.limpaLista();
                                     sc.limparTabela(jTable1);
                                     sc.limparTabela(jTable2);
                                     sc.HabilityComponents(jPanel1.getComponents(), false);
                                     flag = true;
                                     linha = -1;
                                     oc.clearSequenceNumber();
+                                    sc.Initialize(jPanel2.getComponents());
                                 }
-                                else
-                                    m.ErroMessage("ERRO1", "ERRO3");
-                            else
-                             m.ErroMessage("ERRO2", "ERRO2");   
+//                                else
+//                                    m.ErroMessage("ERRO1", "ERRO3");
+//                            else
+//                             m.ErroMessage("ERRO2", "ERRO2");   
                         }
                         else
                         {
@@ -1296,7 +1301,14 @@ public class MovOrcamneto extends javax.swing.JDialog {
         if(m.Pergunta("Deseja excluir esse Orçamento?", "Atenção") == JOptionPane.YES_OPTION)
         {
             if(oc.excluirOrcamento(Integer.parseInt(txtCodigo.getText())))
+            {
                 m.InformationMessage("Excluido com Sucesso!", "Informação");
+                sc.limpar(jPanel1.getComponents());
+                oc.limpaLista();
+                sc.limparTabela(jTable1);
+                sc.limparTabela(jTable2);
+                
+            }
             else
                 m.ErroMessage("Erro ao Excluir! Provavelmente esta sendo usado em Pedido ou em alguma outra Tabela!", "Erro");
         }
@@ -1329,7 +1341,9 @@ public class MovOrcamneto extends javax.swing.JDialog {
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         flag = false;
         sc.HabilityComponents(jPanel1.getComponents(), true);
+        sc.HabilityComponents(jPanel4.getComponents(), false);
         sc.Edity(jPanel2.getComponents());
+        linha = -1;
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusLost

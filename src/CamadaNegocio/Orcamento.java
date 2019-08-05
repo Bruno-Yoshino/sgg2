@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 
 /**
@@ -135,6 +137,22 @@ public class Orcamento {
         return Banco.getCon().manipular(sql); 
     }
     
+    public boolean verificaPedido(int codigo)
+    {//後でPedido とリンクがあるかどうかの確認.
+        String sql = "select * from pedido " +
+                     " WHERE orc_numero="+codigo+";";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try {
+            if(rs.next())
+            {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Orcamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     public final int UltimoCodigo() throws SQLException
     {
         String sql = "select max(orc_numero) from orcamento";
@@ -157,6 +175,7 @@ public class Orcamento {
         {
             temp.setCodigo(rs.getInt(1));
             temp.setCli(new Cliente().buscarCodigo(rs.getInt(2)));
+            temp.setF(new Funcionario().buscarCodigo(rs.getInt(3)));
             temp.setValorTotal(rs.getDouble(4));
             temp.setOrcado(rs.getDate(5));
             temp.setValidade(rs.getDate(6));

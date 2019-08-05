@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2019-07-30T17:53:44 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="servico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="581db10b-488e-4392-9b39-0c1bdd2b9ecb">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[select * from servico]]>
+	</queryString>
+	<field name="serv_codigo" class="java.lang.Integer"/>
+	<field name="serv_nome" class="java.lang.String"/>
+	<field name="serv_status" class="java.lang.Boolean"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="550" height="60" uuid="4d805bf2-29c7-4f17-9035-7925ecee6e8f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Relatório de Cadastro de Servioço]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="478" y="10" width="50" height="20" uuid="d32afb4c-1905-4303-85de-58508653fc06"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Status:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="102" y="10" width="90" height="20" uuid="2c82ca78-d46a-4480-98e5-ef74a0c53695"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="10" width="90" height="20" uuid="27565518-d0e4-4729-af78-b7656ad08deb"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Código:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="102" y="0" width="360" height="30" uuid="4f335292-f3b5-48f8-a08d-fd15c5c3e733"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{serv_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="90" height="30" uuid="3e83b730-f878-454f-8f5b-375f6647cd1e"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{serv_codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="478" y="0" width="74" height="30" uuid="d8ed9978-1061-4244-8d03-c8d34a60d062"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{serv_status} == true) ? "Ativo" : "Não Ativo"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="450" y="1" width="100" height="19" uuid="2e69aa41-b998-4841-900e-1e4b8a654438"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
