@@ -334,6 +334,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel4.setText("Serviço:");
 
+        txtServico.setEditable(false);
         txtServico.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         btnaddServico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo 16.png"))); // NOI18N

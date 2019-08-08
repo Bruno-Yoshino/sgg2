@@ -202,6 +202,20 @@ public class ContaPagar {
         return Banco.getCon().manipular(sql);
     }
     
+    public boolean despesa()
+    {
+        String sql = "update conta_pagar set cp_local = '"+local+"', cp_dtpago = '"+dataP+"', cp_valorp = "+valorP+" where cp_codigo = "+codigo+";";
+        
+        return Banco.getCon().manipular(sql);
+    }
+    
+    public boolean excluir(int codigo)
+    {
+        String sql = "delete form conta_pagar where cp_codigo = "+codigo+";";
+        
+        return Banco.getCon().manipular(sql);
+    }
+    
     public static ResultSet buscarDados()
     {
         String sql = "SELECT cp_codigo, comp_codigo, cp_data, cp_local, cp_valorc, cp_dtpago, cp_valorp, cp_nparcela, tc_codigo, func_codigo, caixa_codigo, cp_datavencimento, cp_obs "
@@ -238,4 +252,6 @@ public class ContaPagar {
         }
         return 0;
     }
+    
+    
 }

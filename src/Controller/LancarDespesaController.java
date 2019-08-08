@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import util.Validacao;
 import util.mensagens;
 
@@ -53,7 +54,7 @@ public class LancarDespesaController
         }
     }
         
-    public int validar(String codigo, String tipo, String conta, String barCode, String valorDoc, Date vencimento, String valorPag, Date pagamento, boolean flag, String banco, String local)
+    public int validar(String codigo, String tipo, String conta, String barCode, String valorDoc, Date vencimento, String valorPag, Date pagamento, boolean flag, String banco, String local, int op)
     {
         String texto = "";
         cp.setCodigo(v.ConverteNumeroInteiro(codigo));
@@ -63,11 +64,11 @@ public class LancarDespesaController
         cp.setValorC(v.ConverteNumeroReal(valorDoc));
         cp.setDataV(vencimento);
         if(!conta.equals(""))
-            texto = texto + "Nome da Conta: "+conta+"\n";
+            texto = texto + "Nome da Conta: "+conta+";\n";
         if(!banco.equals(""))
         {
-            texto = texto + "Boleto referente a Banco: "+banco+"\n";
-            texto = texto + "Codigo de barras: "+barCode+"\n";
+            texto = texto + "Boleto referente a Banco: "+banco+";\n";
+            texto = texto + "Codigo de barras: "+barCode+";\n";
         }
         cp.setLocal(local);
         cp.setValorP(0);
@@ -75,6 +76,10 @@ public class LancarDespesaController
         cp.setObs(texto);
         cp.setDataL(Date.from(Instant.now()));
         cp.setParcela(0);
+        if(op == 3 && v.ValidarDataMenorAtual(vencimento))
+        {
+            return 6;
+        }
         if(flag)
         {
             Integer i;
@@ -275,5 +280,23 @@ public class LancarDespesaController
         jTable.getColumnModel().getColumn(2).setPreferredWidth(150);
         jTable.getColumnModel().getColumn(3).setPreferredWidth(150);
         jTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+    }
+    
+    public void separarString(JTextField txtCodigoBorra, JTextField txtNomeConta)
+    {
+        String[] text = cp.getObs().split(";", 0);
+        String[] temp;
+        if(text.length == 1)
+        {
+            temp = text[0].split(" ", 0);
+            txtNomeConta.setText(temp[1]);
+        }
+        else
+        {
+            temp = text[0].split(" ", 0);
+            txtNomeConta.setText(temp[1]);
+            temp = text[2].split(" ", 0);
+            txtCodigoBorra.setText(temp[1]);
+        }
     }
 }
