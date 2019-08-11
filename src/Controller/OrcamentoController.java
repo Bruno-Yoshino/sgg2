@@ -124,6 +124,20 @@ public class OrcamentoController {
             return 3;
         if(v.ConverteNumeroReal(total) <= 0)
             return 4;
+        if(v.ConverteNumeroReal(custoP) < 0)
+            return 5;
+        if(v.ConverteNumeroReal(custoI) < 0)
+            return 6;
+        if(v.ConverteNumeroReal(custoAca) < 0)
+            return 7;
+        if(v.ConverteNumeroReal(custoArt) < 0)
+            return 8;
+        if(v.ConverteNumeroReal(custoChap) < 0)
+            return 9;
+        if(v.ConverteNumeroReal(custoMdO) < 0)
+            return 10;
+        if(v.ConverteNumeroReal(desconto) < 0)
+            return 11;
         if(linha == -1)
             temp.add(new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, sequenceOS++, new ArrayList<>(), 0));
         else

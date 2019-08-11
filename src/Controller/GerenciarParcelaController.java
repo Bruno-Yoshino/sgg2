@@ -10,6 +10,7 @@ import CamadaNegocio.Compra;
 import CamadaNegocio.ContaPagar;
 import CamadaNegocio.ContaReceber;
 import CamadaNegocio.Pedido;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
@@ -86,7 +87,7 @@ public class GerenciarParcelaController {
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable.getModel();
         par = v.ConverteNumeroInteiro(qtd);
         
-        if(par <= 0)
+        if(par <= 1)
         {
             return 1;
         }
@@ -111,6 +112,9 @@ public class GerenciarParcelaController {
             data
         });
         
+        Date dataT;
+        String strDate;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         for(int i = 2; i <= par; i++)
         {
             if(inter == 0)
@@ -128,10 +132,12 @@ public class GerenciarParcelaController {
                     calendar.add(Calendar.WEEK_OF_MONTH, inter * -1);
                 }
             }
+            dataT = calendar.getTime();
+            strDate = dateFormat.format(dataT);
             model.addRow(new Object[]{
                 i,
                 valor / par,
-                calendar.getTime()
+                strDate
             });
         
         }

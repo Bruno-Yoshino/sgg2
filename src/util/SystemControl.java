@@ -13,6 +13,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 import java.util.logging.Level;
@@ -44,6 +46,30 @@ public class SystemControl
     public SystemControl() {
     }
     
+    public final String DataOnly(Date data)
+    {
+        String strDate;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        strDate = dateFormat.format(data);
+        return strDate;
+    }
+    
+    public final java.sql.Date DateForSql(Date data)
+    {
+        return java.sql.Date.valueOf(DataOnly(data));
+    }
+    
+    public final Date StringDate(String strData)
+    {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try 
+        {
+            return dateFormat.parse(strData);
+        } catch (ParseException ex) {
+            Logger.getLogger(SystemControl.class.getName()).log(Level.SEVERE, null, ex);
+            return Date.from(Instant.now());
+        }
+    }
     
     public final void HabilityComponents(Component c[], boolean flag)
     {

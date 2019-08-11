@@ -391,25 +391,25 @@ public class MovOrcamneto extends javax.swing.JDialog {
             }
         });
 
-        jLabel17.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel17.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel17.setText("Custo Papel:");
 
-        jLabel18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel18.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel18.setText("Custo Arte:");
 
-        jLabel19.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel19.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel19.setText("Custo Impressão:");
 
-        jLabel20.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel20.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel20.setText("Custo Acabamento:");
 
-        jLabel21.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel21.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel21.setText("Custo Chapa:");
 
-        jLabel22.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel22.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel22.setText("Custo Mão de Obra:");
 
-        jLabel23.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel23.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel23.setText("Desconto:");
 
         LCodigoServi.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -1123,6 +1123,13 @@ public class MovOrcamneto extends javax.swing.JDialog {
          case 2: m.InformationMessage("Informe a Quantidade!", "Atenção"); spQtd.requestFocus(); break;
          case 3: m.InformationMessage("Informe o Valor!", "Atenção"); txtValor.requestFocus(); break;
          case 4: m.InformationMessage("Informe os Valores!", "Atenção"); break;
+         case 5: m.InformationMessage("Custo do papel deve ser maior ou igual a 0!", "Atenção"); txtCustoP.requestFocus(); break;
+         case 6: m.InformationMessage("Custo da Impressão deve ser maior ou igual a 0!", "Atenção"); txtCustoI.requestFocus(); break;
+         case 7: m.InformationMessage("Custo do acabamento deve ser maior ou igual a 0!", "Atenção"); txtCustoAcab.requestFocus(); break;
+         case 8: m.InformationMessage("Custo da arte deve ser maior ou igual a 0!", "Atenção"); txtCustoArt.requestFocus(); break;
+         case 9: m.InformationMessage("Custo da chapa deve ser maior ou igual a 0!", "Atenção"); txtCustoChap.requestFocus(); break;
+         case 10: m.InformationMessage("Custo da mão de obra deve ser maior ou igual a 0!", "Atenção"); txtCustoMdO.requestFocus(); break;
+         case 11: m.InformationMessage("Desconto deve ser maior ou igual a 0!", "Atenção"); txtDesconto.requestFocus(); break;
          default: 
              oc.addTabelaServico(jTable1, linha);
              txtValorT.setText(""+oc.calculoTotal(jTable1));
