@@ -50,7 +50,7 @@ public class GerenciarParcela extends javax.swing.JDialog {
         gpc.setC(c);
         gpc.setCp(cp);
         gpc.setP(p);
-        txtQtdP.setText("1");
+        txtQtdP.setText("2");
         txtIntervalo.setText("0");
         if(c != null)
         {

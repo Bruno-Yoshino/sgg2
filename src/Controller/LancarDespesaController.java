@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import util.SystemControl;
 import util.Validacao;
 import util.mensagens;
 
@@ -28,11 +29,13 @@ import util.mensagens;
 public class LancarDespesaController 
 {
     private ContaPagar cp;
+    private SystemControl sc;
     private final util.Validacao v = new Validacao(); 
     private final util.mensagens m = new mensagens(); 
 
     public LancarDespesaController() {
         this.cp = new ContaPagar();
+        sc = new SystemControl();
     }
 
     public ContaPagar getCp() {
@@ -76,21 +79,29 @@ public class LancarDespesaController
         cp.setObs(texto);
         cp.setDataL(Date.from(Instant.now()));
         cp.setParcela(0);
+        if(vencimento == null)
+        {
+            return 7;
+        }
+        
         if(op == 3 && v.ValidarDataMenorAtual(vencimento))
         {
             return 6;
         }
+        
         if(flag)
         {
             Integer i;
-            String var2 = valorPag.replaceAll("\\.", "");
-            var2 = var2.replace(',', '.');
-            cp.setValorP(v.ConverteNumeroReal(var2));
+            cp.setValorP(v.ConverteNumeroReal(valorPag));
             cp.setDataP(pagamento);
-            if(v.ConverteNumeroReal(var2) <= 0)
+            
+            if(pagamento == null)
+                return 8;
+                
+            if(v.ConverteNumeroReal(valorPag) <= 0)
                 return 2;
             
-            if(v.ConverteNumeroReal(valorDoc) < v.ConverteNumeroReal(var2))
+            if(v.ConverteNumeroReal(valorDoc) < v.ConverteNumeroReal(valorPag))
             {
                 i = m.Pergunta("O valor pago é maior! Deseja Continuar?", "Atenção");
                 if(null == i)
@@ -106,7 +117,7 @@ public class LancarDespesaController
                 }
             }
             
-            if(v.ConverteNumeroReal(var2) < v.ConverteNumeroReal(valorDoc))
+            if(v.ConverteNumeroReal(valorPag) < v.ConverteNumeroReal(valorDoc))
             {
                 if(m.Pergunta("O valor pago é menor! Deseja Continuar?", "Atenção") == JOptionPane.NO_OPTION)
                     return 3;

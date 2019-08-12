@@ -29,7 +29,7 @@ public class MovPagarContas extends javax.swing.JDialog {
     public MovPagarContas(java.awt.Frame parent, boolean modal, Funcionario func) {
         super(parent, modal);
         initComponents();
-        
+        setLocationRelativeTo(null);
         btnAlterar.setName("btnAlterar");
         btnCancelar.setName("btnCancelar");
         btnGravar.setName("btnGravar");

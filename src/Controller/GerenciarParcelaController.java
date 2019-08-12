@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import util.SystemControl;
 import util.Validacao;
 import util.mensagens;
 
@@ -36,12 +37,14 @@ public class GerenciarParcelaController {
     private ContaPagar cp;
     private Pedido p;
     private ContaReceber cr;
+    private SystemControl sc;
     private final util.Validacao v = new Validacao(); 
     private final util.mensagens m = new mensagens(); 
     
     public GerenciarParcelaController() {
         cp = new ContaPagar();
         cr = new ContaReceber();
+        sc = new SystemControl();
     }
 
     public Compra getC() {
@@ -106,15 +109,18 @@ public class GerenciarParcelaController {
         {
             temp = valor;
         }
-        model.addRow(new Object[]{
-            1,
-            temp,
-            data
-        });
-        
         Date dataT;
         String strDate;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        dataT = calendar.getTime();
+        strDate = dateFormat.format(data);
+        model.addRow(new Object[]{
+            1,
+            temp,
+            strDate
+        });
+        
+
         for(int i = 2; i <= par; i++)
         {
             if(inter == 0)
@@ -208,12 +214,12 @@ public class GerenciarParcelaController {
         if(p != null)
         {
             cr.setValor((Double) model.getValueAt(0, 1));
-            cr.setDataV((Date) model.getValueAt(0, 2));
+            cp.setDataV(sc.StringDate(String.valueOf(model.getValueAt(0, 2))));
             x = cr.gravar();
             for (int i = 1; i < model.getRowCount() && x; i++) 
             {
                 cr.setValor((Double) model.getValueAt(i, 1));
-                cr.setDataV((Date) model.getValueAt(i, 2));
+                cr.setDataV(sc.StringDate(String.valueOf(model.getValueAt(i, 2))));
                 x = cr.gravar();
             }
             return x;
@@ -229,13 +235,15 @@ public class GerenciarParcelaController {
         }
         cp.setParcela(0);
         cp.setValorC(v.ConverteNumeroReal(model.getValueAt(0, 1)));
-        cp.setDataV((Date) model.getValueAt(0, 2));
+        //cp.setDataV((Date) model.getValueAt(0, 2));
+        cp.setDataV(sc.StringDate(String.valueOf(model.getValueAt(0, 2))));
+        cp.setDataP(null);
         x = cp.gravar();
         cp.setParcela(cp.maxCodigo());
         for (int i = 1; i < model.getRowCount() && x; i++) 
         {
             cp.setValorC((Double) model.getValueAt(i, 1));
-            cp.setDataV((Date) model.getValueAt(i, 2));
+            cp.setDataV(sc.StringDate(String.valueOf(model.getValueAt(i, 2))));
             x = cp.gravar();
         }
         return x;

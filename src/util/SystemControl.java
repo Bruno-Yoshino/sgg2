@@ -61,7 +61,7 @@ public class SystemControl
     
     public final Date StringDate(String strData)
     {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         try 
         {
             return dateFormat.parse(strData);

@@ -84,7 +84,6 @@ public class MovDespesa extends javax.swing.JDialog {
         dcDataVencimento = new br.com.marciorl.beans.DateChooser();
         dcDataPagamento = new br.com.marciorl.beans.DateChooser();
         labelTexto1 = new javax.swing.JLabel();
-        txtValorPago = new javax.swing.JTextField();
         labelBanco = new javax.swing.JLabel();
         txtLocal = new javax.swing.JTextField();
         labelTexto2 = new javax.swing.JLabel();
@@ -93,6 +92,7 @@ public class MovDespesa extends javax.swing.JDialog {
         rbOp2 = new javax.swing.JRadioButton();
         rbOp3 = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
+        txtValorPago = new br.com.ikeda.beans.jTextFieldMonetario();
         jPanel2 = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
@@ -167,8 +167,6 @@ public class MovDespesa extends javax.swing.JDialog {
 
         labelTexto1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         labelTexto1.setText("Valor Pago:");
-
-        txtValorPago.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         labelBanco.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         labelBanco.setText(" ");
@@ -449,6 +447,10 @@ public class MovDespesa extends javax.swing.JDialog {
             txtLocal.setVisible(true);
             labelTexto3.setVisible(true);
             dcDataPagamento.setVisible(true);
+            rbOp1.setEnabled(false);
+            rbOp2.setEnabled(false);
+            rbOp3.setEnabled(false);
+            dcDataVencimento.setEnabled(false);
         }
         else
         {
@@ -460,6 +462,10 @@ public class MovDespesa extends javax.swing.JDialog {
             txtLocal.setVisible(false);
             labelTexto3.setVisible(false);
             dcDataPagamento.setVisible(false);
+            rbOp1.setEnabled(true);
+            rbOp2.setEnabled(true);
+            rbOp3.setEnabled(true);
+            dcDataVencimento.setEnabled(true);
         }
     }//GEN-LAST:event_cbOpActionPerformed
 
@@ -479,6 +485,7 @@ public class MovDespesa extends javax.swing.JDialog {
         sc.Edity(jPanel2.getComponents());
         sc.HabilityComponents(jPanel1.getComponents(), true);
         rbOp1.setSelected(true);
+        rbOp1ActionPerformed(null);
         op = 1;
     }//GEN-LAST:event_btnNovoActionPerformed
 
@@ -513,6 +520,11 @@ public class MovDespesa extends javax.swing.JDialog {
                 break;
             case 6:
                 m.InformationMessage("Data de vencimento não pode ser moneor que hoje!", "Atenção"); dcDataVencimento.requestFocus(); break;
+            case 7:
+                m.InformationMessage("Informe a data de Vencimento!", "Atenção"); dcDataVencimento.requestFocus(); break;
+            case 8:
+                m.InformationMessage("Informe a data do pagamento!", "Atenção"); dcDataPagamento.requestFocus(); break;
+            
             default: 
                 if(op == 2)
                 {
@@ -522,15 +534,27 @@ public class MovDespesa extends javax.swing.JDialog {
                         {
                             sc.limpar(jPanel1.getComponents());
                             sc.Initialize(jPanel2.getComponents());
+                            sc.HabilityComponents(jPanel1.getComponents(), false);
+                            rbOp1.setSelected(true);
+                            rbOp1ActionPerformed(null);
                         }
                 }
                 else
                 {
                     //gravar Direto
-                    sc.limpar(jPanel1.getComponents());
-                    sc.Initialize(jPanel2.getComponents());
-                    rbOp1.setSelected(true);
-                    rbOp1ActionPerformed(null);
+                    if(ldc.gravar())
+                    {
+                        m.InformationMessage("Gravado com sucesso", "Informação");
+                        sc.limpar(jPanel1.getComponents());
+                        sc.Initialize(jPanel2.getComponents());
+                        sc.HabilityComponents(jPanel1.getComponents(), false);
+                        rbOp1.setSelected(true);
+                        rbOp1ActionPerformed(null);
+                    }
+                    else
+                    {
+                        m.ErroMessage("Erro", "Erro");
+                    }
                 }
         }
     }//GEN-LAST:event_btnGravarActionPerformed
@@ -651,6 +675,6 @@ public class MovDespesa extends javax.swing.JDialog {
     private javax.swing.JTextField txtLocal;
     private javax.swing.JTextField txtNome;
     private br.com.ikeda.beans.jTextFieldMonetario txtValor;
-    private javax.swing.JTextField txtValorPago;
+    private br.com.ikeda.beans.jTextFieldMonetario txtValorPago;
     // End of variables declaration//GEN-END:variables
 }
