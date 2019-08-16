@@ -310,4 +310,15 @@ public class LancarDespesaController
             txtCodigoBorra.setText(temp[1]);
         }
     }
+    
+    public boolean checarContaPaga()
+    {
+        return cp.verificaPago();
+    }
+    
+    public boolean excluir()
+    {
+        return cp.excluir(cp.getCodigo());
+    }
+                    
 }

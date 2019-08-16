@@ -282,9 +282,10 @@ public class Producao
     
     public static ResultSet carregarServico(int codigoP)
     {
-        String query = "SELECT s.serv_nome, p.pe_codigo, p.ps_sequence "
-                     + " FROM producao p, servico s "
-                     + " WHERE p.prod_codigo = "+codigoP+" and p.serv_codigo = s.serv_codigo ";
+        String query = "SELECT s.serv_nome, p.pe_codigo, p.ps_sequence, ps.ps_descricao "
+                     + " FROM producao p, servico s, pedido_servico ps "
+                     + " WHERE p.prod_codigo = "+codigoP+" and p.serv_codigo = s.serv_codigo "
+                     + " and p.pe_codigo = ps.pe_codigo and p.serv_codigo = ps.serv_codigo ";
         return Banco.getCon().retornaResultSet(query);
     }
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CamadaApresentacao;
 
 import CamadaLogica.ReadOnlyTableModel;
@@ -310,7 +305,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
         jla.setVisible(false);
         txtCNPJ.setVisible(false);
         txtCPF.setVisible(false);
-        if(nome.equals("Data"))
+        if(nome.contains("Data"))
         {
             txtValor.setVisible(false);
             dateInicio.setVisible(true);
@@ -319,7 +314,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
         }
         else
         {
-            if(nome.equals("Periodo"))
+            if(nome.contains("Periodo"))
             {
                 txtValor.setVisible(false);
                 dateInicio.setVisible(true);
@@ -363,10 +358,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
         }
     }
     
-    /*        vet[0] = "Código";
-        vet[1] = "Nome";
-        vet[2] = "CPF";
-        vet[3] = "CNPJ";*/
+
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         if (evt.getClickCount() == 2)
         {
@@ -423,6 +415,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             case "AProduto": AProduto(); break;
             case "AFolha": AFolha(); break;
             case "Cheque": Cheque(); break;
+            case "CLancarDespesa": CLancarDespesa(); break;
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
@@ -563,7 +556,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             while (rs.next())
             {
                 model.addRow(new Object[]
-                {//pro_codigo, pro_nome, pro_tipo, pro_status, pro_caminho
+                {
                     rs.getInt(1), 
                     rs.getString(2),
                     rs.getString(3).charAt(0) == 'i' ? "Interno" : "Externo",
@@ -589,7 +582,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             while (rs.next())
             {
                 model.addRow(new Object[]
-                {//pro_codigo, pro_nome, pro_tipo, pro_status, pro_caminho
+                {
                     rs.getInt(1), 
                     rs.getString(2),
                     rs.getString(3).charAt(0) == 'i' ? "Interno" : "Externo",
@@ -615,7 +608,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             while (rs.next())
             {
                 model.addRow(new Object[]
-                {//"Código", "Descricao", "Status"}
+                {
                     rs.getInt(1), 
                     rs.getString(2),
                     rs.getBoolean(3) ? "Ativo" : "Não Ativo"
@@ -640,7 +633,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             while (rs.next())
             {
                 model.addRow(new Object[]
-                {//"Código", "Nome", "Status"}
+                {
                     rs.getInt(1), 
                     rs.getString(2),
                     rs.getBoolean(3) ? "Ativo" : "Não Ativo"
@@ -665,7 +658,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             while (rs.next())
             {
                 model.addRow(new Object[]
-                {//"Código", "Nome", "Status"}
+                {
                     rs.getInt(1), 
                     rs.getString(2),
                     rs.getBoolean(3) ? "Ativo" : "Não Ativo"
@@ -693,7 +686,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             else
                 rs = Funcionario.buscarDados(txtValor.getText(), tipo);
             while (rs.next())
-            {//"Código", "Nome", "CPF", "Telefone", "Celular", "Data Adimicao", "Data Demição"
+            {
                 model.addRow(new Object[]
                 {
                     rs.getInt(1), 
@@ -721,13 +714,8 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             Fornecedor.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             rs = Fornecedor.buscarDados(txtValor.getText(), tipo);
-            /*
-            forn_codigo, forn_cid, forn_nome, "
-                        + "forn_telefone, "
-                        + "forn_celular, forn_email
-            */
             while (rs.next())
-            {//"Código", "Nome", "Telefone", "Celular", "E-mail"
+            {
                 model.addRow(new Object[]
                 {
                     rs.getInt(1), 
@@ -761,9 +749,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                 default: rs = Cliente.buscarDados(txtValor.getText(), tipo, cbFlagCliente.isSelected()); 
             }
             while (rs.next())
-            {//"Código", "Nome", "CPF/CNPJ", "Telefone", "Celular", "Enderecço", "Numero", "Complemento", "Status"
-                //c.cli_codigo, c.cli_nome, f.cli_cpf, j.cli_cnpj, 
-                //c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero, c.cli_complemento
+            {
                 model.addRow(new Object[]
                 {
                     rs.getInt(1), 
@@ -818,9 +804,9 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             rs = Cheque.buscarDados(txtValor.getText(), tipo);
             while (rs.next())
-            {//c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata,
+            {
                 model.addRow(new Object[]
-                {//"Código", "Dono", "CPF", "Valor", "Data Lançado", "Pré Data"
+                {
                     rs.getInt(1), 
                     rs.getString(3),
                     rs.getString(4),
@@ -830,6 +816,34 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                 });
             }
         } 
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void CLancarDespesa() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            Cheque.configuraModel(jTable1);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            rs = Cheque.buscarDados(txtValor.getText(), tipo);
+            while (rs.next())
+            {
+                model.addRow(new Object[]
+                {
+                    rs.getInt(1), 
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getDouble(5),
+                    rs.getDate(6),
+                    rs.getDate(7)
+                });
+            }
+        }
         catch (SQLException sqlEmp)
         {
             System.out.println("Erro: \n" + sqlEmp.toString());

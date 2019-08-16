@@ -5,6 +5,7 @@ import Controller.LancarDespesaController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import util.SystemControl;
 import util.mensagens;
 
@@ -30,7 +31,7 @@ public class MovDespesa extends javax.swing.JDialog {
     private final SystemControl sc = new SystemControl();
     private final mensagens m = new mensagens();
     private final LancarDespesaController ldc = new LancarDespesaController();
-    private int op;
+    private int op, flag;
     
     public MovDespesa(java.awt.Frame parent, boolean modal, Funcionario func) throws SQLException {
         super(parent, modal);
@@ -487,6 +488,7 @@ public class MovDespesa extends javax.swing.JDialog {
         rbOp1.setSelected(true);
         rbOp1ActionPerformed(null);
         op = 1;
+        flag = 1;
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -526,8 +528,10 @@ public class MovDespesa extends javax.swing.JDialog {
                 m.InformationMessage("Informe a data do pagamento!", "Atenção"); dcDataPagamento.requestFocus(); break;
             
             default: 
-                if(op == 2)
+                if(flag == 1)
                 {
+                     if(op == 2)
+                    {
                         GerenciarParcela frm = new GerenciarParcela(null, true, ldc.getCp(), null, null);
                         frm.setVisible(true);
                         if(frm.isFlag())
@@ -538,40 +542,34 @@ public class MovDespesa extends javax.swing.JDialog {
                             rbOp1.setSelected(true);
                             rbOp1ActionPerformed(null);
                         }
-                }
-                else
-                {
-                    //gravar Direto
-                    if(ldc.gravar())
-                    {
-                        m.InformationMessage("Gravado com sucesso", "Informação");
-                        sc.limpar(jPanel1.getComponents());
-                        sc.Initialize(jPanel2.getComponents());
-                        sc.HabilityComponents(jPanel1.getComponents(), false);
-                        rbOp1.setSelected(true);
-                        rbOp1ActionPerformed(null);
                     }
                     else
                     {
-                        m.ErroMessage("Erro", "Erro");
+                        //gravar Direto
+                        if(ldc.gravar())
+                        {
+                            m.InformationMessage("Gravado com sucesso", "Informação");
+                            sc.limpar(jPanel1.getComponents());
+                            sc.Initialize(jPanel2.getComponents());
+                            sc.HabilityComponents(jPanel1.getComponents(), false);
+                            rbOp1.setSelected(true);
+                            rbOp1ActionPerformed(null);
+                        }
+                        else
+                        {
+                            m.ErroMessage("Erro", "Erro");
+                        }
                     }
+                }
+                else
+                {
+                    // Alterar はここで！
                 }
         }
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void txtCodBarraFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodBarraFocusGained
-//        if(txtCodBarra.getText().trim().length() == 3)
-//        {
-//            String texto, temp;
-//            texto = txtCodBarra.getText();
-//            temp = sc.BankCheck(texto);
-//            if(temp.equals("Desconhecido"))
-//            {
-//                texto = "" + texto.charAt(0) + texto.charAt(1);
-//                temp = sc.BankCheck(texto);
-//            }
-//            labelBanco.setText(temp);
-//        }
+
     }//GEN-LAST:event_txtCodBarraFocusGained
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -623,13 +621,35 @@ public class MovDespesa extends javax.swing.JDialog {
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        
-        rbOp1.setSelected(true);
-        rbOp1ActionPerformed(null);
+        if(m.Pergunta("Deseja excluir essa Despesa?", "Atenção") == JOptionPane.YES_OPTION)
+        {
+            if(!ldc.checarContaPaga())
+            {
+                if(ldc.excluir())
+                {
+                    m.InformationMessage("Excluido com sucesso!", "Informação");
+                    rbOp1.setSelected(true);
+                    rbOp1ActionPerformed(null);
+                }
+                else
+                    m.ErroMessage("Erro", "Erro");
+
+            }
+            else
+            {
+                m.WarmingMessage("A conta ja foi paga!", "Atenção");
+            }
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        // TODO add your handling code here:
+        sc.HabilityComponents(jPanel1.getComponents(), true);
+        sc.Edity(jPanel2.getComponents());
+        ldc.separarString(txtCodBarra, txtLocal);
+        rbOp1.setEnabled(false);
+        rbOp2.setEnabled(false);
+        rbOp3.setEnabled(false);
+        flag = 2;
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusLost

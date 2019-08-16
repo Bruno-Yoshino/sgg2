@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import CamadaNegocio.AjustarFolha;
@@ -20,8 +15,8 @@ import util.Validacao;
  */
 public class AjusteFolhaController 
 {
-    private Funcionario func;    
-    private Servico serv;
+    private final Funcionario func;    
+    private final Servico serv;
     private final util.Validacao v;
     private AjustarFolha af;
 
@@ -85,5 +80,12 @@ public class AjusteFolhaController
         AtualizarEstoqueController aec = new AtualizarEstoqueController();
         aec.setF(af.getF());
         aec.atualizarEstoqueFolha(af.isFlag(), af.getQtd());
+    }
+    
+    public int QtdReservado()
+    {
+        ProducaoController pc = new ProducaoController();
+        pc.setF(af.getF());
+        return new ProducaoController().qtdReservaF();
     }
 }

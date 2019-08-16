@@ -211,7 +211,7 @@ public class ClienteController {
     
     public void CarregaCidade(JComboBox c, String uf)
     {
-        c.removeAll();
+        c.removeAllItems();
         ArrayList<Cidade> lista;
         lista = cid.buscarPEstado(uf);
         for(int i = 0; i < lista.size(); i++)
@@ -223,9 +223,8 @@ public class ClienteController {
     
     public int buscaCodigoCidade(String cid, String uf)
     {
-        //return 0;
         return this.cid.buscarPCidadeEstado(cid, uf).getCodigo();
-    }
+    }   
     
     public Cliente buscaClienteCodigo(int codigo)
     {

@@ -3,7 +3,6 @@ package CamadaNegocio;
 import CamadaLogica.Banco;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Instant;
 import java.util.Date;
 
 /**
@@ -248,9 +247,27 @@ public class ContaPagar {
         catch (SQLException e) 
         {
             System.out.println(e.getMessage());
-            return 0;
         }
         return 0;
+    }
+    
+    public boolean verificaPago()
+    {
+        String sql = "select cp_codigo from conta_pagar "
+                   + " where cp_codigo = "+codigo+"";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return true;
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
     
     

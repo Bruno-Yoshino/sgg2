@@ -51,6 +51,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
         btnLocalizar.setName("btnLocalizar");
         btnaddCidade.setName("btnaddCidade");
         btnSair.setName("btnSair");
+        jLNivelAtual.setVisible(false);
         if(firstAccess)
         {
             sc.HabilityComponents(jPanel1.getComponents(), true);
@@ -1066,7 +1067,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
         txtCaminho.setText(""); 
         txtCep.setText("");
         txtCodCid.setText("");
-        
+        jLNivelAtual.setText("");
         cbCadastro.setSelected(false);
         cbConsulta.setSelected(false);
         cbMovimentacao.setSelected(false);

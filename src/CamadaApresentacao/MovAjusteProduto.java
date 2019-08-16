@@ -432,7 +432,7 @@ public class MovAjusteProduto extends javax.swing.JDialog {
             apc.buscaProduto(consP.getCodigo());
             consP.dispose();
             txtProduto.setText(apc.getAp().getP().getNome());
-            txtQtdAtual.setText(""+apc.getAp().getP().getQtd());
+            txtQtdAtual.setText(""+(apc.getAp().getP().getQtd() - apc.QtdReservado()));
         }
         else
         {

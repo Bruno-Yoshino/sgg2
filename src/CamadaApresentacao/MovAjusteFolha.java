@@ -438,7 +438,7 @@ public class MovAjusteFolha extends javax.swing.JDialog
             afc.buscaFolha(consFolha.getCodigo());
             consFolha.dispose();
             txtTamnho.setText(afc.getAf().getF().getTamanho()+ "/" +afc.getAf().getF().getDescricao());
-            txtQtdAtual.setText(""+afc.getAf().getF().getQtd());
+            txtQtdAtual.setText(""+(afc.getAf().getF().getQtd() - afc.QtdReservado()));
         }
         else
         {
