@@ -200,10 +200,11 @@ public class ContaPagar {
         
         return Banco.getCon().manipular(sql);
     }
-    
-    public boolean despesa()
+        
+    public boolean alterarDespesa()
     {
-        String sql = "update conta_pagar set cp_local = '"+local+"', cp_dtpago = '"+dataP+"', cp_valorp = "+valorP+" where cp_codigo = "+codigo+";";
+        String sql = "update conta_pagar set cp_datavencimento = '"+dataV+"', cp_valorc = "+valorC+", tc_codigo = "+tc.getCodigo()+", func_codigo = "+func.getCodigo()+", cp_obs = '"+obs+"' "
+                   + "where cp_codigo = "+codigo+";";
         
         return Banco.getCon().manipular(sql);
     }

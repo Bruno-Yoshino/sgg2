@@ -148,6 +148,11 @@ public class LancarDespesaController
         return cp.gravar();
     }
     
+    public boolean alterarDespesa()
+    {
+        return cp.alterarDespesa();
+    }
+    
     public boolean SeocndInserting(String valor, String valorP)
     {
         int add = 0;

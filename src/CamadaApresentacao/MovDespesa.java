@@ -563,7 +563,20 @@ public class MovDespesa extends javax.swing.JDialog {
                 }
                 else
                 {
-                    // Alterar はここで！
+                        if(ldc.alterarDespesa())
+                        {
+                            m.InformationMessage("Alterado com sucesso", "Informação");
+                            sc.limpar(jPanel1.getComponents());
+                            sc.Initialize(jPanel2.getComponents());
+                            sc.HabilityComponents(jPanel1.getComponents(), false);
+                            rbOp1.setSelected(true);
+                            rbOp1ActionPerformed(null);
+                            flag = 1;
+                        }
+                        else
+                        {
+                            m.ErroMessage("ErroA", "ErroA");
+                        }
                 }
         }
     }//GEN-LAST:event_btnGravarActionPerformed
