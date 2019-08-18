@@ -304,15 +304,15 @@ public class LancarDespesaController
         String[] temp;
         if(text.length == 1)
         {
-            temp = text[0].split(" ", 0);
-            txtNomeConta.setText(temp[1]);
+            temp = text[0].split(":", 0);
+            txtNomeConta.setText(temp[1].trim());
         }
         else
         {
-            temp = text[0].split(" ", 0);
-            txtNomeConta.setText(temp[1]);
-            temp = text[2].split(" ", 0);
-            txtCodigoBorra.setText(temp[1]);
+            temp = text[0].split(":", 0);
+            txtNomeConta.setText(temp[1].trim());
+            temp = text[2].split(":", 0);
+            txtCodigoBorra.setText(temp[1].trim());
         }
     }
     
@@ -325,5 +325,16 @@ public class LancarDespesaController
     {
         return cp.excluir(cp.getCodigo());
     }
-                    
+    
+    public ContaPagar buscar(String codigo)
+    {
+        ContaPagar TempCp = new ContaPagar().buscarDados(codigo);
+        if(TempCp == null)
+            return null;
+        else
+        {
+            cp = TempCp;
+            return cp;
+        }
+    }
 }

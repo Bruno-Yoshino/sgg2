@@ -25,6 +25,14 @@ import util.mensagens;
  * @author 海流
  * @author 伊弉冉
  * @author 伊弉諾
+ * 
+ * Tester 2019/08/   テストスタンバイ。
+ * @author 吉野　廉
+ * @author 羽根川　翼
+ * @author 海星
+ * @author 海流
+ * @author 伊弉冉
+ * @author 伊弉諾
  */
 public class MovDespesa extends javax.swing.JDialog {
 
@@ -49,6 +57,7 @@ public class MovDespesa extends javax.swing.JDialog {
         btnaddTipo.setName("btnaddTipo");
         btnSair.setName("btnSair");
         
+        labelBanco.setVisible(false);
         
         sc.HabilityComponents(jPanel1.getComponents(), false);
         sc.Initialize(jPanel2.getComponents()); 
@@ -138,9 +147,6 @@ public class MovDespesa extends javax.swing.JDialog {
 
         txtCodBarra.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtCodBarra.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCodBarraFocusGained(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCodBarraFocusLost(evt);
             }
@@ -581,10 +587,6 @@ public class MovDespesa extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnGravarActionPerformed
 
-    private void txtCodBarraFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodBarraFocusGained
-
-    }//GEN-LAST:event_txtCodBarraFocusGained
-
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
@@ -630,7 +632,25 @@ public class MovDespesa extends javax.swing.JDialog {
     }//GEN-LAST:event_rbOp3ActionPerformed
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
-        // TODO add your handling code here:
+        ConsultaPadrao consDespesa = new ConsultaPadrao(null, true);
+        String[] vet = new String[2];
+        vet[0] = "Data vencimento";
+        vet[1] = "Periodo vencimento";
+        consDespesa.configuraOpcoes(vet, 2, 1, "CLancarDespesa", false);
+        consDespesa.verificaconsulta(true);
+        consDespesa.setVisible(true);
+        if (consDespesa.getCodigo() != 0)
+        {
+            txtCodigo.setText(String.valueOf(consDespesa.getCodigo()));
+            consDespesa.dispose();
+            txtCodigoFocusLost(null);
+            sc.Alter(jPanel2.getComponents());
+        }
+        else
+        {
+            consDespesa.dispose();
+            btnLocalizar.requestFocus();
+        }
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -663,10 +683,20 @@ public class MovDespesa extends javax.swing.JDialog {
         rbOp2.setEnabled(false);
         rbOp3.setEnabled(false);
         flag = 2;
+        cbOp.setEnabled(false);
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusLost
-        // TODO add your handling code here:
+        if(!txtCodigo.getText().equals("0"))
+        {
+            if(ldc.buscar(txtCodigo.getText()) != null)
+            {
+                 ldc.separarString(txtCodBarra, txtNome);
+                 txtValor.setText(""+sc.verificaValor(String.valueOf(ldc.getCp().getValorC())));
+                 cbTipo.setSelectedItem(ldc.getCp().getTc().getTipo());
+                 dcDataVencimento.setData(ldc.getCp().getDataV());
+            }
+        }
     }//GEN-LAST:event_txtCodigoFocusLost
 
     private void carregaTipo() throws SQLException

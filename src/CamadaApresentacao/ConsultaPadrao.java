@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
+import util.SystemControl;
 
 /**
  *
@@ -28,6 +29,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
      */
     private int codigo;    
     private String[] vetOpcoes = new String[20];
+    private SystemControl  sc = new SystemControl();
     private int tl;
     private String tabela;
     private int posDefault;
@@ -811,8 +813,8 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                     rs.getString(3),
                     rs.getString(4),
                     rs.getDouble(5),
-                    rs.getDate(6),
-                    rs.getDate(7)
+                    sc.DataOnly(rs.getDate(6)),
+                    sc.DataOnly(rs.getDate(7))
                 });
             }
         } 
@@ -828,19 +830,20 @@ public class ConsultaPadrao extends javax.swing.JDialog {
         {
             ResultSet rs;
             int tipo = cbOpcao.getSelectedIndex();
-            Cheque.configuraModel(jTable1);
+            ContaPagar.configuraModelCLD(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
-            rs = Cheque.buscarDados(txtValor.getText(), tipo);
+            rs = ContaPagar.buscarDadosCLD(dateInicio.getData(), dateFim.getData(), tipo);
             while (rs.next())
             {
+                //"Código", "Valor da Conta", "Data Vencimento", "Obs"
+                //   1             5                  12           13
+                //cp_codigo, comp_codigo, cp_data, cp_local, cp_valorc, cp_dtpago, cp_valorp, cp_nparcela, tc_codigo, func_codigo, caixa_codigo, cp_datavencimento, cp_obs
                 model.addRow(new Object[]
                 {
                     rs.getInt(1), 
-                    rs.getString(3),
-                    rs.getString(4),
                     rs.getDouble(5),
-                    rs.getDate(6),
-                    rs.getDate(7)
+                    sc.DataOnly(rs.getDate(12)),
+                    rs.getString(13)
                 });
             }
         }

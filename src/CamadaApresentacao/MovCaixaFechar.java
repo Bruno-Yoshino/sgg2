@@ -141,9 +141,6 @@ public class MovCaixaFechar extends javax.swing.JDialog {
 
         txtValorCaixa.setText("jTextFieldMonetario1");
         txtValorCaixa.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtValorCaixaFocusGained(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtValorCaixaFocusLost(evt);
             }
@@ -385,9 +382,9 @@ public class MovCaixaFechar extends javax.swing.JDialog {
         else
         {
             cc.buscarCaixa();
-            txtDataFechado.setText(""+ Date.from(Instant.now()));
-            txtDataAberto.setText(""+cc.getC().getData());
-            txtHorarioAberto.setText(""+cc.getC().getData().getHour());
+            txtDataFechado.setText(""+ sc.DataOnly(Date.from(Instant.now())));
+            txtDataAberto.setText(""+cc.getC().getData().getDayOfMonth()+"-"+cc.getC().getData().getMonthValue()+"-"+cc.getC().getData().getYear());
+            txtHorarioAberto.setText(""+cc.getC().getData().getHour()+":"+cc.getC().getData().getMinute());
             txtFuncionario.setText(cc.getC().getFuncI().getNome());
             txtValor.setText(""+cc.getC().getSaldoI());
             txtValorRetirado.setText(""+cc.SaldoRetirado());
@@ -395,10 +392,6 @@ public class MovCaixaFechar extends javax.swing.JDialog {
             txtValorCaixa.requestFocus();
         }
     }//GEN-LAST:event_formWindowActivated
-
-    private void txtValorCaixaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorCaixaFocusGained
-       txtValorCaixa.setText("");
-    }//GEN-LAST:event_txtValorCaixaFocusGained
 
 
 

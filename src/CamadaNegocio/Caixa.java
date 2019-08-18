@@ -178,6 +178,30 @@ public class Caixa
         return null;
     }
     
+    public Caixa buscaCaixa(int codigo)
+    {
+        //int codigo, Funcionario funcI, Funcionario funcF, double saldoI, double saldoF, double valorR, LocalDateTime data
+        String sql;
+        sql = "select caixa_codigo, func_abrir, func_fechar, caixa_saldoinicio, caixa_saldofinal, caixa_valorreal, caixa_datainicio, max(caixa_codigo) "
+                + " from caixa "
+                + " where caixa_codigo = "+codigo+" " //成功しなかった場合　Where文でfunc_fechar＝nullの確認。
+                + " group by caixa_codigo, func_abrir, func_fechar, caixa_saldoinicio, caixa_saldofinal, caixa_valorreal, caixa_datainicio ";
+                ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return new Caixa(rs.getInt(1), new Funcionario().buscarCodigo(rs.getInt(2)), null, 
+                rs.getDouble(4), 0, 0, rs.getTimestamp(7).toLocalDateTime());//rs.getTimestamp(7)
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+    
     public double SaldoRetirado()
     {
         String sql;
