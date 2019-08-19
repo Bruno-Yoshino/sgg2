@@ -37,7 +37,7 @@ public class GerenciarParcelaController {
     private ContaPagar cp;
     private Pedido p;
     private ContaReceber cr;
-    private SystemControl sc;
+    private final SystemControl sc;
     private final util.Validacao v = new Validacao(); 
     private final util.mensagens m = new mensagens(); 
     
@@ -84,6 +84,7 @@ public class GerenciarParcelaController {
     
     public int gerarParcelas(String qtd, String intervalo, JTable jTable, double valor, Date data)
     {
+        double total = 0;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(data);
         int par, inter;
@@ -100,23 +101,15 @@ public class GerenciarParcelaController {
         {
             return 2;
         }
-        double temp;
-        if(par != 1)
-        {
-            temp = PrimeiraParcela(par, valor);
-        }
-        else
-        {
-            temp = valor;
-        }
         Date dataT;
         String strDate;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         dataT = calendar.getTime();
         strDate = dateFormat.format(data);
+        total +=PrimeiraParcela(par, valor);
         model.addRow(new Object[]{
             1,
-            temp,
+            total,
             strDate
         });
         
@@ -138,14 +131,18 @@ public class GerenciarParcelaController {
                     calendar.add(Calendar.WEEK_OF_MONTH, inter * -1);
                 }
             }
+            if(i != par)
+            {
+                total += v.ConverteNumeroReal(sc.arredondar(valor/par));
+            }
             dataT = calendar.getTime();
             strDate = dateFormat.format(dataT);
             model.addRow(new Object[]{
                 i,
-                valor / par,
+                i == par ? sc.arredondar(valor - total) : sc.arredondar(valor/par),
                 strDate
             });
-        
+            
         }
         
         return 0;
@@ -153,14 +150,7 @@ public class GerenciarParcelaController {
     
     private double PrimeiraParcela(int qtd, double valor)
     {
-        if(valor / qtd != 0)
-        {
-//            resto = valor / qtd;
-//            resto = valor - resto * qtd;
-            double x = valor - ((valor / qtd)*qtd);
-            return valor / qtd + x;
-        }
-        return valor / qtd;
+        return v.ConverteNumeroReal(sc.arredondar(valor / qtd));
     }
     
     public int varidar(String valor)
@@ -201,7 +191,7 @@ public class GerenciarParcelaController {
         {
             tot += v.ConverteNumeroReal(model.getValueAt(i, 1));
         }
-        if(tot != v.ConverteNumeroReal(total.getText()))
+        if(v.ConverteNumeroReal(sc.truncar(tot)) != v.ConverteNumeroReal(total.getText()))
             return 1;
         
         return 0;
@@ -214,11 +204,11 @@ public class GerenciarParcelaController {
         if(p != null)
         {
             cr.setValor((Double) model.getValueAt(0, 1));
-            cp.setDataV(sc.StringDate(String.valueOf(model.getValueAt(0, 2))));
+            cr.setDataV(sc.StringDate(String.valueOf(model.getValueAt(0, 2))));
             x = cr.gravar();
             for (int i = 1; i < model.getRowCount() && x; i++) 
             {
-                cr.setValor((Double) model.getValueAt(i, 1));
+                cr.setValor(v.ConverteNumeroReal(model.getValueAt(i, 1)));
                 cr.setDataV(sc.StringDate(String.valueOf(model.getValueAt(i, 2))));
                 x = cr.gravar();
             }
@@ -242,7 +232,7 @@ public class GerenciarParcelaController {
         cp.setParcela(cp.maxCodigo());
         for (int i = 1; i < model.getRowCount() && x; i++) 
         {
-            cp.setValorC((Double) model.getValueAt(i, 1));
+            cp.setValorC(v.ConverteNumeroReal(model.getValueAt(i, 1)));
             cp.setDataV(sc.StringDate(String.valueOf(model.getValueAt(i, 2))));
             x = cp.gravar();
         }
@@ -252,9 +242,6 @@ public class GerenciarParcelaController {
     public void RemoveAll(JTable jTable)
     {
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable.getModel();
-        for(int i = 0; i < model.getRowCount(); i++)
-        {
-            model.removeRow(i);
-        }
+        model.setRowCount(0);
     }
 }

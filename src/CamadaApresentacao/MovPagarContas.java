@@ -359,6 +359,7 @@ public class MovPagarContas extends javax.swing.JDialog {
                 {
                     m.InformationMessage("Lançado e Alterado com Sucesso!", "Atenção");
                     sc.limpar(jPanel2.getComponents());
+                    sc.limpar(jPanel1.getComponents());
                     dcDataPagamento.setData(Date.from(Instant.now())); 
                     LocalComponentsCtrl(false);
                     lbData.setText("");
@@ -378,6 +379,7 @@ public class MovPagarContas extends javax.swing.JDialog {
                 {
                     m.InformationMessage("Alterado com Sucesso!", "Atenção");
                     sc.limpar(jPanel2.getComponents());
+                    sc.limpar(jPanel1.getComponents());
                     txtObs.setText("");
                     LocalComponentsCtrl(false);
                     lbData.setText("");

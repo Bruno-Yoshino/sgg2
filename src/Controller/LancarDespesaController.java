@@ -29,13 +29,12 @@ import util.mensagens;
 public class LancarDespesaController 
 {
     private ContaPagar cp;
-    private SystemControl sc;
+    private final SystemControl sc = new SystemControl();
     private final util.Validacao v = new Validacao(); 
     private final util.mensagens m = new mensagens(); 
 
     public LancarDespesaController() {
         this.cp = new ContaPagar();
-        sc = new SystemControl();
     }
 
     public ContaPagar getCp() {
@@ -199,7 +198,7 @@ public class LancarDespesaController
             model.addRow(new Object[]{
                 texto,
                 rs.getString(13),
-                rs.getDouble(5),
+                sc.truncar(rs.getDouble(5)),
                 rs.getDate(12),
                 rs.getInt(1)
             });

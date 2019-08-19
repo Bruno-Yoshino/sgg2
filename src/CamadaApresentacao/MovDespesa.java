@@ -26,7 +26,7 @@ import util.mensagens;
  * @author 伊弉冉
  * @author 伊弉諾
  * 
- * Tester 2019/08/   テストスタンバイ。
+ * Tester 2019/08/18   テスト完了。
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author 海星
@@ -569,20 +569,20 @@ public class MovDespesa extends javax.swing.JDialog {
                 }
                 else
                 {
-                        if(ldc.alterarDespesa())
-                        {
-                            m.InformationMessage("Alterado com sucesso", "Informação");
-                            sc.limpar(jPanel1.getComponents());
-                            sc.Initialize(jPanel2.getComponents());
-                            sc.HabilityComponents(jPanel1.getComponents(), false);
-                            rbOp1.setSelected(true);
-                            rbOp1ActionPerformed(null);
-                            flag = 1;
-                        }
-                        else
-                        {
-                            m.ErroMessage("ErroA", "ErroA");
-                        }
+                    if(ldc.alterarDespesa())
+                    {
+                        m.InformationMessage("Alterado com sucesso", "Informação");
+                        sc.limpar(jPanel1.getComponents());
+                        sc.Initialize(jPanel2.getComponents());
+                        sc.HabilityComponents(jPanel1.getComponents(), false);
+                        rbOp1.setSelected(true);
+                        rbOp1ActionPerformed(null);
+                        flag = 1;
+                    }
+                    else
+                    {
+                        m.ErroMessage("ErroA", "ErroA");
+                    }
                 }
         }
     }//GEN-LAST:event_btnGravarActionPerformed
@@ -656,11 +656,14 @@ public class MovDespesa extends javax.swing.JDialog {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if(m.Pergunta("Deseja excluir essa Despesa?", "Atenção") == JOptionPane.YES_OPTION)
         {
-            if(!ldc.checarContaPaga())
+            if(ldc.checarContaPaga())
             {
                 if(ldc.excluir())
                 {
                     m.InformationMessage("Excluido com sucesso!", "Informação");
+                    sc.limpar(jPanel1.getComponents());
+                    sc.Initialize(jPanel2.getComponents());
+                    sc.HabilityComponents(jPanel1.getComponents(), false);
                     rbOp1.setSelected(true);
                     rbOp1ActionPerformed(null);
                 }

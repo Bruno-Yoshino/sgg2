@@ -504,7 +504,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("Folha", jPanel5);
 
-        jLabel18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel18.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel18.setText("Valor Total Produto:");
 
         txtvalorTotP.setEditable(false);
@@ -513,13 +513,13 @@ public class MovLancarCompras extends javax.swing.JDialog {
         txtvalorTotF.setEditable(false);
         txtvalorTotF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        jLabel19.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel19.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel19.setText("Valor Total Folha:");
 
         txtvalorF.setEditable(false);
         txtvalorF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        jLabel25.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel25.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel25.setText("Valor Total Final:");
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -742,6 +742,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         sc.limpar(jPanel1.getComponents());
         sc.limparTabela(tbF);
         sc.limparTabela(tbP);
+        sc.Initialize(jPanel2.getComponents());
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnaddProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddProdActionPerformed

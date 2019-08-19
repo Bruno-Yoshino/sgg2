@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import util.SystemControl;
 import util.Validacao;
 import util.mensagens;
 
@@ -37,6 +38,7 @@ public class ReceberContaController {
     private ContaReceber cr;
     private Pedido p;
     private final mensagens m;
+    private final util.SystemControl sc = new SystemControl();
 
     public ReceberContaController() {
         cr = new ContaReceber();
@@ -152,7 +154,7 @@ public class ReceberContaController {
             model.addRow(new Object[]{
                 rs.getString(1),//Nome Clietne
                 rs.getInt(2),// Numero Pedido
-                rs.getDouble(3),//Valor Conta
+                sc.truncar(rs.getDouble(3)),//Valor Conta 
                 rs.getDate(4),// Data Vencimento
                 rs.getDate(5),// Data Pedido
                 rs.getInt(6)// Numero Conta

@@ -213,7 +213,7 @@ public class ContaPagar {
     
     public boolean excluir(int codigo)
     {
-        String sql = "delete form conta_pagar where cp_codigo = "+codigo+";";
+        String sql = "delete from conta_pagar where cp_codigo = "+codigo+";";
         
         return Banco.getCon().manipular(sql);
     }
@@ -278,7 +278,7 @@ public class ContaPagar {
     public boolean verificaPago()
     {
         String sql = "select cp_codigo from conta_pagar "
-                   + " where cp_codigo = "+codigo+"";
+                   + " where cp_codigo = "+codigo+" and cp_dtpago is null";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {

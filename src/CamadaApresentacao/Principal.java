@@ -204,9 +204,11 @@ public class Principal extends javax.swing.JFrame {
         ch.configuraModel(jTable1);
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
         //ここで最初のリロード、残りはそれぞれの処理を終えた後。
+       
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/Rekotyoku.wav").getAbsoluteFile());
+            //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/Rekotyoku.wav").getAbsoluteFile());
             //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/05 - Eight Minutes.wav").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/Oda Nobuna no Yabou OST - Kishuu.wav").getAbsoluteFile());
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
@@ -214,6 +216,7 @@ public class Principal extends javax.swing.JFrame {
         } catch(IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
             System.out.println("Error with playing sound.");
         }
+        
     }
 
 

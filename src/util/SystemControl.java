@@ -12,7 +12,9 @@ import java.awt.Component;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -24,6 +26,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,11 +35,15 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * プログラマー
  * @author 吉野　廉
+ * @author 羽根川
  * @author モニカ
+ * @author アナスタシア
+ * @author 長門
  */
 public class SystemControl 
 {
@@ -216,13 +223,13 @@ public class SystemControl
         String local = null;
         int chamar = getJFileChooser().showOpenDialog(null);
         {
-            if(chamar == jfilechooser.APPROVE_OPTION)
+            if(chamar == JFileChooser.APPROVE_OPTION)
             {
                 File f = getJFileChooser().getSelectedFile();
                 try
                 {
                     img = ImageIO.read(f);
-                    imagem.setIcon(new ImageIcon(img.getScaledInstance(imagem.getWidth(),imagem.getHeight(),img.SCALE_DEFAULT)));
+                    imagem.setIcon(new ImageIcon(img.getScaledInstance(imagem.getWidth(),imagem.getHeight(),BufferedImage.SCALE_DEFAULT)));
                 }
                 catch (IOException ex)
                 {
@@ -274,11 +281,8 @@ public class SystemControl
                                 {
                                     if(c1 instanceof JTable)
                                     {
-                                        for(int i = 0; i < ((JTabbedPane) c1).getTabCount(); i++)
-                                        {
-                                            ((JTabbedPane) c1).setSelectedIndex(i);
-                                            limpar(((JTabbedPane) c1).getComponents());
-                                        }
+                                         DefaultTableModel model = (DefaultTableModel) ((JTable) c1).getModel();
+                                         model.setRowCount(0);
                                     }
                                     else
                                     {
@@ -307,10 +311,7 @@ public class SystemControl
     public final void limparTabela(JTable tabela)
     {
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
-        for(int i = 0; i < tabela.getRowCount(); i++)
-        {
-            model.removeRow(i);
-        }
+        model.setRowCount(0);
     }
     
     public final String removeCharacter(String texto, int posicao)//posicao = texto.lenght() - 1
@@ -347,6 +348,17 @@ public class SystemControl
             String replace = valor.replace(".", "");
             return replace+"0";
         }
+    }
+    
+    public final String arredondar(Double valor) 
+    {
+        return new DecimalFormat("#,##0.00").format(valor);
+    }
+    
+    public final String truncar(Double valor) {
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
+        return decimalFormat.format(valor);
     }
     
     public final String BankCheck(String number)
