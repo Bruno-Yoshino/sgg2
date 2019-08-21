@@ -182,7 +182,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tbP);
 
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Codigo:");
 
         txtcodP.setEditable(false);
@@ -224,7 +224,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         txtvalortP.setEditable(false);
         txtvalortP.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel11.setText("Valor Total:");
 
         btnaddDP.setText("Adicionar Dados");
@@ -353,7 +353,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         txtValorTF.setEditable(false);
         txtValorTF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel12.setText("Valor Total:");
 
         jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -362,7 +362,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         jLabel14.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel14.setText("Folha:");
 
-        jLabel15.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel15.setText("Codigo:");
 
         txtCodigoF.setEditable(false);

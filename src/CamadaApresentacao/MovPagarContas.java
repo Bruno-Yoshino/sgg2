@@ -67,12 +67,16 @@ public class MovPagarContas extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtObs = new javax.swing.JTextArea();
         lb4 = new javax.swing.JLabel();
-        cbCaixa = new javax.swing.JComboBox<>();
+        txtCaixa = new javax.swing.JTextField();
+        btnlocCaixa = new javax.swing.JButton();
+        lb5 = new javax.swing.JLabel();
+        txtSaldo = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         btnAlterar = new javax.swing.JButton();
         btnGravar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -131,6 +135,22 @@ public class MovPagarContas extends javax.swing.JDialog {
         lb4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lb4.setText("Caixa a ser utilizado:");
 
+        txtCaixa.setEditable(false);
+        txtCaixa.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        btnlocCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
+        btnlocCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlocCaixaActionPerformed(evt);
+            }
+        });
+
+        lb5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lb5.setText("Saldo Disponivel:");
+
+        txtSaldo.setEditable(false);
+        txtSaldo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -169,12 +189,20 @@ public class MovPagarContas extends javax.swing.JDialog {
                                 .addComponent(lb2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtValorP, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cbCaixa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtCaixa))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lb3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(70, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lb3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnlocCaixa)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lb5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,9 +226,14 @@ public class MovPagarContas extends javax.swing.JDialog {
                 .addGap(5, 5, 5)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb4)
-                    .addComponent(cbCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnlocCaixa)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(lb4)
+                        .addComponent(txtCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lb5)
+                        .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb1)
@@ -246,6 +279,14 @@ public class MovPagarContas extends javax.swing.JDialog {
             }
         });
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/extornar16.jpg"))); // NOI18N
+        jButton1.setText("Extornar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -255,6 +296,8 @@ public class MovPagarContas extends javax.swing.JDialog {
                 .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(91, 91, 91)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
@@ -263,13 +306,15 @@ public class MovPagarContas extends javax.swing.JDialog {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAlterar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSair, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnGravar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGravar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -361,12 +406,13 @@ public class MovPagarContas extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        switch(ldc.validarContasPagar(txtCodigo.getText(), txtValorP.getText(), dcDataPagamento.getData(), txtLocal.getText(), txtValor.getText()))
+        switch(ldc.validarContasPagar(txtCodigo.getText(), txtValorP.getText(), dcDataPagamento.getData(), txtLocal.getText(), txtValor.getText(), txtSaldo.getText(), txtCaixa.getText()))
         {
             case 1: m.InformationMessage("Informe o valor a ser pago!", "Atenção"); txtValorP.requestFocus(); break;
             case 2: m.InformationMessage("Valor precisa ser maior ou igual a 0!", "Atenção"); txtValorP.requestFocus(); break;
             case 3: m.InformationMessage("Altera o valor Pago", "Atenção"); txtValorP.requestFocus(); break;
-            case 4: m.InformationMessage("O saldo da caixa selecionado é menor que o valor a ser pago", "Atenção");
+            case 4: m.InformationMessage("O saldo do caixa selecionado é menor que o valor a ser pago! \n Selecione outro caixa", "Atenção"); btnlocCaixa.requestFocus(); break;
+            case 6: m.InformationMessage("Selecione o Caixa!", "Atenção"); btnlocCaixa.requestFocus(); break;
             case 5: 
                 ldc.alterar();
                 ldc.getCp().setFunc(f);
@@ -439,6 +485,30 @@ public class MovPagarContas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Localizar e realizar o extorno
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnlocCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlocCaixaActionPerformed
+        ConsultaPadrao consCaixaGeral = new ConsultaPadrao(null, true);
+        String[] vet = new String[1];
+        vet[0] = "Nome";
+        consCaixaGeral.configuraOpcoes(vet, 1, 0, "CCaixaGeral", false);
+        consCaixaGeral.verificaconsulta(true);
+        consCaixaGeral.setVisible(true);
+        if (consCaixaGeral.getCodigo() != 0)
+        {
+            ldc.buscarCaixa(consCaixaGeral.getCodigo());
+            txtCaixa.setText(""+ldc.getCp().getC().getNome());
+            txtSaldo.setText(""+ldc.getCp().getC().getSaldoI());
+            consCaixaGeral.dispose();
+        }
+        else
+        {
+            consCaixaGeral.dispose();
+        }
+    }//GEN-LAST:event_btnlocCaixaActionPerformed
+
 private void LocalComponentsCtrl(boolean flag)
 {
     txtValorP.setEnabled(flag);
@@ -454,8 +524,9 @@ private void LocalComponentsCtrl(boolean flag)
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnSair;
-    private javax.swing.JComboBox<String> cbCaixa;
+    private javax.swing.JButton btnlocCaixa;
     private br.com.marciorl.beans.DateChooser dcDataPagamento;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -470,10 +541,13 @@ private void LocalComponentsCtrl(boolean flag)
     private javax.swing.JLabel lb2;
     private javax.swing.JLabel lb3;
     private javax.swing.JLabel lb4;
+    private javax.swing.JLabel lb5;
     private javax.swing.JLabel lbData;
+    private javax.swing.JTextField txtCaixa;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtLocal;
     private javax.swing.JTextArea txtObs;
+    private javax.swing.JTextField txtSaldo;
     private javax.swing.JTextField txtTipo;
     private javax.swing.JTextField txtValor;
     private javax.swing.JTextField txtValorP;

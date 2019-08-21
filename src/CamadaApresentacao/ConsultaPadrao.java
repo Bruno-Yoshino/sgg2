@@ -19,6 +19,8 @@ import util.SystemControl;
  * 
  * @author 弐条
  * @author 七草
+ * @author 川波
+ * @author 水川
  */
 public class ConsultaPadrao extends javax.swing.JDialog {
 
@@ -418,6 +420,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             case "AFolha": AFolha(); break;
             case "Cheque": Cheque(); break;
             case "CLancarDespesa": CLancarDespesa(); break;
+            case "CCaixabanco": CCaixabanco(); break;
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
@@ -844,6 +847,31 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                     rs.getDouble(5),
                     sc.DataOnly(rs.getDate(12)),
                     rs.getString(13)
+                });
+            }
+        }
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void CCaixabanco() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            Caixa.configuraModelCaixaBanco(jTable1);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            rs = Caixa.buscarCaixaBanco(txtValor.getText(), tipo);
+            while (rs.next())
+            {
+                model.addRow(new Object[]
+                {
+                    rs.getInt(1), 
+                    rs.getString(2),
+                    rs.getDouble(3)
                 });
             }
         }

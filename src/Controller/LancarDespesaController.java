@@ -163,9 +163,7 @@ public class LancarDespesaController
         cp.setValorC(v.ConverteNumeroReal(valor)-v.ConverteNumeroReal(valorP));
         cp.setValorP(0);
         cp.setDataP(null);
-        cp.setComp(null);
         cp.setC(null);
-        cp.setTc(null);
         cp.setFunc(cp.getFunc());
         cp.setDataL(Date.from(Instant.now()));
 //        Calendar calendar = Calendar.getInstance();
@@ -224,7 +222,7 @@ public class LancarDespesaController
         //tc_codigo, func_codigo, caixa_codigo, cp_datavencimento, cp_obs
     }
     
-    public int validarContasPagar(String codigo, String valorPag, Date pagamento, String local, String total)
+    public int validarContasPagar(String codigo, String valorPag, Date pagamento, String local, String total, String saldo, String caixaS)
     {
         cp.setCodigo(v.ConverteNumeroInteiro(codigo));
         if(valorPag.equals(""))
@@ -236,6 +234,12 @@ public class LancarDespesaController
         {
             return 2;
         }
+        
+        if(v.ConverteNumeroReal(saldo) - v.ConverteNumeroReal(valorPag) >= 0)
+            return 4;
+        
+        if(caixaS.equals(""))
+            return 6;
         
         Integer i;
         cp.setValorP(v.ConverteNumeroReal(valorPag));
@@ -335,5 +339,16 @@ public class LancarDespesaController
             cp = TempCp;
             return cp;
         }
+    }
+    
+    public void buscarCaixa(int codigo)
+    {
+        CaixaController c = new CaixaController();
+        c.buscarCaixa(codigo);
+        if(c.getC().getNome() == null)
+        {
+            c.getC().setNome("Caixa Local");
+        }
+        cp.setC(c.getC());
     }
 }

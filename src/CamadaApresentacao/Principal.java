@@ -79,6 +79,8 @@ Add conection Caixa -- Pedido and constraint FK caixa_codigo in Pedido
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * @author 川波
+ * @author 水川
  * @author 巴御前
  * @author アナスタシア
  * @author 早川　茜
@@ -132,6 +134,8 @@ Add conection Caixa -- Pedido and constraint FK caixa_codigo in Pedido
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * @author 川波
+ * @author 水川
  * @author アナスタシア
  * @author 早川　茜
  * @author 高村　結衣
@@ -265,7 +269,9 @@ public class Principal extends javax.swing.JFrame {
         Servico = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem30 = new javax.swing.JMenuItem();
         jMenuItem24 = new javax.swing.JMenuItem();
+        jMenuItem31 = new javax.swing.JMenuItem();
         jMenuItem25 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
@@ -689,6 +695,14 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem16);
 
+        jMenuItem30.setText("Abrir Caixa Banco");
+        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem30ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem30);
+
         jMenuItem24.setText("Retirar Caixa");
         jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -696,6 +710,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem24);
+
+        jMenuItem31.setText("Ajustar Caixa Banco");
+        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem31ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem31);
 
         jMenuItem25.setText("Fechar Caixa");
         jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
@@ -1301,6 +1323,16 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jComboBox1FocusLost
 
+    private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
+        MovCaixaBanco frm = new MovCaixaBanco(this, true, funcL);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem30ActionPerformed
+
+    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
+        MovAjustarCaixaBanco frm = new MovAjustarCaixaBanco(this, true, funcL);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem31ActionPerformed
+
 
     private void AccessLevel(int soma)
     {  
@@ -1396,6 +1428,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem30;
+    private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

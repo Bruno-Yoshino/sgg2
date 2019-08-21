@@ -22,8 +22,10 @@ public class CaixaController
 {
     private Caixa c;
     private Funcionario f;
-    private Validacao v;
+    private final Validacao v;
     private final mensagens m;
+    private double creditar = 0;
+    private String obs;
 
     public CaixaController() {
         this.c = new Caixa();
@@ -57,8 +59,6 @@ public class CaixaController
     
     public int varidar(String valor, LocalDateTime data, int codigo)
     {
-//        valor = valor.replaceAll("\\.", "");
-//        valor = valor.replace(',', '.');
         c.setSaldoI(v.ConverteNumeroReal(valor));
         if(c.getSaldoI() == -999)
             return 1;
@@ -80,6 +80,11 @@ public class CaixaController
     public void buscarCaixa()
     {
         c = new Caixa().buscaCaixa();
+    }
+    
+    public void buscarCaixa(int codigo)
+    {
+        c = new Caixa().buscaCaixa(codigo);
     }
     
     public double buscaDesconto(String data)
@@ -143,5 +148,60 @@ public class CaixaController
     public boolean fechar()
     {
         return c.gravar();
+    }
+    //------------------------------------------------------------- Caixa Banco ---------------------------------------
+    
+    public int varidar(String valor, String nome, int codigo)// Para abrir 
+    {
+        c.setSaldoI(v.ConverteNumeroReal(valor));
+        if(c.getSaldoI() == -999)
+            return 1;
+        if(c.getSaldoI() <= 0)
+            return 2;
+        if(nome.trim().equalsIgnoreCase(""))
+            return 3;
+        
+        c.setNome(nome);
+        c.setCodigo(codigo);
+        c.setFuncI(f);
+        
+        return 0;
+    }
+    
+    public int varidar(String valor, String nome, String saldo, int codigo, boolean flag)// Para Debitar Creditar
+    {
+        this.creditar = v.ConverteNumeroReal(valor);
+        
+        if(this.creditar <= 0)
+            return 1;
+        if(!flag)
+            if(this.creditar - v.ConverteNumeroReal(saldo) >= 0)
+                return 2;
+        
+        if(flag)
+        {
+            creditar += v.ConverteNumeroReal(saldo);
+            obs = "Foi Debitado";
+        }
+        else
+        {
+            creditar -= v.ConverteNumeroReal(saldo);
+            obs = "Foi Creditado";
+        }
+        c.setNome(nome);
+        c.setCodigo(codigo);
+        c.setFuncI(f);
+        
+        return 0;
+    }
+    
+    public boolean abrirBanco()
+    {
+        return c.abriBanco();
+    }
+    
+    public boolean lancarAjuste()
+    {
+        return c.gravarAjusteCaixaBanco(creditar, obs);
     }
 }

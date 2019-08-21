@@ -331,6 +331,10 @@ public class SystemControl
     {
         int indx = 0;
         boolean flag = true;
+        if(valor.equals(".0"))
+        {
+            return "0";
+        }
         for(int i = 0; i < valor.length() && flag; i++)
         {
             if('.' == valor.charAt(i))

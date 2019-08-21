@@ -9,9 +9,11 @@ import CamadaLogica.Banco;
 import CamadaLogica.ReadOnlyTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JTable;
 
 /**
@@ -37,6 +39,18 @@ public class Caixa
     private Funcionario funcI, funcF;
     private double saldoI, saldoF, valorR;  //ValorR --> Valor Real
     private LocalDateTime data;
+    private String nome;
+
+    public Caixa(int codigo, Funcionario funcI, Funcionario funcF, double saldoI, double saldoF, double valorR, LocalDateTime data, String nome) {
+        this.codigo = codigo;
+        this.funcI = funcI;
+        this.funcF = funcF;
+        this.saldoI = saldoI;
+        this.saldoF = saldoF;
+        this.valorR = valorR;
+        this.data = data;
+        this.nome = nome;
+    }
 
     public Caixa(int codigo, Funcionario funcI, Funcionario funcF, double saldoI, double saldoF, double valorR, LocalDateTime data) {
         this.codigo = codigo;
@@ -112,17 +126,50 @@ public class Caixa
         this.data = data;
     }
     
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
     public boolean gravar()  // using This
     {
         String sql;
         if(this.codigo == 0) // Abrir
         {
-            sql = "insert into caixa (func_abrir, caixa_saldoinicio, caixa_datainicio, func_fechar) values ("+this.funcI.getCodigo()+", "+this.saldoI+", '"+this.data+"', "+null+")";
+            sql = "insert into caixa (func_abrir, caixa_saldoinicio, caixa_datainicio, func_fechar, caixa_saldofinal, caixa_valorreal) values ("+this.funcI.getCodigo()+", "+this.saldoI+", '"+this.data+"', "+null+", 0, 0)";
         }
         else // Fechar
         {
             sql = "update caixa set func_fechar = "+this.funcF.getCodigo()+", caixa_saldofinal = "+this.saldoF+", caixa_valorreal = "+this.valorR+" where caixa_codigo = "+this.codigo+"";
         }
+        return Banco.getCon().manipular(sql);
+    }
+    
+    public boolean abriBanco()  // using This
+    {
+        String sql;
+        if(this.codigo == 0) // Abrir Banco
+        {
+            sql = "insert into caixa (func_abrir, caixa_saldoinicio, caixa_datainicio, func_fechar, caixa_nome, caixa_saldofinal, caixa_valorreal) values ("+this.funcI.getCodigo()+", "+this.saldoI+", '"+this.data+"', "+null+", '"+nome+"', -1, -1)";
+        }
+        else // Encerrar Conta
+        {
+            sql = "update caixa set func_fechar = "+this.funcF.getCodigo()+", caixa_saldofinal = 0, caixa_valorreal = 0 where caixa_codigo = "+this.codigo+"";
+        }
+        return Banco.getCon().manipular(sql);
+    }
+    
+    public boolean gravarAjusteCaixaBanco(double saldo, String obs)
+    {
+        String sql = "INSERT INTO conta_pagar(comp_codigo, cp_data, cp_local, cp_valorc, cp_dtpago, cp_valorp, cp_nparcela, tc_codigo, func_codigo, caixa_codigo, cp_datavencimento, cp_obs) " +
+                     " VALUES (null, "
+                    + " '"+Date.from(Instant.now())+"', null, "+saldo+", null, null, 0, "
+                    + " null, "
+                    + " "+funcI.getCodigo()+", "
+                    + " "+codigo+", null, '"+obs+"');";
         return Banco.getCon().manipular(sql);
     }
     
@@ -133,11 +180,13 @@ public class Caixa
         return Banco.getCon().manipular(sql);
     }
     
-    public boolean VerificaCaixaAberto()
+    public boolean VerificaCaixaAberto()// Caixa Local
     {
         String sql;
         sql = "select caixa_codigo, max(caixa_codigo) "
-            + " from caixa where func_fechar is null"
+            + " from caixa "
+            + " where func_fechar is null "
+            + " and caixa_valorreal != -1 "
             + " group by caixa_codigo";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
@@ -160,7 +209,7 @@ public class Caixa
         String sql;
         sql = "select caixa_codigo, func_abrir, func_fechar, caixa_saldoinicio, caixa_saldofinal, caixa_valorreal, caixa_datainicio, max(caixa_codigo) "
                 + " from caixa "
-                + " where func_fechar is null" //成功しなかった場合　Where文でfunc_fechar＝nullの確認。
+                + " where func_fechar is null and caixa_saldoinicio != -1 " 
                 + " group by caixa_codigo, func_abrir, func_fechar, caixa_saldoinicio, caixa_saldofinal, caixa_valorreal, caixa_datainicio ";
                 ResultSet rs=Banco.getCon().consultar(sql);
         try 
@@ -168,7 +217,7 @@ public class Caixa
             if (rs.next()) 
             {
                 return new Caixa(rs.getInt(1), new Funcionario().buscarCodigo(rs.getInt(2)), null, 
-                rs.getDouble(4), 0, 0, rs.getTimestamp(7).toLocalDateTime());//rs.getTimestamp(7)
+                rs.getDouble(4), rs.getDouble(5), rs.getDouble(6), rs.getTimestamp(7).toLocalDateTime());//rs.getTimestamp(7)
             }
         } 
         catch (SQLException e) 
@@ -182,9 +231,9 @@ public class Caixa
     {
         //int codigo, Funcionario funcI, Funcionario funcF, double saldoI, double saldoF, double valorR, LocalDateTime data
         String sql;
-        sql = "select caixa_codigo, func_abrir, func_fechar, caixa_saldoinicio, caixa_saldofinal, caixa_valorreal, caixa_datainicio, max(caixa_codigo) "
+        sql = "select caixa_codigo, func_abrir, func_fechar, caixa_saldoinicio, caixa_saldofinal, caixa_valorreal, caixa_datainicio, caixa_nome "
                 + " from caixa "
-                + " where caixa_codigo = "+codigo+" " //成功しなかった場合　Where文でfunc_fechar＝nullの確認。
+                + " where caixa_codigo = "+codigo+" " 
                 + " group by caixa_codigo, func_abrir, func_fechar, caixa_saldoinicio, caixa_saldofinal, caixa_valorreal, caixa_datainicio ";
                 ResultSet rs=Banco.getCon().consultar(sql);
         try 
@@ -192,7 +241,7 @@ public class Caixa
             if (rs.next()) 
             {
                 return new Caixa(rs.getInt(1), new Funcionario().buscarCodigo(rs.getInt(2)), null, 
-                rs.getDouble(4), 0, 0, rs.getTimestamp(7).toLocalDateTime());//rs.getTimestamp(7)
+                rs.getDouble(4), rs.getDouble(5), rs.getDouble(6), rs.getTimestamp(7).toLocalDateTime(), rs.getString(8));//rs.getTimestamp(7)
             }
         } 
         catch (SQLException e) 
@@ -275,10 +324,36 @@ public class Caixa
         return null;
     }
 
+    public static ResultSet buscarCaixaBanco(String nome, int op)
+    {
+        String sql;
+        if(nome.equals(""))
+        {
+            sql = "select caixa_codigo, caixa_nome, caixa_saldoinicio "
+                + " from caixa "
+                + " where caixa_saldofinal = -1 ";
+                ResultSet rs=Banco.getCon().consultar(sql);
+            return rs;
+        }
+        sql = "select caixa_codigo, caixa_nome, caixa_saldoinicio "
+                + " from caixa "
+                + " where caixa_nome ilike '%"+nome+"%' and caixa_saldofinal = -1 ";
+                ResultSet rs=Banco.getCon().consultar(sql);
+        return rs;
+    }
     
     public static void configuraModel(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
     {
         String colunas[] = new String [] {"Código", "Caixa", "Estado"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(500);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(50);
+    }
+    
+    public static void configuraModelCaixaBanco(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
+    {
+        String colunas[] = new String [] {"Código", "Nome", "Saldo"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));
         jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
         jTable.getColumnModel().getColumn(1).setPreferredWidth(500);

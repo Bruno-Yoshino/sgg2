@@ -410,7 +410,7 @@ public class MovPedido extends javax.swing.JDialog {
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel7.setText("Desconto:");
 
         txtValor.setText(".0");
