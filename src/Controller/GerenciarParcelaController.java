@@ -106,7 +106,7 @@ public class GerenciarParcelaController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         dataT = calendar.getTime();
         strDate = dateFormat.format(data);
-        total +=PrimeiraParcela(par, valor);
+        total += PrimeiraParcela(par, valor);
         model.addRow(new Object[]{
             1,
             total,
@@ -225,13 +225,12 @@ public class GerenciarParcelaController {
         }
         cp.setParcela(0);
         cp.setValorC(v.ConverteNumeroReal(model.getValueAt(0, 1)));
-        //cp.setDataV((Date) model.getValueAt(0, 2));
         cp.setDataV(sc.StringDate(String.valueOf(model.getValueAt(0, 2))));
         cp.setDataP(null);
         x = cp.gravar();
         cp.setParcela(cp.maxCodigo());
         for (int i = 1; i < model.getRowCount() && x; i++) 
-        {
+        {        
             cp.setValorC(v.ConverteNumeroReal(model.getValueAt(i, 1)));
             cp.setDataV(sc.StringDate(String.valueOf(model.getValueAt(i, 2))));
             x = cp.gravar();

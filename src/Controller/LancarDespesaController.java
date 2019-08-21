@@ -156,10 +156,10 @@ public class LancarDespesaController
     {
         int add = 0;
         String resp;
-        do{
-            resp = JOptionPane.showInputDialog(null, "Informe apos quantos dias apos esta data "+Date.from(Instant.now())+": ", "Atenção", JOptionPane.INFORMATION_MESSAGE);
-            add = v.ConverteNumeroInteiro(resp);
-        }while (add < 0);
+//        do{
+//            resp = JOptionPane.showInputDialog(null, "Informe apos quantos dias apos esta data "+Date.from(Instant.now())+": ", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+//            add = v.ConverteNumeroInteiro(resp);
+//        }while (add < 0);
         cp.setValorC(v.ConverteNumeroReal(valor)-v.ConverteNumeroReal(valorP));
         cp.setValorP(0);
         cp.setDataP(null);
@@ -168,13 +168,13 @@ public class LancarDespesaController
         cp.setTc(null);
         cp.setFunc(cp.getFunc());
         cp.setDataL(Date.from(Instant.now()));
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(Date.from(Instant.now()));
-        calendar.add(Calendar.DAY_OF_MONTH, add);
-        cp.setDataV(calendar.getTime());
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(Date.from(Instant.now()));
+//        calendar.add(Calendar.DAY_OF_MONTH, add);
+//        cp.setDataV(calendar.getTime());
         cp.setLocal("");
         cp.setObs("Nova Parcela.");
-        
+        cp.setParcela(cp.getCodigo());
         return cp.gravar();
     }
     

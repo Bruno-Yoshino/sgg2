@@ -352,13 +352,13 @@ public class SystemControl
     
     public final String arredondar(Double valor) 
     {
-        return new DecimalFormat("#,##0.00").format(valor);
+        return new DecimalFormat("#,##0.00").format(valor).replaceAll(",", "");
     }
     
     public final String truncar(Double valor) {
         DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
         decimalFormat.setRoundingMode(RoundingMode.DOWN);
-        return decimalFormat.format(valor);
+        return decimalFormat.format(valor).replaceAll(",", "");
     }
     
     public final String BankCheck(String number)

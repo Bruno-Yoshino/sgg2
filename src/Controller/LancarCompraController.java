@@ -237,6 +237,7 @@ public class LancarCompraController
     
     public boolean excluir()
     {
+        //voltar o estoque
         if(c.excluirItens())
             return c.excluir();
         return false;

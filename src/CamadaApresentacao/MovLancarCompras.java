@@ -624,6 +624,11 @@ public class MovLancarCompras extends javax.swing.JDialog {
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
         btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Excluir16.png"))); // NOI18N
         btnExcluir.setText("Excluir");
@@ -1021,6 +1026,10 @@ public class MovLancarCompras extends javax.swing.JDialog {
            case 2: m.InformationMessage("Informe o valor! O Valor precisa ser mairo que 0!", "Atenção"); txtPrecoF.requestFocus(); break;
        }  
     }//GEN-LAST:event_txtPrecoFFocusLost
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // Realizar o triguer ao gravar
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
 
 

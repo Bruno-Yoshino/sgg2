@@ -66,6 +66,8 @@ public class MovPagarContas extends javax.swing.JDialog {
         txtLocal = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtObs = new javax.swing.JTextArea();
+        lb4 = new javax.swing.JLabel();
+        cbCaixa = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         btnAlterar = new javax.swing.JButton();
         btnGravar = new javax.swing.JButton();
@@ -126,6 +128,9 @@ public class MovPagarContas extends javax.swing.JDialog {
         txtObs.setRows(5);
         jScrollPane2.setViewportView(txtObs);
 
+        lb4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lb4.setText("Caixa a ser utilizado:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -153,18 +158,23 @@ public class MovPagarContas extends javax.swing.JDialog {
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtTipo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lb1)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lb4)
+                            .addComponent(lb1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dcDataPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lb2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtValorP, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(dcDataPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lb2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtValorP, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbCaixa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lb3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,6 +197,10 @@ public class MovPagarContas extends javax.swing.JDialog {
                     .addComponent(jLabel2))
                 .addGap(5, 5, 5)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lb4)
+                    .addComponent(cbCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb1)
@@ -352,11 +366,13 @@ public class MovPagarContas extends javax.swing.JDialog {
             case 1: m.InformationMessage("Informe o valor a ser pago!", "Atenção"); txtValorP.requestFocus(); break;
             case 2: m.InformationMessage("Valor precisa ser maior ou igual a 0!", "Atenção"); txtValorP.requestFocus(); break;
             case 3: m.InformationMessage("Altera o valor Pago", "Atenção"); txtValorP.requestFocus(); break;
+            case 4: m.InformationMessage("O saldo da caixa selecionado é menor que o valor a ser pago", "Atenção");
             case 5: 
                 ldc.alterar();
                 ldc.getCp().setFunc(f);
                 if(ldc.SeocndInserting(txtValor.getText(), txtValorP.getText()))
                 {
+                    //Atualizar o saldo da caixa (Gravar uma retirada de caixa)
                     m.InformationMessage("Lançado e Alterado com Sucesso!", "Atenção");
                     sc.limpar(jPanel2.getComponents());
                     sc.limpar(jPanel1.getComponents());
@@ -377,6 +393,7 @@ public class MovPagarContas extends javax.swing.JDialog {
             default: 
                 if(ldc.alterar())
                 {
+                    //Atualizar o saldo da caixa (Gravar uma retirada de caixa)
                     m.InformationMessage("Alterado com Sucesso!", "Atenção");
                     sc.limpar(jPanel2.getComponents());
                     sc.limpar(jPanel1.getComponents());
@@ -437,6 +454,7 @@ private void LocalComponentsCtrl(boolean flag)
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnSair;
+    private javax.swing.JComboBox<String> cbCaixa;
     private br.com.marciorl.beans.DateChooser dcDataPagamento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -451,6 +469,7 @@ private void LocalComponentsCtrl(boolean flag)
     private javax.swing.JLabel lb1;
     private javax.swing.JLabel lb2;
     private javax.swing.JLabel lb3;
+    private javax.swing.JLabel lb4;
     private javax.swing.JLabel lbData;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtLocal;
