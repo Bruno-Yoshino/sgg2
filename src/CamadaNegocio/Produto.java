@@ -93,7 +93,7 @@ public class Produto {
         String sql;
         if(this.codigo == 0)
         {
-            sql = "insert into produto (pro_nome, pro_tipo, pro_status, pro_caminho) values ('"+this.nome.toUpperCase()+"', '"+this.tipo+"', "+this.status+", '"+this.caminho+"')";
+            sql = "insert into produto (pro_nome, pro_tipo, pro_status, pro_caminho, pro_qtd) values ('"+this.nome.toUpperCase()+"', '"+this.tipo+"', "+this.status+", '"+this.caminho+"', 0)";
         }
         else
         {

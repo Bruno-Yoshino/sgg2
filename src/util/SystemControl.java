@@ -31,6 +31,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -296,6 +297,9 @@ public class SystemControl
                                             {
                                                 if(c1 instanceof JPanel)
                                                     limpar(((JPanel) c1).getComponents());
+                                                else
+                                                    if(c1 instanceof JSpinner)
+                                                        ((JSpinner) c1).setValue("0");
                                             }
                                         }
                                     }
@@ -323,6 +327,11 @@ public class SystemControl
     }
     
     public final String converteString(double valor)
+    {
+        return String.valueOf(valor);
+    }
+    
+    public final String converteString(Object valor)
     {
         return String.valueOf(valor);
     }

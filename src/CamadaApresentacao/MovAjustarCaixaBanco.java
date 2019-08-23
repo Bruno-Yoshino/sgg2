@@ -289,11 +289,12 @@ public class MovAjustarCaixaBanco extends javax.swing.JDialog {
         consCaixaBanco.setVisible(true);
         if (consCaixaBanco.getCodigo() != 0)
         {
-            cc.buscarCaixa();
+            cc.buscarCaixa(consCaixaBanco.getCodigo());
             txtCodigo.setText(""+cc.getC().getCodigo());
             txtNome.setText(""+cc.getC().getNome());
             txtSaldo.setText(""+cc.getC().getSaldoI());
             consCaixaBanco.dispose();
+            sc.Edity(jPanel3.getComponents());
         }
         else
         {

@@ -278,7 +278,7 @@ public class OrcamentoController {
     public boolean excluirServico(JTable tabela, int linha, boolean flag)
     {
         ArrayList<Orcamento_Servico_Detalhe> temp = new ArrayList<>();
-        ArrayList<Orcamento_Servico> tempS  = new ArrayList<>();
+        ArrayList<Orcamento_Servico> tempS  = o.getLista();
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
         if(o.getLista().get(linha).getLista().size() > 0) // DetalheServicoがある時。
         {
@@ -317,8 +317,8 @@ public class OrcamentoController {
             }
             else
             {
-                tempS.remove(linha);
                 excluirS.add(o.getLista().get(linha));
+                tempS.remove(linha);
                 o.setLista(tempS);
                 return true;
             }

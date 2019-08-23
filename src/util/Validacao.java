@@ -97,9 +97,7 @@ public class Validacao
             return -999;
         }
     }
-    
-    
-    
+        
     public final boolean ValidarDataMenorAtual(LocalDate data)
     {
         return data.isBefore(LocalDate.now());

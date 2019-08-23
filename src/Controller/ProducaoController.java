@@ -47,6 +47,8 @@ public class ProducaoController {
         p = new Producao();
         v = new Validacao();
         m = new mensagens();
+        f = new Folha();
+        prod = new Produto();
     }
 
     public Producao getP() {

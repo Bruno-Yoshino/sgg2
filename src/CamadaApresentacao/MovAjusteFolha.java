@@ -398,7 +398,7 @@ public class MovAjusteFolha extends javax.swing.JDialog
         ConsultaPadrao consDS = new ConsultaPadrao(null, true);
         String[] vet = new String[1];
         vet[0] = "Nome";
-        consDS.configuraOpcoes(vet, 1, 0, "Servico", false);
+        consDS.configuraOpcoes(vet, 1, 0, "AServico", false);
         consDS.verificaconsulta(true);
         consDS.setVisible(true);
         if (consDS.getCodigo() != 0)

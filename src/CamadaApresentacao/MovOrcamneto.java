@@ -1134,6 +1134,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
              oc.addTabelaServico(jTable1, linha);
              txtValorT.setText(""+oc.calculoTotal(jTable1));
              linha = -1;
+             //Limpar os campo
      }
     }//GEN-LAST:event_btnAddServicoActionPerformed
 
@@ -1155,17 +1156,17 @@ public class MovOrcamneto extends javax.swing.JDialog {
             //テキストフィールドにデーターを追加。 追加済み↓2019/06/27
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             txtServico.setText(""+model.getValueAt(jTable1.getSelectedRow(), 0));
-            txtValor.setText(""+model.getValueAt(jTable1.getSelectedRow(), 1));
+            txtValor.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 1))));
             spQtd.setValue(model.getValueAt(jTable1.getSelectedRow(), 2));
-            txtCustoP.setText(""+model.getValueAt(jTable1.getSelectedRow(), 3));
-            txtCustoArt.setText(""+model.getValueAt(jTable1.getSelectedRow(), 4));
-            txtCustoI.setText(""+model.getValueAt(jTable1.getSelectedRow(), 5));
-            txtCustoAcab.setText(""+model.getValueAt(jTable1.getSelectedRow(), 6));
-            txtCustoChap.setText(""+model.getValueAt(jTable1.getSelectedRow(), 7));
-            txtCustoMdO.setText(""+model.getValueAt(jTable1.getSelectedRow(), 8));
-            txtDesconto.setText(""+model.getValueAt(jTable1.getSelectedRow(), 9));
-            txtValor_total.setText(""+model.getValueAt(jTable1.getSelectedRow(), 10));
-            txtDescricao.setText(""+model.getValueAt(jTable1.getSelectedRow(), 11));
+            txtCustoP.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 3))));
+            txtCustoArt.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 4))));
+            txtCustoI.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 5))));
+            txtCustoAcab.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 6))));
+            txtCustoChap.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 7))));
+            txtCustoMdO.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 8))));
+            txtDesconto.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 9))));
+            txtValor_total.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 10))));
+            txtDescricao.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 11))));
         }
         else
         {
@@ -1275,20 +1276,19 @@ public class MovOrcamneto extends javax.swing.JDialog {
                         if(oc.gravarOrcamento())
                         {
                             oc.excluirListas(Integer.parseInt(txtCodigo.getText()));
-                            if(oc.alterarOrcamentoServico())
-                                if(oc.alterarOrcamentoServicoDetalhe())
-                                {
-                                    m.InformationMessage("Alterado com Sucesso", "Informação");
-                                    sc.limpar(jPanel1.getComponents());
-                                    oc.limpaLista();
-                                    sc.limparTabela(jTable1);
-                                    sc.limparTabela(jTable2);
-                                    sc.HabilityComponents(jPanel1.getComponents(), false);
-                                    flag = true;
-                                    linha = -1;
-                                    oc.clearSequenceNumber();
-                                    sc.Initialize(jPanel2.getComponents());
-                                }
+                            oc.alterarOrcamentoServico();
+                            oc.alterarOrcamentoServicoDetalhe();
+                            m.InformationMessage("Alterado com Sucesso", "Informação");
+                            sc.limpar(jPanel1.getComponents());
+                            oc.limpaLista();
+                            sc.limparTabela(jTable1);
+                            sc.limparTabela(jTable2);
+                            sc.HabilityComponents(jPanel1.getComponents(), false);
+                            flag = true;
+                            linha = -1;
+                            oc.clearSequenceNumber();
+                            sc.Initialize(jPanel2.getComponents());
+                                
 //                                else
 //                                    m.ErroMessage("ERRO1", "ERRO3");
 //                            else
@@ -1315,7 +1315,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
                 oc.limpaLista();
                 sc.limparTabela(jTable1);
                 sc.limparTabela(jTable2);
-                
+                sc.Initialize(jPanel2.getComponents());
             }
             else
                 m.ErroMessage("Erro ao Excluir! Provavelmente esta sendo usado em Pedido ou em alguma outra Tabela!", "Erro");
@@ -1420,6 +1420,19 @@ public class MovOrcamneto extends javax.swing.JDialog {
         enableComponents(String.valueOf(cbDescricao.getSelectedItem()));
     }//GEN-LAST:event_cbDescricaoFocusLost
 
+    private void clearLocalComponents()
+    {
+        txtCustoAcab.setText("0");
+        txtCustoArt.setText("0");
+        txtCustoChap.setText("0");
+        txtCustoI.setText("0");
+        txtCustoMdO.setText("0");
+        txtCustoP.setText("0");
+        txtDesconto.setText("0");
+        txtValor.setText("0");
+        spQtd.setValue("0");
+    }
+    
     private void startDescricao()
     {
         txtNumeracaoI.setText("0");

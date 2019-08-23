@@ -164,7 +164,7 @@ public class CaixaController
         c.setNome(nome);
         c.setCodigo(codigo);
         c.setFuncI(f);
-        
+        c.setData(LocalDateTime.now());
         return 0;
     }
     
