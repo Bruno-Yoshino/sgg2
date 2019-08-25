@@ -331,13 +331,33 @@ public class Caixa
         {
             sql = "select caixa_codigo, caixa_nome, caixa_saldoinicio "
                 + " from caixa "
-                + " where caixa_saldofinal = -1 ";
+                + " where caixa_saldofinal = -1 "; // -1 == aberto para difeneciar com o caixa local
                 ResultSet rs=Banco.getCon().consultar(sql);
             return rs;
         }
         sql = "select caixa_codigo, caixa_nome, caixa_saldoinicio "
                 + " from caixa "
                 + " where caixa_nome ilike '%"+nome+"%' and caixa_saldofinal = -1 ";
+                ResultSet rs=Banco.getCon().consultar(sql);
+        return rs;
+    }
+    
+    public static ResultSet buscarCaixaGeral(String nome, int op)
+    {
+        String sql;
+        if(nome.equals(""))
+        {
+            sql = "select caixa_codigo, caixa_nome, caixa_saldoinicio "
+                + " from caixa "
+                + " where func_fechar is null "               
+                + " oder by caixa_saldoinicio";
+                ResultSet rs=Banco.getCon().consultar(sql);
+            return rs;
+        }
+        sql = "select caixa_codigo, caixa_nome, caixa_saldoinicio "
+                + " from caixa "
+                + " where caixa_nome ilike '%"+nome+"%' and func_fechar is null  "
+                + " oder by caixa_saldoinicio";
                 ResultSet rs=Banco.getCon().consultar(sql);
         return rs;
     }

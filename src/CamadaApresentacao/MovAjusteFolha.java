@@ -417,6 +417,7 @@ public class MovAjusteFolha extends javax.swing.JDialog
         sc.Edity(jPanel2.getComponents());
         sc.HabilityComponents(jPanel1.getComponents(), true);
         txtcod.setText("0");
+        txtData.setEnabled(false);
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnaddFolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddFolhaActionPerformed

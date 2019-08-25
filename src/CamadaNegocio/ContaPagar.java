@@ -198,7 +198,7 @@ public class ContaPagar {
     
     public boolean alterar()
     {
-        String sql = "update conta_pagar set cp_local = '"+local+"', cp_dtpago = '"+dataP+"', cp_valorp = "+valorP+" where cp_codigo = "+codigo+";";
+        String sql = "update conta_pagar set cp_local = '"+local+"', cp_dtpago = '"+dataP+"', cp_valorp = "+valorP+", caixa_codigo = "+c.getCodigo()+" where cp_codigo = "+codigo+";";
         
         return Banco.getCon().manipular(sql);
     }
@@ -237,6 +237,26 @@ public class ContaPagar {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+    
+    public int buscarNParcela(String codigo)
+    {
+        String sql = "SELECT cp_nparcela "
+                    + "FROM conta_pagar "
+                    + "WHERE cp_codigo = "+codigo+" ";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {//int codigo, Compra comp, TipoConta tc, Funcionario func, Caixa c, Date dataL, String local, double valorC, Date dataP, double valorP, int parcela, Date dataV, String obs
+                return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
     }
     
     public static ResultSet buscarDados()

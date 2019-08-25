@@ -137,7 +137,6 @@ public class LancarDespesaController
                 }
             }
         }
-        cp.setC(null);
         cp.setComp(null);
         return 0;
     }
@@ -152,7 +151,7 @@ public class LancarDespesaController
         return cp.alterarDespesa();
     }
     
-    public boolean SeocndInserting(String valor, String valorP)
+    public boolean SeocndInserting(String valor, String valorP, Date dataV)
     {
         int add = 0;
         String resp;
@@ -170,9 +169,43 @@ public class LancarDespesaController
 //        calendar.setTime(Date.from(Instant.now()));
 //        calendar.add(Calendar.DAY_OF_MONTH, add);
 //        cp.setDataV(calendar.getTime());
+        cp.setDataV(dataV);
         cp.setLocal("");
+        if(cp.getObs().equals("Nova Parcela."))
+            cp.setParcela(cp.getParcela());
+        else
+            cp.setParcela(cp.getCodigo());
         cp.setObs("Nova Parcela.");
-        cp.setParcela(cp.getCodigo());
+        
+        return cp.gravar();
+    }
+    
+    public boolean SeocndInserting(String valor, String valorP, Date dataV, String obs, String codigo)
+    {
+        int add = 0;
+        String resp;
+//        do{
+//            resp = JOptionPane.showInputDialog(null, "Informe apos quantos dias apos esta data "+Date.from(Instant.now())+": ", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+//            add = v.ConverteNumeroInteiro(resp);
+//        }while (add < 0);
+        cp.setValorC(v.ConverteNumeroReal(valor)-v.ConverteNumeroReal(valorP));
+        cp.setValorP(0);
+        cp.setDataP(null);
+        cp.setC(null);
+        cp.setFunc(cp.getFunc());
+        cp.setDataL(Date.from(Instant.now()));
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(Date.from(Instant.now()));
+//        calendar.add(Calendar.DAY_OF_MONTH, add);
+//        cp.setDataV(calendar.getTime());
+        cp.setDataV(dataV);
+        cp.setLocal("");
+        if(obs.equals("Nova Parcela."))
+            cp.setParcela(cp.buscarNParcela(codigo));
+        else
+            cp.setParcela(v.ConverteNumeroInteiro(codigo));
+        cp.setObs("Nova Parcela.");
+        
         return cp.gravar();
     }
     
@@ -197,7 +230,7 @@ public class LancarDespesaController
                 texto,
                 rs.getString(13),
                 sc.truncar(rs.getDouble(5)),
-                rs.getDate(12),
+                sc.DataOnly(rs.getDate(12)),
                 rs.getInt(1)
             });
         }
@@ -235,7 +268,7 @@ public class LancarDespesaController
             return 2;
         }
         
-        if(v.ConverteNumeroReal(saldo) - v.ConverteNumeroReal(valorPag) >= 0)
+        if(v.ConverteNumeroReal(saldo) - v.ConverteNumeroReal(valorPag) <= 0)
             return 4;
         
         if(caixaS.equals(""))
@@ -294,11 +327,11 @@ public class LancarDespesaController
     {
         String colunas[] = new String [] {"Tipo", "Observação", "Valor", "Data de Vencimento", "Codigo C."};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));
-        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-        jTable.getColumnModel().getColumn(1).setPreferredWidth(250);
-        jTable.getColumnModel().getColumn(2).setPreferredWidth(150);
-        jTable.getColumnModel().getColumn(3).setPreferredWidth(150);
-        jTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(350);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(80);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(120);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(120);
     }
     
     public void separarString(JTextField txtCodigoBorra, JTextField txtNomeConta)
@@ -350,5 +383,10 @@ public class LancarDespesaController
             c.getC().setNome("Caixa Local");
         }
         cp.setC(c.getC());
+    }
+    
+    public double SaldoAtualizado()
+    {
+        return new AtualizarCaixaController().saldoAtualizadoGeral(cp.getC().getCodigo());
     }
 }

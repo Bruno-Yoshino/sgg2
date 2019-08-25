@@ -309,6 +309,7 @@ public class PedidoController {
                 if(p.verificaStatusProducao(p.getCodigo(), p.getLista().get(linha).getSequence()))
                 {
                     //Producaoでの消去
+                    excluirS.add(p.getLista().get(linha));
                     tempS.remove(linha);
                     p.setLista(tempS);
                     return true;
@@ -526,9 +527,6 @@ public class PedidoController {
     public boolean exculir()
     {
         boolean x = true;
-        /*
-            private final ArrayList<Pedido_Servico> excluirS;
-        */
         for(int i = 0; i < excluirDetalhes.size() && x; i++)
         {
             x = new Pedido_Servico_Detalhe().executeDelete(excluirDetalhes.get(i));

@@ -416,7 +416,7 @@ public class MovPagarContas extends javax.swing.JDialog {
             case 5: 
                 ldc.alterar();
                 ldc.getCp().setFunc(f);
-                if(ldc.SeocndInserting(txtValor.getText(), txtValorP.getText()))
+                if(ldc.SeocndInserting(txtValor.getText(), txtValorP.getText(), sc.StringDate(lbData.getText()), txtObs.getText(), txtCodigo.getText()))
                 {
                     //Atualizar o saldo da caixa (Gravar uma retirada de caixa)
                     m.InformationMessage("Lançado e Alterado com Sucesso!", "Atenção");
@@ -500,7 +500,7 @@ public class MovPagarContas extends javax.swing.JDialog {
         {
             ldc.buscarCaixa(consCaixaGeral.getCodigo());
             txtCaixa.setText(""+ldc.getCp().getC().getNome());
-            txtSaldo.setText(""+ldc.getCp().getC().getSaldoI());
+            txtSaldo.setText(""+ldc.SaldoAtualizado()); // Deve retornar o somente o valor disponivel
             consCaixaGeral.dispose();
         }
         else
@@ -514,6 +514,7 @@ private void LocalComponentsCtrl(boolean flag)
     txtValorP.setEnabled(flag);
     txtLocal.setEnabled(flag);
     dcDataPagamento.setEnabled(flag);
+    btnlocCaixa.setEnabled(flag);
     lb1.setEnabled(true);
     lb2.setEnabled(true);
     lb3.setEnabled(true);

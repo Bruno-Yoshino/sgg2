@@ -41,4 +41,10 @@ public class AtualizarCaixaController
         c = new Caixa().buscaCaixa();
         return c.getSaldoI() - new ContaPagar().saldoRetirado(codigo);
     }
+    
+    public final double saldoAtualizadoGeral(int codigo)
+    {
+        c = new Caixa().buscaCaixa(codigo);
+        return c.getSaldoI() - new ContaPagar().saldoRetirado(codigo);
+    }
 }

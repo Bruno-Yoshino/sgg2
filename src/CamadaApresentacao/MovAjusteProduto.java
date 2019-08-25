@@ -444,6 +444,7 @@ public class MovAjusteProduto extends javax.swing.JDialog {
         sc.Edity(jPanel2.getComponents());
         sc.HabilityComponents(jPanel1.getComponents(), true);
         txtcod.setText("0");
+        txtData.setEnabled(false);
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed

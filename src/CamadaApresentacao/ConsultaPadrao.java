@@ -2,6 +2,7 @@ package CamadaApresentacao;
 
 import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.*;
+import Controller.AtualizarCaixaController;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +15,7 @@ import util.SystemControl;
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * @author 鈴  
  * @author 阿賀野
  * @author 矢矧
  * 
@@ -421,6 +423,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             case "Cheque": Cheque(); break;
             case "CLancarDespesa": CLancarDespesa(); break;
             case "CCaixabanco": CCaixabanco(); break;
+            case "CCaixaGeral": CCaixabanco(); break;
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
@@ -871,7 +874,32 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                 {
                     rs.getInt(1), 
                     rs.getString(2),
-                    rs.getDouble(3)
+                    new AtualizarCaixaController().saldoAtualizadoGeral(rs.getInt(1))
+                });
+            }
+        }
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void CCaixaGeral() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            Caixa.configuraModelCaixaBanco(jTable1);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            rs = Caixa.buscarCaixaGeral(txtValor.getText(), tipo);
+            while (rs.next())
+            {
+                model.addRow(new Object[]
+                {
+                    rs.getInt(1), 
+                    rs.getString(2) == null ? "Caixa Local" : rs.getString(2),
+                    new AtualizarCaixaController().saldoAtualizadoGeral(rs.getInt(1))
                 });
             }
         }

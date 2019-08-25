@@ -523,7 +523,7 @@ public class MovDespesa extends javax.swing.JDialog {
             case 3: m.InformationMessage("Altere o Valor do Docuemnto ou o valor que foi Pago!", "Atenção"); break;
             case 5: 
                 ldc.gravar();
-                ldc.SeocndInserting(txtValor.getText(), txtValorPago.getText());
+                ldc.SeocndInserting(txtValor.getText(), txtValorPago.getText(), dcDataVencimento.getData());
                 m.InformationMessage("Lançado com Sucesso!", "Informação");
                 break;
             case 6:
