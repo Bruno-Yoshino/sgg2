@@ -5,6 +5,7 @@ import CamadaNegocio.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JComboBox;
@@ -200,10 +201,10 @@ public class LancarDespesaController
 //        cp.setDataV(calendar.getTime());
         cp.setDataV(dataV);
         cp.setLocal("");
-        if(obs.equals("Nova Parcela."))
+//        if(obs.equals("Nova Parcela."))
             cp.setParcela(cp.buscarNParcela(codigo));
-        else
-            cp.setParcela(v.ConverteNumeroInteiro(codigo));
+//        else
+//            cp.setParcela(v.ConverteNumeroInteiro(codigo));
         cp.setObs("Nova Parcela.");
         
         return cp.gravar();
@@ -364,7 +365,7 @@ public class LancarDespesaController
     
     public ContaPagar buscar(String codigo)
     {
-        ContaPagar TempCp = new ContaPagar().buscarDados(codigo);
+        ContaPagar TempCp = new ContaPagar().buscarDado(codigo);
         if(TempCp == null)
             return null;
         else
@@ -388,5 +389,80 @@ public class LancarDespesaController
     public double SaldoAtualizado()
     {
         return new AtualizarCaixaController().saldoAtualizadoGeral(cp.getC().getCodigo());
+    }
+    
+    public boolean checarParcela(String codigo)
+    {
+        ContaPagar temp = new ContaPagar().buscarDado(codigo);
+        if(temp.getParcela() == 0)
+        {
+            return true;
+        }
+        else
+        {
+            ArrayList<ContaPagar> lista = new ContaPagar().retornaLista(String.valueOf(temp.getParcela()));
+            if(lista.isEmpty())
+            {
+                return false;
+            }
+            else
+            {
+                boolean flag;
+                int i;
+                for(i = 0; lista.get(i).getCodigo() != Integer.parseInt(codigo); i++)
+                {
+
+                }
+                return lista.get(i-1).getDataP() != null;
+            }
+        }
+    }
+    
+    public boolean extornarValor(int codigo)
+    {
+        ContaPagar temp = new ContaPagar().buscarDado(String.valueOf(codigo));
+        if(temp.getParcela() == 0 && temp.buscarQTDParcela(String.valueOf(codigo)) == 0)
+        {
+            cp.alterarPEstorno(codigo);
+            return true;
+        }
+        else
+        {
+            ArrayList<ContaPagar> lista = new ContaPagar().retornaListaSPago(String.valueOf(temp.getParcela()));
+            int i;
+            for(i = 0; lista.get(i).getCodigo() != codigo; i++)
+            {
+                
+            }
+            if(i == lista.size() - 1)
+            {
+                int tempCodigo = cp.buscarCodigoMaxParcelaCDtV(lista.get(i).getParcela(), lista.get(i).getDataV());
+                if(tempCodigo == 0 && temp.buscaCaixa(lista.get(i).getC().getCodigo()))
+                {
+                    if(tempCodigo == lista.get(i).getCodigo())
+                    {
+                        // Altera somente os seguinte dados: caixa_codigo = null, cp_dtpago = null, cp_valop = 0 where cp_codigo = lista.get(i).getCodigo();
+                        cp.alterarPEstorno(codigo);
+                        return true;
+                    }
+                    else
+                    {
+                        // Altera somente os seguinte dados: caixa_codigo = null, cp_dtpago = null, cp_valop = 0 where cp_codigo = lista.get(i).getCodigo(); && Excluir a proxima parcela
+                        cp.alterarPEstorno(codigo);
+                        cp.excluir(tempCodigo);
+                        return true;
+                    }
+                }
+                else
+                {
+                     return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }

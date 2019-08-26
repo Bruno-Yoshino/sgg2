@@ -423,7 +423,8 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             case "Cheque": Cheque(); break;
             case "CLancarDespesa": CLancarDespesa(); break;
             case "CCaixabanco": CCaixabanco(); break;
-            case "CCaixaGeral": CCaixabanco(); break;
+            case "CCaixaGeral": CCaixaGeral(); break;
+            case "CEstornoCP": CEstornoCP(); break;
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
@@ -900,6 +901,34 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                     rs.getInt(1), 
                     rs.getString(2) == null ? "Caixa Local" : rs.getString(2),
                     new AtualizarCaixaController().saldoAtualizadoGeral(rs.getInt(1))
+                });
+            }
+        }
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void CEstornoCP() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            ContaPagar.configuraModelCEstornoCP(jTable1);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            rs = ContaPagar.buscarDadosCEstornoCP(dateInicio.getData(), dateFim.getData(), tipo);
+            while (rs.next())
+            {//cp_codigo, cp_valorc, cp_valorp, cp_datavencimento, cp_dtpago, cp_obs
+                model.addRow(new Object[]
+                {
+                    rs.getInt(1), 
+                    rs.getDouble(2),
+                    rs.getDouble(3),
+                    sc.DataOnly(rs.getDate(4)),
+                    sc.DataOnly(rs.getDate(5)),
+                    rs.getString(6)
                 });
             }
         }

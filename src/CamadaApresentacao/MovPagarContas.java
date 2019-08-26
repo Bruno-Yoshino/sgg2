@@ -34,6 +34,7 @@ public class MovPagarContas extends javax.swing.JDialog {
         btnCancelar.setName("btnCancelar");
         btnGravar.setName("btnGravar");
         btnSair.setName("btnSair");
+        btnExtornar.setName("btnExtornar");
         
         sc.HabilityComponents(jPanel2.getComponents(), false);
         f = func;
@@ -76,7 +77,7 @@ public class MovPagarContas extends javax.swing.JDialog {
         btnGravar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnExtornar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -279,11 +280,11 @@ public class MovPagarContas extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/extornar16.jpg"))); // NOI18N
-        jButton1.setText("Extornar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnExtornar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/extornar16.jpg"))); // NOI18N
+        btnExtornar.setText("Estornar");
+        btnExtornar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnExtornarActionPerformed(evt);
             }
         });
 
@@ -297,7 +298,7 @@ public class MovPagarContas extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(91, 91, 91)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnExtornar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
@@ -314,7 +315,7 @@ public class MovPagarContas extends javax.swing.JDialog {
                     .addComponent(btnGravar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnExtornar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -385,12 +386,20 @@ public class MovPagarContas extends javax.swing.JDialog {
         if (jTable1.getSelectedRow() >= 0)
         {////Tipo, Cb barra, valor, data, codigo
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
-            txtCodigo.setText(""+model.getValueAt(jTable1.getSelectedRow(), 4));
-            txtTipo.setText(""+model.getValueAt(jTable1.getSelectedRow(), 0));
-            txtObs.setText(""+model.getValueAt(jTable1.getSelectedRow(), 1));
-            txtValor.setText(""+model.getValueAt(jTable1.getSelectedRow(), 2));
-            lbData.setText(""+model.getValueAt(jTable1.getSelectedRow(), 3));
-            LocalComponentsCtrl(true);
+            if(ldc.checarParcela(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 4))))
+            {
+                txtCodigo.setText(""+model.getValueAt(jTable1.getSelectedRow(), 4));
+                txtTipo.setText(""+model.getValueAt(jTable1.getSelectedRow(), 0));
+                txtObs.setText(""+model.getValueAt(jTable1.getSelectedRow(), 1));
+                txtValor.setText(""+model.getValueAt(jTable1.getSelectedRow(), 2));
+                lbData.setText(""+model.getValueAt(jTable1.getSelectedRow(), 3));
+                LocalComponentsCtrl(true);
+            }
+            else
+            {
+                m.InformationMessage("Exixte parcelas anteriores que ainda não foram pagos!", "Informação");
+            }
+
         }
         else
         {
@@ -485,9 +494,41 @@ public class MovPagarContas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // Localizar e realizar o extorno
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnExtornarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExtornarActionPerformed
+               ConsultaPadrao consEstornoCP = new ConsultaPadrao(null, true);
+        String[] vet = new String[5];
+        vet[0] = "Data Vencimento";
+        vet[1] = "Periodo Vencimento";
+        vet[2] = "Data Pagamento";
+        vet[3] = "Periodo Pagamento";
+        vet[4] = "Tudo";
+        consEstornoCP.configuraOpcoes(vet, 5, 4, "CEstornoCP", false);
+        consEstornoCP.verificaconsulta(true);
+        consEstornoCP.setVisible(true);
+        if (consEstornoCP.getCodigo() != 0)
+        {
+            if(ldc.extornarValor(consEstornoCP.getCodigo()))
+            {
+                m.InformationMessage("Estornado com sucesso!", "Informação");
+                try {
+                    ldc.carregarTabela(jTable1);
+                } catch (SQLException ex) {
+                    Logger.getLogger(MovPagarContas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else
+            {
+                m.ErroMessage("Não pode ser retornado pelo fato do caixa estar fechado!", "Atenção");
+            }
+
+            consEstornoCP.dispose();
+        }
+        else
+        {
+            consEstornoCP.dispose();
+            btnExtornar.requestFocus();
+        }
+    }//GEN-LAST:event_btnExtornarActionPerformed
 
     private void btnlocCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlocCaixaActionPerformed
         ConsultaPadrao consCaixaGeral = new ConsultaPadrao(null, true);
@@ -523,11 +564,11 @@ private void LocalComponentsCtrl(boolean flag)
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnExtornar;
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnlocCaixa;
     private br.com.marciorl.beans.DateChooser dcDataPagamento;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;

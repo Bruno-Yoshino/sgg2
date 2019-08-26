@@ -4,6 +4,7 @@ import CamadaLogica.Banco;
 import CamadaLogica.ReadOnlyTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JTable;
 
@@ -202,6 +203,13 @@ public class ContaPagar {
         
         return Banco.getCon().manipular(sql);
     }
+    
+    public boolean alterarPEstorno(int codigo)
+    {
+        String sql = "update conta_pagar set cp_local = '', cp_dtpago = null, cp_valorp = 0, caixa_codigo = null where cp_codigo = "+codigo+";";
+        
+        return Banco.getCon().manipular(sql);
+    }
         
     public boolean alterarDespesa()
     {
@@ -218,7 +226,7 @@ public class ContaPagar {
         return Banco.getCon().manipular(sql);
     }
     
-    public ContaPagar buscarDados(String codigo)
+    public ContaPagar buscarDado(String codigo)
     {
         String sql = "SELECT cp_codigo, comp_codigo, tc_codigo, func_codigo, caixa_codigo, cp_data, cp_local, cp_valorc, cp_dtpago, cp_valorp, cp_nparcela, cp_datavencimento, cp_obs "
                     + "FROM conta_pagar "
@@ -239,7 +247,135 @@ public class ContaPagar {
         return null;
     }
     
-    public int buscarNParcela(String codigo)
+    public ArrayList<ContaPagar> retornaLista(String codigo)//Por Nparcela
+    {
+        ArrayList<ContaPagar> lista = new ArrayList<>();
+        String sql = "SELECT cp_codigo, comp_codigo, tc_codigo, func_codigo, caixa_codigo, cp_data, cp_local, cp_valorc, cp_dtpago, cp_valorp, cp_nparcela, cp_datavencimento, cp_obs "
+                    + "FROM conta_pagar "
+                    + "WHERE cp_nparcela = "+codigo+" "
+                    + "Order by cp_datavencimento;";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            while(rs.next()) 
+            {//int codigo, Compra comp, TipoConta tc, Funcionario func, Caixa c, Date dataL, String local, double valorC, Date dataP, double valorP, int parcela, Date dataV, String obs
+                 lista.add(new ContaPagar(rs.getInt(1), new Compra().buscaCompra(rs.getInt(2)), new TipoConta().buscarCodigo(rs.getInt(3)), new Funcionario().buscarCodigo(rs.getInt(4)), new Caixa().buscaCaixa(rs.getInt(5)), rs.getDate(6), rs.getString(7), rs.getDouble(8), rs.getDate(9), rs.getDouble(10), rs.getInt(11), rs.getDate(12), rs.getString(13)));
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return lista;
+    }
+    
+    public ArrayList<ContaPagar> retornaListaSPago(String codigo)//Por Nparcela Somente Pago
+    {
+        ArrayList<ContaPagar> lista = new ArrayList<>();
+        String sql = "SELECT cp_codigo, comp_codigo, tc_codigo, func_codigo, caixa_codigo, cp_data, cp_local, cp_valorc, cp_dtpago, cp_valorp, cp_nparcela, cp_datavencimento, cp_obs "
+                    + "FROM conta_pagar "
+                    + "WHERE (cp_codigo = "+codigo+" or cp_nparcela = "+codigo+") and cp_dtpago is not null "
+                    + "Order by cp_datavencimento;";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            while(rs.next()) 
+            {//int codigo, Compra comp, TipoConta tc, Funcionario func, Caixa c, Date dataL, String local, double valorC, Date dataP, double valorP, int parcela, Date dataV, String obs
+                 lista.add(new ContaPagar(rs.getInt(1), new Compra().buscaCompra(rs.getInt(2)), new TipoConta().buscarCodigo(rs.getInt(3)), new Funcionario().buscarCodigo(rs.getInt(4)), new Caixa().buscaCaixa(rs.getInt(5)), rs.getDate(6), rs.getString(7), rs.getDouble(8), rs.getDate(9), rs.getDouble(10), rs.getInt(11), rs.getDate(12), rs.getString(13)));
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return lista;
+    }
+    
+    public int buscarParcelas(int codigoI, int codigoF)
+    {
+         
+        String sql = "SELECT count(*) "
+                    + "FROM conta_pagar "
+                    + "WHERE cp_codigo >= "+codigoI+" and cp_codigo < "+codigoF+" and cp_dtpago is not null ";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                 return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+    
+    public int buscarCodigoMaxParcela(int codigo)//referente a parcela 
+    {
+         
+        String sql = "SELECT max(cp_codigo) "
+                    + "FROM conta_pagar "
+                    + "WHERE cp_nparcela = "+codigo+" ";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                 return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+    
+    public int buscarCodigoMaxParcelaCDtV(int parcela, Date dataV)
+    {
+         
+        String sql = "SELECT max(cp_codigo) "
+                    + "FROM conta_pagar "
+                    + "WHERE cp_nparcela = "+parcela+" and cp_datavencimento = '"+dataV+"' and cp_dtpago is null ";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                 return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+    
+    public int buscarCodigoMaxNaoPago(int codigo)
+    {
+         
+        String sql = "SELECT max(cp_codigo) "
+                    + "FROM conta_pagar "
+                    + "WHERE cp_nparcela = "+codigo+" and cp_dtpago is null ";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                 return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+    
+    public int buscarNParcela(String codigo)// busca somente o numero da parcela para manter na hora de gerar uma nova parcela
     {
         String sql = "SELECT cp_nparcela "
                     + "FROM conta_pagar "
@@ -248,7 +384,27 @@ public class ContaPagar {
         try 
         {
             if (rs.next()) 
-            {//int codigo, Compra comp, TipoConta tc, Funcionario func, Caixa c, Date dataL, String local, double valorC, Date dataP, double valorP, int parcela, Date dataV, String obs
+            {
+                return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+    
+    public int buscarQTDParcela(String codigo)
+    {
+        String sql = "SELECT count(*) "
+                    + "FROM conta_pagar "
+                    + "WHERE cp_nparcela = "+codigo+" ";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
                 return rs.getInt(1);
             }
         } 
@@ -266,6 +422,28 @@ public class ContaPagar {
                     + "WHERE cp_dtpago is null and caixa_codigo is null "
                     + "Order by cp_datavencimento;";
         return Banco.getCon().retornaResultSet(sql);
+    }
+    
+    public boolean buscaCaixa(int codigo)
+    {
+        //int codigo, Funcionario funcI, Funcionario funcF, double saldoI, double saldoF, double valorR, LocalDateTime data
+        String sql;
+        sql = "select * "
+                + " from caixa "
+                + " where caixa_codigo = "+codigo+" and func_fechar is null "; 
+                ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return true;
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
     
     public static ResultSet buscarDados(int codigo)
@@ -314,9 +492,27 @@ public class ContaPagar {
         return false;
     }
     
+    public int verificaPago(int codigo)
+    {
+        String sql = "select max(cp_codigo) from conta_pagar "
+                   + " where cp_nparcela = "+codigo+" and cp_dtpago is null";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return 0;
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+    
     public static ResultSet buscarDadosCLD(Date Inicio, Date Fim, int tipo)//CLancarDespesa
     {
-      
         String query = null;
         switch (tipo)
         {
@@ -344,7 +540,54 @@ public class ContaPagar {
         }
         return Banco.getCon().retornaResultSet(query);
     }
-    public static void configuraModelCLD(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
+    
+    public static ResultSet buscarDadosCEstornoCP(Date Inicio, Date Fim, int tipo)//CLancarDespesa
+    {
+        String query = null;
+        switch (tipo)
+        {
+            case 0: //Data vencimento
+            {
+                query = "SELECT cp_codigo, cp_valorc, cp_valorp, cp_datavencimento, cp_dtpago, cp_obs "
+                      + "FROM conta_pagar "
+                      + "WHERE cp_dtpago is not null and cp_datavencimento = '"+Inicio+"' "
+                      + "Order by cp_datavencimento;";                
+                break;
+            }
+            case 1://Periodo vencimento
+            {
+                query = "SELECT cp_codigo, cp_valorc, cp_valorp, cp_datavencimento, cp_dtpago, cp_obs "
+                      + "FROM conta_pagar "
+                      + "WHERE cp_dtpago is not null and cp_datavencimento BETWEEN '"+Inicio+"' and '"+Fim+"' "
+                      + "Order by cp_datavencimento;";                
+                break;
+            }
+            case 2://Data Pagamento
+            {
+                query = "SELECT cp_codigo, cp_valorc, cp_valorp, cp_datavencimento, cp_dtpago, cp_obs "
+                      + "FROM conta_pagar "
+                      + "WHERE cp_dtpago is not null and cp_dtpago BETWEEN '"+Inicio+"' and '"+Fim+"' "
+                      + "Order by cp_datavencimento;";                
+                break;
+            }
+            case 3://Periodo Pagamento
+            {
+                query = "SELECT cp_codigo, cp_valorc, cp_valorp, cp_datavencimento, cp_dtpago, cp_obs "
+                      + "FROM conta_pagar "
+                      + "WHERE cp_dtpago is not null and cp_dtpago BETWEEN '"+Inicio+"' and '"+Fim+"' "
+                      + "Order by cp_datavencimento;";                
+                break;
+            }
+            default:
+                    query = "SELECT cp_codigo, cp_valorc, cp_valorp, cp_datavencimento, cp_dtpago, cp_obs "
+                    + "FROM conta_pagar "
+                    + "WHERE cp_dtpago is not null "
+                    + "Order by cp_datavencimento;";    
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
+    public static void configuraModelCLD(JTable jTable) // CLancarDespesa
     {
         String colunas[] = new String [] {"Código", "Valor da Conta", "Data Vencimento", "Obs"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));
@@ -353,4 +596,17 @@ public class ContaPagar {
         jTable.getColumnModel().getColumn(2).setPreferredWidth(150);
         jTable.getColumnModel().getColumn(2).setPreferredWidth(300);
     }
+    
+    public static void configuraModelCEstornoCP(JTable jTable) 
+    {
+        String colunas[] = new String [] {"Código", "Valor da Conta", "Valor Pago", "Data Vencimento", "Data Pagamento", "Obs"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(300);
+    }
+    
 }
