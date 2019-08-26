@@ -413,7 +413,10 @@ public class LancarDespesaController
                 {
 
                 }
-                return lista.get(i-1).getDataP() != null;
+                if(i == 0)
+                    return lista.get(i).getDataP() != null;
+                else
+                    return lista.get(i-1).getDataP() != null;
             }
         }
     }

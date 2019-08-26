@@ -3,6 +3,8 @@ package CamadaApresentacao;
 import CamadaNegocio.Funcionario;
 import Controller.LancarDespesaController;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -495,6 +497,7 @@ public class MovDespesa extends javax.swing.JDialog {
         rbOp1ActionPerformed(null);
         op = 1;
         flag = 1;
+        dcDataVencimento.setData(Date.from(Instant.now()));
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

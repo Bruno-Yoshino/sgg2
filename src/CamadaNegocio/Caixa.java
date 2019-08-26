@@ -350,14 +350,14 @@ public class Caixa
             sql = "select caixa_codigo, caixa_nome, caixa_saldoinicio "
                 + " from caixa "
                 + " where func_fechar is null "               
-                + " oder by caixa_saldoinicio";
+                + " order by caixa_saldoinicio";
                 ResultSet rs=Banco.getCon().consultar(sql);
             return rs;
         }
         sql = "select caixa_codigo, caixa_nome, caixa_saldoinicio "
                 + " from caixa "
                 + " where caixa_nome ilike '%"+nome+"%' and func_fechar is null  "
-                + " oder by caixa_saldoinicio";
+                + " order by caixa_saldoinicio";
                 ResultSet rs=Banco.getCon().consultar(sql);
         return rs;
     }
