@@ -102,6 +102,10 @@ public class GerenciarParcela extends javax.swing.JDialog {
         btnAtualizar = new javax.swing.JButton();
         jLTexto7 = new javax.swing.JLabel();
         txtValorN = new javax.swing.JTextField();
+        jLTexto8 = new javax.swing.JLabel();
+        txtDataVencimento = new javax.swing.JTextField();
+        jLTexto9 = new javax.swing.JLabel();
+        dtNovo = new br.com.marciorl.beans.DateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -142,7 +146,10 @@ public class GerenciarParcela extends javax.swing.JDialog {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -300,7 +307,7 @@ public class GerenciarParcela extends javax.swing.JDialog {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLTexto6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLTexto6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLTexto6.setText("Valor da Parcela Atual:");
 
         txtValorV.setEditable(false);
@@ -343,20 +350,52 @@ public class GerenciarParcela extends javax.swing.JDialog {
             }
         });
 
+        jLTexto8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLTexto8.setText("Data de vencimento:");
+
+        txtDataVencimento.setEditable(false);
+        txtDataVencimento.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDataVencimento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDataVencimentoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDataVencimentoFocusLost(evt);
+            }
+        });
+        txtDataVencimento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtDataVencimentoKeyPressed(evt);
+            }
+        });
+
+        jLTexto9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLTexto9.setText("Nova Data:");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLTexto6)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLTexto6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtValorV, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLTexto8)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDataVencimento)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtValorV, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLTexto7)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLTexto9)
+                    .addComponent(jLTexto7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtValorN, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dtNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtValorN))
+                .addGap(10, 10, 10)
                 .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -372,6 +411,12 @@ public class GerenciarParcela extends javax.swing.JDialog {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLTexto6)
                         .addComponent(txtValorV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLTexto8)
+                    .addComponent(txtDataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLTexto9)
+                    .addComponent(dtNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -403,7 +448,13 @@ public class GerenciarParcela extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-
+        if (evt.getClickCount() == 2)
+        {
+            if (jTable1.getSelectedRow() >= 0)
+            {
+                btnAlterarActionPerformed(null);
+            }
+        }    
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void txtValorTFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorTFocusGained
@@ -464,6 +515,9 @@ public class GerenciarParcela extends javax.swing.JDialog {
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             txtValorV.setText(""+model.getValueAt(jTable1.getSelectedRow(), 1));
             txtValorN.setText("0");
+            txtDataVencimento.setText(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 2)));
+            dtNovo.setData(sc.StringDate(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 2))));
+            btnAtualizar.setEnabled(true);
         }
         else
         {
@@ -490,7 +544,22 @@ public class GerenciarParcela extends javax.swing.JDialog {
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        gpc.atualizarValor(txtValorN, jTable1, jTable1.getSelectedRow());
+        switch(gpc.varidarCamposAtualizar(txtValorN.getText(), dtNovo.getData(), dtData.getData()))
+        {
+            case 1: m.InformationMessage("Informe o Novo valor para a parcela! Não pode ser menor ou igula a 0!", "Informação");
+                    txtValorN.requestFocus();
+                    txtValorN.setText("0");
+                    break;
+            case 2: 
+                m.InformationMessage("A nova data não pode ser menor que a data de vencimento Expecificado no campo \"Data de Vencimento\"!", "Informação");
+                dtNovo.requestFocus();
+                dtNovo.setData(dtData.getData());
+                break;
+            default:
+                gpc.atualizarValor(txtValorN, jTable1, jTable1.getSelectedRow(), dtNovo.getData()); 
+                sc.limpar(jPanel3.getComponents());
+                btnAtualizar.setEnabled(false);
+        }
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void txtQtdPFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQtdPFocusLost
@@ -517,6 +586,18 @@ public class GerenciarParcela extends javax.swing.JDialog {
         flag = false;
     }//GEN-LAST:event_formWindowClosing
 
+    private void txtDataVencimentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDataVencimentoFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDataVencimentoFocusGained
+
+    private void txtDataVencimentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDataVencimentoFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDataVencimentoFocusLost
+
+    private void txtDataVencimentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDataVencimentoKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDataVencimentoKeyPressed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -526,17 +607,21 @@ public class GerenciarParcela extends javax.swing.JDialog {
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnGravar3;
     private br.com.marciorl.beans.DateChooser dtData;
+    private br.com.marciorl.beans.DateChooser dtNovo;
     private javax.swing.JLabel jLTexto;
     private javax.swing.JLabel jLTexto1;
     private javax.swing.JLabel jLTexto3;
     private javax.swing.JLabel jLTexto4;
     private javax.swing.JLabel jLTexto6;
     private javax.swing.JLabel jLTexto7;
+    private javax.swing.JLabel jLTexto8;
+    private javax.swing.JLabel jLTexto9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txtDataVencimento;
     private javax.swing.JTextField txtIntervalo;
     private javax.swing.JTextField txtQtdP;
     private javax.swing.JTextField txtValorN;

@@ -177,10 +177,40 @@ public class GerenciarParcelaController {
          return 0;
     }
     
-    public void atualizarValor(JTextField fd, JTable jTable, int linha)
+    public int varidarCamposAtualizar(String valor, Date dataN, Date dataVP)
     {
+        String var = valor;
+        if(!valor.contentEquals("\\,"))
+        {
+            var = valor.replaceAll("\\.", "");
+            var = var.replaceAll("\\,", "\\.");
+        }
+        if(v.ConverteNumeroReal(var) <= 0 && var.length() > 0)
+        {
+            return 1;
+        }
+        if(!v.ValidarDataDuasDataIgual(dataN, dataVP))
+        {
+            if(!v.ValidarDataDuasData(dataVP, dataN))
+                return 2;
+        }
+        return 0;
+    }
+    
+    public void atualizarValor(JTextField fd, JTable jTable, int linha, Date dataN)
+    {
+        String var = fd.getText();
+        if(!var.contentEquals("\\,"))
+        {
+            var = var.replaceAll("\\.", "");
+            var = var.replaceAll("\\,", "\\.");
+        }
+        String strDate;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        strDate = dateFormat.format(dataN);
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable.getModel();
-        model.setValueAt(fd.getText(), linha, 1);
+        model.setValueAt(var, linha, 1);
+        model.setValueAt(strDate, linha, 2);
     }
     
     public int check(JTable jTable, JTextField total)

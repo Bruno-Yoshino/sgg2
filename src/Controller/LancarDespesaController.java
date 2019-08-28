@@ -437,7 +437,7 @@ public class LancarDespesaController
         {
             ArrayList<ContaPagar> lista = new ContaPagar().retornaListaSPago(String.valueOf(codigo));
             int i;
-            for(i = 0; lista.get(i).getCodigo() != codigo; i++)
+            for(i = 0; lista.get(i).getCodigo() != codigo; i++) 
             {
                 
             }
@@ -448,16 +448,19 @@ public class LancarDespesaController
                 {
                     if(tempCodigo == lista.get(i).getCodigo())
                     {
-                        // Altera somente os seguinte dados: caixa_codigo = null, cp_dtpago = null, cp_valop = 0 where cp_codigo = lista.get(i).getCodigo();
                         cp.alterarPEstorno(codigo);
                         return true;
                     }
                     else
                     {
                         // Altera somente os seguinte dados: caixa_codigo = null, cp_dtpago = null, cp_valop = 0 where cp_codigo = lista.get(i).getCodigo(); && Excluir a proxima parcela
-                        cp.alterarPEstorno(codigo);
-                        cp.excluir(tempCodigo);
-                        return true;
+                        if(cp.buscarCodigoMaxParcelaPaga(lista.get(i).getParcela(), lista.get(i).getDataV(), v.ConverteNumeroInteiro(codigo)) == codigo)
+                        {
+                            cp.alterarPEstorno(codigo);
+                            cp.excluir(tempCodigo);
+                            return true;
+                        }
+                        return false;
                     }
                 }
                 else
@@ -470,6 +473,5 @@ public class LancarDespesaController
                 return false;
             }
         }
-
     }
 }

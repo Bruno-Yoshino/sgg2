@@ -275,7 +275,7 @@ public class ContaPagar {
         String sql = "SELECT cp_codigo, comp_codigo, tc_codigo, func_codigo, caixa_codigo, cp_data, cp_local, cp_valorc, cp_dtpago, cp_valorp, cp_nparcela, cp_datavencimento, cp_obs "
                     + "FROM conta_pagar "
                     + "WHERE (cp_codigo = "+codigo+" or cp_nparcela = "+codigo+") and cp_dtpago is not null "
-                    + "Order by cp_datavencimento;";
+                    + "Order by cp_datavencimento asc;";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
@@ -339,6 +339,27 @@ public class ContaPagar {
         String sql = "SELECT max(cp_codigo) "
                     + "FROM conta_pagar "
                     + "WHERE (cp_nparcela = "+parcela+" or cp_nparcela = "+codigo+") and cp_datavencimento = '"+dataV+"' and cp_dtpago is null ";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                 return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+    
+    public int buscarCodigoMaxParcelaPaga(int parcela, Date dataV, int codigo)
+    {
+         
+        String sql = "SELECT max(cp_codigo) "
+                    + "FROM conta_pagar "
+                    + "WHERE (cp_nparcela = "+parcela+" or cp_nparcela = "+codigo+") and cp_datavencimento = '"+dataV+"' and cp_dtpago is not null ";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
@@ -465,7 +486,7 @@ public class ContaPagar {
             {
                 return rs.getInt(1);
             }
-        } 
+        }
         catch (SQLException e) 
         {
             System.out.println(e.getMessage());
