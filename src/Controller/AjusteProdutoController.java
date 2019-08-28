@@ -84,6 +84,7 @@ public class AjusteProdutoController
         if(servico.equals(""))
             return 6;
         ap.setFlag(flag);
+
         ap.setObs(obs);
         ap.setData(data);
         return 0;

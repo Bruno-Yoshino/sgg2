@@ -1045,7 +1045,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void txtValorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusGained
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtValorFocusGained
 
     private void spQtdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spQtdFocusGained
@@ -1053,35 +1053,35 @@ public class MovOrcamneto extends javax.swing.JDialog {
         {
             spQtd.setValue(sc.removeCharacter(String.valueOf(spQtd.getValue()), String.valueOf(spQtd.getValue()).length()-1));
         }
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_spQtdFocusGained
 
     private void txtCustoPFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoPFocusGained
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtCustoPFocusGained
 
     private void txtCustoIFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoIFocusGained
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtCustoIFocusGained
 
     private void txtCustoAcabFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoAcabFocusGained
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtCustoAcabFocusGained
 
     private void txtCustoArtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoArtFocusGained
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtCustoArtFocusGained
 
     private void txtCustoChapFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoChapFocusGained
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtCustoChapFocusGained
 
     private void txtCustoMdOFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoMdOFocusGained
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtCustoMdOFocusGained
 
     private void txtDescontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescontoFocusGained
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtDescontoFocusGained
 
     private void txtValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorActionPerformed
@@ -1133,6 +1133,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
          default: 
              oc.addTabelaServico(jTable1, linha);
              txtValorT.setText(""+oc.calculoTotal(jTable1));
+             clearLocalComponents();
              linha = -1;
              //Limpar os campo
      }
@@ -1146,6 +1147,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         sc.Edity(jPanel2.getComponents());
         txtValorT.setText("0");
         txtCodigo.setText("0");
+        clearLocalComponents();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnAlterarServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarServicoActionPerformed
@@ -1180,6 +1182,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         {
             m.InformationMessage("Excluido com Sucesso", "Informação");
             txtValorT.setText(""+oc.calculoTotal(jTable1));
+            clearLocalComponents();
         }
     }//GEN-LAST:event_btnExcluirServiActionPerformed
 
@@ -1377,39 +1380,39 @@ public class MovOrcamneto extends javax.swing.JDialog {
     }//GEN-LAST:event_txtCodigoFocusLost
 
     private void txtValorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusLost
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtValorFocusLost
 
     private void spQtdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spQtdFocusLost
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_spQtdFocusLost
 
     private void txtCustoPFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoPFocusLost
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtCustoPFocusLost
 
     private void txtCustoIFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoIFocusLost
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtCustoIFocusLost
 
     private void txtCustoAcabFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoAcabFocusLost
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtCustoAcabFocusLost
 
     private void txtCustoArtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoArtFocusLost
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtCustoArtFocusLost
 
     private void txtCustoChapFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoChapFocusLost
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtCustoChapFocusLost
 
     private void txtCustoMdOFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoMdOFocusLost
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtCustoMdOFocusLost
 
     private void txtDescontoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescontoFocusLost
-        txtValor_total.setText(""+oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()));
+        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
     }//GEN-LAST:event_txtDescontoFocusLost
 
     private void cbDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDescricaoActionPerformed
@@ -1430,7 +1433,9 @@ public class MovOrcamneto extends javax.swing.JDialog {
         txtCustoP.setText("0");
         txtDesconto.setText("0");
         txtValor.setText("0");
-        spQtd.setValue("0");
+        spQtd.setValue(0);
+        txtValor_total.setText("0");
+        txtDescricao.setText("");
     }
     
     private void startDescricao()

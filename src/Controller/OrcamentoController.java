@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import util.SystemControl;
 import util.Validacao;
 import util.mensagens;
 
@@ -41,6 +42,7 @@ public class OrcamentoController {
     private final mensagens m = new mensagens(); 
     private Servico ser;
     private DetalheServico sd; 
+    private util.SystemControl sc;
     private int sequenceOS;
     private ArrayList<Orcamento_Servico> excluirS;
     private ArrayList<Integer> excluirSD;
@@ -57,6 +59,7 @@ public class OrcamentoController {
         excluirSDCodigo = new ArrayList<>();
         excluirDetalhes = new ArrayList<>();
         sequenceOS = 1;
+        sc = new SystemControl();
     }
 
     public Orcamento getO() {
@@ -168,9 +171,9 @@ public class OrcamentoController {
                     return 5;
                 break;
             case "VIAS":
-                if(numeracaoI.equals(""))
+                if(via.equals(""))
                     return 6;
-                if(v.ConverteNumeroInteiro(numeracaoI) <= 0)
+                if(v.ConverteNumeroInteiro(via) <= 0)
                     return 7;
                 break;
             case "OUTROS":
@@ -210,7 +213,7 @@ public class OrcamentoController {
                 temp.get(temp.size()-1).getCustoChapa(),
                 temp.get(temp.size()-1).getCustoMdO(),
                 temp.get(temp.size()-1).getDesconto(),
-                temp.get(temp.size()-1).getValor()*temp.get(temp.size()-1).getQtd()+temp.get(temp.size()-1).getCustoPapel()+temp.get(temp.size()-1).getCustoImpre()+temp.get(temp.size()-1).getCustoAcab()+temp.get(temp.size()-1).getCustoArte()+temp.get(temp.size()-1).getCustoChapa()+temp.get(temp.size()-1).getCustoMdO()-temp.get(temp.size()-1).getDesconto(),
+                sc.truncar(temp.get(temp.size()-1).getValor()*temp.get(temp.size()-1).getQtd()+temp.get(temp.size()-1).getCustoPapel()+temp.get(temp.size()-1).getCustoImpre()+temp.get(temp.size()-1).getCustoAcab()+temp.get(temp.size()-1).getCustoArte()+temp.get(temp.size()-1).getCustoChapa()+temp.get(temp.size()-1).getCustoMdO()-temp.get(temp.size()-1).getDesconto()),
                 temp.get(temp.size()-1).getDescricao()
             });
         }
@@ -226,7 +229,7 @@ public class OrcamentoController {
             model.setValueAt(temp.get(linha).getCustoChapa(), linha, 7);
             model.setValueAt(temp.get(linha).getCustoMdO(), linha, 8);
             model.setValueAt(temp.get(linha).getDesconto(), linha, 9);
-            model.setValueAt(temp.get(linha).getValor()*temp.get(linha).getQtd()+temp.get(linha).getCustoPapel()+temp.get(linha).getCustoImpre()+temp.get(linha).getCustoAcab()+temp.get(linha).getCustoArte()+temp.get(linha).getCustoChapa()+temp.get(linha).getCustoMdO()- temp.get(linha).getDesconto(), linha, 10);
+            model.setValueAt(sc.truncar(temp.get(linha).getValor()*temp.get(linha).getQtd()+temp.get(linha).getCustoPapel()+temp.get(linha).getCustoImpre()+temp.get(linha).getCustoAcab()+temp.get(linha).getCustoArte()+temp.get(linha).getCustoChapa()+temp.get(linha).getCustoMdO()- temp.get(linha).getDesconto()), linha, 10);
             model.setValueAt(temp.get(linha).getDescricao(), linha, 11);
         }
     }

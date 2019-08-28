@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package util;
 
 import CamadaLogica.ReadOnlyTableModel;
@@ -295,7 +290,7 @@ public class SystemControl
                                                     limpar(((JPanel) c1).getComponents());
                                                 else
                                                     if(c1 instanceof JSpinner)
-                                                        ((JSpinner) c1).setValue("0");
+                                                        ((JSpinner) c1).setValue(0);
                                             }
                                         }
                                     }

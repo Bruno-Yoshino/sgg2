@@ -510,7 +510,8 @@ public class MovPagarContas extends javax.swing.JDialog {
             if(ldc.extornarValor(consEstornoCP.getCodigo()))
             {
                 m.InformationMessage("Estornado com sucesso!", "Informação");
-                try {
+                try 
+                {
                     ldc.carregarTabela(jTable1);
                 } catch (SQLException ex) {
                     Logger.getLogger(MovPagarContas.class.getName()).log(Level.SEVERE, null, ex);
@@ -518,7 +519,7 @@ public class MovPagarContas extends javax.swing.JDialog {
             }
             else
             {
-                m.ErroMessage("Não pode ser retornado pelo fato do caixa estar fechado!", "Atenção");
+                m.ErroMessage("Não pode ser estornado!", "Atenção");
             }
 
             consEstornoCP.dispose();

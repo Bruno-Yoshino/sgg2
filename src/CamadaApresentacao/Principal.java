@@ -209,17 +209,17 @@ public class Principal extends javax.swing.JFrame {
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
         //ここで最初のリロード、残りはそれぞれの処理を終えた後。
        
-        try {
-            //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/Rekotyoku.wav").getAbsoluteFile());
-            //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/05 - Eight Minutes.wav").getAbsoluteFile());
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/Oda Nobuna no Yabou OST - Kishuu.wav").getAbsoluteFile());
-            clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.start();
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch(IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
-            System.out.println("Error with playing sound.");
-        }
+//        try {
+//            //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/Rekotyoku.wav").getAbsoluteFile());
+//            //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/05 - Eight Minutes.wav").getAbsoluteFile());
+//            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/Oda Nobuna no Yabou OST - Kishuu.wav").getAbsoluteFile());
+//            clip = AudioSystem.getClip();
+//            clip.open(audioInputStream);
+//            clip.start();
+//            clip.loop(Clip.LOOP_CONTINUOUSLY);
+//        } catch(IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
+//            System.out.println("Error with playing sound.");
+//        }
         
     }
 
@@ -977,7 +977,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cadEstadoActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        clip.stop();
+//        clip.stop();
         log.setVisible(true);
         dispose();
     }//GEN-LAST:event_jMenuItem13ActionPerformed
@@ -1055,7 +1055,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn10ActionPerformed
 
     private void btn11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn11ActionPerformed
-        clip.stop();
+//        clip.stop();
         log.setVisible(true);
         dispose();
     }//GEN-LAST:event_btn11ActionPerformed

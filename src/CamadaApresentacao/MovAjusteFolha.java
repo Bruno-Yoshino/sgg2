@@ -131,7 +131,7 @@ public class MovAjusteFolha extends javax.swing.JDialog
         lbTexto.setText("Quantidade a ser retirado:");
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel5.setText("Servioço utilizado:");
+        jLabel5.setText("Serviço utilizado:");
 
         txtServico.setEditable(false);
         txtServico.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -162,7 +162,7 @@ public class MovAjusteFolha extends javax.swing.JDialog
         });
 
         rbincrement.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        rbincrement.setText("Adidiconar");
+        rbincrement.setText("Adicionar");
         rbincrement.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 rbincrementStateChanged(evt);
@@ -452,7 +452,7 @@ public class MovAjusteFolha extends javax.swing.JDialog
         {
             case 1:  m.InformationMessage("Informe a quantidade!", "Informação"); txtqtd.requestFocus(); break;
             case 2:  m.InformationMessage("Quanridade negativa!", "Informação"); txtqtd.requestFocus(); break;
-            //case 3:  m.InformationMessage("Informe a observação!", "Informação"); txtObs.requestFocus();break;
+            case 3:  m.InformationMessage("Informe a observação!", "Informação"); txtObs.requestFocus();break;
             case 4:  m.InformationMessage("A quantidade informada é maior que a quantidade existente no estoque!", "Informação"); txtqtd.requestFocus(); break;
             case 5:  m.InformationMessage("Informe a Folha!", "Informação"); btnlocFolha.requestFocus(); break;
             case 6:  m.InformationMessage("Informe o Serviço!", "Informação"); btnlocServico.requestFocus(); break;

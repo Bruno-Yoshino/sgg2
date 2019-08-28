@@ -252,7 +252,7 @@ public class ContaPagar {
         ArrayList<ContaPagar> lista = new ArrayList<>();
         String sql = "SELECT cp_codigo, comp_codigo, tc_codigo, func_codigo, caixa_codigo, cp_data, cp_local, cp_valorc, cp_dtpago, cp_valorp, cp_nparcela, cp_datavencimento, cp_obs "
                     + "FROM conta_pagar "
-                    + "WHERE cp_nparcela = "+codigo+" "
+                    + "WHERE (cp_nparcela = "+codigo+" or cp_codigo = "+codigo+") and cp_dtpago is null "
                     + "Order by cp_datavencimento;";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
@@ -333,12 +333,12 @@ public class ContaPagar {
         return 0;
     }
     
-    public int buscarCodigoMaxParcelaCDtV(int parcela, Date dataV)
+    public int buscarCodigoMaxParcelaCDtV(int parcela, Date dataV, int codigo)
     {
          
         String sql = "SELECT max(cp_codigo) "
                     + "FROM conta_pagar "
-                    + "WHERE cp_nparcela = "+parcela+" and cp_datavencimento = '"+dataV+"' and cp_dtpago is null ";
+                    + "WHERE (cp_nparcela = "+parcela+" or cp_nparcela = "+codigo+") and cp_datavencimento = '"+dataV+"' and cp_dtpago is null ";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
@@ -456,7 +456,7 @@ public class ContaPagar {
     
     public double saldoRetirado(int codigo)
     {
-        String sql = "select sum(cp_valorc) from conta_pagar "
+        String sql = "select sum(cp_valorp) from conta_pagar "
                    + " where caixa_codigo = "+codigo+"";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 

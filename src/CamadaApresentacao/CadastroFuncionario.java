@@ -713,7 +713,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if(fc.checkADMCount() && cbAdm.isSelected())
         {
-            m.ErroMessage("Nao pode demitido pelo fato de ter somente um Administrador", "Erro");
+            m.ErroMessage("Não pode demitido pelo fato de ter somente um Administrador", "Erro");
         }
         else
         {

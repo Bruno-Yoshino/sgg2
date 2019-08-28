@@ -64,6 +64,7 @@ public class AjusteFolhaController
             return 5;
         if(servico.equals(""))
             return 6;
+
         af.setFlag(flag);
         af.setObs(obs);
         af.setData(data);

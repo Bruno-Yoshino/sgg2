@@ -1,7 +1,24 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+CREATE FUNCTION AtualizarEstoqueFolha(codC Integer, codF Integer) RETURNS boolean AS $$
+Declare 
+  qtd int;
+  estoque int;
+  qtdC int;
+  resultado int;
+  
+Begin
+	Select sum(pf.pf_qtd) into qtd from producao_folha pf, producao prod where pf.fo_codigo = codF and prod.prod_status = 4;
+	select fo_qtd into estoque from folha where fo_codigo = codF;
+	select compf_qtd into qtdC from compra_folha where comp_codigo = codC and fo_codigo = codF;
+	resultado := estoque - qtd - qtdC;
+	if resultado >= 0 then
+		update folha set fo_qtd = resultado where fo_codigo = codF;
+		return true;
+	else
+		return false;
+	end if;
+End;
+$$ LANGUAGE plpgsql;
  */
 package CamadaNegocio;
 

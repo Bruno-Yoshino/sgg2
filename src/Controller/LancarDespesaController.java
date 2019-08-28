@@ -202,7 +202,11 @@ public class LancarDespesaController
         cp.setDataV(dataV);
         cp.setLocal("");
 //        if(obs.equals("Nova Parcela."))
-            cp.setParcela(cp.buscarNParcela(codigo));
+        int i =  cp.buscarNParcela(codigo);
+        if(i == 0)
+            cp.setParcela(v.ConverteNumeroInteiro(codigo));
+        else
+            cp.setParcela(v.ConverteNumeroInteiro(i));
 //        else
 //            cp.setParcela(v.ConverteNumeroInteiro(codigo));
         cp.setObs("Nova Parcela.");
@@ -269,7 +273,7 @@ public class LancarDespesaController
             return 2;
         }
         
-        if(v.ConverteNumeroReal(saldo) - v.ConverteNumeroReal(valorPag) <= 0)
+        if(v.ConverteNumeroReal(saldo) - v.ConverteNumeroReal(valorPag) < 0)
             return 4;
         
         if(caixaS.equals(""))
@@ -414,9 +418,9 @@ public class LancarDespesaController
 
                 }
                 if(i == 0)
-                    return lista.get(i).getDataP() != null;
+                    return lista.get(i).getDataP() == null;
                 else
-                    return lista.get(i-1).getDataP() != null;
+                    return false;
             }
         }
     }
@@ -431,7 +435,7 @@ public class LancarDespesaController
         }
         else
         {
-            ArrayList<ContaPagar> lista = new ContaPagar().retornaListaSPago(String.valueOf(temp.getParcela()));
+            ArrayList<ContaPagar> lista = new ContaPagar().retornaListaSPago(String.valueOf(codigo));
             int i;
             for(i = 0; lista.get(i).getCodigo() != codigo; i++)
             {
@@ -439,8 +443,8 @@ public class LancarDespesaController
             }
             if(i == lista.size() - 1)
             {
-                int tempCodigo = cp.buscarCodigoMaxParcelaCDtV(lista.get(i).getParcela(), lista.get(i).getDataV());
-                if(tempCodigo == 0 && temp.buscaCaixa(lista.get(i).getC().getCodigo()))
+                int tempCodigo = cp.buscarCodigoMaxParcelaCDtV(lista.get(i).getParcela(), lista.get(i).getDataV(), v.ConverteNumeroInteiro(codigo));
+                if(temp.buscaCaixa(lista.get(i).getC().getCodigo()))
                 {
                     if(tempCodigo == lista.get(i).getCodigo())
                     {
