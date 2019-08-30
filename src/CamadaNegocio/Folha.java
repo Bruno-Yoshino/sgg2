@@ -106,8 +106,8 @@ public class Folha {
         String sql;
         if(this.codigo == 0)
         {
-            sql = "insert into folha (fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao, fo_qtd) "
-                    + "values ('"+this.getTamanho()+"', '"+this.status+"', 0, "+this.altura+", "+this.largura+", '"+this.descricao+"', 0)";
+            sql = "insert into folha (fo_tamanho, fo_status, fo_qtd, fo_altura, fo_largura, fo_descricao) "
+                    + "values ('"+this.getTamanho()+"', '"+this.status+"', 0, "+this.altura+", "+this.largura+", '"+this.descricao+"')";
         }
         else
         {

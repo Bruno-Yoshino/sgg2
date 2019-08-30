@@ -1036,7 +1036,6 @@ public class MovOrcamneto extends javax.swing.JDialog {
        sc.limparTabela(jTable2);
        flag = true;
        linha = -1;
-       oc.clearSequenceNumber();
        oc.limpaLista();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -1250,8 +1249,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
                         {
                             oc.UpdateNumberOrcamento();
                             if(oc.gravarOrcemntoServico())
-                                if(oc.gravarOrcamentoServicoDetalhe())
-                                {
+                            {
                                     m.InformationMessage("Gravado com Sucesso", "Informação");
                                     sc.limpar(jPanel1.getComponents());
                                     sc.limparTabela(jTable1);
@@ -1260,9 +1258,8 @@ public class MovOrcamneto extends javax.swing.JDialog {
                                     //flag = true;
                                     linha = -1;
                                     oc.limpaLista();
-                                    oc.clearSequenceNumber();
                                     sc.Initialize(jPanel2.getComponents());
-                                }
+                            }   
 //                                else
 //                                    m.ErroMessage("ERRO", "ERRO3");
 //                            else
@@ -1289,7 +1286,6 @@ public class MovOrcamneto extends javax.swing.JDialog {
                             sc.HabilityComponents(jPanel1.getComponents(), false);
                             flag = true;
                             linha = -1;
-                            oc.clearSequenceNumber();
                             sc.Initialize(jPanel2.getComponents());
                                 
 //                                else

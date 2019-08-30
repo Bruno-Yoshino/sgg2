@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CamadaNegocio;
 
 import CamadaLogica.Banco;
@@ -20,6 +15,7 @@ import javax.swing.JTable;
  * @author 弐条
  * @author 七草
  */
+//insert into forma_pagamento (fpg_nome, fpg_status) values ('Dinheiro', true),('Cartão Credito', true),('Cartão Débito', true),('Cheque', true), ('Fiado', true)
 public class TipoConta {
     private int codigo;
     private String tipo;

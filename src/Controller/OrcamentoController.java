@@ -42,6 +42,7 @@ public class OrcamentoController {
     private final mensagens m = new mensagens(); 
     private Servico ser;
     private DetalheServico sd; 
+    private Orcamento_Servico os;
     private util.SystemControl sc;
     private int sequenceOS;
     private ArrayList<Orcamento_Servico> excluirS;
@@ -58,7 +59,7 @@ public class OrcamentoController {
         excluirSD = new ArrayList<>();
         excluirSDCodigo = new ArrayList<>();
         excluirDetalhes = new ArrayList<>();
-        sequenceOS = 1;
+        os = new Orcamento_Servico();
         sc = new SystemControl();
     }
 
@@ -142,9 +143,9 @@ public class OrcamentoController {
         if(v.ConverteNumeroReal(desconto) < 0)
             return 11;
         if(linha == -1)
-            temp.add(new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, sequenceOS++, new ArrayList<>(), 0));
+            temp.add(new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, 0, new ArrayList<>()));
         else
-            temp.add(linha, new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>(), 0));
+            temp.add(linha, new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>()));
         
         o.setLista(temp);
         return 0;
@@ -386,10 +387,7 @@ public class OrcamentoController {
         }
     }
     
-    public void clearSequenceNumber()
-    {
-        sequenceOS = 1;
-    }
+
     
     public void limpaLista()
     {
@@ -436,23 +434,29 @@ public class OrcamentoController {
         for(int i = 0; i < o.getLista().size() && control; i++)
         {
             control = o.getLista().get(i).gravar(o.getCodigo());
-            o.getLista().get(i).setCodigo(new Orcamento_Servico().buscarUltimoCodigo());
+            //retornar o codigo da sequencia e em seguida grava o Detalhe
+            for(int x = 0; x < o.getLista().get(i).getLista().size(); x++ )
+            {
+                o.getLista().get(i).getLista().get(x).setSequence(os.maxSequencia());
+                o.getLista().get(i).getLista().get(x).gravar(o.getCodigo(), o.getLista().get(i).getServ().getCodigo(), o.getLista().get(i).getSequence());
+            }
+            //o.getLista().get(i).setCodigo(new Orcamento_Servico().buscarUltimoCodigo());
         }
         return control;
     }
     
-    public boolean gravarOrcamentoServicoDetalhe()
-    {
-        boolean control = true;
-        for(int i = 0; i < o.getLista().size() && control; i++)
-        {
-            for(int y = 0; y < o.getLista().get(i).getLista().size() && control; y++)
-            {
-                control = o.getLista().get(i).getLista().get(y).gravar(o.getCodigo(), o.getLista().get(i).getServ().getCodigo(), o.getLista().get(i).getCodigo());
-            }
-        }
-        return control;
-    }
+//    public boolean gravarOrcamentoServicoDetalhe()
+//    {
+//        boolean control = true;
+//        for(int i = 0; i < o.getLista().size() && control; i++)
+//        {
+//            for(int y = 0; y < o.getLista().get(i).getLista().size() && control; y++)
+//            {
+//                control = o.getLista().get(i).getLista().get(y).gravar(o.getCodigo(), o.getLista().get(i).getServ().getCodigo(), o.getLista().get(i).getLista().get(i).getSequence());
+//            }
+//        }
+//        return control;
+//    }
     
     public boolean alterarOrcamentoServico()
     {
@@ -477,7 +481,7 @@ public class OrcamentoController {
                 if(o.getLista().get(i).getLista().get(y).ChecarExiste(o.getCodigo(), o.getLista().get(i).getSequence(), o.getLista().get(i).getLista().get(y).getDs().getCodigo()))
                     control = o.getLista().get(i).getLista().get(y).alterar(o.getCodigo(), o.getLista().get(i).getServ().getCodigo());
                 else
-                    control = o.getLista().get(i).getLista().get(y).gravar(o.getCodigo(), o.getLista().get(i).getServ().getCodigo(), o.getLista().get(i).getCodigo());
+                    control = o.getLista().get(i).getLista().get(y).gravar(o.getCodigo(), o.getLista().get(i).getServ().getCodigo(), o.getLista().get(i).getSequence());
             }
         }
         return control;

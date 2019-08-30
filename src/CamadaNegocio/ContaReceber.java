@@ -1,12 +1,10 @@
 package CamadaNegocio;
 
 import CamadaLogica.Banco;
-import CamadaLogica.ReadOnlyTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.JTable;
 
 /**
  *
@@ -25,8 +23,21 @@ public class ContaReceber {
     private double valor;
     private Date dataP;
     private double valorP;
+    private boolean flag;
 
     public ContaReceber() {
+        
+    }
+
+    public ContaReceber(int codigo, Pedido p, Date dataV, String obs, double valor, Date dataP, double valorP, boolean flag) {
+        this.codigo = codigo;
+        this.p = p;
+        this.dataV = dataV;
+        this.obs = obs;
+        this.valor = valor;
+        this.dataP = dataP;
+        this.valorP = valorP;
+        this.flag = flag;
     }
 
     public ContaReceber(int codigo, Pedido p, Date dataV, String obs, double valor, Date dataP, double valorP) {
@@ -97,14 +108,14 @@ public class ContaReceber {
     //--------------------------------------------------------------------------
     public boolean gravar()
     {
-        String sql = "INSERT INTO conta_receber (pe_codigo, cr_datavenc, cr_obs, cr_valor, cr_datapago, cr_vlorp) "
-                   + " values ("+p.getCodigo()+", '"+dataV+"', '', "+valor+", "+null+", "+0+");";
+        String sql = "INSERT INTO conta_receber (pe_codigo, cr_datavenc, cr_obs, cr_valor, cr_datapago, cr_vlorp, cr_flag) "
+                   + " values ("+p.getCodigo()+", '"+dataV+"', '', "+valor+", "+null+", "+0+", "+flag+");";
         return Banco.getCon().manipular(sql);
     }
     
     public boolean alterar()
     {
-        String sql = "update conta_receber set  cr_obs = '"+obs+"', cr_datapago = '"+dataP+"', cr_vlorp = "+valorP+" "
+        String sql = "update conta_receber set cr_obs = '"+obs+"', cr_datapago = '"+dataP+"', cr_vlorp = "+valorP+" "
                    + " where cr_codigo = "+codigo+";";
         return Banco.getCon().manipular(sql);
     }
@@ -119,7 +130,7 @@ public class ContaReceber {
     public ContaReceber buscaContaReceber(int codigo) throws SQLException
     {
         //int codigo, Pedido p, Date dataV, String obs, double valor, Date dataP, double valorP
-        String sql = "SELECT cr_codigo, pe_codigo, cr_datavenc, cr_obs, cr_valor, cr_datapago, cr_vlorp " +
+        String sql = "SELECT cr_codigo, pe_codigo, cr_datavenc, cr_obs, cr_valor, cr_datapago, cr_vlorp, cr_flag " +
                      " FROM public.conta_receber"
                    + " WHERE cr_codigo = "+codigo+";";
         ResultSet rs=Banco.getCon().consultar(sql);
@@ -127,7 +138,7 @@ public class ContaReceber {
         {
             if (rs.next()) 
             {
-                return new ContaReceber(rs.getInt(1), new Pedido().buscar(rs.getInt(2)), rs.getDate(3), rs.getString(4), rs.getDouble(5), rs.getDate(6), rs.getDouble(7));
+                return new ContaReceber(rs.getInt(1), new Pedido().buscar(rs.getInt(2)), rs.getDate(3), rs.getString(4), rs.getDouble(5), rs.getDate(6), rs.getDouble(7), rs.getBoolean(8));
             }
         } 
         catch (SQLException e) 
@@ -141,14 +152,14 @@ public class ContaReceber {
     public ContaReceber buscar(int codigo)
     {
         String sql;
-        sql = "select cr_codigo, pe_codigo, cr_datavenc, cr_obs, cr_valor, cr_datapago, cr_vlorp "
+        sql = "select cr_codigo, pe_codigo, cr_datavenc, cr_obs, cr_valor, cr_datapago, cr_vlorp, cr_boolean "
                 + " from conta_receber where cr_codigo = "+codigo+"";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
             if (rs.next()) 
             {
-                return new ContaReceber(rs.getInt(1), new Pedido().buscar(rs.getInt(2)), rs.getDate(3), rs.getString(4), rs.getDouble(5), rs.getDate(6), rs.getDouble(7));
+                return new ContaReceber(rs.getInt(1), new Pedido().buscar(rs.getInt(2)), rs.getDate(3), rs.getString(4), rs.getDouble(5), rs.getDate(6), rs.getDouble(7), rs.getBoolean(8));
             }
         } 
         catch (SQLException e) 
@@ -170,6 +181,27 @@ public class ContaReceber {
             while (rs.next()) 
             {
                 lista.add(rs.getInt(1));
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return lista;
+    }
+    
+    public ArrayList<ContaReceber> ListaContaReceber(int codigoP)
+    {
+        String sql;
+        ArrayList<ContaReceber> lista = new ArrayList<>();
+        sql = "select cr_codigo, pe_codigo, cr_datavenc, cr_obs, cr_valor, cr_datapago, cr_vlorp, cr_boolean "
+                + " from conta_receber where pe_codigo = "+codigoP+" order by cr_codigo";
+                ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            while (rs.next()) 
+            {
+                lista.add(new ContaReceber(rs.getInt(1), new Pedido().buscar(rs.getInt(2)), rs.getDate(3), rs.getString(4), rs.getDouble(5), rs.getDate(6), rs.getDouble(7), rs.getBoolean(8)));
             }
         } 
         catch (SQLException e) 

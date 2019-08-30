@@ -18,6 +18,8 @@ import java.sql.SQLException;
  * @author 天野
  * @author 紅葉
  */
+
+//insert into forma_pagamento (fpg_nome, fpg_status) values ('Dinheiro', true),('Cartão Credito', true),('Cartão Débito', true),('Cheque', true), ('Fiado', true)
 public class FormaPagamento {
     private int codigo;
     private String nome;

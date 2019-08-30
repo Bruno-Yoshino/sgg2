@@ -42,6 +42,7 @@ public class MovCaixaAbertura extends javax.swing.JDialog {
         ImageIcon icon = new ImageIcon(cc.getF().getCaminho());
         jLabel2.setIcon(new ImageIcon(icon.getImage().getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_DEFAULT))); // Utilizado para recuperar imagem.
         txtTamnho.setText(cc.getF().getNome()); 
+        dateChooser1.setEnabled(false);
     }
 
     /**

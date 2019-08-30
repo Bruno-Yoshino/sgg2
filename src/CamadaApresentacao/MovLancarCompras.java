@@ -30,6 +30,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
     private final SystemControl sc = new SystemControl();
     private final mensagens m = new mensagens();
     private final LancarCompraController lcc = new LancarCompraController();
+    private boolean flag;
     
     public MovLancarCompras(java.awt.Frame parent, boolean modal, Funcionario f) {
         super(parent, modal);
@@ -737,6 +738,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         txtvalorTotF.setText("0"); 
         txtvalorF.setText("0");
         txtvalortP.setText("0");
+        flag = true;
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -923,11 +925,20 @@ public class MovLancarCompras extends javax.swing.JDialog {
     }//GEN-LAST:event_btnaltPActionPerformed
 
     private void btnexcPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexcPActionPerformed
-        if(m.Pergunta("Deseja realmente Excluir esta Linha?", "Atenção") == JOptionPane.YES_OPTION)
+        if(flag)
         {
-            lcc.ExcluirLinha(tbP, txtvalorTotP, txtValorTF);
-            lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
-            m.InformationMessage("Excluido com Sucesso!", "Atenção");
+            if(m.Pergunta("Deseja realmente Excluir esta Linha?", "Atenção") == JOptionPane.YES_OPTION)
+            {
+                lcc.ExcluirLinha(tbP, txtvalorTotP, txtValorTF);
+                lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
+                m.InformationMessage("Excluido com Sucesso!", "Atenção");
+            }
+        }
+        else
+        {
+            //存在するのか確認。
+            //存在すれば、現在のストック数と新しく入力したストック数が　
+            //現在のストック-予約済みのストック数-新しく入力したストック数　＜０の場合、エラーを戻す。
         }
     }//GEN-LAST:event_btnexcPActionPerformed
 
@@ -990,7 +1001,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         vet[0] = "Tudo";
         vet[1] = "Data";
         vet[2] = "Periodo";
-        consCompra.configuraOpcoes(vet, 3, 0, "Compra", false);
+        consCompra.configuraOpcoes(vet, 3, 0, "CCompra", false);
         consCompra.verificaconsulta(true);
         consCompra.setVisible(true);
         if (consCompra.getCodigo() != 0)
@@ -1028,7 +1039,9 @@ public class MovLancarCompras extends javax.swing.JDialog {
     }//GEN-LAST:event_txtPrecoFFocusLost
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        // Realizar o triguer ao gravar
+        flag = false;
+        sc.HabilityComponents(jPanel1.getComponents(), true);
+        sc.Edity(jPanel2.getComponents());
     }//GEN-LAST:event_btnAlterarActionPerformed
 
 

@@ -1,17 +1,13 @@
 package Controller;
 
 import CamadaLogica.ReadOnlyTableModel;
-import CamadaNegocio.ContaPagar;
 import CamadaNegocio.ContaReceber;
 import CamadaNegocio.Pedido;
-import CamadaNegocio.TipoConta;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import util.SystemControl;
@@ -33,6 +29,10 @@ import util.mensagens;
  * @author ウィリアム
  * @author レレイナ
  */
+
+/*
+    ２０１９年０８月２９日: 鈴奈メモ：Conta_receberにboolean cr_flagを新たに追加してください。＜－データベース。
+*/
 public class ReceberContaController {
     private Validacao v = new Validacao();
     private ContaReceber cr;
@@ -184,6 +184,15 @@ public class ReceberContaController {
             }
         }
         return x;
+    }
+    
+    public boolean estornarValor(int codigoCR)
+    {
+        //確認方法、　CR_codigoを使用して情報の修得を行い、Pe_codigoで分割回数を習得する。
+        //分割数が0の場合はそのまま払い戻しを行う。そうでない場合は、ArrayListを使用してCP_codigoの位置を調べる. <-selectではOrder by cr_codigo
+        //消去する場合は一つ手前支払いを確認しそれが同じ日付とフラグがFalseなら消去。
+        //ListaContaReceberを使用してください。
+        return false;
     }
     
     private double PrimeiraParcela(int qtd, double valor)

@@ -193,7 +193,7 @@ public class LancarCompraController
         c.setLcp(cp.buscaCompraProduto(codigo));
     }   
     
-    public int Calcula(JTextField qtd, JTextField valor, JTextField total)//.replaceAll("\\.", "");
+    public int Calcula(JTextField qtd, JTextField valor, JTextField total)
     {
 //        String var = valor.getText();
 ////        var = var.replaceAll("\\.", "");
@@ -237,6 +237,11 @@ public class LancarCompraController
     
     public boolean excluir()
     {
+        //Verificar se existe Parcela paga!
+        if(c.buscaQtdParcelas(c.getCodigo()) > 0)
+        {
+            return false;
+        }
         //voltar o estoque
         if(c.excluirItens())
             return c.excluir();

@@ -466,6 +466,7 @@ public class ConsultaMov extends javax.swing.JDialog {
         switch(tabela)
         {
             case "Compra": Compra(); break; 
+            case "CCompra": CCompra(); break; 
             case "Orçamento": Orcamento(); break;
             case "Pedido": Pedido(); break;
         }
@@ -500,6 +501,33 @@ public class ConsultaMov extends javax.swing.JDialog {
             Compra.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             rs = Compra.ConsultaCompra(txtValor.getText(), tipo, dateInicio.getData(), dateFim.getData());
+            while (rs.next())
+            {
+                model.addRow(new Object[]
+                {//"Código", "Fornecedor", "Valor Total", "Data", "Funcionario"
+                    rs.getInt(1), 
+                    rs.getString(2),
+                    rs.getDouble(3),
+                    rs.getDate(4),
+                    rs.getString(5)
+                });
+            }
+        } 
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void CCompra() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            Compra.configuraModel(jTable1);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            rs = Compra.ConsultaCompraAE(txtValor.getText(), tipo, dateInicio.getData(), dateFim.getData());
             while (rs.next())
             {
                 model.addRow(new Object[]

@@ -87,6 +87,7 @@ public class MovReceberContas extends javax.swing.JDialog {
         btnCancelar = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
+        btnExtornar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -281,6 +282,14 @@ public class MovReceberContas extends javax.swing.JDialog {
             }
         });
 
+        btnExtornar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/extornar16.jpg"))); // NOI18N
+        btnExtornar.setText("Estornar");
+        btnExtornar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExtornarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -290,11 +299,13 @@ public class MovReceberContas extends javax.swing.JDialog {
                 .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnExtornar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -303,11 +314,14 @@ public class MovReceberContas extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSair, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
-                    .addComponent(btnGravar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSair, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnImprimir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnGravar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnExtornar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -461,10 +475,48 @@ public class MovReceberContas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnGravarActionPerformed
 
+    private void btnExtornarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExtornarActionPerformed
+        ConsultaPadrao consEstornoCR = new ConsultaPadrao(null, true);
+        String[] vet = new String[5];
+        vet[0] = "Data Vencimento";
+        vet[1] = "Periodo Vencimento";
+        vet[2] = "Data Pagamento";
+        vet[3] = "Periodo Pagamento";
+        vet[4] = "Tudo";
+        consEstornoCR.configuraOpcoes(vet, 5, 4, "CEstornoCP", false);
+        consEstornoCR.verificaconsulta(true);
+        consEstornoCR.setVisible(true);
+        if (consEstornoCR.getCodigo() != 0)
+        {
+            if(rcc.estornarValor(consEstornoCR.getCodigo()))
+            {
+                m.InformationMessage("Estornado com sucesso!", "Informação");
+                try
+                {
+                    rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
+                } catch (SQLException ex) {
+                    Logger.getLogger(MovPagarContas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else
+            {
+                m.ErroMessage("Não pode ser estornado!", "Atenção");
+            }
+
+            consEstornoCR.dispose();
+        }
+        else
+        {
+            consEstornoCR.dispose();
+            btnExtornar.requestFocus();
+        }
+    }//GEN-LAST:event_btnExtornarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnExtornar;
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnSair;

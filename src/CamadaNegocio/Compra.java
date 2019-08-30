@@ -134,6 +134,7 @@ public class Compra
         String sql = "delete form compra where comp_codigo = "+codigo+"";
         return Banco.getCon().manipular(sql);
     }
+    
     public boolean excluirItens()
     {
         String sql = "delete form compra_produto where comp_codigo = "+codigo+"; delete form compra_folha where comp_codigo = "+codigo+"";
@@ -200,6 +201,38 @@ public class Compra
         return Banco.getCon().retornaResultSet(query);
     }
     
+    public static ResultSet ConsultaCompraAE(String valor, int tipo, Date dataI, Date dataF)//AE = Alterar e Excluir
+    {
+        String query = null;
+        if (valor.equals(""))
+        {
+            query = "select c.comp_codigo, forn.forn_nome, c.comp_valortotal, c.comp_data, func.func_nome "
+                + " from compra c, fornecedor forn, funcionario func where func.func_codigo = c.func_codigo or forn_codigo = c.forn_codigo and (select count(*) from conta_pagar cp, compra c where c.comp_codigo = cp.comp_codigo) = 0 "
+                + " order by comp_codigo";
+        }
+        else
+        {
+            switch (tipo)
+            {
+                case 0:// data
+                {
+                    query = "select c.comp_codigo, forn.forn_nome, c.comp_valortotal, c.comp_data, func.func_nome "
+                             + " from compra c, fornecedor forn, funcionario func "
+                            + "where comp_data = '"+dataI+"' and (func.func_codigo = c.func_codigo and forn_codigo = c.forn_codigo) and (select count(*) from conta_pagar cp, compra c where c.comp_codigo = cp.comp_codigo) = 0 order by comp_codigo";
+                    break;
+                }
+                case 1:// periodo
+                {
+                    query = "select c.comp_codigo, forn.forn_nome, c.comp_valortotal, c.comp_data, func.func_nome "
+                             + " from compra c, fornecedor forn, funcionario func "
+                            + "where comp_data BETWEEN '"+dataI+"' and '"+dataF+"' and func.func_codigo = c.func_codigo and forn_codigo = c.forn_codigo and (select count(*) from conta_pagar cp, compra c where c.comp_codigo = cp.comp_codigo) = 0 order by comp_codigo";
+                    break;
+                }
+            }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
     public Compra buscaCompra(int codigo)
     {
         String sql;
@@ -220,7 +253,27 @@ public class Compra
         return null;
     }
     
-
+    public int buscaQtdParcelas(int codigo)
+    {
+        String sql;
+        sql = "select count(*) "
+                + " from conta_pagar where comp_codigo = "+codigo+" and cp_dtpago is not null;";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {//int codigo, Fornecedor f, Funcionario func, double valort, Date data, ArrayList<Compra_Folha> lcf, ArrayList<Compra_Produto> lcp
+            if (rs.next()) 
+            {
+                return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return -1;
+    }
+    
+    
     
     public static ResultSet ConsultaCompraItem(int codigo, int tipo)
     {
