@@ -541,7 +541,7 @@ public class ContaPagar {
             {
                 query = "SELECT cp_codigo, comp_codigo, cp_data, cp_local, cp_valorc, cp_dtpago, cp_valorp, cp_nparcela, tc_codigo, func_codigo, caixa_codigo, cp_datavencimento, cp_obs "
                       + "FROM conta_pagar "
-                      + "WHERE cp_dtpago is null and cp_datavencimento = '"+Inicio+"' "
+                      + "WHERE cp_dtpago is null and cp_datavencimento = '"+Inicio+"' and comp_codigo is null "
                       + "Order by cp_datavencimento;";                
                 break;
             }
@@ -549,14 +549,14 @@ public class ContaPagar {
             {
                 query = "SELECT cp_codigo, comp_codigo, cp_data, cp_local, cp_valorc, cp_dtpago, cp_valorp, cp_nparcela, tc_codigo, func_codigo, caixa_codigo, cp_datavencimento, cp_obs "
                       + "FROM conta_pagar "
-                      + "WHERE cp_dtpago is null and cp_datavencimento BETWEEN '"+Inicio+"' and '"+Fim+"' "
+                      + "WHERE cp_dtpago is null and cp_datavencimento BETWEEN '"+Inicio+"' and '"+Fim+"' and comp_codigo is null "
                       + "Order by cp_datavencimento;";                
                 break;
             }
             default:
                     query = "SELECT cp_codigo, comp_codigo, cp_data, cp_local, cp_valorc, cp_dtpago, cp_valorp, cp_nparcela, tc_codigo, func_codigo, caixa_codigo, cp_datavencimento, cp_obs "
                     + "FROM conta_pagar "
-                    + "WHERE cp_dtpago is null "
+                    + "WHERE cp_dtpago is null and comp_codigo is null "
                     + "Order by cp_datavencimento;";    
         }
         return Banco.getCon().retornaResultSet(query);

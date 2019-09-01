@@ -238,16 +238,27 @@ public class OrcamentoController {
     public void addTabelaServicoDetalhe(JTable tabela, int linha)// まだ  =>> OK 2019/06/29
     {
         ArrayList<Orcamento_Servico> temp = o.getLista();
+        ArrayList<Orcamento_Servico_Detalhe> osdtemp = o.getLista().get(linha).getLista();
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        
 //        if(linha == -1)
 //        {
+//            model.addRow(new Object[]{
+//                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getDs().getDescricao(),
+//                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getVias(),
+//                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getNumeracaoI(),
+//                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getNumeracaoF(),
+//                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getOutros(),
+//                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getDs().getCodigo()
+//            });
+            
             model.addRow(new Object[]{
-                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getDs().getDescricao(),
-                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getVias(),
-                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getNumeracaoI(),
-                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getNumeracaoF(),
-                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getOutros(),
-                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getDs().getCodigo()
+                osdtemp.get(osdtemp.size()-1).getDs().getDescricao(),
+                osdtemp.get(osdtemp.size()-1).getVias(),
+                osdtemp.get(osdtemp.size()-1).getNumeracaoI(),
+                osdtemp.get(osdtemp.size()-1).getNumeracaoF(),
+                osdtemp.get(osdtemp.size()-1).getOutros(),
+                osdtemp.get(osdtemp.size()-1).getDs().getCodigo()
             });
 //        }
 //        else

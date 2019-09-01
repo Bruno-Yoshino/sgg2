@@ -93,27 +93,27 @@ public class Pedido_Servico_Detalhe {
         return sql;
     }
     
-    public boolean gravar(int codigoP, int codigoS, int codigoPS)
+    public boolean gravar(int codigoP, int codigoS)
     {
         String sql =  "INSERT INTO pedido_servico_detalhe(" +
-                    " pe_codigo, serv_codigo, ds_codigo, psd_numeracaoini, psd_numeracaofim, psd_vias, psd_outros, ps_sequence, ps_codigo) " +
-                    " VALUES ("+codigoP+", "+codigoS+", "+ds.getCodigo()+", "+numeracaoI+", "+numeracaoF+", "+vias+", '"+outros+"', "+sequence+", "+codigoPS+");";
+                    " pe_codigo, serv_codigo, ds_codigo, psd_numeracaoini, psd_numeracaofim, psd_vias, psd_outros, ps_sequence) " +
+                    " VALUES ("+codigoP+", "+codigoS+", "+ds.getCodigo()+", "+numeracaoI+", "+numeracaoF+", "+vias+", '"+outros+"', "+sequence+");";
         return Banco.getCon().manipular(sql);
     }
     
-    public boolean gravar2(int codigoP, int codigoS, int codigoPS)
+    public boolean gravar2(int codigoP, int codigoS)
     {
          String sql =  "INSERT INTO pedido_servico_detalhe( " +
-                    " pe_codigo, serv_codigo, ds_codigo, psd_numeracaoini, psd_numeracaofim, psd_vias, psd_outros, ps_sequence, ps_codigo) " +
-                    " VALUES ("+codigoP+", "+codigoS+", "+ds.getCodigo()+", "+numeracaoI+", "+numeracaoF+", "+vias+", '"+outros+"', "+sequence+", "+codigoPS+");";
+                    " pe_codigo, serv_codigo, ds_codigo, psd_numeracaoini, psd_numeracaofim, psd_vias, psd_outros, ps_sequence) " +
+                    " VALUES ("+codigoP+", "+codigoS+", "+ds.getCodigo()+", "+numeracaoI+", "+numeracaoF+", "+vias+", '"+outros+"', "+sequence+");";
         return Banco.getCon().manipular(sql);
     }
     
-    public boolean alterar(int codigoP, int codigoS, int codigoPS)
+    public boolean alterar(int codigoP, int codigoS)
     {
         String sql =  "UPDATE pedido_servico_detalhe" +
                       " SET serv_codigo="+codigoS+", ds_codigo="+ds.getCodigo()+", psd_numeracaoini="+numeracaoI+", psd_numeracaofim="+numeracaoF+", psd_vias="+vias+", psd_outros='"+outros+"' " +
-                      " WHERE pe_codigo="+codigoP+" and ps_sequence="+sequence+"　and ps_codigo = "+codigoPS+";";
+                      " WHERE pe_codigo="+codigoP+" and ps_sequence="+sequence+";";
         return Banco.getCon().manipular(sql);
     }
     

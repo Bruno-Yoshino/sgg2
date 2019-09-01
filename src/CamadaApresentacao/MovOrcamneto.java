@@ -1181,6 +1181,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         {
             m.InformationMessage("Excluido com Sucesso", "Informação");
             txtValorT.setText(""+oc.calculoTotal(jTable1));
+            sc.limparTabela(jTable2);
             clearLocalComponents();
         }
     }//GEN-LAST:event_btnExcluirServiActionPerformed
@@ -1351,6 +1352,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         sc.HabilityComponents(jPanel4.getComponents(), false);
         sc.Edity(jPanel2.getComponents());
         linha = -1;
+        clearLocalComponents();
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusLost

@@ -10,12 +10,14 @@ import CamadaNegocio.Compra;
 import CamadaNegocio.Orcamento;
 import CamadaNegocio.Pedido;
 import java.util.ArrayList;
+import util.SystemControl;
 
 /**
  *
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ
+ * @author アナスタシア
  * @author 阿賀野
  * @author 矢矧
  * @author 磐手
@@ -33,6 +35,7 @@ public class ConsultaMov extends javax.swing.JDialog {
     private final int x, y;
     boolean jtableEditavel;
     private ArrayList<Integer> listaSequence;
+    private util.SystemControl sc = new SystemControl();
 
     public ConsultaMov(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -345,6 +348,7 @@ public class ConsultaMov extends javax.swing.JDialog {
         this.posDefault = posDefault;
         this.tabela = tabela;
         this.setTitle("Localiza " + tabela);
+        createModel();
         for (int i = 0; i < tl; i++)
         {
             cbOpcao.addItem(vetOpcoes[i]);
@@ -403,6 +407,34 @@ public class ConsultaMov extends javax.swing.JDialog {
         }
     }
     
+    private void createModel()
+    {
+        switch(tabela)
+        {
+            case "Compra": 
+                Compra.configuraModel(jTable1);
+                Compra.configuraModelItem(jTable3, "Produto");
+                Compra.configuraModelItem(jTable4, "Tamanho/Descrição");
+                break; 
+            case "CCompra": 
+                Compra.configuraModel(jTable1);
+                Compra.configuraModel(jTable1);
+                Compra.configuraModelItem(jTable3, "Produto");
+                Compra.configuraModelItem(jTable4, "Tamanho/Descrição");
+                break; 
+            case "Orçamento": 
+                Orcamento.configuraModel(jTable1);
+                Orcamento.configuraModelOrcamentoS(jTable3);
+                Orcamento.configuraModelOrcamentoSD(jTable4);
+                break;
+            case "Pedido": 
+                Pedido.configuraModel(jTable1); 
+                Pedido.configuraModelPedidoS(jTable3);
+                Pedido.configuraModelPedidoSD(jTable4);
+                break;
+        }
+    }
+    
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         if (evt.getClickCount() == 2)
         {
@@ -428,6 +460,8 @@ public class ConsultaMov extends javax.swing.JDialog {
             if (jTable1.getSelectedRow() >= 0)
             {
                 codigo = Integer.parseInt(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0)));
+                sc.limparTabela(jTable3);
+                sc.limparTabela(jTable4);
                 switch(tabela)
                 {
                     case "Compra": 
@@ -480,10 +514,15 @@ public class ConsultaMov extends javax.swing.JDialog {
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
         if (jTable3.getSelectedRow() >= 0)
         {
+            
             switch(tabela)
             {
-                case "Orçamento": OrcamentoServicoDetalhe(); break;
-                case "Pedido": PedidoServicoDetalhe(); break;
+                case "Orçamento": 
+                    sc.limparTabela(jTable4);
+                    OrcamentoServicoDetalhe(); break;
+                case "Pedido": 
+                    sc.limparTabela(jTable4);
+                    PedidoServicoDetalhe(); break;
             }
         }
     }//GEN-LAST:event_jTable3MouseClicked
@@ -498,7 +537,7 @@ public class ConsultaMov extends javax.swing.JDialog {
         {
             ResultSet rs;
             int tipo = cbOpcao.getSelectedIndex();
-            Compra.configuraModel(jTable1);
+            
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             rs = Compra.ConsultaCompra(txtValor.getText(), tipo, dateInicio.getData(), dateFim.getData());
             while (rs.next())
@@ -525,7 +564,7 @@ public class ConsultaMov extends javax.swing.JDialog {
         {
             ResultSet rs;
             int tipo = cbOpcao.getSelectedIndex();
-            Compra.configuraModel(jTable1);
+//            Compra.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             rs = Compra.ConsultaCompraAE(txtValor.getText(), tipo, dateInicio.getData(), dateFim.getData());
             while (rs.next())
@@ -552,7 +591,7 @@ public class ConsultaMov extends javax.swing.JDialog {
         {
             ResultSet rs;
             int tipo = cbOpcao.getSelectedIndex();
-            Orcamento.configuraModel(jTable1);
+            
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             rs = Orcamento.ConsultaOrcamento(txtValor.getText(), tipo, dateInicio.getData(), dateFim.getData());
             while (rs.next())
@@ -580,7 +619,7 @@ public class ConsultaMov extends javax.swing.JDialog {
         {
             ResultSet rs;
             int tipo = cbOpcao.getSelectedIndex();
-            Pedido.configuraModel(jTable1);
+            
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             rs = Pedido.ConsultaPedido(txtValor.getText(), tipo, dateInicio.getData(), dateFim.getData());
             while (rs.next())
@@ -608,9 +647,10 @@ public class ConsultaMov extends javax.swing.JDialog {
         {
             ResultSet rs;
             int tipo = cbOpcao.getSelectedIndex();
-            Compra.configuraModelItem(jTable3, "Produto");
+            
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable3.getModel();
             rs = Compra.ConsultaCompraItem(codigo, 1); //1 == produto 2 == folha
+            
             while (rs.next())
             {
                 model.addRow(new Object[]
@@ -634,7 +674,7 @@ public class ConsultaMov extends javax.swing.JDialog {
         {
             ResultSet rs;
             int tipo = cbOpcao.getSelectedIndex();
-            Compra.configuraModelItem(jTable4, "Tamanho/Descrição");
+            
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable4.getModel();
             rs = Compra.ConsultaCompraItem(codigo, 2); //1 == produto 2 == folha
             while (rs.next())
@@ -660,7 +700,7 @@ public class ConsultaMov extends javax.swing.JDialog {
         {
             ResultSet rs;
             int tipo = cbOpcao.getSelectedIndex();
-            Orcamento.configuraModelOrcamentoS(jTable3);
+            listaSequence.removeAll(listaSequence);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable3.getModel();
             rs = Orcamento.ConsultaOrcamentoServico(codigo); 
             while (rs.next())
@@ -695,9 +735,9 @@ public class ConsultaMov extends javax.swing.JDialog {
         {
             ResultSet rs;
             int tipo = cbOpcao.getSelectedIndex();
-            Orcamento.configuraModelOrcamentoSD(jTable4);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable4.getModel();
             rs = Orcamento.ConsultaOrcamentoServicoD(codigo, listaSequence.get(jTable3.getSelectedRow())); 
+            
             while (rs.next())
             {
                 
@@ -724,9 +764,10 @@ public class ConsultaMov extends javax.swing.JDialog {
         {
             ResultSet rs;
             int tipo = cbOpcao.getSelectedIndex();
-            Pedido.configuraModelPedidoS(jTable3);
+            
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable3.getModel();
             rs = Pedido.ConsultaPedidoServico(codigo); 
+            listaSequence.removeAll(listaSequence);
             while (rs.next())
             {
                 model.addRow(new Object[]
@@ -753,9 +794,10 @@ public class ConsultaMov extends javax.swing.JDialog {
         {
             ResultSet rs;
             int tipo = cbOpcao.getSelectedIndex();
-            Pedido.configuraModelPedidoSD(jTable4);
+            
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable4.getModel();
             rs = Pedido.ConsultaPedidoServicoD(codigo, listaSequence.get(jTable3.getSelectedRow())); 
+            
             while (rs.next())
             {
                 

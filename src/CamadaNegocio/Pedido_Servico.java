@@ -22,7 +22,6 @@ import java.util.ArrayList;
  * @author 稲荷
  */
 public class Pedido_Servico {
-    private int codigo;
     private Servico serv;
     private double valor;
     private int qtd;
@@ -31,7 +30,7 @@ public class Pedido_Servico {
     private int sequence;
     private ArrayList<Pedido_Servico_Detalhe> lista;
 
-    public Pedido_Servico(Servico serv, double valor, int qtd, double desconto, String descricao, int sequence, ArrayList<Pedido_Servico_Detalhe> lista, int codigo) {
+    public Pedido_Servico(Servico serv, double valor, int qtd, double desconto, String descricao, int sequence, ArrayList<Pedido_Servico_Detalhe> lista) {
         this.serv = serv;
         this.valor = valor;
         this.qtd = qtd;
@@ -39,7 +38,6 @@ public class Pedido_Servico {
         this.descricao = descricao;
         this.sequence = sequence;
         this.lista = lista;
-        this.codigo = codigo;
     }
 
     public Pedido_Servico() {
@@ -102,14 +100,6 @@ public class Pedido_Servico {
         this.lista = lista;
     }
 
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
-    
     public boolean gravar(int codigoP)
     {
         String sql =  "INSERT INTO pedido_servico( " +
@@ -171,7 +161,7 @@ public class Pedido_Servico {
         {
             while (rs.next()) 
             {
-                lista.add(new Pedido_Servico(new Servico().buscarCodigo(rs.getInt(2)), rs.getDouble(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getInt(7), new Pedido_Servico_Detalhe().buscar(rs.getInt(1), rs.getInt(7)), rs.getInt(8)));
+                lista.add(new Pedido_Servico(new Servico().buscarCodigo(rs.getInt(2)), rs.getDouble(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getInt(7), new Pedido_Servico_Detalhe().buscar(rs.getInt(1), rs.getInt(7))));
             }
         } 
         catch (SQLException e) 
@@ -184,7 +174,7 @@ public class Pedido_Servico {
     public int buscarUltimoCodigo()
     {
         String sql;
-        sql = "SELECT max(ps_codigo) " +
+        sql = "SELECT max(ps_sequence) " +
               " FROM pedido_servico;";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 

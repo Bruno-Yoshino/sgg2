@@ -48,7 +48,6 @@ public class PedidoController {
     private final mensagens m = new mensagens(); 
     private Servico ser;
     private DetalheServico sd; 
-    private int sequencePS;
     private final ArrayList<Pedido_Servico> excluirS;
     private final ArrayList<Integer> excluirSD;
     private final ArrayList<Integer> excluirSDCodigo;
@@ -63,7 +62,6 @@ public class PedidoController {
         excluirSD = new ArrayList<>();
         excluirSDCodigo = new ArrayList<>();
         excluirDetalhes = new ArrayList<>();
-        sequencePS = 1;
     }
 
     public Pedido getP() {
@@ -133,9 +131,9 @@ public class PedidoController {
         if(v.ConverteNumeroReal(total) <= 0)
             return 4;
         if(linha == -1)
-            temp.add(new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd),  v.ConverteNumeroReal(desconto), descricao, sequencePS++, new ArrayList<>(), 0));
+            temp.add(new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd),  v.ConverteNumeroReal(desconto), descricao, 0, new ArrayList<>()));
         else
-            temp.add(linha, new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>(), 0));
+            temp.add(linha, new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>()));
         p.setLista(temp);
         return 0;
     }
@@ -215,16 +213,25 @@ public class PedidoController {
     public void addTabelaServicoDetalhe(JTable tabela, int linha)// まだ  =>> OK 2019/06/29
     {
         ArrayList<Pedido_Servico> temp = p.getLista();
+        ArrayList<Pedido_Servico_Detalhe> psdTemp = temp.get(linha).getLista();
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
 //        if(linha == -1)
 //        {
+//            model.addRow(new Object[]{
+//                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getDs().getDescricao(),
+//                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getVias(),
+//                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getNumeracaoI(),
+//                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getNumeracaoF(),
+//                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getOutros(),
+//                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getDs().getCodigo()
+//            });
             model.addRow(new Object[]{
-                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getDs().getDescricao(),
-                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getVias(),
-                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getNumeracaoI(),
-                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getNumeracaoF(),
-                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getOutros(),
-                temp.get(linha).getLista().get(temp.get(temp.size()-1).getLista().size()-1).getDs().getCodigo()
+                psdTemp.get(psdTemp.size()-1).getDs().getDescricao(),
+                psdTemp.get(psdTemp.size()-1).getVias(),
+                psdTemp.get(psdTemp.size()-1).getNumeracaoI(),
+                psdTemp.get(psdTemp.size()-1).getNumeracaoF(),
+                psdTemp.get(psdTemp.size()-1).getOutros(),
+                psdTemp.get(psdTemp.size()-1).getDs().getCodigo()
             });
 //        }
 //        else
@@ -396,11 +403,6 @@ public class PedidoController {
         }
     }
     
-    public void clearSequenceNumber()
-    {
-        sequencePS = 1;
-    }
-    
     public boolean gravarPedido()
     {
         return p.gravar();
@@ -412,7 +414,7 @@ public class PedidoController {
         for(int i = 0; i < p.getLista().size() && control; i++)
         {
             control = p.getLista().get(i).gravar(p.getCodigo());
-            p.getLista().get(i).setCodigo(ultimoCodigoInserido());
+            p.getLista().get(i).setSequence(ultimoCodigoInserido());
         }
         return control;
     }
@@ -424,7 +426,7 @@ public class PedidoController {
         {
             for(int y = 0; y < p.getLista().get(i).getLista().size() && control; y++)
             {
-                control = p.getLista().get(i).getLista().get(y).gravar2(p.getCodigo(), p.getLista().get(i).getServ().getCodigo(), p.getLista().get(i).getCodigo());
+                control = p.getLista().get(i).getLista().get(y).gravar2(p.getCodigo(), p.getLista().get(i).getServ().getCodigo());
             }
         }
         return control;
@@ -438,7 +440,11 @@ public class PedidoController {
             if(p.getLista().get(i).ChecarExiste(p.getCodigo(), p.getLista().get(i).getSequence()))
                 control = p.getLista().get(i).alterar(p.getCodigo());
             else
+            {
                 control = p.getLista().get(i).gravar(p.getCodigo());
+                new ProducaoController().gerarProducao(p.getLista().get(i), p);
+            }
+                
         }
         return control;
     }
@@ -451,9 +457,9 @@ public class PedidoController {
             for(int y = 0; y < p.getLista().get(i).getLista().size() && control; y++)
             {
                 if(p.getLista().get(i).getLista().get(y).ChecarExiste(p.getCodigo(), p.getLista().get(i).getSequence(), p.getLista().get(i).getLista().get(y).getDs().getCodigo()))
-                    control = p.getLista().get(i).getLista().get(y).alterar(p.getCodigo(), p.getLista().get(i).getServ().getCodigo(), p.getLista().get(i).getCodigo());
+                    control = p.getLista().get(i).getLista().get(y).alterar(p.getCodigo(), p.getLista().get(i).getServ().getCodigo());
                 else
-                    control = p.getLista().get(i).getLista().get(y).gravar(p.getCodigo(), p.getLista().get(i).getServ().getCodigo(), p.getLista().get(i).getCodigo());
+                    control = p.getLista().get(i).getLista().get(y).gravar(p.getCodigo(), p.getLista().get(i).getServ().getCodigo());
             }
         }
         return control;
@@ -461,6 +467,9 @@ public class PedidoController {
     
     public boolean excluirPedido(int codigo)
     {
+        //verificar se uma parcela foi paga, se tiver retorna false
+        //verificar se existe algum pedido em adamento, entregue ou pausado, se tiver retorna false
+        
         new Producao().excluir(codigo);
         new Pedido_Servico_Detalhe().excluir(codigo);
         new Pedido_Servico().excluir(codigo);
@@ -471,13 +480,6 @@ public class PedidoController {
     {
         Pedido temp = p.buscar(codigo);
         p = temp == null ? new Pedido() : temp;
-        if(temp != null)
-            if(p.getLista().size() > 0)
-                sequencePS = p.getLista().get(p.getLista().size()-1).getSequence();
-            else
-                sequencePS = 0;
-        else
-            sequencePS = 0;
     }
     
     public void carregarTabelaServico(JTable tabela)
@@ -572,11 +574,10 @@ public class PedidoController {
             {
                 for(int x = 0; x < temp.getLista().get(i).getLista().size(); x++)
                 {//                                         DetalheServico ds, int numeracaoI, int numeracaoF, int vias, String outros, int sequence
-                    listaPSD.add(new Pedido_Servico_Detalhe(temp.getLista().get(i).getLista().get(x).getDs(), temp.getLista().get(i).getLista().get(x).getNumeracaoI(), temp.getLista().get(i).getLista().get(x).getNumeracaoF(), temp.getLista().get(i).getLista().get(x).getVias(), temp.getLista().get(i).getLista().get(x).getOutros(), sequencePS));
+                    listaPSD.add(new Pedido_Servico_Detalhe(temp.getLista().get(i).getLista().get(x).getDs(), temp.getLista().get(i).getLista().get(x).getNumeracaoI(), temp.getLista().get(i).getLista().get(x).getNumeracaoF(), temp.getLista().get(i).getLista().get(x).getVias(), temp.getLista().get(i).getLista().get(x).getOutros(), 0));
                 }
                 //                                          Servico serv, double valor, int qtd, double desconto, String descricao, int sequence, ArrayList<Pedido_Servico_Detalhe> lista
-                listaPS.add(new Pedido_Servico(temp.getLista().get(i).getServ(), (temp.getLista().get(i).getValor()+temp.getLista().get(i).getCustoAcab()+temp.getLista().get(i).getCustoArte()+temp.getLista().get(i).getCustoChapa()+temp.getLista().get(i).getCustoImpre()+temp.getLista().get(i).getCustoMdO()+temp.getLista().get(i).getCustoPapel()), temp.getLista().get(i).getQtd(), temp.getLista().get(i).getDesconto(), temp.getLista().get(i).getDescricao(), sequencePS, listaPSD, 0));
-                sequencePS++;
+                listaPS.add(new Pedido_Servico(temp.getLista().get(i).getServ(), (temp.getLista().get(i).getValor()+temp.getLista().get(i).getCustoAcab()+temp.getLista().get(i).getCustoArte()+temp.getLista().get(i).getCustoChapa()+temp.getLista().get(i).getCustoImpre()+temp.getLista().get(i).getCustoMdO()+temp.getLista().get(i).getCustoPapel()), temp.getLista().get(i).getQtd(), temp.getLista().get(i).getDesconto(), temp.getLista().get(i).getDescricao(), 0, listaPSD));
             }
         } catch (SQLException ex) 
         {

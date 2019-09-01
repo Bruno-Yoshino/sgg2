@@ -131,7 +131,7 @@ public class Producao
     
     public boolean gravar(Pedido_Servico ps)
     {
-        String sql = "INSERT INTO producao (pe_codigo, serv_codigo, prod_status, ps_sequence, ps_codigo) VALUES ("+p.getCodigo()+", "+ps.getServ().getCodigo()+", 4, "+ps.getSequence()+", "+ps.getCodigo()+")";
+        String sql = "INSERT INTO producao (pe_codigo, serv_codigo, prod_status, ps_sequence) VALUES ("+p.getCodigo()+", "+ps.getServ().getCodigo()+", 4, "+ps.getSequence()+")";
         return Banco.getCon().manipular(sql);
     }
     

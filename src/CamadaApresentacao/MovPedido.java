@@ -1022,7 +1022,6 @@ public class MovPedido extends javax.swing.JDialog {
        linha = -1;
        lbEntrega.setVisible(false);
        dcEntrega.setVisible(false);
-       pc.clearSequenceNumber();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -1050,26 +1049,23 @@ public class MovPedido extends javax.swing.JDialog {
                                     m.InformationMessage("Gravado com Sucesso", "Informação");
 
                                     //OK OK ここ、後でPedidoが保存された時(保存内容)の処理 Producao OK, Contas Receber OK 
-                                    if(txtCodigo.getText().equals("0"))
+
+                                    if(pc.gerarProducao())
                                     {
-                                        if(pc.gerarProducao())
-                                        {
-                                            m.InformationMessage("Producão gerado com Sucesso!", "Informação");
-                                        }
-                                        else
-                                        {
-                                            m.ErroMessage("ERRO", "ERRO2");
-                                        }
-                                        GerenciarParcela formGP = new GerenciarParcela(null, true, null, null, pc.getP());
-                                        formGP.setVisible(true);
+                                        m.InformationMessage("Producão gerado com Sucesso!", "Informação");
                                     }
+                                    else
+                                    {
+                                        m.ErroMessage("ERRO", "ERRO2");
+                                    }
+                                    lancarConta();
+                                    
                                     sc.limpar(jPanel1.getComponents());
                                     sc.limparTabela(jTable1);
                                     sc.limparTabela(jTable2);
                                     sc.HabilityComponents(jPanel1.getComponents(), false);
                                     flag = true;
                                     linha = -1;
-                                    pc.clearSequenceNumber();
                                     lbEntrega.setVisible(false);
                                     dcEntrega.setVisible(false);
 //                                }
@@ -1084,7 +1080,6 @@ public class MovPedido extends javax.swing.JDialog {
                                 sc.HabilityComponents(jPanel1.getComponents(), false);
                                 flag = true;
                                 linha = -1;
-                                pc.clearSequenceNumber();
                                 lbEntrega.setVisible(false);
                                 dcEntrega.setVisible(false);
                                 //Alterar a data da entrega
@@ -1099,7 +1094,6 @@ public class MovPedido extends javax.swing.JDialog {
                     else
                     {
                          //OK, OK ここ、後でPedidoが変更された時(内容変更)の処理 Producao OK, Pedido OK
-                        pc.clearSequenceNumber();
                         if(pc.exculir())
                         {
                             if(pc.alterar())
@@ -1108,13 +1102,12 @@ public class MovPedido extends javax.swing.JDialog {
                                 {
                                     if(pc.alterarPedidoServicoDetalhe())
                                     {
-                                        if(pc.alterarValorReceber())
-                                        {
-                                            m.InformationMessage("Alterardo com Sucesso!", "Informação");
-                                            sc.limparTabela(jTable1);
-                                            sc.limparTabela(jTable2);
-                                            sc.HabilityComponents(jPanel1.getComponents(), false);
-                                        }
+                                        //Excluir as parcelas!
+                                        lancarConta();
+                                        m.InformationMessage("Alterardo com Sucesso!", "Informação");
+                                        sc.limparTabela(jTable1);
+                                        sc.limparTabela(jTable2);
+                                        sc.HabilityComponents(jPanel1.getComponents(), false);
                                     }
                                 }
                             }
@@ -1279,6 +1272,36 @@ public class MovPedido extends javax.swing.JDialog {
             default:
                 txtNumeracaoI.setEnabled(false); txtNumeracaoF.setEnabled(false); txtVia.setEnabled(false); txtOutros.setEnabled(false);
                 labelTexto1.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto2.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto3.setFont(new Font("Arial", Font.PLAIN, 14));
+        }
+    }
+    
+    private void lancarConta()
+    {
+        String lista[] = {"Vista","Parcelado","Prazo"};
+        Object valor;
+        do{
+            valor = JOptionPane.showInputDialog(this, "Atenção", 
+                    "Informe a modeo de pagamento:", JOptionPane.INFORMATION_MESSAGE,
+                    null, lista, lista[0]);
+        }while(valor == null);
+        if(valor.equals("Vista"))
+        {//Vista
+            m.InformationMessage("Informação", "Conta a receber Lançado com Sucesso!");
+        }
+        else
+        {
+            Date data;
+            DateMessage messegeDate = new DateMessage(null, true, "Atenção", "Informe a Data de Vencimento:");
+            if(valor.equals("Parcelado"))
+            {//Parcelado
+                GerenciarParcela formGP = new GerenciarParcela(null, true, null, null, pc.getP());
+                formGP.setVisible(true);
+                m.InformationMessage("Informação", "Parcelas Lançados com Sucesso!");
+            }
+            else
+            {//Prazo
+                m.InformationMessage("Informação", "Conta a receber Lançado com Sucesso!");
+            }
         }
     }
 
