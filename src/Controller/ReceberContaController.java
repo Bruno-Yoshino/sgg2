@@ -32,6 +32,7 @@ import util.mensagens;
 
 /*
     ２０１９年０８月２９日: 鈴奈メモ：Conta_receberにboolean cr_flagを新たに追加してください。＜－データベース。
+    ２０１９年09月01日: 鈴奈メモ：cr_flagは支払いが完全かどうかを調べる、True = 本体, False = 新しく本体から作られたクローン
 */
 public class ReceberContaController {
     private Validacao v = new Validacao();
@@ -66,10 +67,10 @@ public class ReceberContaController {
     {
         int add = 0;
         String resp;
-        do{
-            resp = JOptionPane.showInputDialog(null, "Informe apos quantos dias: ", "Atenção", JOptionPane.INFORMATION_MESSAGE);
-            add = v.ConverteNumeroInteiro(resp);
-        }while (add < 0);
+//        do{
+//            resp = JOptionPane.showInputDialog(null, "Informe apos quantos dias: ", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+//            add = v.ConverteNumeroInteiro(resp);
+//        }while (add < 0);
         cr.setValor(cr.getValor()-cr.getValorP());
         cr.setValorP(0);
         cr.setDataP(null);
@@ -99,7 +100,7 @@ public class ReceberContaController {
         }
         if(v.ValidarDataDuasData(cr.getP().getPedido(), pagamento) == false)
         {
-            if(v.ValidarDataDuasDataIgual(pagamento, cr.getP().getPedido()) == false)
+            if(v.ValidarDataDuasDataIgual(cr.getP().getPedido(), pagamento) == false)
                 return 4;
         }
         Integer i;
@@ -155,57 +156,89 @@ public class ReceberContaController {
                 rs.getString(1),//Nome Clietne
                 rs.getInt(2),// Numero Pedido
                 sc.truncar(rs.getDouble(3)),//Valor Conta 
-                rs.getDate(4),// Data Vencimento
-                rs.getDate(5),// Data Pedido
+                sc.DataOnly(rs.getDate(4)),// Data Vencimento
+                sc.DataOnly(rs.getDate(5)),// Data Pedido
                 rs.getInt(6)// Numero Conta
             });
-            //cr.cr_codigo, cr.pe_codigo, cr.cr_datavenc, cr.cr_obs, cr.cr_valor, cr.cr_datapago, cr.cr_vlorp
         }
     }
     
-    public boolean atualizarValor()
-    {
-        int qtd = cr.QtdParcela();
-        boolean x = true;
-        ArrayList<Integer> lista = cr.CodigoContaReceber(p.getCodigo());
-        if(qtd == 1)
-        {
-             x = cr.alterarvalorConta(lista.get(0));
-        }
-        else
-        {
-            double valor = PrimeiraParcela(qtd, p.getValorTotal());
-            cr.setValor(valor);
-            cr.alterarvalorConta(lista.get(0));
-            for(int i = 1; lista.size() < i; i++)
-            {
-                cr.setValor(valor/qtd);
-                x = cr.alterarvalorConta(lista.get(i));
-            }
-        }
-        return x;
-    }
+//    public boolean atualizarValor()
+//    {
+//        int qtd = cr.QtdParcela();
+//        boolean x = true;
+//        ArrayList<Integer> lista = cr.CodigoContaReceber(p.getCodigo());
+//        if(qtd == 1)
+//        {
+//             x = cr.alterarvalorConta(lista.get(0));
+//        }
+//        else
+//        {
+//            double valor = PrimeiraParcela(qtd, p.getValorTotal()), total = 0;
+//            total += valor;
+//            cr.setValor(valor);
+//            cr.alterarvalorConta(lista.get(0));
+//            for(int i = 1; lista.size()-1 < i; i++)
+//            {
+//                cr.setValor(valor/qtd);
+//                x = cr.alterarvalorConta(lista.get(i));
+//            }
+//        }
+//        return x;
+//    }
     
     public boolean estornarValor(int codigoCR)
     {
-        //確認方法、　CR_codigoを使用して情報の修得を行い、Pe_codigoで分割回数を習得する。
-        //分割数が0の場合はそのまま払い戻しを行う。そうでない場合は、ArrayListを使用してCP_codigoの位置を調べる. <-selectではOrder by cr_codigo
-        //消去する場合は一つ手前支払いを確認しそれが同じ日付とフラグがFalseなら消去。
-        //ListaContaReceberを使用してください。
+        //確認方法、　CR_codigoを使用して情報の修得を行い、Pe_codigoで分割回数を習得する。 OK
+        //分割数が0の場合はそのまま払い戻しを行う。OK
+        //そうでない場合は、ArrayListを使用してCP_codigoの位置を調べる. <-selectではOrder by cr_codigo OK
+        //消去する場合は一つ手前支払いを確認しそれが同じ日付とフラグがFalseなら消去。 OK 日付の確認は必要ない、なぜならOder by で確認済み
+        //ListaContaReceberを使用してください。 OK
+        ContaReceber crTemp = new ContaReceber().buscar(codigoCR);
+        if(crTemp.QtdParcela(codigoCR) == 1)
+        {
+            crTemp.estornarValor(codigoCR);
+            return true;
+        }
+        else
+        {
+            ArrayList<ContaReceber> lista = crTemp.ListaContaReceber(crTemp.getP().getCodigo());
+            int i, notNull;
+            for(i = 0; i < lista.size() && lista.get(i).getCodigo() != codigoCR; i++)
+            {
+                
+            }
+            for(notNull = 0; notNull < lista.size() && lista.get(notNull).getDataP() != null; i++)
+            {
+                
+            }
+            if(i+1 == notNull)//lista.get(i).equals(lista.get(notNull-1)) && notNull != lista.size()
+            {
+                if(!lista.get(notNull).isFlag())
+                {
+                    lista.get(notNull).excluir();
+                }
+                crTemp.estornarValor(codigoCR);
+                return true;
+            }
+            else
+            {
+                if(i == lista.size()-1)
+                {
+                    crTemp.estornarValor(codigoCR);
+                    return true;
+                }
+            }
+        }
         return false;
     }
     
     private double PrimeiraParcela(int qtd, double valor)
     {
-        double resto = valor % qtd;
-        if(resto > 0)
-        {
-            return valor / qtd + resto;
-        }
-        return valor / qtd;
+        return v.ConverteNumeroReal(sc.arredondar(valor / qtd));
     }
     
-    public static void configuraModel(JTable jTable) // Configurar Tabela Detalhe
+    public static void configuraModel(JTable jTable)
     {
         String colunas[] = new String [] {"Cliente", "Número Pedido", "Valor a ser Cobrado", "Data de Vencimento", "Data do Peido", "Numero da conta"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));

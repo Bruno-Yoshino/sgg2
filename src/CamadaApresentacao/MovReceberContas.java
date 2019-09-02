@@ -3,6 +3,8 @@ package CamadaApresentacao;
 import CamadaLogica.ReadOnlyTableModel;
 import Controller.ReceberContaController;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -44,6 +46,7 @@ public class MovReceberContas extends javax.swing.JDialog {
         btnGravar.setName("btnGravar");
         btnSair.setName("btnSair");
         btnImprimir.setName("btnImprimir");
+        btnExtornar.setName("btnExtornar");
         sc.Alter(jPanel3.getComponents());
         sc.HabilityComponents(jPanel2.getComponents(), false);
         rcc.carregarTabela(jTable1, 1);
@@ -400,6 +403,8 @@ public class MovReceberContas extends javax.swing.JDialog {
         sc.Alter(jPanel3.getComponents());
         sc.HabilityComponents(jPanel2.getComponents(), false);
         sc.HabilityComponents(jPanel1.getComponents(), true);
+        dcPagamento.setData(Date.from(Instant.now()));
+        txtValorP.setText("0");
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed

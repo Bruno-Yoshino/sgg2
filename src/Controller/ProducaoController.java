@@ -364,7 +364,7 @@ public class ProducaoController {
     
     public int atualizaProduto(int status)
     {
-        if(status == 4 && p.VerificaItens(p.getCodigo()))
+        if(status == 4 && (p.VerificaItensP(p.getCodigo()) || p.VerificaItensF(p.getCodigo())))
             return 1;
         p.setStatus(status);
         return 0;

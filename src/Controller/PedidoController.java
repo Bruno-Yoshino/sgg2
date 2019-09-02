@@ -3,6 +3,7 @@ package Controller;
 import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Caixa;
 import CamadaNegocio.Cliente;
+import CamadaNegocio.ContaReceber;
 import CamadaNegocio.DetalheServico;
 import CamadaNegocio.FormaPagamento;
 import CamadaNegocio.Orcamento;
@@ -204,9 +205,9 @@ public class PedidoController {
             model.setValueAt(temp.get(linha).getServ().getNome(), linha, 0);
             model.setValueAt(temp.get(linha).getValor(), linha, 1);
             model.setValueAt(temp.get(linha).getQtd(), linha, 2);
-            model.setValueAt(temp.get(linha).getDesconto(), linha, 9);
-            model.setValueAt(temp.get(linha).getValor()*temp.get(linha).getQtd()-temp.get(linha).getDesconto(), linha, 10);
-            model.setValueAt(temp.get(linha).getDescricao(), linha, 11);
+            model.setValueAt(temp.get(linha).getDesconto(), linha, 3);
+            model.setValueAt(temp.get(linha).getValor()*temp.get(linha).getQtd()-temp.get(linha).getDesconto(), linha, 4);
+            model.setValueAt(temp.get(linha).getDescricao(), linha, 5);
         }
     }
     
@@ -411,10 +412,16 @@ public class PedidoController {
     public boolean gravarPedidoServico()
     {
         boolean control = true;
+        int f;
         for(int i = 0; i < p.getLista().size() && control; i++)
         {
             control = p.getLista().get(i).gravar(p.getCodigo());
-            p.getLista().get(i).setSequence(ultimoCodigoInserido());
+            f = ultimoCodigoInserido();
+            p.getLista().get(i).setSequence(f);
+            for (int j = 0; j < p.getLista().get(i).getLista().size(); j++) 
+            {
+                 p.getLista().get(i).getLista().get(j).setSequence(f);
+            }
         }
         return control;
     }
@@ -437,7 +444,7 @@ public class PedidoController {
         boolean control = true;
         for(int i = 0; i < p.getLista().size() && control; i++)
         {
-            if(p.getLista().get(i).ChecarExiste(p.getCodigo(), p.getLista().get(i).getSequence()))
+            if(p.getLista().get(i).getSequence() != 0 && p.getLista().get(i).ChecarExiste(p.getCodigo(), p.getLista().get(i).getSequence()))
                 control = p.getLista().get(i).alterar(p.getCodigo());
             else
             {
@@ -551,12 +558,6 @@ public class PedidoController {
         return p.alterar();
     }
     
-    public boolean alterarValorReceber()
-    {
-        ReceberContaController rcc = new ReceberContaController();
-        rcc.setP(p);
-        return rcc.atualizarValor();
-    }
     public int carregarOrcamento(int codigo)
     {
         ArrayList<Pedido_Servico> listaPS = new ArrayList<>();
@@ -586,6 +587,24 @@ public class PedidoController {
         p.setLista(listaPS);
        
         return 0;
+    }
+    
+    public void gerarContaReceber()
+    {
+        ContaReceber cr = new ContaReceber();
+        cr.setP(p);
+        cr.setDataV(Date.from(Instant.now()));
+        cr.setValor(p.getValorTotal());
+        cr.gravar();
+    }
+    
+    public void gerarContaReceber(Date dataV)
+    {
+        ContaReceber cr = new ContaReceber();
+        cr.setP(p);
+        cr.setDataV(dataV);
+        cr.setValor(p.getValorTotal());
+        cr.gravar();
     }
     
     public static void configuraModelServico(JTable jTable) // Configurar Tabela Servico

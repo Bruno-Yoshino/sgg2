@@ -250,9 +250,24 @@ public class Producao
         return Banco.getCon().retornaResultSet(query);
     }
     
-    public boolean VerificaItens(int codigo)
+    public boolean VerificaItensP(int codigo)
     {
-        String sql = "select pp.pp_qtd, pf.pf_qtd from producao_folha pf, producao_produto pp where pp.prod_codigo = "+codigo+" and pf.prod_codigo = "+codigo+"";
+        String sql = "select pp.pp_qtd from producao_produto pp where pp.prod_codigo = "+codigo+"";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try {
+            if(rs.next())
+            {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Producao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public boolean VerificaItensF(int codigo)
+    {
+        String sql = "select pf.pf_qtd from producao_folha pf where pf.prod_codigo = "+codigo+"";
         ResultSet rs=Banco.getCon().consultar(sql);
         try {
             if(rs.next())

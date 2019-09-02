@@ -46,7 +46,7 @@ public class MovPedido extends javax.swing.JDialog {
     private final Validacao v = new Validacao(); 
     private boolean flag;
     private int linha;
-    
+    private final Funcionario f;
     /*
         2019年07月20日
             作業終了。
@@ -60,7 +60,7 @@ public class MovPedido extends javax.swing.JDialog {
         pc.buscaCaixa();
         
         pc.getP().setF(f);
-        
+        this.f = f;
         btnNovo.setName("btnNovo");
         btnEntregar.setName("btnAlterar");
         btnCancelar.setName("btnCancelar");
@@ -425,10 +425,12 @@ public class MovPedido extends javax.swing.JDialog {
             }
         });
 
-        spQtd.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                spQtdFocusGained(evt);
+        spQtd.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spQtdStateChanged(evt);
             }
+        });
+        spQtd.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 spQtdFocusLost(evt);
             }
@@ -1006,6 +1008,7 @@ public class MovPedido extends javax.swing.JDialog {
                 sc.limparTabela(jTable1);
                 sc.limparTabela(jTable2);
                 sc.HabilityComponents(jPanel1.getComponents(), false);
+                sc.Initialize(jPanel2.getComponents());
             }
             else
                 m.ErroMessage("Erro ao Cancelar! O pedido ja foi entregue!", "Erro");
@@ -1018,6 +1021,7 @@ public class MovPedido extends javax.swing.JDialog {
        sc.Initialize(jPanel2.getComponents());
        sc.limparTabela(jTable1);
        sc.limparTabela(jTable2);
+       sc.Initialize(jPanel2.getComponents());
        flag = true;
        linha = -1;
        lbEntrega.setVisible(false);
@@ -1064,6 +1068,7 @@ public class MovPedido extends javax.swing.JDialog {
                                     sc.limparTabela(jTable1);
                                     sc.limparTabela(jTable2);
                                     sc.HabilityComponents(jPanel1.getComponents(), false);
+                                    sc.Initialize(jPanel2.getComponents());
                                     flag = true;
                                     linha = -1;
                                     lbEntrega.setVisible(false);
@@ -1078,6 +1083,7 @@ public class MovPedido extends javax.swing.JDialog {
                                 sc.limparTabela(jTable1);
                                 sc.limparTabela(jTable2);
                                 sc.HabilityComponents(jPanel1.getComponents(), false);
+                                sc.Initialize(jPanel2.getComponents());
                                 flag = true;
                                 linha = -1;
                                 lbEntrega.setVisible(false);
@@ -1108,6 +1114,7 @@ public class MovPedido extends javax.swing.JDialog {
                                         sc.limparTabela(jTable1);
                                         sc.limparTabela(jTable2);
                                         sc.HabilityComponents(jPanel1.getComponents(), false);
+                                        sc.Initialize(jPanel2.getComponents());
                                     }
                                 }
                             }
@@ -1126,6 +1133,8 @@ public class MovPedido extends javax.swing.JDialog {
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         flag = false;
         sc.HabilityComponents(jPanel1.getComponents(), true);
+        jTable1.setEnabled(true);
+        linha = -1;
         sc.Edity(jPanel2.getComponents());
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -1172,6 +1181,7 @@ public class MovPedido extends javax.swing.JDialog {
                 dcEntrega.setData(pc.getP().getEntrega());
                 cbForma.setSelectedItem(pc.getP().getFp().getNome());
                 pc.carregarTabelaServico(jTable1);
+                pc.getP().setF(f);
                 if(pc.existPedioServicoDetalhe())
                     pc.carregarTabelaDetalheServico(jTable2, 0);
             }
@@ -1242,17 +1252,17 @@ public class MovPedido extends javax.swing.JDialog {
         txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
     }//GEN-LAST:event_txtDescontoFocusLost
 
-    private void spQtdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spQtdFocusLost
-        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
-    }//GEN-LAST:event_spQtdFocusLost
-
     private void txtValorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusLost
         txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
     }//GEN-LAST:event_txtValorFocusLost
 
-    private void spQtdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spQtdFocusGained
+    private void spQtdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spQtdFocusLost
         txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
-    }//GEN-LAST:event_spQtdFocusGained
+    }//GEN-LAST:event_spQtdFocusLost
+
+    private void spQtdStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spQtdStateChanged
+        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
+    }//GEN-LAST:event_spQtdStateChanged
 
     private void startDescricao()
     {
@@ -1286,21 +1296,24 @@ public class MovPedido extends javax.swing.JDialog {
         }while(valor == null);
         if(valor.equals("Vista"))
         {//Vista
-            m.InformationMessage("Informação", "Conta a receber Lançado com Sucesso!");
+            pc.gerarContaReceber();
+            m.InformationMessage("Conta a receber Lançado com Sucesso!", "Informação");
         }
         else
         {
             Date data;
             DateMessage messegeDate = new DateMessage(null, true, "Atenção", "Informe a Data de Vencimento:");
+            data = messegeDate.getData();
             if(valor.equals("Parcelado"))
             {//Parcelado
                 GerenciarParcela formGP = new GerenciarParcela(null, true, null, null, pc.getP());
                 formGP.setVisible(true);
-                m.InformationMessage("Informação", "Parcelas Lançados com Sucesso!");
+                m.InformationMessage("Parcelas Lançados com Sucesso!", "Informação");
             }
             else
             {//Prazo
-                m.InformationMessage("Informação", "Conta a receber Lançado com Sucesso!");
+                pc.gerarContaReceber(data);
+                m.InformationMessage("Conta a receber Lançado com Sucesso!", "Informação");
             }
         }
     }

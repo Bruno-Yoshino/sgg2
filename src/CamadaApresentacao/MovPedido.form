@@ -723,7 +723,7 @@
             </Component>
             <Component class="javax.swing.JSpinner" name="spQtd">
               <Events>
-                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="spQtdFocusGained"/>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="spQtdStateChanged"/>
                 <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="spQtdFocusLost"/>
               </Events>
             </Component>

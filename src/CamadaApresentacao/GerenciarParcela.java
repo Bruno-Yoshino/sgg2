@@ -6,6 +6,7 @@ import CamadaNegocio.ContaPagar;
 import CamadaNegocio.Pedido;
 import Controller.GerenciarParcelaController;
 import java.awt.event.KeyEvent;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import util.SystemControl;
 import util.mensagens;
@@ -49,7 +50,13 @@ public class GerenciarParcela extends javax.swing.JDialog {
         txtIntervalo.setText("0");
         if(c != null)
         {
-            dtData.setEditable(true);
+            Date data;
+            DateMessage messegeDate = new DateMessage(null, true, "Atenção", "Informe a Data de Vencimento:");
+            data = messegeDate.getData();
+            dtData.setData(data);
+            dtData.setEditable(false);
+            dtData.setEditable(false);
+            dtData.setFocusable(false);
             txtValorT.setText(""+c.getValort());
 //            txtValorT.setText(""+sc.verificaValor(sc.converteString(c.getValort())));
         }
@@ -64,7 +71,13 @@ public class GerenciarParcela extends javax.swing.JDialog {
         }
         if(p != null)
         {
-            dtData.setEditable(true);
+            Date data;
+            DateMessage messegeDate = new DateMessage(null, true, "Atenção", "Informe a Data de Vencimento:");
+            data = messegeDate.getData();
+            dtData.setData(data);
+            dtData.setEditable(false);
+            dtData.setEditable(false);
+            dtData.setFocusable(false);
             txtValorT.setText(""+p.getValorTotal());
             //txtValorT.setText(""+sc.verificaValor(sc.converteString(p.getValorTotal())));
         }

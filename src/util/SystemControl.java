@@ -45,7 +45,7 @@ public class SystemControl
     public SystemControl() {
     }
     
-    public final String DataOnly(Date data)
+    public final String DataOnly(Date data)//Retornar Somente a Data
     {
         String strDate;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -53,12 +53,12 @@ public class SystemControl
         return strDate;
     }
     
-    public final java.sql.Date DateForSql(Date data)
+    public final java.sql.Date DateForSql(Date data)//Converter a Data para Sql Data
     {
         return java.sql.Date.valueOf(DataOnly(data));
     }
     
-    public final Date StringDate(String strData)
+    public final Date StringDate(String strData) // Converter String para Data
     {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         try 

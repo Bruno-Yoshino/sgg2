@@ -842,6 +842,7 @@ public class MovProducao extends javax.swing.JDialog {
     private void rbClienteOP2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbClienteOP2MouseClicked
         if(rbClienteOP2.isSelected())
         {
+            sc.limparTabela(jTable1);
             pc.carregarListaCliente(rbClienteOP2.isSelected() ? 1 : 2, txtFiltro.getText(), jTable1);
             rbClienteOP3.setSelected(false);
         }
@@ -850,6 +851,7 @@ public class MovProducao extends javax.swing.JDialog {
     private void rbClienteOP3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbClienteOP3MouseClicked
         if(rbClienteOP3.isSelected())
         {
+            sc.limparTabela(jTable1);
             pc.carregarListaCliente(rbClienteOP3.isSelected() ? 1 : 2, txtFiltro.getText(), jTable1);
             rbClienteOP2.setSelected(false);
         }
@@ -860,6 +862,7 @@ public class MovProducao extends javax.swing.JDialog {
         {
             //Jtable2 更新  OK
             jTable2.removeAll();
+            sc.limparTabela(jTable2);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             pc.carregarListaPedido(2, jTable2, Integer.parseInt(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 2))));
             rbPedidoOP2.setSelected(false);
@@ -871,6 +874,7 @@ public class MovProducao extends javax.swing.JDialog {
         {
             //Jtable2 更新  OK
             jTable2.removeAll();
+            sc.limparTabela(jTable2);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             pc.carregarListaPedido(1, jTable2, Integer.parseInt(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 2))));
             rbPedidoOP3.setSelected(false);
@@ -882,10 +886,11 @@ public class MovProducao extends javax.swing.JDialog {
     }//GEN-LAST:event_txtFiltroFocusGained
 
     private void txtFiltroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroFocusLost
-        if(txtFiltro.equals("") || txtFiltro.equals("Nome Cliente ou Numero pedido"))
+        if(txtFiltro.getText().equals("") || txtFiltro.getText().equals("Nome Cliente ou Numero pedido"))
         {
             txtFiltro.setText("Nome Cliente ou Numero pedido");
         }
+        sc.limparTabela(jTable1);
         pc.carregarListaCliente(rbClienteOP2.isSelected() ? 1 : 2, txtFiltro.getText(), jTable1);
     }//GEN-LAST:event_txtFiltroFocusLost
 

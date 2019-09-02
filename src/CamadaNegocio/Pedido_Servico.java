@@ -103,8 +103,8 @@ public class Pedido_Servico {
     public boolean gravar(int codigoP)
     {
         String sql =  "INSERT INTO pedido_servico( " +
-                  " pe_codigo, serv_codigo, ps_valor, ps_qtd, ps_desconto, ps_descricao, ps_sequence) " +
-                  " VALUES ("+codigoP+", "+serv.getCodigo()+", "+valor+", "+qtd+", "+desconto+", '"+descricao+"', "+sequence+");";
+                  " pe_codigo, serv_codigo, ps_valor, ps_qtd, ps_desconto, ps_descricao) " +
+                  " VALUES ("+codigoP+", "+serv.getCodigo()+", "+valor+", "+qtd+", "+desconto+", '"+descricao+"');";
         return Banco.getCon().manipular(sql);
     }
     
@@ -153,7 +153,7 @@ public class Pedido_Servico {
     {
         ArrayList<Pedido_Servico> lista = new ArrayList<>();
         String sql;
-        sql = "SELECT pe_codigo, serv_codigo, ps_valor, ps_qtd, ps_desconto, ps_descricao, ps_sequence, ps_codigo " +
+        sql = "SELECT pe_codigo, serv_codigo, ps_valor, ps_qtd, ps_desconto, ps_descricao, ps_sequence   " +
               " FROM pedido_servico"
             + " WHERE pe_codigo = "+codigo+";";
         ResultSet rs=Banco.getCon().consultar(sql);

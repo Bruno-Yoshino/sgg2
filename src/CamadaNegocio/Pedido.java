@@ -167,10 +167,11 @@ public class Pedido {
     
     public boolean excluir(int codigo)
     {
-        String sql = "UPDATE pedido " +
-                  " SET  pe_dataentrega="+null+" " +
-                  " WHERE pe_codigo="+codigo+";";//"DELETE FROM pedido " +
-                     //" WHERE pe_codigo="+codigo+";";
+//        String sql = "UPDATE pedido " +
+//                  " SET  pe_dataentrega="+null+" " +
+//                  " WHERE pe_codigo="+codigo+";";
+        String sql = "DELETE FROM pedido " +
+                     " WHERE pe_codigo="+codigo+";";
         return Banco.getCon().manipular(sql); 
     }
     
@@ -212,6 +213,7 @@ public class Pedido {
         {
             temp.setCodigo(rs.getInt(1));
             temp.setCli(new Cliente().buscarCodigo(rs.getInt(2)));
+            temp.setF(new Funcionario().buscarCodigo(rs.getInt(3)));
             temp.setValorTotal(rs.getDouble(4));
             temp.setPedido(rs.getDate(5));
             temp.setEntrega(rs.getDate(6));
