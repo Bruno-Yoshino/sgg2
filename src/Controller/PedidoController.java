@@ -162,7 +162,7 @@ public class PedidoController {
             case "VIAS":
                 if(numeracaoI.equals(""))
                     return 6;
-                if(v.ConverteNumeroInteiro(numeracaoI) <= 0)
+                if(v.ConverteNumeroInteiro(via) <= 0)
                     return 7;
                 break;
             case "OUTROS":
@@ -474,9 +474,17 @@ public class PedidoController {
     
     public boolean excluirPedido(int codigo)
     {
-        //verificar se uma parcela foi paga, se tiver retorna false
-        //verificar se existe algum pedido em adamento, entregue ou pausado, se tiver retorna false
+        //verificar se uma parcela foi paga, se tiver retorna false  OK
+        //verificar se existe algum pedido em adamento, entregue ou pausado, se tiver retorna false OK
+        if(p.qtdParcelaPaga() != 0)
+        {
+            return false;
+        }
         
+        if(p.qtdPedidoAndamento()!= 0)
+        {
+            return false;
+        }
         new Producao().excluir(codigo);
         new Pedido_Servico_Detalhe().excluir(codigo);
         new Pedido_Servico().excluir(codigo);

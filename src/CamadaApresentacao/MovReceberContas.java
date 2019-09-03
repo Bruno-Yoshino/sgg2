@@ -40,6 +40,7 @@ public class MovReceberContas extends javax.swing.JDialog {
     public MovReceberContas(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         ReceberContaController.configuraModel(jTable1);
         btnAlterar.setName("btnAlterar");
         btnCancelar.setName("btnCancelar");

@@ -174,6 +174,36 @@ public class Pedido {
                      " WHERE pe_codigo="+codigo+";";
         return Banco.getCon().manipular(sql); 
     }
+        
+    public int qtdParcelaPaga()
+    {
+        String sql = "select count(*) from conta_receber where pe_codigo = "+codigo+" and cr_datapago is not null";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try {
+            if(rs.next())
+            {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Producao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 1;
+    }
+    
+    public int qtdPedidoAndamento()
+    {
+        String sql = "select count(*) from producao where pe_codigo = "+codigo+" and prod_status != 4";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try {
+            if(rs.next())
+            {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Producao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 1;
+    }
     
     public final int UltimoCodigo() throws SQLException
     {

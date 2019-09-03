@@ -73,10 +73,11 @@ public class GerenciarParcela extends javax.swing.JDialog {
         {
             Date data;
             DateMessage messegeDate = new DateMessage(null, true, "Atenção", "Informe a Data de Vencimento:");
+            messegeDate.setVisible(true);
             data = messegeDate.getData();
             dtData.setData(data);
             dtData.setEditable(false);
-            dtData.setEditable(false);
+            dtData.setEnabled(false);
             dtData.setFocusable(false);
             txtValorT.setText(""+p.getValorTotal());
             //txtValorT.setText(""+sc.verificaValor(sc.converteString(p.getValorTotal())));

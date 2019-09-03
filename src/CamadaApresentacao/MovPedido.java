@@ -857,6 +857,7 @@ public class MovPedido extends javax.swing.JDialog {
              txtValor.setText("0");
              txtDesconto.setText("0");
              spQtd.setValue(0);
+             txtServico.setText("");
      }
 
     }//GEN-LAST:event_btnAddServicoActionPerformed
@@ -1011,7 +1012,7 @@ public class MovPedido extends javax.swing.JDialog {
                 sc.Initialize(jPanel2.getComponents());
             }
             else
-                m.ErroMessage("Erro ao Cancelar! O pedido ja foi entregue!", "Erro");
+                m.ErroMessage("Erro ao Excluir!", "Erro");
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
@@ -1270,6 +1271,7 @@ public class MovPedido extends javax.swing.JDialog {
         txtNumeracaoF.setText("0");
         txtOutros.setText("");
         txtVia.setText("0");
+        txtServico.setText("");
     }
     
     private void enableComponents(String valor)

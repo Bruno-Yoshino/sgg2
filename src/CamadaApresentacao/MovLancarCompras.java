@@ -36,6 +36,8 @@ public class MovLancarCompras extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
+        setLocationRelativeTo(null);
+        
         btnNovo.setName("btnNovo");
         btnAlterar.setName("btnAlterar");
         btnCancelar.setName("btnCancelar");
