@@ -266,7 +266,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Numero Cheque:"/>
+            <Property name="text" type="java.lang.String" value="N&#xfa;mero Cheque:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNumeroCheque">
@@ -306,7 +306,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Numero da Agencia:"/>
+            <Property name="text" type="java.lang.String" value="N&#xfa;mero da Ag&#xea;ncia:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAgencia">
@@ -318,7 +318,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Numero da Conta:"/>
+            <Property name="text" type="java.lang.String" value="N&#xfa;mero da Conta:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel14">
@@ -326,7 +326,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Numero da Banco:"/>
+            <Property name="text" type="java.lang.String" value="N&#xfa;mero da Banco:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtBanco">
@@ -400,7 +400,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Data compen&#xe7;ado:"/>
+                <Property name="text" type="java.lang.String" value="Data compensado:"/>
               </Properties>
             </Component>
             <Component class="br.com.marciorl.beans.DateChooser" name="dcCompencado">
@@ -415,7 +415,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Motivo caso o cheque n&#xe3;o foi compencado:"/>
+                <Property name="text" type="java.lang.String" value="Motivo caso o cheque n&#xe3;o foi compensado:"/>
               </Properties>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -438,7 +438,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Cheque Compen&#xe7;ado?"/>
+                <Property name="text" type="java.lang.String" value="Cheque Compensado?"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -514,7 +514,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Icon/Alterar16.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Compen&#xe7;ar"/>
+            <Property name="text" type="java.lang.String" value="Compensar"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAlterarActionPerformed"/>

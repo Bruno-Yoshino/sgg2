@@ -1098,7 +1098,7 @@ public class MovPedido extends javax.swing.JDialog {
                             m.ErroMessage("ERRO", "ERRO1");
                         }
                     }
-                    else
+                    else// Erro em alterar!
                     {
                          //OK, OK ここ、後でPedidoが変更された時(内容変更)の処理 Producao OK, Pedido OK
                         if(pc.exculir())
@@ -1151,6 +1151,8 @@ public class MovPedido extends javax.swing.JDialog {
         consPedido.setVisible(true);
         if (consPedido.getCodigo() != 0)
         {
+            sc.limparTabela(jTable1);
+            sc.limparTabela(jTable2);
             txtCodigo.setText(String.valueOf(consPedido.getCodigo()));
             consPedido.dispose();
             txtCodigoFocusLost(null);
@@ -1205,9 +1207,10 @@ public class MovPedido extends javax.swing.JDialog {
             {
                 case 1: m.WarmingMessage("Este orcamento esta Vencido!", "Atenção"); break;
                 default:
+                    txtValorT.setText(""+pc.getP().getValorTotal());
                     jTable1.removeAll();
                     txtCliente.setText(pc.getP().getCli().getNome());
-                    pc.carregarTabelaServico(jTable1);
+                    pc.carregarTabelaServicoOrcamento(jTable1);
             }
             consOrcamento.dispose();
         }

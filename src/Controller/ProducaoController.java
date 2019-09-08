@@ -366,6 +366,7 @@ public class ProducaoController {
     {
         if(status == 4 && (p.VerificaItensP(p.getCodigo()) || p.VerificaItensF(p.getCodigo())))
             return 1;
+        
         p.setStatus(status);
         return 0;
     }
@@ -404,16 +405,15 @@ public class ProducaoController {
         {
            x = listaF.get(i).gravar(codigo);
            aec.setF(listaF.get(i).getF());
-           aec.atualizarEstoqueFolha(false, listaF.get(i).getQtd());
+           aec.atualizarEstoqueFolha(false, listaF.get(i).getQtd()); //atualizar so depois que a opcao virar Entregue!
         }
         
         for(int i = 0; i < listaP.size() && x; i++)
         {
             x = listaP.get(i).gravar(codigo);
             aec.setP(listaP.get(i).getP());
-            aec.atualizarEstoqueProduto(false, listaP.get(i).getQtd());
+            aec.atualizarEstoqueProduto(false, listaP.get(i).getQtd());//atualizar so depois que a opcao virar Entregue!
         }
-        
         return x;
     }
     

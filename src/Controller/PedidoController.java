@@ -514,6 +514,23 @@ public class PedidoController {
         }
     }
     
+    public void carregarTabelaServicoOrcamento(JTable tabela)
+    {
+        ArrayList<Pedido_Servico> temp = p.getLista();
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        for(int i = 0; i < temp.size(); i++)
+        {
+            model.addRow(new Object[]{
+                temp.get(i).getServ().getNome(),
+                temp.get(i).getValor(),
+                temp.get(i).getQtd(),
+                temp.get(i).getDesconto(),
+                temp.get(i).getValor()-temp.get(i).getDesconto(),
+                temp.get(i).getDescricao()
+            });
+        }
+    }
+    
 //    public boolean checarStatusProducao(int codigoP, int linha)
 //    {
 //        if(linha == -1)
@@ -573,12 +590,13 @@ public class PedidoController {
         try 
         {
             Orcamento temp = new Orcamento().buscar(codigo);
-            if(!v.ValidarDataDuasData(Date.from(Instant.now()), temp.getValidade()) || !v.ValidarDataDuasDataIgual(Date.from(Instant.now()), temp.getValidade()))
+            if(!v.ValidarDataDuasData(Date.from(Instant.now()), temp.getValidade()) && !v.ValidarDataDuasDataIgual(Date.from(Instant.now()), temp.getValidade()))
             {
                 return 1;
             }
             p.setOrc(temp);
             p.setCli(temp.getCli());
+            p.setValorTotal(temp.getValorTotal());
             for(int i = 0; i < temp.getLista().size(); i++)
             {
                 for(int x = 0; x < temp.getLista().get(i).getLista().size(); x++)
@@ -586,7 +604,12 @@ public class PedidoController {
                     listaPSD.add(new Pedido_Servico_Detalhe(temp.getLista().get(i).getLista().get(x).getDs(), temp.getLista().get(i).getLista().get(x).getNumeracaoI(), temp.getLista().get(i).getLista().get(x).getNumeracaoF(), temp.getLista().get(i).getLista().get(x).getVias(), temp.getLista().get(i).getLista().get(x).getOutros(), 0));
                 }
                 //                                          Servico serv, double valor, int qtd, double desconto, String descricao, int sequence, ArrayList<Pedido_Servico_Detalhe> lista
-                listaPS.add(new Pedido_Servico(temp.getLista().get(i).getServ(), (temp.getLista().get(i).getValor()+temp.getLista().get(i).getCustoAcab()+temp.getLista().get(i).getCustoArte()+temp.getLista().get(i).getCustoChapa()+temp.getLista().get(i).getCustoImpre()+temp.getLista().get(i).getCustoMdO()+temp.getLista().get(i).getCustoPapel()), temp.getLista().get(i).getQtd(), temp.getLista().get(i).getDesconto(), temp.getLista().get(i).getDescricao(), 0, listaPSD));
+                listaPS.add(new Pedido_Servico(temp.getLista().get(i).getServ(), 
+                        (temp.getLista().get(i).getValor()*temp.getLista().get(i).getQtd()+temp.getLista().get(i).getCustoAcab()
+                                +temp.getLista().get(i).getCustoArte()+temp.getLista().get(i).getCustoChapa()
+                                +temp.getLista().get(i).getCustoImpre()+temp.getLista().get(i).getCustoMdO()
+                                +temp.getLista().get(i).getCustoPapel()), temp.getLista().get(i).getQtd(), temp.getLista().get(i).getDesconto(), temp.getLista().get(i).getDescricao(), 0, listaPSD));
+                listaPSD = new ArrayList<>();
             }
         } catch (SQLException ex) 
         {

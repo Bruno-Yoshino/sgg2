@@ -158,7 +158,7 @@ public class MovCheque extends javax.swing.JDialog {
         jLabel7.setText("Nome da pessoa do cheque:");
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel9.setText("Numero Cheque:");
+        jLabel9.setText("Número Cheque:");
 
         txtNumeroCheque.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -171,13 +171,13 @@ public class MovCheque extends javax.swing.JDialog {
         jLabel11.setText("CPF do Dono do Cheque:");
 
         jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel12.setText("Numero da Agencia:");
+        jLabel12.setText("Número da Agência:");
 
         jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel13.setText("Numero da Conta:");
+        jLabel13.setText("Número da Conta:");
 
         jLabel14.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel14.setText("Numero da Banco:");
+        jLabel14.setText("Número da Banco:");
 
         txtValor.setText(".0");
 
@@ -185,19 +185,19 @@ public class MovCheque extends javax.swing.JDialog {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Situação do Cheque", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
 
         jLabel15.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel15.setText("Data compençado:");
+        jLabel15.setText("Data compensado:");
 
         dcCompencado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel5.setText("Motivo caso o cheque não foi compencado:");
+        jLabel5.setText("Motivo caso o cheque não foi compensado:");
 
         txtMotivo.setColumns(20);
         txtMotivo.setRows(5);
         jScrollPane2.setViewportView(txtMotivo);
 
         cbCompencar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        cbCompencar.setText("Cheque Compençado?");
+        cbCompencar.setText("Cheque Compensado?");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -347,7 +347,7 @@ public class MovCheque extends javax.swing.JDialog {
         });
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
-        btnAlterar.setText("Compençar");
+        btnAlterar.setText("Compensar");
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);

@@ -1334,6 +1334,8 @@ public class MovOrcamneto extends javax.swing.JDialog {
         consOrcamento.setVisible(true);
         if (consOrcamento.getCodigo() != 0)
         {
+            sc.limparTabela(jTable1);
+            sc.limparTabela(jTable2);
             txtCodigo.setText(String.valueOf(consOrcamento.getCodigo()));
             consOrcamento.dispose();
             txtCodigoFocusLost(null);

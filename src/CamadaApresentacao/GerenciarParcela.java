@@ -560,7 +560,7 @@ public class GerenciarParcela extends javax.swing.JDialog {
                     txtValorN.setText("0");
                     break;
             case 2: 
-                m.InformationMessage("A nova data não pode ser menor que a data de vencimento Expecificado no campo \"Data de Vencimento\"!", "Informação");
+                m.InformationMessage("A nova data não pode ser menor que a data de vencimento especificado no campo \"Data de Vencimento\"!", "Informação");
                 dtNovo.requestFocus();
                 dtNovo.setData(dtData.getData());
                 break;

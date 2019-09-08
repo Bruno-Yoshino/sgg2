@@ -905,7 +905,8 @@ public class MovProducao extends javax.swing.JDialog {
                     ReadOnlyTableModel model = (ReadOnlyTableModel) jTable2.getModel();
                     if(pc.Atualizar(Integer.parseInt(String.valueOf(model.getValueAt(jTable2.getSelectedRow(), 0)))))
                     {
-                        pc.gravarItens(Integer.parseInt(String.valueOf(model.getValueAt(jTable2.getSelectedRow(), 0))));
+                        if(cbStatus.getSelectedIndex() == 0)
+                            pc.gravarItens(Integer.parseInt(String.valueOf(model.getValueAt(jTable2.getSelectedRow(), 0))));
                         m.InformationMessage("Atualizado com sucesso", "");
                         sc.limpar(jPanel4.getComponents());
                         sc.limpar(jPanel2.getComponents());
@@ -928,6 +929,7 @@ public class MovProducao extends javax.swing.JDialog {
 
     private void btnremoveAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnremoveAllActionPerformed
         jTable3.removeAll();
+        sc.limparTabela(jTable3);
         pc.limpaLista();
     }//GEN-LAST:event_btnremoveAllActionPerformed
 
