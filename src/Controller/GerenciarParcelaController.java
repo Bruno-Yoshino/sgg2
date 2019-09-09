@@ -230,6 +230,7 @@ public class GerenciarParcelaController {
         {
             cr.setValor((Double) model.getValueAt(0, 1));
             cr.setDataV(sc.StringDate(String.valueOf(model.getValueAt(0, 2))));
+            cr.setFlag(true);
             x = cr.gravar();
             for (int i = 1; i < model.getRowCount() && x; i++) 
             {

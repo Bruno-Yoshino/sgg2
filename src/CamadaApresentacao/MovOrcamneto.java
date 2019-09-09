@@ -1168,6 +1168,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
             txtDesconto.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 9))));
             txtValor_total.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 10))));
             txtDescricao.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 11))));
+            oc.setSer(oc.getO().getLista().get(linha).getServ());
         }
         else
         {
@@ -1205,8 +1206,11 @@ public class MovOrcamneto extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        oc.excluirDetalheServico(jTable2, jTable1.getSelectedRow(), jTable2.getSelectedRow(), flag, txtCodigo.getText());
-        startDescricao();
+        if (jTable2.getSelectedRow() >= 0)
+        {
+            oc.excluirDetalheServico(jTable2, jTable1.getSelectedRow(), jTable2.getSelectedRow(), flag, txtCodigo.getText());
+            startDescricao();
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked

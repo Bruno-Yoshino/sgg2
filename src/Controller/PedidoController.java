@@ -449,6 +449,7 @@ public class PedidoController {
             else
             {
                 control = p.getLista().get(i).gravar(p.getCodigo());
+                p.getLista().get(i).setSequence(new Pedido_Servico().buscarUltimoCodigo());
                 new ProducaoController().gerarProducao(p.getLista().get(i), p);
             }
                 
@@ -488,7 +489,13 @@ public class PedidoController {
         new Producao().excluir(codigo);
         new Pedido_Servico_Detalhe().excluir(codigo);
         new Pedido_Servico().excluir(codigo);
+        new ContaReceber().excluirContaReceberPedido(codigo);
         return new Pedido().excluir(codigo);
+    }
+    
+    public boolean excluirContaReceber()
+    {
+        return new ContaReceber().excluirContaReceberPedido(p.getCodigo());
     }
     
     public void buscarDados(int codigo) throws SQLException

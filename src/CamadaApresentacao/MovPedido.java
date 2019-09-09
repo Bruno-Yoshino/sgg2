@@ -853,11 +853,7 @@ public class MovPedido extends javax.swing.JDialog {
              pc.addTabelaServico(jTable1, linha);
              txtValorT.setText(""+pc.calculoTotal(jTable1));
              linha = -1;
-             txtValor_total.setText("0");
-             txtValor.setText("0");
-             txtDesconto.setText("0");
-             spQtd.setValue(0);
-             txtServico.setText("");
+             initializeServico();
      }
 
     }//GEN-LAST:event_btnAddServicoActionPerformed
@@ -975,8 +971,11 @@ public class MovPedido extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAddDetalheActionPerformed
 
     private void btnExcluirDetalheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirDetalheActionPerformed
-        pc.excluirDetalheServico(jTable2, jTable1.getSelectedRow(), jTable2.getSelectedRow(), flag, txtCodigo.getText());
-        startDescricao();
+        if (jTable1.getSelectedRow() >= 0)
+        {
+            pc.excluirDetalheServico(jTable2, jTable1.getSelectedRow(), jTable2.getSelectedRow(), flag, txtCodigo.getText());
+            startDescricao();
+        }
     }//GEN-LAST:event_btnExcluirDetalheActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
@@ -985,8 +984,11 @@ public class MovPedido extends javax.swing.JDialog {
         sc.HabilityComponents(jPanel1.getComponents(), true);
         sc.HabilityComponents(jPanel4.getComponents(), false);
         sc.Edity(jPanel2.getComponents());
+        dcEntrega.setData(Date.from(Instant.now()));
+        dcPedido.setData(Date.from(Instant.now()));
         txtCodigo.setText("0");
         txtValorT.setText("0");
+        initializeServico();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEntregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregarActionPerformed
@@ -1109,7 +1111,8 @@ public class MovPedido extends javax.swing.JDialog {
                                 {
                                     if(pc.alterarPedidoServicoDetalhe())
                                     {
-                                        //Excluir as parcelas!
+                                        //Excluir as parcelas!  OK
+                                        pc.excluirContaReceber();
                                         lancarConta();
                                         m.InformationMessage("Alterardo com Sucesso!", "Informação");
                                         sc.limparTabela(jTable1);
@@ -1137,6 +1140,7 @@ public class MovPedido extends javax.swing.JDialog {
         jTable1.setEnabled(true);
         linha = -1;
         sc.Edity(jPanel2.getComponents());
+        initializeServico();
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
@@ -1275,6 +1279,16 @@ public class MovPedido extends javax.swing.JDialog {
         txtOutros.setText("");
         txtVia.setText("0");
         txtServico.setText("");
+    }
+    
+    private void initializeServico()
+    {
+        txtServico.setText("");
+        txtValor_total.setText("0");
+        txtValor.setText("0");
+        spQtd.setValue(0);
+        txtDescricao.setText("");
+        txtDesconto.setText("0");
     }
     
     private void enableComponents(String valor)

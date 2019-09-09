@@ -79,6 +79,7 @@ public class ReceberContaController {
         calendar.add(Calendar.DAY_OF_MONTH, add);
         cr.setDataV(calendar.getTime());
         cr.setObs("Nova parcela.");
+        cr.setFlag(false);
         return cr.gravar();
     }
     

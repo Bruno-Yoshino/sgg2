@@ -128,6 +128,12 @@ public class ContaReceber {
         return Banco.getCon().manipular(sql);
     }
     
+    public boolean excluirContaReceberPedido(int codigoP)
+    {
+        String sql = "delete from conta_receber where pe_codigo = "+codigoP+";";
+        return Banco.getCon().manipular(sql);
+    }
+    
     public boolean alterarvalorConta(int codigo)
     {
         String sql = "update conta_receber set cr_valor = "+valor+" "
@@ -256,6 +262,26 @@ public class ContaReceber {
     {
         String sql;
         sql = "select count(*) "
+                + " from conta_receber where pe_codigo = "+codigo+"";
+                ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return rs.getInt(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+    
+    public int minCodioParcela(int codigo)
+    {
+        String sql;
+        sql = "select min(crodigo) "
                 + " from conta_receber where pe_codigo = "+codigo+"";
                 ResultSet rs=Banco.getCon().consultar(sql);
         try 

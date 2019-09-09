@@ -87,7 +87,7 @@ public class Orcamento_Servico_Detalhe {
     
     public String CreatingDeleteSQLComand(int codigoO, int codigoS, int codigoD, int sequencia)
     {
-        String sql = "delete form orcamento_servico_detalhe where orc_codigo = "+codigoO+" and serv_codigo = "+codigoS+" and ds_codigo = "+codigoD+" and os_sequence = "+sequencia+"";
+        String sql = "delete from orcamento_servico_detalhe where orc_numero = "+codigoO+" and serv_codigo = "+codigoS+" and ds_codigo = "+codigoD+" and os_sequence = "+sequencia+"";
         return sql;
     }
     

@@ -390,12 +390,15 @@ public class MovReceberContas extends javax.swing.JDialog {
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
        if(jTable1.getSelectedRow() >= 0)
        {
-         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
-         txtCliente.setText(""+model.getValueAt(jTable1.getSelectedRow(), 0));
-         txtValor.setText(""+model.getValueAt(jTable1.getSelectedRow(), 2));
-         sc.Edity(jPanel3.getComponents());
-         sc.HabilityComponents(jPanel1.getComponents(), false);
-         sc.HabilityComponents(jPanel2.getComponents(), true);
+          if(true)
+          {
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            txtCliente.setText(""+model.getValueAt(jTable1.getSelectedRow(), 0));
+            txtValor.setText(""+model.getValueAt(jTable1.getSelectedRow(), 2));
+            sc.Edity(jPanel3.getComponents());
+            sc.HabilityComponents(jPanel1.getComponents(), false);
+            sc.HabilityComponents(jPanel2.getComponents(), true);
+          }
        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 

@@ -89,7 +89,7 @@ public class Pedido_Servico_Detalhe {
     
     public String CreatingDeleteSQLComand(int codigoP, int codigoS, int codigoD, int sequencia)
     {
-        String sql = "delete form pedido_servico_detalhe where orc_codigo = "+codigoP+" and serv_codigo = "+codigoS+" and ds_codigo = "+codigoD+" and ps_sequence = "+sequencia+"";
+        String sql = "delete from pedido_servico_detalhe where pe_codigo = "+codigoP+" and serv_codigo = "+codigoS+" and ds_codigo = "+codigoD+" and ps_sequence = "+sequencia+"";
         return sql;
     }
     
@@ -112,8 +112,8 @@ public class Pedido_Servico_Detalhe {
     public boolean alterar(int codigoP, int codigoS)
     {
         String sql =  "UPDATE pedido_servico_detalhe" +
-                      " SET serv_codigo="+codigoS+", ds_codigo="+ds.getCodigo()+", psd_numeracaoini="+numeracaoI+", psd_numeracaofim="+numeracaoF+", psd_vias="+vias+", psd_outros='"+outros+"' " +
-                      " WHERE pe_codigo="+codigoP+" and ps_sequence="+sequence+";";
+                      " SET psd_numeracaoini="+numeracaoI+", psd_numeracaofim="+numeracaoF+", psd_vias="+vias+", psd_outros='"+outros+"' " +
+                      " WHERE pe_codigo="+codigoP+" and ps_sequence="+sequence+" and serv_codigo="+codigoS+" and ds_codigo="+ds.getCodigo()+";";
         return Banco.getCon().manipular(sql);
     }
     
