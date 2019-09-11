@@ -133,7 +133,7 @@ public class PedidoController {
             return 4;
         if(linha == -1)
             temp.add(new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd),  v.ConverteNumeroReal(desconto), descricao, 0, new ArrayList<>()));
-        else
+        else //addではなく、temp.get(Linha).setXXXXX();で処理を行ってください。
             temp.add(linha, new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>()));
         p.setLista(temp);
         return 0;
@@ -154,7 +154,7 @@ public class PedidoController {
                     return 2;
                 if(v.ConverteNumeroInteiro(numeracaoI) < 0)
                     return 3;
-                if(v.ConverteNumeroInteiro(numeracaoF) < 0)
+                if(v.ConverteNumeroInteiro(numeracaoF) <= 0)
                     return 4;
                 if(v.ConverteNumeroInteiro(numeracaoI) > v.ConverteNumeroInteiro(numeracaoF))
                     return 5;
@@ -266,8 +266,7 @@ public class PedidoController {
     
     public boolean excluirServico(JTable tabela, int linha, boolean flag)
     {
-        ArrayList<Pedido_Servico_Detalhe> temp = new ArrayList<>();
-        ArrayList<Pedido_Servico> tempS  = new ArrayList<>();
+        ArrayList<Pedido_Servico> tempS  = p.getLista();
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
         if(p.getLista().get(linha).getLista().size() > 0) // DetalheServicoがある時。
         {

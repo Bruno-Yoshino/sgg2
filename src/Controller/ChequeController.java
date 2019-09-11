@@ -43,7 +43,7 @@ public class ChequeController {
         this.c = c;
     }
     //int codigo, ContaReceber cr, String dono, String cpf, double valor, Date data, Date predata, int nAgencia, String nConta, String nBanco, String nCheque, String obs, Date dataComp, String motivo
-    public int varidar(int codigo, String dono, String cpf, String valor, Date data, Date predata, String nAgencia, String nConta, String nBanco, String nCheque, String obs, Date dataComp, String motivo, boolean flag)
+    public int varidar(int codigo, String dono, String cpf, String valor, Date data, Date predata, String nAgencia, String nConta, String nBanco, String nCheque, String obs, Date dataComp, String motivo, boolean flag, boolean op)
     {
         c.setCodigo(codigo);
         if(dono.trim().equals(""))
@@ -97,7 +97,7 @@ public class ChequeController {
         }
         c.setnCheque(nCheque);
         
-        if(codigo != 0)
+        if(codigo != 0 && !op)
         {
             if(!v.ValidarDataDuasData(data, dataComp))
             {
@@ -118,6 +118,11 @@ public class ChequeController {
     public boolean gravar()
     {
         return c.gravar();
+    }
+    
+    public boolean compensar()
+    {
+        return c.compensar();
     }
     
     public void buscaConta(int codigo)

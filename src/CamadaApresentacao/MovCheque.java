@@ -46,11 +46,13 @@ public class MovCheque extends javax.swing.JDialog {
     private final mensagens m = new mensagens();
     private final ChequeController cc = new ChequeController();
     private int codigo;
+    private boolean op;
     
     public MovCheque(java.awt.Frame parent, boolean modal, int codigoCR) {
         super(parent, modal);
         initComponents();
         btnNovo.setName("btnNovo");
+        btnCompensar.setName("btnCompensar");
         btnAlterar.setName("btnAlterar");
         btnCancelar.setName("btnCancelar");
         btnExcluir.setName("btnExcluir");
@@ -119,12 +121,13 @@ public class MovCheque extends javax.swing.JDialog {
         cbCompencar = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
-        btnAlterar = new javax.swing.JButton();
+        btnCompensar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnGravar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnLocalizar = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -346,11 +349,11 @@ public class MovCheque extends javax.swing.JDialog {
             }
         });
 
-        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
-        btnAlterar.setText("Compensar");
-        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+        btnCompensar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
+        btnCompensar.setText("Compensar");
+        btnCompensar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAlterarActionPerformed(evt);
+                btnCompensarActionPerformed(evt);
             }
         });
 
@@ -393,6 +396,14 @@ public class MovCheque extends javax.swing.JDialog {
             }
         });
 
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
+        btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -401,12 +412,14 @@ public class MovCheque extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCompensar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(btnAlterar)
-                .addGap(21, 21, 21)
+                .addGap(18, 18, 18)
                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLocalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -419,13 +432,16 @@ public class MovCheque extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAlterar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+                    .addComponent(btnCompensar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnNovo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSair, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnGravar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLocalizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnExcluir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -460,12 +476,14 @@ public class MovCheque extends javax.swing.JDialog {
         sc.HabilityComponents(jPanel1.getComponents(), true);
         sc.HabilityComponents(jPanel3.getComponents(), false);
         codigo = 0;
+        op = true;
     }//GEN-LAST:event_btnNovoActionPerformed
 
-    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+    private void btnCompensarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompensarActionPerformed
         sc.Edity(jPanel2.getComponents());
         sc.HabilityComponents(jPanel3.getComponents(), true);
-    }//GEN-LAST:event_btnAlterarActionPerformed
+        op = false;
+    }//GEN-LAST:event_btnCompensarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         sc.Initialize(jPanel2.getComponents());
@@ -481,7 +499,7 @@ public class MovCheque extends javax.swing.JDialog {
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         //int codigo, ContaReceber cr, String dono, String cpf, double valor, Date data, Date predata, int nAgencia, String nConta, String nBanco, String nCheque, String obs, Date dataComp, String motivo
-        switch(cc.varidar(codigo, txtPessoa.getText(), txtCpf.getText(), txtValor.getText(), dcData.getData(), dcPredata.getData(), txtAgencia.getText(), txtConta.getText(), txtBanco.getText(), txtNumeroCheque.getText(), txtObs.getText(), dcCompencado.getData(), txtMotivo.getText(), cbCompencar.isSelected()))
+        switch(cc.varidar(codigo, txtPessoa.getText(), txtCpf.getText(), txtValor.getText(), dcData.getData(), dcPredata.getData(), txtAgencia.getText(), txtConta.getText(), txtBanco.getText(), txtNumeroCheque.getText(), txtObs.getText(), dcCompencado.getData(), txtMotivo.getText(), cbCompencar.isSelected(), op))
         {
             case 1: m.InformationMessage("Informe o Dono do Cheque!", "Atenção"); txtPessoa.requestFocus(); break;
             case 2: m.InformationMessage("Informe o CPF!", "Atenção"); txtCpf.requestFocus(); break;
@@ -494,16 +512,35 @@ public class MovCheque extends javax.swing.JDialog {
             case 9: m.InformationMessage("A data Compençado é menor que a Data Recebido!", "Atenção"); dcCompencado.requestFocus(); break;
             case 10: m.InformationMessage("Informe o motivo!", "Atenção"); txtMotivo.requestFocus(); break;
             default:
-                if(cc.gravar())
+                if(op)
                 {
-                    m.InformationMessage("Gravado com Sucesso!", "Informação");
-                    btnCancelarActionPerformed(null);
-                    sc.Initialize(jPanel2.getComponents());
+                    if(cc.gravar())
+                    {
+                        m.InformationMessage("Gravado com Sucesso!", "Informação");
+                        btnCancelarActionPerformed(null);
+                        sc.Initialize(jPanel2.getComponents());
+                        sc.limpar(jPanel1.getComponents());
+                    }
+                    else
+                    {
+                        m.ErroMessage("ERRO", "ERRO");
+                    }
                 }
                 else
                 {
-                    m.ErroMessage("ERRO", "ERRO");
+                    if(cc.compensar())
+                    {
+                        m.InformationMessage("Compensado com Sucesso!", "Informação");
+                        btnCancelarActionPerformed(null);
+                        sc.Initialize(jPanel2.getComponents());
+                        sc.limpar(jPanel1.getComponents());
+                    }
+                    else
+                    {
+                        m.ErroMessage("ERRO", "ERRO");
+                    }
                 }
+                
         }
     }//GEN-LAST:event_btnGravarActionPerformed
 
@@ -555,10 +592,18 @@ public class MovCheque extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        sc.Edity(jPanel2.getComponents());
+        sc.HabilityComponents(jPanel1.getComponents(), true);
+        sc.HabilityComponents(jPanel3.getComponents(), false);
+        op = true;
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCompensar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnLocalizar;

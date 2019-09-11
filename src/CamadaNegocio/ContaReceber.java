@@ -1,10 +1,12 @@
 package CamadaNegocio;
 
 import CamadaLogica.Banco;
+import CamadaLogica.ReadOnlyTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JTable;
 
 /**
  *
@@ -281,8 +283,8 @@ public class ContaReceber {
     public int minCodioParcela(int codigo)
     {
         String sql;
-        sql = "select min(crodigo) "
-                + " from conta_receber where pe_codigo = "+codigo+"";
+        sql = "select min(cr_codigo) "
+                + " from conta_receber where pe_codigo = "+codigo+" and cr_datapago is null;";
                 ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
@@ -320,5 +322,63 @@ public class ContaReceber {
                 sql = null;
         }
         return Banco.getCon().retornaResultSet(sql);
+    }
+    
+    public static ResultSet buscarDadosCEstornoCR(Date Inicio, Date Fim, int tipo)//CLancarDespesa
+    {
+        String query = null; /// falta alterar o sql
+        switch (tipo)
+        {
+            case 0: //Data vencimento
+            {
+                query = "SELECT cr_codigo, cr_valorc, cr_valorp, cr_datavencimento, cr_dtpago, cr_obs "
+                      + "FROM conta_receber "
+                      + "WHERE cr_dtpago is not null and cr_datavencimento = '"+Inicio+"' "
+                      + "Order by cr_datavencimento;";                
+                break;
+            }
+            case 1://Periodo vencimento
+            {
+                query = "SELECT cr_codigo, cr_valorc, cr_valorp, cr_datavencimento, cr_dtpago, cr_obs "
+                      + "FROM conta_receber "
+                      + "WHERE cr_dtpago is not null and cr_datavencimento BETWEEN '"+Inicio+"' and '"+Fim+"' "
+                      + "Order by cr_datavencimento;";                
+                break;
+            }
+            case 2://Data Pagamento
+            {
+                query = "SELECT cr_codigo, cr_valorc, cr_valorp, cr_datavencimento, cr_dtpago, cr_obs "
+                      + "FROM conta_receber "
+                      + "WHERE cr_dtpago is not null and cr_dtpago BETWEEN '"+Inicio+"' and '"+Fim+"' "
+                      + "Order by cr_datavencimento;";                
+                break;
+            }
+            case 3://Periodo Pagamento
+            {
+                query = "SELECT cr_codigo, cr_valorc, cr_valorp, cr_datavencimento, cr_dtpago, cr_obs "
+                      + "FROM conta_receber "
+                      + "WHERE cr_dtpago is not null and cr_dtpago BETWEEN '"+Inicio+"' and '"+Fim+"' "
+                      + "Order by cr_datavencimento;";                
+                break;
+            }
+            default:
+                    query = "SELECT cr_codigo, cr_valorc, cr_valorp, cr_datavencimento, cr_dtpago, cr_obs "
+                    + "FROM conta_receber "
+                    + "WHERE cr_dtpago is not null "
+                    + "Order by cr_datavencimento;";    
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
+    public static void configuraModelCEstornoCR(JTable jTable) 
+    {
+        String colunas[] = new String [] {"Código", "Valor da Conta", "Valor Pago", "Data Vencimento", "Data Pagamento", "Obs"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(300);
     }
 }

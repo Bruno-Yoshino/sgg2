@@ -925,6 +925,8 @@ public class MovPedido extends javax.swing.JDialog {
         {
             m.InformationMessage("Excluido com Sucesso", "Informação");
             txtValorT.setText(""+pc.calculoTotal(jTable1));
+            sc.limparTabela(jTable2);
+            initializeServico();
         }
     }//GEN-LAST:event_btnExcluiServicoActionPerformed
 
@@ -935,12 +937,14 @@ public class MovPedido extends javax.swing.JDialog {
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             if(pc.verificaStatus(Integer.parseInt(txtCodigo.getText()), linha) || flag)
             {
+                //"Serviço", "Valor", "Quantidade", "Desconto", "Valor Total", "Descrição"
                 txtServico.setText(""+model.getValueAt(jTable1.getSelectedRow(), 0));
-                txtValor.setText(""+model.getValueAt(jTable1.getSelectedRow(), 1));
+                txtValor.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 1))));
                 spQtd.setValue(model.getValueAt(jTable1.getSelectedRow(), 2));
-                txtDesconto.setText(""+model.getValueAt(jTable1.getSelectedRow(), 9));
-                txtValor_total.setText(""+model.getValueAt(jTable1.getSelectedRow(), 10));
-                txtDescricao.setText(""+model.getValueAt(jTable1.getSelectedRow(), 11));
+                txtDesconto.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 3))));
+                txtValor_total.setText(""+sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 4)));
+                txtDescricao.setText(""+sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 5)));
+                pc.setSer(pc.getP().getLista().get(linha).getServ());
             }
             else
             {

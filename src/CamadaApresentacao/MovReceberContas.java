@@ -390,15 +390,23 @@ public class MovReceberContas extends javax.swing.JDialog {
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
        if(jTable1.getSelectedRow() >= 0)
        {
-          if(true)
+          ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+          if(rcc.verificaConta(Integer.parseInt(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 1))), Integer.parseInt(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 5)))))
           {
-            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             txtCliente.setText(""+model.getValueAt(jTable1.getSelectedRow(), 0));
             txtValor.setText(""+model.getValueAt(jTable1.getSelectedRow(), 2));
             sc.Edity(jPanel3.getComponents());
             sc.HabilityComponents(jPanel1.getComponents(), false);
             sc.HabilityComponents(jPanel2.getComponents(), true);
           }
+          else
+          {
+             m.InformationMessage("Exixte parcelas anteriores que ainda não foram pagos!", "Informação");
+          }
+       }
+       else
+       {
+         JOptionPane.showMessageDialog(this, "Você deve selecionar um registro", "Informação", JOptionPane.INFORMATION_MESSAGE);   
        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -492,7 +500,7 @@ public class MovReceberContas extends javax.swing.JDialog {
         vet[2] = "Data Pagamento";
         vet[3] = "Periodo Pagamento";
         vet[4] = "Tudo";
-        consEstornoCR.configuraOpcoes(vet, 5, 4, "CEstornoCP", false);
+        consEstornoCR.configuraOpcoes(vet, 5, 4, "CEstornoCR", false);
         consEstornoCR.verificaconsulta(true);
         consEstornoCR.setVisible(true);
         if (consEstornoCR.getCodigo() != 0)

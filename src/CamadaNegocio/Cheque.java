@@ -181,9 +181,18 @@ public class Cheque {
         }
         else
         {
-            sql = "UPDATE cheque set c_datacomp = '"+dataComp+"', c_motivo = '"+motivo+"' where c_codigo = "+codigo+"";
+             sql = "UPDATE cheque set cr_codigo = "+(cr == null ? null : cr.getCodigo())+", c_dono = '"+dono+"', c_cpfdono = '"+cpf+"', "
+                     + " c_valor = "+valor+", c_datal = '"+data+"', c_predata = '"+predata+"', "
+                     + " c_nagencia = '"+nAgencia+"', c_nconta = '"+nConta+"', c_nbanco = '"+nBanco+"', c_ncheque = '"+nCheque+"',"
+                     + " c_obs = '"+obs+"', c_datacomp = "+null+", c_motivo = '') where c_codigo = "+codigo+" ";
         }
         return Banco.getCon().manipular(sql);
+   }
+   
+   public boolean compensar()
+   {
+       String sql = "UPDATE cheque set c_datacomp = '"+dataComp+"', c_motivo = '"+motivo+"' where c_codigo = "+codigo+"";
+       return Banco.getCon().manipular(sql);
    }
    
    public boolean excluir()

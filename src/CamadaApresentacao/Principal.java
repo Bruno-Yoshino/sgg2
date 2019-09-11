@@ -995,6 +995,7 @@ public class Principal extends javax.swing.JFrame {
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
         MovCaixaRetirada frm = new MovCaixaRetirada(this, true, funcL);
         frm.setTitle("Retirar Dinheiro");
+        
         frm.setVisible(true);
     }//GEN-LAST:event_btn2ActionPerformed
 

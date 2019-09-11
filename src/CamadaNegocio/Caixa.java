@@ -288,6 +288,28 @@ public class Caixa
         return 0;
     }
     
+    public double TotalRecebido()
+    {
+        String sql;
+        sql = "select sum(cr_valorp) "
+                + " from conta_receber "
+                + " where caixa_codigo = "+codigo+" and cr_datapago is not null ";
+                ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return rs.getDouble(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+            return 0;
+        }
+        return 0;
+    }
+    
     public double TotalPedido(String data)
     {
         String sql;

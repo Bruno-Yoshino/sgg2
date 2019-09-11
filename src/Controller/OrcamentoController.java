@@ -144,8 +144,8 @@ public class OrcamentoController {
             return 11;
         if(linha == -1)
             temp.add(new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, 0, new ArrayList<>()));
-        else
-            temp.add(linha, new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>()));
+        else////// addではなく、temp.get(Linha).setXXXXX();で処理を行ってください。 Pedidoも同様。
+            temp.add(linha+1, new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>()));
         
         o.setLista(temp);
         return 0;
@@ -166,7 +166,7 @@ public class OrcamentoController {
                     return 2;
                 if(v.ConverteNumeroInteiro(numeracaoI) < 0)
                     return 3;
-                if(v.ConverteNumeroInteiro(numeracaoF) < 0)
+                if(v.ConverteNumeroInteiro(numeracaoF) <= 0)
                     return 4;
                 if(v.ConverteNumeroInteiro(numeracaoI) > v.ConverteNumeroInteiro(numeracaoF))
                     return 5;

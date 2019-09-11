@@ -239,6 +239,11 @@ public class ReceberContaController {
         return v.ConverteNumeroReal(sc.arredondar(valor / qtd));
     }
     
+    public boolean verificaConta(int npedido, int nconta)
+    {
+       return nconta == cr.minCodioParcela(npedido);
+    }
+    
     public static void configuraModel(JTable jTable)
     {
         String colunas[] = new String [] {"Cliente", "Número Pedido", "Valor a ser Cobrado", "Data de Vencimento", "Data do Peido", "Numero da conta"};

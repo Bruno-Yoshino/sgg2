@@ -1,8 +1,11 @@
 package util;
 
 import CamadaLogica.ReadOnlyTableModel;
+import CamadaNegocio.Empresa;
+import CamadaNegocio.Funcionario;
 import br.com.marciorl.beans.DateChooser;
 import java.awt.Component;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -231,6 +234,12 @@ public class SystemControl
             }
         }
         return local;
+    }
+    
+    public final ImageIcon CarregarIconeEmrpesa(String pass)
+    {
+        ImageIcon icon2 = new ImageIcon(pass);
+        return new ImageIcon(icon2.getImage().getScaledInstance(16, 16, Image.SCALE_DEFAULT));
     }
     
     public final javax.swing.JFileChooser getJFileChooser()

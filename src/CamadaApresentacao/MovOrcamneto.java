@@ -1166,8 +1166,8 @@ public class MovOrcamneto extends javax.swing.JDialog {
             txtCustoChap.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 7))));
             txtCustoMdO.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 8))));
             txtDesconto.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 9))));
-            txtValor_total.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 10))));
-            txtDescricao.setText(""+sc.verificaValor(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 11))));
+            txtValor_total.setText(""+sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 10)));
+            txtDescricao.setText(""+sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 11)));
             oc.setSer(oc.getO().getLista().get(linha).getServ());
         }
         else
@@ -1440,6 +1440,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         spQtd.setValue(0);
         txtValor_total.setText("0");
         txtDescricao.setText("");
+        txtServico.setText("");
     }
     
     private void startDescricao()
