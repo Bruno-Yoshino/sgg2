@@ -145,8 +145,22 @@ public class OrcamentoController {
         if(linha == -1)
             temp.add(new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, 0, new ArrayList<>()));
         else////// addではなく、temp.get(Linha).setXXXXX();で処理を行ってください。 Pedidoも同様。
-            temp.add(linha+1, new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>()));
-        
+        {    
+            //temp.add(linha+1, new Orcamento_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(custoP), v.ConverteNumeroReal(custoI), v.ConverteNumeroReal(custoAca), v.ConverteNumeroReal(custoArt), v.ConverteNumeroReal(custoChap), v.ConverteNumeroReal(custoMdO), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>()));
+            temp.get(linha).setQtd(v.ConverteNumeroInteiro(qtd));
+            temp.get(linha).setCustoAcab(v.ConverteNumeroReal(custoAca));
+            temp.get(linha).setCustoArte(v.ConverteNumeroReal(custoArt));
+            temp.get(linha).setCustoChapa(v.ConverteNumeroReal(custoChap));
+            temp.get(linha).setCustoImpre(v.ConverteNumeroReal(custoI));
+            temp.get(linha).setCustoMdO(v.ConverteNumeroReal(custoMdO));
+            temp.get(linha).setCustoPapel( v.ConverteNumeroReal(custoP));
+            temp.get(linha).setDesconto(v.ConverteNumeroReal(desconto));
+            temp.get(linha).setDescricao(descricao);
+            temp.get(linha).setServ(ser);
+            temp.get(linha).setValor(v.ConverteNumeroReal(valor));
+            
+            
+        }
         o.setLista(temp);
         return 0;
     }

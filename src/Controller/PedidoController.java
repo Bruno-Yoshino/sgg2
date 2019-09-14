@@ -134,7 +134,13 @@ public class PedidoController {
         if(linha == -1)
             temp.add(new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd),  v.ConverteNumeroReal(desconto), descricao, 0, new ArrayList<>()));
         else //addではなく、temp.get(Linha).setXXXXX();で処理を行ってください。
-            temp.add(linha, new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(desconto), descricao, temp.get(linha).getSequence(), new ArrayList<>()));
+        {   
+            temp.get(linha).setQtd(v.ConverteNumeroInteiro(qtd));
+            temp.get(linha).setDesconto(v.ConverteNumeroReal(desconto));
+            temp.get(linha).setDescricao(descricao);
+            temp.get(linha).setServ(ser);
+            temp.get(linha).setValor(v.ConverteNumeroReal(valor));
+        }
         p.setLista(temp);
         return 0;
     }
