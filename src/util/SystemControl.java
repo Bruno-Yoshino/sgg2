@@ -1,8 +1,6 @@
 package util;
 
 import CamadaLogica.ReadOnlyTableModel;
-import CamadaNegocio.Empresa;
-import CamadaNegocio.Funcionario;
 import br.com.marciorl.beans.DateChooser;
 import java.awt.Component;
 import java.awt.Image;
@@ -106,6 +104,10 @@ public class SystemControl
                     c1.setEnabled(false);
                     break;
                     
+                case "btnCompensar":
+                    c1.setEnabled(false);
+                    break;
+                    
                 case "btnEntregar":
                     c1.setEnabled(false);
                     break;
@@ -149,6 +151,10 @@ public class SystemControl
                     c1.setEnabled(true);
                     break;
                     
+                case "btnCompensar":
+                    c1.setEnabled(true);
+                    break;
+                    
                 case "btnEntregar":
                     c1.setEnabled(true);
                     break;
@@ -185,6 +191,10 @@ public class SystemControl
                     break;
                 
                 case "btnAlterar":
+                    c1.setEnabled(false);
+                    break;
+                    
+                case "btnCompensar":
                     c1.setEnabled(false);
                     break;
                     

@@ -209,9 +209,9 @@ public class ReceberContaController {
             {
                 
             }
-            for(notNull = 0; notNull < lista.size() && lista.get(notNull).getDataP() != null; i++)
+            for(notNull = 0; notNull < lista.size() && lista.get(notNull).getDataP() != null; notNull++)
             {
-                
+                  
             }
             if(i+1 == notNull)//lista.get(i).equals(lista.get(notNull-1)) && notNull != lista.size()
             {

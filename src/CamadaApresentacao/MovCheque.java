@@ -349,7 +349,7 @@ public class MovCheque extends javax.swing.JDialog {
             }
         });
 
-        btnCompensar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
+        btnCompensar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/extornar16.jpg"))); // NOI18N
         btnCompensar.setText("Compensar");
         btnCompensar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -413,7 +413,7 @@ public class MovCheque extends javax.swing.JDialog {
                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCompensar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(btnAlterar)
                 .addGap(18, 18, 18)
                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)

@@ -361,6 +361,7 @@ public class MovReceberContas extends javax.swing.JDialog {
         {
             rbOP2.setSelected(false);
             try {
+                sc.limparTabela(jTable1);
                 rcc.carregarTabela(jTable1, 1);
             } catch (SQLException ex) {
                 Logger.getLogger(MovReceberContas.class.getName()).log(Level.SEVERE, null, ex);
@@ -373,6 +374,7 @@ public class MovReceberContas extends javax.swing.JDialog {
         {
             rbOP1.setSelected(false);
             try {
+                sc.limparTabela(jTable1);
                 rcc.carregarTabela(jTable1, 2);
             } catch (SQLException ex) {
                 Logger.getLogger(MovReceberContas.class.getName()).log(Level.SEVERE, null, ex);
@@ -510,6 +512,7 @@ public class MovReceberContas extends javax.swing.JDialog {
                 m.InformationMessage("Estornado com sucesso!", "Informação");
                 try
                 {
+                    sc.limparTabela(jTable1);
                     rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
                 } catch (SQLException ex) {
                     Logger.getLogger(MovPagarContas.class.getName()).log(Level.SEVERE, null, ex);

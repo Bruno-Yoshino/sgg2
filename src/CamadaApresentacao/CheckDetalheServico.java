@@ -23,6 +23,8 @@ public class CheckDetalheServico extends javax.swing.JDialog
     public CheckDetalheServico(java.awt.Frame parent, boolean modal, int codigoPe) throws SQLException {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
+        this.setTitle("Detalhe do Serviço");
         ResultSet rs =  Producao.carregarServico(codigoPe);
         if(rs.next())
         {    

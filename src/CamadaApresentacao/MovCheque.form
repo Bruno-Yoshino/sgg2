@@ -465,7 +465,7 @@
                   <Component id="btnNovo" min="-2" pref="85" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnCompensar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="14" max="32767" attributes="0"/>
+                  <EmptySpace pref="12" max="32767" attributes="0"/>
                   <Component id="btnAlterar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnExcluir" min="-2" pref="84" max="-2" attributes="0"/>
@@ -518,7 +518,7 @@
         <Component class="javax.swing.JButton" name="btnCompensar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Icon/Alterar16.png"/>
+              <Image iconType="3" name="/Icon/extornar16.jpg"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Compensar"/>
           </Properties>

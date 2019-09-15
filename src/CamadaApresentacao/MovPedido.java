@@ -1003,6 +1003,7 @@ public class MovPedido extends javax.swing.JDialog {
         dcEntrega.setVisible(true);
         dcEntrega.setData(Date.from(Instant.now()));
         dcEntrega.requestFocus();
+        cbForma.setEnabled(true);
     }//GEN-LAST:event_btnEntregarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -1069,7 +1070,7 @@ public class MovPedido extends javax.swing.JDialog {
                                     {
                                         m.ErroMessage("ERRO", "ERRO2");
                                     }
-                                    lancarConta();
+                                    //lancarConta();
                                     
                                     sc.limpar(jPanel1.getComponents());
                                     sc.limparTabela(jTable1);
@@ -1095,6 +1096,7 @@ public class MovPedido extends javax.swing.JDialog {
                                 linha = -1;
                                 lbEntrega.setVisible(false);
                                 dcEntrega.setVisible(false);
+                                lancarConta();
                                 //Alterar a data da entrega
                                 //m.ErroMessage("ERRO2", "ERRO2");
                             }
@@ -1116,8 +1118,8 @@ public class MovPedido extends javax.swing.JDialog {
                                     if(pc.alterarPedidoServicoDetalhe())
                                     {
                                         //Excluir as parcelas!  OK
-                                        pc.excluirContaReceber();
-                                        lancarConta();
+                                        //pc.excluirContaReceber();
+                                        
                                         m.InformationMessage("Alterardo com Sucesso!", "Informação");
                                         sc.limparTabela(jTable1);
                                         sc.limparTabela(jTable2);

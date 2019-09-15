@@ -307,15 +307,15 @@ public class ContaReceber {
         {//"Cliente", "Número Pedido", "Valor a ser Cobrado", "Data de Vencimento", "Data do Peido", "Numero da conta"
             case 1: // nome
                 sql = "select c.cli_nome, cr.pe_codigo, cr.cr_valor, cr.cr_datavenc, p.pe_datapedido, cr.cr_codigo "
-                    + " from conta_receber cr, pedido p, cliente c"
+                    + " from conta_receber cr, pedido p, cliente c "
                     + " where cr.cr_datapago is null and p.pe_codigo = cr.pe_codigo and p.cli_codigo = c.cli_codigo "
                     + " order by c.cli_nome;";
                 break;
             case 2: // data vencimento
                 //sql = "select cr.cr_codigo, cr.pe_codigo, cr.cr_datavenc, cr.cr_obs, cr.cr_valor, cr.cr_datapago, cr.cr_vlorp "
                 sql = "select c.cli_nome, cr.pe_codigo, cr.cr_valor, cr.cr_datavenc, p.pe_datapedido, cr.cr_codigo "
-                    + " from conta_receber cr "
-                    + " where cr.cr_datapago is null"
+                    + " from conta_receber cr, pedido p, cliente c "
+                    + " where cr.cr_datapago is null and p.pe_codigo = cr.pe_codigo and p.cli_codigo = c.cli_codigo "
                     + " order by cr.cr_datavenc;";
                 break;
             default:
@@ -331,41 +331,41 @@ public class ContaReceber {
         {
             case 0: //Data vencimento
             {
-                query = "SELECT cr_codigo, cr_valorc, cr_valorp, cr_datavencimento, cr_dtpago, cr_obs "
+                query = "SELECT cr_codigo, cr_valor, cr_vlorp, cr_datavenc, cr_datapago, cr_obs "
                       + "FROM conta_receber "
-                      + "WHERE cr_dtpago is not null and cr_datavencimento = '"+Inicio+"' "
-                      + "Order by cr_datavencimento;";                
+                      + "WHERE cr_datapago is not null and cr_datavenc = '"+Inicio+"' "
+                      + "Order by cr_datavenc;";                
                 break;
             }
             case 1://Periodo vencimento
             {
-                query = "SELECT cr_codigo, cr_valorc, cr_valorp, cr_datavencimento, cr_dtpago, cr_obs "
+                query = "SELECT cr_codigo, cr_valor, cr_vlorp, cr_datavenc, cr_datapago, cr_obs "
                       + "FROM conta_receber "
-                      + "WHERE cr_dtpago is not null and cr_datavencimento BETWEEN '"+Inicio+"' and '"+Fim+"' "
-                      + "Order by cr_datavencimento;";                
+                      + "WHERE cr_datapago is not null and cr_datavenc BETWEEN '"+Inicio+"' and '"+Fim+"' "
+                      + "Order by cr_datavenc;";                
                 break;
             }
             case 2://Data Pagamento
             {
-                query = "SELECT cr_codigo, cr_valorc, cr_valorp, cr_datavencimento, cr_dtpago, cr_obs "
+                query = "SELECT cr_codigo, cr_valor, cr_vlorp, cr_datavenc, cr_datapago, cr_obs "
                       + "FROM conta_receber "
-                      + "WHERE cr_dtpago is not null and cr_dtpago BETWEEN '"+Inicio+"' and '"+Fim+"' "
-                      + "Order by cr_datavencimento;";                
+                      + "WHERE cr_datapago is not null and cr_datapago BETWEEN '"+Inicio+"' and '"+Fim+"' "
+                      + "Order by cr_datavenc;";                
                 break;
             }
             case 3://Periodo Pagamento
             {
-                query = "SELECT cr_codigo, cr_valorc, cr_valorp, cr_datavencimento, cr_dtpago, cr_obs "
+                query = "SELECT cr_codigo, cr_valor, cr_vlorp, cr_datavenc, cr_datapago, cr_obs "
                       + "FROM conta_receber "
-                      + "WHERE cr_dtpago is not null and cr_dtpago BETWEEN '"+Inicio+"' and '"+Fim+"' "
-                      + "Order by cr_datavencimento;";                
+                      + "WHERE cr_datapago is not null and cr_datapago BETWEEN '"+Inicio+"' and '"+Fim+"' "
+                      + "Order by cr_datavenc;";                
                 break;
             }
             default:
-                    query = "SELECT cr_codigo, cr_valorc, cr_valorp, cr_datavencimento, cr_dtpago, cr_obs "
+                    query = "SELECT cr_codigo, cr_valor, cr_vlorp, cr_datavenc, cr_datapago, cr_obs "
                     + "FROM conta_receber "
-                    + "WHERE cr_dtpago is not null "
-                    + "Order by cr_datavencimento;";    
+                    + "WHERE cr_datapago is not null "
+                    + "Order by cr_datavenc;";    
         }
         return Banco.getCon().retornaResultSet(query);
     }

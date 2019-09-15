@@ -164,7 +164,7 @@ public class MovProducao extends javax.swing.JDialog {
 
         rbClienteOP2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         rbClienteOP2.setSelected(true);
-        rbClienteOP2.setText("Clientes com pedidos não entregue");
+        rbClienteOP2.setText("Serviço a fazer");
         rbClienteOP2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 rbClienteOP2MouseClicked(evt);
@@ -177,7 +177,7 @@ public class MovProducao extends javax.swing.JDialog {
         });
 
         rbClienteOP3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        rbClienteOP3.setText("Clientes com pedidos faltando");
+        rbClienteOP3.setText("Serviços prontos não entregue");
         rbClienteOP3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 rbClienteOP3MouseClicked(evt);
@@ -210,11 +210,10 @@ public class MovProducao extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(rbClienteOP2)
                         .addGap(18, 18, 18)
-                        .addComponent(rbClienteOP3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtFiltro)
-                        .addGap(22, 22, 22))
-                    .addComponent(jScrollPane1)))
+                        .addComponent(rbClienteOP3, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtFiltro))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 782, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -825,6 +824,7 @@ public class MovProducao extends javax.swing.JDialog {
             sc.Edity(jPanel3.getComponents());
             sc.HabilityComponents(jPanel4.getComponents(), true);
             jPanel3.setEnabled(false);
+            sc.HabilityComponents(jPanel1.getComponents(), false);
         }
         else
         {
