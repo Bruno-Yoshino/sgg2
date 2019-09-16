@@ -151,7 +151,7 @@ public class Pedido {
         else
         {
             sql = "UPDATE pedido " +
-                  " SET  pe_dataentrega='"+entrega+"' " +
+                  " SET  pe_dataentrega='"+entrega+"', fpg_codigo = "+fp.getCodigo()+" " +
                   " WHERE pe_codigo="+codigo+";";
         }
         return Banco.getCon().manipular(sql);

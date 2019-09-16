@@ -4,12 +4,19 @@ import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Compra;
 import CamadaNegocio.Compra_Folha;
 import CamadaNegocio.Compra_Produto;
+import CamadaNegocio.ContaPagar;
 import CamadaNegocio.Folha;
 import CamadaNegocio.Fornecedor;
+import CamadaNegocio.Producao_Folha;
+import CamadaNegocio.Producao_Produto;
 import CamadaNegocio.Produto;
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -237,10 +244,16 @@ public class LancarCompraController
         {
             return false;
         }
+        ContaPagar.excluirParcelasCompra(c.getCodigo());
         //voltar o estoque
         if(c.excluirItens())
             return c.excluir();
         return false;
+    }
+    
+    public boolean verificarParcelars(int codigo)
+    {
+        return c.buscaQtdParcelas(codigo) > 0;
     }
     
     public void addItens(JTable tabelaF, JTable tabelaP, JTextField valorTF, JTextField valorTP)
@@ -278,7 +291,33 @@ public class LancarCompraController
         valorTP.setText(""+valort);
     }
     
-        public static void configuraModelItem(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
+    public boolean verificarEstoqueProduto(int codigoP, int qtd)
+    {
+        try {
+            Produto temp = new Produto().buscarCodigo(codigoP);
+            Producao_Produto pp = new Producao_Produto();
+            
+            return temp.getQtd() - qtd - pp.qtdReserva(codigoP) >= 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(LancarCompraController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public boolean verificarEstoqueFolha(int codigoF, int qtd)
+    {
+        try {
+            Folha temp = new Folha().buscarCodigo(codigoF);
+            Producao_Folha pf = new Producao_Folha();
+            
+            return temp.getQtd() - qtd - pf.qtdReserva(codigoF) >= 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(LancarCompraController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public static void configuraModelItem(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
     {
         String colunas[] = new String [] {"Codigo", "Nome", "Quantidade", "Valor Unitario", "Valor Total"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));

@@ -46,9 +46,9 @@ public class MovLancarCompras extends javax.swing.JDialog {
         btnLocalizar.setName("btnLocalizar");
         btnSair.setName("btnSair");
         
-        btnAlterar.setVisible(false);
-        btnExcluir.setVisible(false);
-        btnLocalizar.setVisible(false);
+//        btnAlterar.setVisible(false);
+//        btnExcluir.setVisible(false);
+//        btnLocalizar.setVisible(false);
         
         btnaddDF.setName("btnaddDF");
         btnExcluirF.setName("btnExcluirF");
@@ -299,8 +299,9 @@ public class MovLancarCompras extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnaltP)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(btnLocProd)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap())
             .addComponent(jScrollPane1)
         );
         jPanel3Layout.setVerticalGroup(
@@ -848,13 +849,35 @@ public class MovLancarCompras extends javax.swing.JDialog {
            case 3: m.InformationMessage("Informe a Folha!", "Atenção"); btnLocProd.requestFocus(); break;
            case 4: m.InformationMessage("O item não pode ser inserido!", "Atenção"); break;
            default:
-                lcc.CalculaTotalI(txtvalorTotF, tbF);
-                lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
-                txtCodigoF.setText("");
-                txtFolha.setText("");
-                txtQtdF.setText("0");
-                txtPrecoF.setText("1");
-                txtValorTF.setText("0");
+                if(flag)
+                {
+                    lcc.CalculaTotalI(txtvalorTotF, tbF);
+                    lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
+                    txtCodigoF.setText("");
+                    txtFolha.setText("");
+                    txtQtdF.setText("0");
+                    txtPrecoF.setText("1");
+                    txtValorTF.setText("0");
+                }
+                else
+                {
+                   ReadOnlyTableModel model = (ReadOnlyTableModel) tbP.getModel();
+                   if(lcc.verificarEstoqueProduto(Integer.parseInt(txtcodP.getText()), Integer.parseInt(txtqtdP.getText())))
+                   {
+                        lcc.CalculaTotalI(txtvalorTotP, tbP);
+                        lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
+                        txtcodP.setText("");
+                        txtproduto.setText("");
+                        txtqtdP.setText("0");
+                        txtprecoP.setText("1");
+                        txtvalortP.setText("0");
+                        btnLocProd.setEnabled(true);      
+                   }
+                   else
+                   {
+                       m.WarmingMessage("Ao alterar essa quantidade o estoque ficara negativa!\n Por esse motivo, não pode ser alterado!", "Atenção");
+                   }
+                }
        }
     }//GEN-LAST:event_btnaddDFActionPerformed
 
@@ -864,6 +887,8 @@ public class MovLancarCompras extends javax.swing.JDialog {
            case 3: m.InformationMessage("Informe o Produto!", "Atenção"); btnlocF.requestFocus(); break;
            case 4: m.InformationMessage("O item não pode ser inserido!", "Atenção"); break;
            default: 
+               if(flag)
+               {
                     lcc.CalculaTotalI(txtvalorTotP, tbP);
                     lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
                     txtcodP.setText("");
@@ -871,6 +896,27 @@ public class MovLancarCompras extends javax.swing.JDialog {
                     txtqtdP.setText("0");
                     txtprecoP.setText("1");
                     txtvalortP.setText("0");
+                    btnLocProd.setEnabled(true);
+               }
+               else
+               {
+                   ReadOnlyTableModel model = (ReadOnlyTableModel) tbP.getModel();
+                   if(lcc.verificarEstoqueProduto(Integer.parseInt(txtcodP.getText()), Integer.parseInt(txtqtdP.getText())))
+                   {
+                        lcc.CalculaTotalI(txtvalorTotP, tbP);
+                        lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
+                        txtcodP.setText("");
+                        txtproduto.setText("");
+                        txtqtdP.setText("0");
+                        txtprecoP.setText("1");
+                        txtvalortP.setText("0");
+                        btnLocProd.setEnabled(true);      
+                   }
+                   else
+                   {
+                       m.WarmingMessage("Ao alterar essa quantidade o estoque ficara negativa!\n Por esse motivo, não pode ser alterado!", "Atenção");
+                   }
+               }
        }
     }//GEN-LAST:event_btnaddDPActionPerformed
 
@@ -911,6 +957,10 @@ public class MovLancarCompras extends javax.swing.JDialog {
     private void btnaltPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaltPActionPerformed
         if(tbP.getSelectedRow() >= 0)
         {
+            if(!flag)
+            {
+                btnLocProd.setEnabled(false);
+            }
             txtcodP.setText(""+tbP.getValueAt(tbP.getSelectedRow(), 0));
             txtproduto.setText(""+tbP.getValueAt(tbP.getSelectedRow(), 1));
             txtqtdP.setText(""+tbP.getValueAt(tbP.getSelectedRow(), 2));
@@ -927,29 +977,56 @@ public class MovLancarCompras extends javax.swing.JDialog {
     }//GEN-LAST:event_btnaltPActionPerformed
 
     private void btnexcPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexcPActionPerformed
-        if(flag)
-        {
-            if(m.Pergunta("Deseja realmente Excluir esta Linha?", "Atenção") == JOptionPane.YES_OPTION)
+        if(m.Pergunta("Deseja realmente Excluir esta Linha?", "Atenção") == JOptionPane.YES_OPTION)
+        {    
+            if(flag)
             {
-                lcc.ExcluirLinha(tbP, txtvalorTotP, txtValorTF);
-                lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
-                m.InformationMessage("Excluido com Sucesso!", "Atenção");
+                    lcc.ExcluirLinha(tbP, txtvalorTotP, txtValorTF);
+                    lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
+                    m.InformationMessage("Excluido com Sucesso!", "Atenção");
+
             }
-        }
-        else
-        {
-            //存在するのか確認。
-            //存在すれば、現在のストック数と新しく入力したストック数が　
-            //現在のストック-予約済みのストック数-新しく入力したストック数　＜０の場合、エラーを戻す。
+            else
+            {
+                ReadOnlyTableModel model = (ReadOnlyTableModel) tbP.getModel();
+                if(lcc.verificarEstoqueProduto(Integer.parseInt(txtcodP.getText()), Integer.parseInt(txtqtdP.getText())))
+                {
+                    m.InformationMessage("Excluido com Sucesso!", "Atenção");
+                }
+                else
+                {
+                    m.WarmingMessage("Não pode ser excluido pelo fato do estque deste produto ficar negativo!", "Atenção");
+                }
+                //存在するのか確認。 OK
+                //存在すれば、現在のストック数と新しく入力したストック数が　
+                //現在のストック-予約済みのストック数-新しく入力したストック数　＜０の場合、エラーを戻す。 OK
+            }
         }
     }//GEN-LAST:event_btnexcPActionPerformed
 
     private void btnExcluirFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirFActionPerformed
         if(m.Pergunta("Deseja realmente Excluir esta Linha?", "Atenção") == JOptionPane.YES_OPTION)
         {
-            lcc.ExcluirLinha(tbF, txtvalorTotF, txtValorTF);
-            lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
-            m.InformationMessage("Excluido com Sucesso!", "Atenção");
+            if(flag)
+            {
+                lcc.ExcluirLinha(tbF, txtvalorTotF, txtValorTF);
+                lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
+                m.InformationMessage("Excluido com Sucesso!", "Atenção");
+            }
+            else
+            {
+                ReadOnlyTableModel model = (ReadOnlyTableModel) tbP.getModel();
+                if(lcc.verificarEstoqueProduto(Integer.parseInt(txtcodP.getText()), Integer.parseInt(txtqtdP.getText())))
+                {
+                    lcc.ExcluirLinha(tbF, txtvalorTotF, txtValorTF);
+                    lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
+                    m.InformationMessage("Excluido com Sucesso!", "Atenção");
+                }
+                else
+                {
+                    m.WarmingMessage("Não pode ser excluido pelo fato do estque desta Folha ficar negativa!", "Atenção");
+                }
+            }
         }
     }//GEN-LAST:event_btnExcluirFActionPerformed
 
@@ -1009,9 +1086,18 @@ public class MovLancarCompras extends javax.swing.JDialog {
         if (consCompra.getCodigo() != 0)
         {
             txtCodigo.setText(String.valueOf(consCompra.getCodigo()));
-            consCompra.dispose();
-            txtCodigoFocusLost(null);
-            sc.Alter(jPanel2.getComponents());
+            if(!lcc.verificarParcelars(consCompra.getCodigo()))
+            {
+                m.InformationMessage("Esta compra não pode ser alterada pelo fato de já existir\n uma ou mais parcelas paga!", "Atenção");
+                consCompra.dispose();
+                btnLocalizar.requestFocus();    
+            }
+            else
+            {
+                consCompra.dispose();
+                txtCodigoFocusLost(null);
+                sc.Alter(jPanel2.getComponents());
+            }
         }
         else
         {

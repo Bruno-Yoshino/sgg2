@@ -38,8 +38,9 @@ public class Cheque {
    private String obs;
    private Date dataComp;
    private String motivo;
+   private String cliente;
 
-    public Cheque(int codigo, ContaReceber cr, String dono, String cpf, double valor, Date data, Date predata, String nAgencia, String nConta, String nBanco, String nCheque, String obs, Date dataComp, String motivo) {
+    public Cheque(int codigo, ContaReceber cr, String dono, String cpf, double valor, Date data, Date predata, String nAgencia, String nConta, String nBanco, String nCheque, String obs, Date dataComp, String motivo, String cliente) {
         this.codigo = codigo;
         this.cr = cr;
         this.dono = dono;
@@ -54,8 +55,9 @@ public class Cheque {
         this.obs = obs;
         this.dataComp = dataComp;
         this.motivo = motivo;
+        this.cliente = cliente;
     }
-
+   
     public Cheque() {
     }
 
@@ -170,21 +172,29 @@ public class Cheque {
     public void setMotivo(String motivo) {
         this.motivo = motivo;
     }
-   
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+       
    public boolean gravar()
    {
         String sql;
         if(this.codigo == 0)
         {
-            sql = "INSERT INTO cheque (cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo) VALUES "
-                    + " ("+(cr == null ? null : cr.getCodigo())+", '"+dono+"', '"+cpf+"', "+valor+", '"+data+"', '"+predata+"', '"+nAgencia+"', '"+nConta+"', '"+nBanco+"', '"+nCheque+"', '"+obs+"', "+null+", '')";
+            sql = "INSERT INTO cheque (cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo, c_cliente) VALUES "
+                    + " ("+(cr == null ? null : cr.getCodigo())+", '"+dono+"', '"+cpf+"', "+valor+", '"+data+"', '"+predata+"', '"+nAgencia+"', '"+nConta+"', '"+nBanco+"', '"+nCheque+"', '"+obs+"', "+null+", '', '"+cliente+"')";
         }
         else
         {
              sql = "UPDATE cheque set cr_codigo = "+(cr == null ? null : cr.getCodigo())+", c_dono = '"+dono+"', c_cpfdono = '"+cpf+"', "
                      + " c_valor = "+valor+", c_datal = '"+data+"', c_predata = '"+predata+"', "
                      + " c_nagencia = '"+nAgencia+"', c_nconta = '"+nConta+"', c_nbanco = '"+nBanco+"', c_ncheque = '"+nCheque+"',"
-                     + " c_obs = '"+obs+"', c_datacomp = "+null+", c_motivo = '') where c_codigo = "+codigo+" ";
+                     + " c_obs = '"+obs+"', c_datacomp = "+null+", c_motivo = '', c_cliente = '"+cliente+"' where c_codigo = "+codigo+" ";
         }
         return Banco.getCon().manipular(sql);
    }
@@ -204,14 +214,14 @@ public class Cheque {
    public Cheque buscar(int codigo)
    {
         String sql;
-        sql = "select c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo "
+        sql = "select c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo, c_cliente "
                 + " from cheque where c_codigo = "+codigo+"";
                 ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {
             if (rs.next()) 
             {
-                return new Cheque(rs.getInt(1), new ContaReceber().buscar(rs.getInt(2)), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getDate(6), rs.getDate(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getDate(13), rs.getString(14));
+                return new Cheque(rs.getInt(1), new ContaReceber().buscar(rs.getInt(2)), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getDate(6), rs.getDate(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getDate(13), rs.getString(14), rs.getString(15));
             }
         } 
         catch (SQLException e) 
@@ -227,7 +237,7 @@ public class Cheque {
         String query = null;
         if (valor.equals(""))
         {
-            query = "SELECT c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo\n" +
+            query = "SELECT c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo, c_cliente\n" +
                     " FROM cheque "
                   + " WHERE c_datacomp is null"
                   + " ORDER BY c_dono;";
@@ -238,7 +248,7 @@ public class Cheque {
             {
                 case 0: //Dono
                 {
-                    query = "SELECT c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo\n" +
+                    query = "SELECT c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo, c_cliente\n" +
                             " FROM cheque "
                           + " Where c_dono ilike '"+valor+"' and c_datacomp is null"
                           + " ORDER BY c_dono;"; 
@@ -246,7 +256,7 @@ public class Cheque {
                 }
                 case 1: //Data Lancado
                 {
-                    query = "SELECT c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo\n" +
+                    query = "SELECT c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo, c_cliente\n" +
                             " FROM cheque "
                           + " Where c_datal = '"+valor+"' and c_datacomp is null "
                           + " ORDER BY c_dono;";

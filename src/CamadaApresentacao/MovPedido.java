@@ -1096,7 +1096,9 @@ public class MovPedido extends javax.swing.JDialog {
                                 linha = -1;
                                 lbEntrega.setVisible(false);
                                 dcEntrega.setVisible(false);
+                                m.InformationMessage("Pedido Entregue com Sucesso!", "Informação");
                                 lancarConta();
+                                
                                 //Alterar a data da entrega
                                 //m.ErroMessage("ERRO2", "ERRO2");
                             }

@@ -405,6 +405,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
     }//GEN-LAST:event_cbOpcaoFocusLost
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
+        sc.limparTabela(jTable1);
         switch(tabela)
         {
             case "Estado": Estado(); break;

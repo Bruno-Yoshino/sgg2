@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import CamadaNegocio.Cheque;
+import CamadaNegocio.Cliente;
 import java.util.Date;
 import util.Validacao;
 
@@ -43,7 +39,7 @@ public class ChequeController {
         this.c = c;
     }
     //int codigo, ContaReceber cr, String dono, String cpf, double valor, Date data, Date predata, int nAgencia, String nConta, String nBanco, String nCheque, String obs, Date dataComp, String motivo
-    public int varidar(int codigo, String dono, String cpf, String valor, Date data, Date predata, String nAgencia, String nConta, String nBanco, String nCheque, String obs, Date dataComp, String motivo, boolean flag, boolean op)
+    public int varidar(int codigo, String dono, String cpf, String valor, Date data, Date predata, String nAgencia, String nConta, String nBanco, String nCheque, String obs, Date dataComp, String motivo, boolean flag, boolean op, String cliente)
     {
         c.setCodigo(codigo);
         if(dono.trim().equals(""))
@@ -112,6 +108,7 @@ public class ChequeController {
             c.setMotivo(motivo);
         }
         c.setObs(obs);
+        c.setCliente(cliente);
         return 0;
     }
     
@@ -133,5 +130,11 @@ public class ChequeController {
     public boolean excluir()
     {
         return c.excluir();
+    }
+
+    public void buscaClietne(int codigo)
+    {
+        Cliente c = new Cliente().buscarCodigo(codigo);
+        this.c.setCliente(c.getNome());
     }
 }

@@ -497,6 +497,7 @@ public class ConsultaMov extends javax.swing.JDialog {
     }//GEN-LAST:event_txtValorKeyPressed
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
+        sc.limparTabela(jTable1);
         switch(tabela)
         {
             case "Compra": Compra(); break; 

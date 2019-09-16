@@ -226,6 +226,13 @@ public class ContaPagar {
         return Banco.getCon().manipular(sql);
     }
     
+    public static boolean excluirParcelasCompra(int codigoC)
+    {
+        String sql = "delete from conta_pagar where comp_codigo = "+codigoC+";";
+        
+        return Banco.getCon().manipular(sql);
+    }
+    
     public ContaPagar buscarDado(String codigo)
     {
         String sql = "SELECT cp_codigo, comp_codigo, tc_codigo, func_codigo, caixa_codigo, cp_data, cp_local, cp_valorc, cp_dtpago, cp_valorp, cp_nparcela, cp_datavencimento, cp_obs "
