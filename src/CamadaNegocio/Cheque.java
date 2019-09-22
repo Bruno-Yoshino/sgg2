@@ -262,6 +262,11 @@ public class Cheque {
                           + " ORDER BY c_dono;";
                     break;
                 }
+                default:
+                     query = "SELECT c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo, c_cliente\n" +
+                    " FROM cheque "
+                  + " WHERE c_datacomp is null"
+                  + " ORDER BY c_dono;";
             }
         }
         return Banco.getCon().retornaResultSet(query);

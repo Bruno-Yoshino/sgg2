@@ -194,6 +194,21 @@ public class ProducaoController {
             case 1: 
                 if(valor.equals("Nome Cliente ou Numero pedido"))
                 {
+                    rs =  Producao.BuscarPedidoHaFazer("", 0);
+                }
+                else
+                    if(v.ConverteNumeroInteiro(valor) > 0)
+                    {
+                        rs =  Producao.BuscarPedidoHaFazer(valor, 2);
+                    }
+                    else
+                    {
+                        rs =  Producao.BuscarPedidoHaFazer(valor, 1);
+                    }
+                break;
+            case 2: 
+                if(valor.equals("Nome Cliente ou Numero pedido"))
+                {
                     rs =  Producao.BuscarPedidoNaoEntregue("", 0);
                 }
                 else
@@ -206,23 +221,8 @@ public class ProducaoController {
                         rs =  Producao.BuscarPedidoNaoEntregue(valor, 1);
                     }
                 break;
-            case 2: 
-                if(valor.equals("Nome Cliente ou Numero pedido"))
-                {
-                    rs =  Producao.BuscarPedidoEntregue("", 0);
-                }
-                else
-                    if(v.ConverteNumeroInteiro(valor) > 0)
-                    {
-                        rs =  Producao.BuscarPedidoEntregue(valor, 2);
-                    }
-                    else
-                    {
-                        rs =  Producao.BuscarPedidoEntregue(valor, 1);
-                    }
-                break;
                 
-            default: rs =  Producao.BuscarPedidoNaoEntregue("", 0);
+            default: rs =  Producao.BuscarPedidoHaFazer("", 0);
         }
         try {
             while(rs.next())
@@ -362,11 +362,12 @@ public class ProducaoController {
         p.getListaP().clear();
     }
     
-    public int atualizaProduto(int status)
+    public int atualizaProduto(int status, String funcionario)
     {
         if(status == 4 && (p.VerificaItensP(p.getCodigo()) || p.VerificaItensF(p.getCodigo())))
             return 1;
-        
+        if(funcionario.equals(""))
+            return 2;
         p.setStatus(status);
         return 0;
     }

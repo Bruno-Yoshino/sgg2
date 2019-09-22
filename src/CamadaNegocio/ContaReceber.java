@@ -324,6 +324,15 @@ public class ContaReceber {
         return Banco.getCon().retornaResultSet(sql);
     }
     
+    public static ResultSet buscarDadosHome()
+    {
+        String sql = "select c.cli_nome, cr.cr_valor, cr.cr_datavenc "
+                    + " from conta_receber cr, pedido p, cliente c "
+                    + " where cr.cr_datapago is null and p.pe_codigo = cr.pe_codigo and p.cli_codigo = c.cli_codigo "
+                    + " order by c.cli_nome;";
+        return Banco.getCon().retornaResultSet(sql);
+    }
+    
     public static ResultSet buscarDadosCEstornoCR(Date Inicio, Date Fim, int tipo)//CLancarDespesa
     {
         String query = null; /// falta alterar o sql

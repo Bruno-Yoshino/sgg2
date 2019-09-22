@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import util.SystemControl;
 import util.Validacao;
 import util.mensagens;
 
@@ -53,6 +54,7 @@ public class PedidoController {
     private final ArrayList<Integer> excluirSD;
     private final ArrayList<Integer> excluirSDCodigo;
     private final ArrayList<String> excluirDetalhes;
+    private final util.SystemControl sc;
 
     public PedidoController() {
         p = new Pedido();
@@ -63,6 +65,7 @@ public class PedidoController {
         excluirSD = new ArrayList<>();
         excluirSDCodigo = new ArrayList<>();
         excluirDetalhes = new ArrayList<>();
+        sc = new SystemControl();
     }
 
     public Pedido getP() {
@@ -602,7 +605,7 @@ public class PedidoController {
         try 
         {
             Orcamento temp = new Orcamento().buscar(codigo);
-            if(!v.ValidarDataDuasData(Date.from(Instant.now()), temp.getValidade()) && !v.ValidarDataDuasDataIgual(Date.from(Instant.now()), temp.getValidade()))
+            if(!v.ValidarDataDuasData(Date.from(Instant.now()), temp.getValidade()) && !v.VerificarDataIgualAtual(temp.getValidade()))
             {
                 return 1;
             }

@@ -153,7 +153,8 @@ public class ReceberContaController {
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
         while(rs.next())
         {
-            model.addRow(new Object[]{
+            model.addRow(new Object[]
+            {//"Nome", "Valor", "Data Vencimento"
                 rs.getString(1),//Nome Clietne
                 rs.getInt(2),// Numero Pedido
                 sc.truncar(rs.getDouble(3)),//Valor Conta 
@@ -204,32 +205,51 @@ public class ReceberContaController {
         else
         {
             ArrayList<ContaReceber> lista = crTemp.ListaContaReceber(crTemp.getP().getCodigo());
-            int i, notNull;
-            for(i = 0; i < lista.size() && lista.get(i).getCodigo() != codigoCR; i++)
+            int i;
+            for(i = 0; lista.get(i).getCodigo() != codigoCR; i++)
             {
                 
             }
-            for(notNull = 0; notNull < lista.size() && lista.get(notNull).getDataP() != null; notNull++)
+            if(lista.size() - 1 == i)
             {
-                  
-            }
-            if(i+1 == notNull)//lista.get(i).equals(lista.get(notNull-1)) && notNull != lista.size()
-            {
-                if(!lista.get(notNull).isFlag())
-                {
-                    lista.get(notNull).excluir();
-                }
                 crTemp.estornarValor(codigoCR);
                 return true;
             }
             else
             {
-                if(i == lista.size()-1)
+                if(lista.get(i+1).getDataP() == null)
                 {
+                    if(!lista.get(i+1).isFlag())
+                    {
+                        lista.get(i+1).excluir();
+                    }
                     crTemp.estornarValor(codigoCR);
                     return true;
                 }
             }
+//            if(notNull == lista.size())
+//                notNull--;
+//            if(i == notNull)//Igual sob a parcela (Sem Parcela)
+//            {
+//                if(!lista.get(notNull).isFlag())
+//                {
+//                    lista.get(notNull).excluir();
+//                }
+//                crTemp.estornarValor(codigoCR);
+//                return true;
+//            }
+//            else//Tratar o Proximo (Tiver Parcela)
+//            {
+//                if(i == lista.size()-2)
+//                {
+//                    if(!lista.get(notNull).isFlag())
+//                    {
+//                        lista.get(notNull).excluir();
+//                    }
+//                    crTemp.estornarValor(codigoCR);
+//                    return true;
+//                }
+//            }
         }
         return false;
     }

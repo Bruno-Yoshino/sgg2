@@ -153,14 +153,14 @@ public class Producao
         return Banco.getCon().manipular(sql);
     }
     
-    public static ResultSet BuscarPedidoNaoEntregue(String valor, int tipo)
+    public static ResultSet BuscarPedidoHaFazer(String valor, int tipo)
     {
         String query = null;
         if (valor.equals(""))
         {
             query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_dataentrega "
                 + " FROM pedido p, cliente c "
-                + " WHERE p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_dataentrega";
+                + " WHERE p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_dataentrega and (select count(*) from producao prod where p.pe_codigo = prod.pe_codigo and prod.prod_status != 1) != 0";
         }
         else
         {
@@ -170,14 +170,14 @@ public class Producao
                 {
                     query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_dataentrega "
                           + " FROM pedido p, cliente c "
-                          + " WHERE c.cli_nome ilike '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_dataentrega";
+                          + " WHERE c.cli_nome ilike '%"+valor+"%' and p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_dataentrega and (select count(*) from producao prod where p.pe_codigo = prod.pe_codigo and prod.prod_status != 1) != 0";
                     break;
                 }
                 case 2:// Numero
                 {
                     query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_dataentrega "
                              + " FROM pedido p, cliente c "
-                            + "where p.pe_codigo = '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_dataentrega";
+                            + "where p.pe_codigo = '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_dataentrega and (select count(*) from producao prod where p.pe_codigo = prod.pe_codigo and prod.prod_status != 1) != 0";
                     break;
                 }
             }
@@ -185,14 +185,14 @@ public class Producao
         return Banco.getCon().retornaResultSet(query);
     }
     
-    public static ResultSet BuscarPedidoEntregue(String valor, int tipo)
+    public static ResultSet BuscarPedidoNaoEntregue(String valor, int tipo)
     {
         String query = null;
         if (valor.equals(""))
         {
             query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_dataentrega "
                 + " FROM pedido p, cliente c "
-                + " WHERE p.cli_codigo = c.cli_codigo and p.pe_datapedido < p.pe_dataentrega";
+                + " WHERE p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_dataentrega and (select count(*) from producao prod where p.pe_codigo = prod.pe_codigo and prod.prod_status = 1) != 0";
         }
         else
         {
@@ -202,14 +202,14 @@ public class Producao
                 {
                     query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_dataentrega "
                           + " FROM pedido p, cliente c "
-                          + " WHERE c.cli_nome ilike '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido < p.pe_dataentrega";
+                          + " WHERE c.cli_nome ilike '%"+valor+"%' and p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_dataentrega and (select count(*) from producao prod where p.pe_codigo = prod.pe_codigo and prod.prod_status = 1) != 0";
                     break;
                 }
                 case 2:// Numero
                 {
                     query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_dataentrega "
                              + " FROM pedido p, cliente c "
-                            + "where p.pe_codigo = '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido < p.pe_dataentrega";
+                            + "where p.pe_codigo = '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_dataentrega and (select count(*) from producao prod where p.pe_codigo = prod.pe_codigo and prod.prod_status = 1) != 0";
                     break;
                 }
             }

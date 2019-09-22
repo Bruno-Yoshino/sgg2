@@ -6,14 +6,15 @@
 package CamadaApresentacao;
 
 import CamadaLogica.ReadOnlyTableModel;
-import CamadaNegocio.Cheque;
+import CamadaNegocio.ContaPagar;
+import CamadaNegocio.ContaReceber;
 import CamadaNegocio.Empresa;
 import CamadaNegocio.Funcionario;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import util.ClassHome;
+import util.SystemControl;
 
 /*
 Important Data Base
@@ -180,6 +182,7 @@ public class Principal extends javax.swing.JFrame {
 
     private final Funcionario funcL;
     private final Empresa emp;
+    private final SystemControl sc = new SystemControl();
     private final java.awt.Frame log;
     private ClassHome ch;
     private Clip clip;
@@ -205,8 +208,9 @@ public class Principal extends javax.swing.JFrame {
         ImageIcon icon2 = new ImageIcon(emp.getCaminho());
         jlLogo.setIcon(new ImageIcon(icon2.getImage().getScaledInstance(jlLogo.getWidth(), jlLogo.getHeight(), Image.SCALE_DEFAULT))); // Utilizado para recuperar imagem.
         
-        ch.configuraModel(jTable1);
+        ClassHome.configuraModel(jTable1);
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+        carregaTabela();
         //ここで最初のリロード、残りはそれぞれの処理を終えた後。
        
 //        try {
@@ -529,14 +533,9 @@ public class Principal extends javax.swing.JFrame {
 
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contas a Pagar", "Contas a Receber" }));
-        jComboBox1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jComboBox1FocusLost(evt);
-            }
-        });
-        jComboBox1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jComboBox1PropertyChange(evt);
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
             }
         });
 
@@ -1216,10 +1215,6 @@ public class Principal extends javax.swing.JFrame {
         consTC.setVisible(true);
     }//GEN-LAST:event_jMenuItem22ActionPerformed
 
-    private void jComboBox1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jComboBox1PropertyChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1PropertyChange
-
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
         MovCaixaAbertura frmCA  = new MovCaixaAbertura(this, true, funcL);
         frmCA.setTitle("Abrir Caixa");
@@ -1242,6 +1237,7 @@ public class Principal extends javax.swing.JFrame {
         MovLancarCompras frm = new MovLancarCompras(this, true, funcL);
         frm.setTitle("Lançar Compras");
         frm.setVisible(true);
+        carregaTabela(); 
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
@@ -1249,6 +1245,7 @@ public class Principal extends javax.swing.JFrame {
             MovDespesa frm = new MovDespesa(this, true, funcL);
             frm.setTitle("Lançar Despesa");
             frm.setVisible(true);
+            carregaTabela(); 
         } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1258,6 +1255,7 @@ public class Principal extends javax.swing.JFrame {
         MovPagarContas frm = new MovPagarContas(this, true, funcL);
         frm.setTitle("Pagar Conta");
         frm.setVisible(true);
+        carregaTabela(); 
     }//GEN-LAST:event_jMenuItem27ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
@@ -1287,6 +1285,7 @@ public class Principal extends javax.swing.JFrame {
             MovPedido frm = new MovPedido(this, true, funcL);
             frm.setTitle("Pedido");
             frm.setVisible(true);
+            carregaTabela(); 
         } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1320,10 +1319,6 @@ public class Principal extends javax.swing.JFrame {
         s.setVisible(true);
     }//GEN-LAST:event_jMenu7ActionPerformed
 
-    private void jComboBox1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusLost
-        
-    }//GEN-LAST:event_jComboBox1FocusLost
-
     private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
         MovCaixaBanco frm = new MovCaixaBanco(this, true, funcL);
         frm.setVisible(true);
@@ -1333,6 +1328,12 @@ public class Principal extends javax.swing.JFrame {
         MovAjustarCaixaBanco frm = new MovAjustarCaixaBanco(this, true, funcL);
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem31ActionPerformed
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        sc.limparTabela(jTable1);
+        carregaTabela();     
+//        System.out.println("sssss");
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
 
 
     private void AccessLevel(int soma)
@@ -1367,6 +1368,48 @@ public class Principal extends javax.swing.JFrame {
                 Cadastro.setVisible(true);
                 soma = 0;
             }
+        }
+    }
+    
+    private void carregaTabela()
+    {
+        switch(jComboBox1.getSelectedIndex())
+        {
+            case 0:
+                ResultSet rs = ContaPagar.buscarDadosHomeContaP();
+                ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+                try 
+                {//"Nome", "Valor", "Data Vencimento"
+                    while(rs.next())
+                    {
+                         model.addRow(new Object[]{
+                        rs.getString(1) != null ? rs.getString(1) : "Compra" ,//Nome Clietne
+                        rs.getDouble(3),
+                        rs.getDate(4)
+                        });
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+                
+            case 1:
+                ResultSet rst = ContaReceber.buscarDadosHome();
+                ReadOnlyTableModel model2 = (ReadOnlyTableModel) jTable1.getModel();
+                try 
+                {//"Nome", "Valor", "Data Vencimento"
+                    while(rst.next())
+                    {
+                        model2.addRow(new Object[]{
+                        rst.getString(1),//Nome Clietne
+                        rst.getDouble(2),
+                        rst.getDate(3)
+                        });
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
         }
     }
     

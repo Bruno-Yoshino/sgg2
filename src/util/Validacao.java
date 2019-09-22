@@ -122,6 +122,12 @@ public class Validacao
         return dataI.equals(dataF);
     }
     
+    public final boolean VerificarDataIgualAtual(Date dataF) //Verificacao utilizando o Date do sql
+    {
+        java.sql.Date data = java.sql.Date.valueOf(LocalDate.now());
+        return data.equals(dataF);
+    }
+    
     public final boolean ValidarEmail(String email)
     {
         String mailFormat = "^[a-zA-Z0-9!#$%&'_`/=~\\*\\+\\-\\?\\^\\{\\|\\}]+(\\.[a-zA-Z0-9!#$%&'_`/=~\\*\\+\\-\\?\\^\\{\\|\\}]+)*+(.*)@[a-zA-Z0-9][a-zA-Z0-9\\-]*(\\.[a-zA-Z0-9\\-]+)+$";

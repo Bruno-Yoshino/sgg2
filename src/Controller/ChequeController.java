@@ -101,7 +101,7 @@ public class ChequeController {
             }
             c.setDataComp(dataComp);
             
-            if(flag && motivo.trim().equals(""))
+            if(!flag && motivo.trim().equals(""))
             {
                 return 10;
             }

@@ -199,6 +199,11 @@ public class MovProducao extends javax.swing.JDialog {
                 txtFiltroFocusLost(evt);
             }
         });
+        txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -680,6 +685,7 @@ public class MovProducao extends javax.swing.JDialog {
         sc.limparTabela(jTable2);
         if(jTable1.getSelectedRow() >= 0)
         {
+            //System.out.println("Teste1: "+jTable1.getSelectedRow());
             if(evt.getClickCount() == 1)
             {
 //                jTable2.removeAll();
@@ -687,7 +693,7 @@ public class MovProducao extends javax.swing.JDialog {
                 sc.Alter(jPanel3.getComponents());
                 //carregar os Itens de pedido OK
                 ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
-                pc.carregarListaPedido(2, jTable2, Integer.valueOf(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 2))));
+                pc.carregarListaPedido(rbPedidoOP2.isSelected() ? 1 : 2, jTable2, Integer.valueOf(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 2))));
             }    
         }
         else
@@ -845,7 +851,10 @@ public class MovProducao extends javax.swing.JDialog {
         {
             sc.limparTabela(jTable1);
             pc.carregarListaCliente(rbClienteOP2.isSelected() ? 1 : 2, txtFiltro.getText(), jTable1);
-            rbClienteOP3.setSelected(false);
+            //rbClienteOP3.setSelected(false);
+            sc.limparTabela(jTable2);
+            rbPedidoOP3.setSelected(true);
+            rbPedidoOP2.setSelected(false);
         }
     }//GEN-LAST:event_rbClienteOP2MouseClicked
 
@@ -853,8 +862,11 @@ public class MovProducao extends javax.swing.JDialog {
         if(rbClienteOP3.isSelected())
         {
             sc.limparTabela(jTable1);
-            pc.carregarListaCliente(rbClienteOP3.isSelected() ? 1 : 2, txtFiltro.getText(), jTable1);
-            rbClienteOP2.setSelected(false);
+            pc.carregarListaCliente(rbClienteOP3.isSelected() ? 2 : 1, txtFiltro.getText(), jTable1);
+            //rbClienteOP2.setSelected(false);
+            sc.limparTabela(jTable2);
+            rbPedidoOP3.setSelected(true);
+            rbPedidoOP2.setSelected(false);
         }
     }//GEN-LAST:event_rbClienteOP3MouseClicked
 
@@ -862,11 +874,11 @@ public class MovProducao extends javax.swing.JDialog {
         if(rbPedidoOP3.isSelected())
         {
             //Jtable2 更新  OK
-            jTable2.removeAll();
+            //jTable2.removeAll();
             sc.limparTabela(jTable2);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             pc.carregarListaPedido(2, jTable2, Integer.parseInt(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 2))));
-            rbPedidoOP2.setSelected(false);
+            //rbPedidoOP2.setSelected(false);
         }
     }//GEN-LAST:event_rbPedidoOP3MouseClicked
 
@@ -874,11 +886,10 @@ public class MovProducao extends javax.swing.JDialog {
         if(rbPedidoOP2.isSelected())
         {
             //Jtable2 更新  OK
-            jTable2.removeAll();
             sc.limparTabela(jTable2);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             pc.carregarListaPedido(1, jTable2, Integer.parseInt(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 2))));
-            rbPedidoOP3.setSelected(false);
+            //rbPedidoOP3.setSelected(false);
         }
     }//GEN-LAST:event_rbPedidoOP2MouseClicked
 
@@ -898,9 +909,10 @@ public class MovProducao extends javax.swing.JDialog {
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         if(m.Pergunta("Confirma a Gravação?", "Atenção") == JOptionPane.YES_OPTION)
         {
-            switch(pc.atualizaProduto(cbStatus.getSelectedIndex()+1))
+            switch(pc.atualizaProduto(cbStatus.getSelectedIndex()+1, txtFuncionario.getText()))
             {
                 case 1: m.InformationMessage("A producao ja existe itens, favor atualize o estoque utilizando o AjustarEstoqueProduto ou AjustarEstoqueFolha!", "Atenção"); break;
+                case 2: m.InformationMessage("Informe o Funcionário!", "Atenção"); btnlocFuncionario.requestFocus(); break;
                 default:
                     ReadOnlyTableModel model = (ReadOnlyTableModel) jTable2.getModel();
                     if(pc.Atualizar(Integer.parseInt(String.valueOf(model.getValueAt(jTable2.getSelectedRow(), 0)))))
@@ -913,11 +925,20 @@ public class MovProducao extends javax.swing.JDialog {
                         sc.limparTabela(jTable3);
                         sc.limparTabela(jTable2);
                         ReadOnlyTableModel model2 = (ReadOnlyTableModel) jTable1.getModel();
-                        pc.carregarListaPedido(2, jTable2, Integer.valueOf(String.valueOf(model2.getValueAt(jTable1.getSelectedRow(), 2))));
-                        sc.Edity(jPanel3.getComponents());
-                        sc.Initialize(jPanel3.getComponents());
-                        sc.HabilityComponents(jPanel2.getComponents(), false);
-                        sc.HabilityComponents(jPanel4.getComponents(), false);
+                        int i = jTable1.getSelectedRow();
+                        pc.carregarListaPedido(2, jTable2, Integer.valueOf(String.valueOf(model2.getValueAt(i, 2))));
+                        if(jTable2.getRowCount() > 0)
+                        {
+                            sc.HabilityComponents(jPanel2.getComponents(), true);
+                            sc.HabilityComponents(jPanel4.getComponents(), false);
+                        }
+                        else
+                        {
+                            pc.carregarListaCliente(rbClienteOP2.isSelected() ? 1 : 2, txtFiltro.getText(), jTable1);
+                            sc.Alter(jPanel3.getComponents());
+                            sc.HabilityComponents(jPanel2.getComponents(), false);
+                            sc.HabilityComponents(jPanel4.getComponents(), false);
+                        }
                     }
                     else
                     {
@@ -972,9 +993,16 @@ public class MovProducao extends javax.swing.JDialog {
     }//GEN-LAST:event_rbPedidoOP3ActionPerformed
 
     private void rbPedidoOP2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbPedidoOP2ActionPerformed
-        sc.limparTabela(jTable1);
+        sc.limparTabela(jTable2);
         rbPedidoOP3.setSelected(false);
     }//GEN-LAST:event_rbPedidoOP2ActionPerformed
+
+    private void txtFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyPressed
+       if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER)
+       {
+           txtFiltroFocusLost(null);
+       }
+    }//GEN-LAST:event_txtFiltroKeyPressed
 
 
 

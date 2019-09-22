@@ -405,7 +405,6 @@ public class ConsultaPadrao extends javax.swing.JDialog {
     }//GEN-LAST:event_cbOpcaoFocusLost
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
-        sc.limparTabela(jTable1);
         switch(tabela)
         {
             case "Estado": Estado(); break;
@@ -458,6 +457,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Estado.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = Estado.buscarDados(txtValor.getText(), tipo);
             while (rs.next())
             {
@@ -482,6 +482,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Cidade.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = Cidade.buscarDados(txtValor.getText(), tipo);
             while (rs.next())
             {
@@ -507,6 +508,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Folha.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = Folha.buscarDados(txtValor.getText(), tipo);
             while (rs.next())
             {
@@ -535,6 +537,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Folha.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = Folha.buscarDados2(txtValor.getText(), tipo);
             while (rs.next())
             {
@@ -563,6 +566,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Produto.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = Produto.buscarDados(txtValor.getText(), tipo);
             while (rs.next())
             {
@@ -589,6 +593,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Produto.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = Produto.buscarDados2(txtValor.getText(), tipo);
             while (rs.next())
             {
@@ -615,6 +620,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             DetalheServico.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = DetalheServico.buscarDados(txtValor.getText(), tipo);
             while (rs.next())
             {
@@ -640,6 +646,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Servico.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = Servico.buscarDados(txtValor.getText(), tipo);
             while (rs.next())
             {
@@ -665,6 +672,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Servico.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = Servico.buscarDados2(txtValor.getText(), tipo);
             while (rs.next())
             {
@@ -690,6 +698,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Funcionario.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             if(tipo == 1)
             {
                 rs = Funcionario.buscarDados(txtCPF.getText(), tipo);
@@ -724,6 +733,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Fornecedor.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = Fornecedor.buscarDados(txtValor.getText(), tipo);
             while (rs.next())
             {
@@ -751,6 +761,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Cliente.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             switch(tipo)
             {
                 case 1: rs = Cliente.buscarDados(txtValor.getText(), tipo, true); break;
@@ -789,6 +800,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             TipoConta.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = TipoConta.buscarDados(txtValor.getText(), tipo);
             while (rs.next())
             {
@@ -813,6 +825,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Cheque.configuraModel(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = Cheque.buscarDados(txtValor.getText(), tipo);
             while (rs.next())
             {
@@ -842,6 +855,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             ContaPagar.configuraModelCLD(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             rs = ContaPagar.buscarDadosCLD(dateInicio.getData(), dateFim.getData(), tipo);
+            sc.limparTabela(jTable1);
             while (rs.next())
             {
                 //"Código", "Valor da Conta", "Data Vencimento", "Obs"
@@ -870,6 +884,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Caixa.configuraModelCaixaBanco(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = Caixa.buscarCaixaBanco(txtValor.getText(), tipo);
             while (rs.next())
             {
@@ -895,6 +910,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Caixa.configuraModelCaixaBanco(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = Caixa.buscarCaixaGeral(txtValor.getText(), tipo);
             while (rs.next())
             {
@@ -920,6 +936,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             ContaPagar.configuraModelCEstornoCP(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = ContaPagar.buscarDadosCEstornoCP(dateInicio.getData(), dateFim.getData(), tipo);
             while (rs.next())
             {//cp_codigo, cp_valorc, cp_valorp, cp_datavencimento, cp_dtpago, cp_obs
@@ -948,6 +965,7 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             ContaReceber.configuraModelCEstornoCR(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
             rs = ContaReceber.buscarDadosCEstornoCR(dateInicio.getData(), dateFim.getData(), tipo);
             while (rs.next())
             {//cp_codigo, cp_valorc, cp_valorp, cp_datavencimento, cp_dtpago, cp_obs

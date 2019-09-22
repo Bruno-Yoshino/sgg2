@@ -569,6 +569,16 @@ public class ContaPagar {
         return Banco.getCon().retornaResultSet(query);
     }
     
+    public static ResultSet buscarDadosHomeContaP()//CLancarDespesa
+    {
+        String query = "SELECT tc.tc_tipo, comp_codigo, cp_valorc, cp_datavencimento "
+                    + "FROM conta_pagar cp, tipo_conta tc "
+                    + "WHERE cp_dtpago is null and (tc.tc_codigo = cp.tc_codigo or cp.comp_codigo is not null)"
+                    + "Order by cp_datavencimento;";    
+        
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
     public static ResultSet buscarDadosCEstornoCP(Date Inicio, Date Fim, int tipo)//CLancarDespesa
     {
         String query = null;

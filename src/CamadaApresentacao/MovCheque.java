@@ -573,6 +573,7 @@ public class MovCheque extends javax.swing.JDialog {
         String[] vet = new String[3];
         vet[0] = "Dono";
         vet[1] = "Data";
+        vet[2] = "Tudo";
         consCheque.configuraOpcoes(vet, 2, 0, "Cheque", false);
         consCheque.verificaconsulta(true);
         consCheque.setVisible(true);
@@ -591,7 +592,7 @@ public class MovCheque extends javax.swing.JDialog {
             txtNumeroCheque.setText(cc.getC().getnCheque());
             txtObs.setText(cc.getC().getObs());
             txtPessoa.setText(cc.getC().getDono());
-            txtValor.setText(""+cc.getC().getValor());
+            txtValor.setText(""+sc.verificaValor(sc.converteString(cc.getC().getValor())));
             txtCliente.setText(cc.getC().getCliente());
             dcData.setData(cc.getC().getData());
             dcPredata.setData(cc.getC().getPredata());
