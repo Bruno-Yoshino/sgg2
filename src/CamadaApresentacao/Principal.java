@@ -1373,6 +1373,7 @@ public class Principal extends javax.swing.JFrame {
     
     private void carregaTabela()
     {
+        sc.limparTabela(jTable1);
         switch(jComboBox1.getSelectedIndex())
         {
             case 0:

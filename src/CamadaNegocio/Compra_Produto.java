@@ -99,7 +99,7 @@ public class Compra_Produto
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {//int codigo, Fornecedor f, Funcionario func, double valort, Date data, ArrayList<Compra_Folha> lcf, ArrayList<Compra_Produto> lcp
-            if (rs.next()) 
+            while (rs.next()) 
             {
                 lista.add(new Compra_Produto(c, new Produto().buscarCodigo(rs.getInt(2)), rs.getInt(3), rs.getDouble(4)));
             }

@@ -10,6 +10,7 @@ import CamadaNegocio.Fornecedor;
 import CamadaNegocio.Producao_Folha;
 import CamadaNegocio.Producao_Produto;
 import CamadaNegocio.Produto;
+import CamadaNegocio.TipoConta;
 import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.sql.SQLException;
 import java.time.Instant;
@@ -46,6 +47,7 @@ public class LancarCompraController
     private Produto p;
     private Fornecedor forn;
     private Compra_Produto cp = new Compra_Produto();
+    private ContaPagar contP;
     private Compra_Folha cf = new Compra_Folha();
     private final mensagens m = new mensagens();
 
@@ -55,6 +57,7 @@ public class LancarCompraController
         f = new Folha();
         p = new Produto();
         forn = new Fornecedor();
+        contP = new ContaPagar();
     }
 
     public Compra getC() {
@@ -191,6 +194,8 @@ public class LancarCompraController
     public void buscaCompra(int codigo)
     {
         c = c.buscaCompra(codigo);
+        cf.setC(c);
+        cp.setC(c);
         c.setLcf(cf.buscaCompraFolha(codigo));
         c.setLcp(cp.buscaCompraProduto(codigo));
     }   
@@ -245,15 +250,15 @@ public class LancarCompraController
             return false;
         }
         ContaPagar.excluirParcelasCompra(c.getCodigo());
-        //voltar o estoque
-        if(c.excluirItens())
-            return c.excluir();
-        return false;
+        //voltar o estoque ->> O triguer esta cuidando dess parte
+        //if(c.excluirItens())
+        return c.excluir();
+        //return false;
     }
     
     public boolean verificarParcelars(int codigo)
     {
-        return c.buscaQtdParcelas(codigo) > 0;
+        return c.buscaQtdParcelas(codigo) == 0;
     }
     
     public void addItens(JTable tabelaF, JTable tabelaP, JTextField valorTF, JTextField valorTP)
@@ -315,6 +320,23 @@ public class LancarCompraController
             Logger.getLogger(LancarCompraController.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+    
+    public boolean lancarContaPagar(Date data)
+    {
+        contP.setCodigo(0);
+        contP.setTc(null);
+        contP.setValorC(c.getValort());
+        contP.setDataV(data);
+        contP.setComp(c);
+        contP.setLocal("");
+        contP.setValorP(0);
+        contP.setDataP(null);
+        contP.setObs("Compra");
+        contP.setDataL(Date.from(Instant.now()));
+        contP.setParcela(0);
+        contP.setFunc(c.getFunc());
+        return contP.gravar();
     }
     
     public static void configuraModelItem(JTable jTable) // Configurar Tabela Para consulta ou para Alterar

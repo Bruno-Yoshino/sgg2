@@ -131,13 +131,13 @@ public class Compra
     
     public boolean excluir()
     {
-        String sql = "delete form compra where comp_codigo = "+codigo+"";
+        String sql = "delete from compra where comp_codigo = "+codigo+"";
         return Banco.getCon().manipular(sql);
     }
     
     public boolean excluirItens()
     {
-        String sql = "delete form compra_produto where comp_codigo = "+codigo+"; delete form compra_folha where comp_codigo = "+codigo+"";
+        String sql = "delete from compra_produto where comp_codigo = "+codigo+"; delete from compra_folha where comp_codigo = "+codigo+"";
         return Banco.getCon().manipular(sql);
     }
     
@@ -151,7 +151,7 @@ public class Compra
         return Banco.getCon().manipular(sql);
     }
     
-    public int maxCodigo()//comp_codigo, forn_codigo, comp_valortotal, comp_data, func_codigo
+    public int maxCodigo()
     {
         String sql = "select max(comp_codigo) "
                 + "from compra ";
@@ -206,8 +206,8 @@ public class Compra
         String query = null;
         if (valor.equals(""))
         {
-            query = "select c.comp_codigo, forn.forn_nome, c.comp_valortotal, c.comp_data, func.func_nome "
-                + " from compra c, fornecedor forn, funcionario func where func.func_codigo = c.func_codigo or forn_codigo = c.forn_codigo and (select count(*) from conta_pagar cp, compra c where c.comp_codigo = cp.comp_codigo) = 0 "
+            query = "select c.comp_codigo, c.comp_valortotal, c.comp_data, func.func_nome "
+                + " from compra c, funcionario func where func.func_codigo = c.func_codigo and (select count(*) from conta_pagar cp, compra c where c.comp_codigo = cp.comp_codigo) = 0 "
                 + " order by comp_codigo";
         }
         else
@@ -288,7 +288,7 @@ public class Compra
         {
             query = "select cf.comp_codigo, f.fo_tamanho, f.fo_descricao, cf.compf_qtd, cf.compf_preco"
                  + " from compra_folha cf, folha f "
-                 + "where cp.comp_codigo = "+codigo+" and cp.fo_codigo = f.fo_codigo order by f.fo_tamanho";
+                 + "where cf.comp_codigo = "+codigo+" and cf.fo_codigo = f.fo_codigo order by f.fo_tamanho";
         }
         return Banco.getCon().retornaResultSet(query);
     }

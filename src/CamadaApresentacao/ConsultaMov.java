@@ -468,6 +468,10 @@ public class ConsultaMov extends javax.swing.JDialog {
                         CompraFolha();
                         CompraProduto();
                         break;
+                    case "CCompra": 
+                        CompraFolha();
+                        CompraProduto();
+                        break;
                     case "Orçamento":
                         OrcamentoServico();
                         break;
@@ -571,12 +575,11 @@ public class ConsultaMov extends javax.swing.JDialog {
             while (rs.next())
             {
                 model.addRow(new Object[]
-                {//"Código", "Fornecedor", "Valor Total", "Data", "Funcionario"
+                {//"Código", "Valor Total", "Data", "Funcionario"
                     rs.getInt(1), 
-                    rs.getString(2),
-                    rs.getDouble(3),
-                    rs.getDate(4),
-                    rs.getString(5)
+                    rs.getDouble(2),
+                    rs.getDate(3),
+                    rs.getString(4)
                 });
             }
         } 

@@ -7477,7 +7477,7 @@
 <W>152</W>
 <H>138</H>
 <L>1395</L>
-<T>992</T>
+<T>994</T>
 <BRUSH>0,16777215</BRUSH>
 <PEN>0,1,4,0</PEN>
 <FONT>Arial,8,,0,clWindowText,0</FONT>
@@ -8302,7 +8302,7 @@
 <POINTS>
 <POINT>
 <X>1418</X>
-<Y>1130</Y>
+<Y>1132</Y>
 </POINT>
 <POINT>
 <X>1418</X>
@@ -8358,7 +8358,7 @@
 <POINTS>
 <POINT>
 <X>1499</X>
-<Y>1130</Y>
+<Y>1132</Y>
 </POINT>
 <POINT>
 <X>1499</X>
@@ -8734,7 +8734,7 @@
 </POINT>
 <POINT>
 <X>1471</X>
-<Y>991</Y>
+<Y>993</Y>
 </POINT>
 </POINTS>
 </RELC>
@@ -9042,7 +9042,7 @@
 </POINT>
 <POINT>
 <X>1442</X>
-<Y>991</Y>
+<Y>993</Y>
 </POINT>
 </POINTS>
 </RELC>

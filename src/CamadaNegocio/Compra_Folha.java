@@ -95,11 +95,11 @@ public class Compra_Folha
         String sql;
         sql = "select cf.comp_codigo, cf.fo_codigo, cf.compf_qtd, cf.compf_preco"
                  + " from compra_folha cf "
-                 + "where cp.comp_codigo = "+codigo+"";
+                 + "where cf.comp_codigo = "+codigo+"";
         ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {//int codigo, Fornecedor f, Funcionario func, double valort, Date data, ArrayList<Compra_Folha> lcf, ArrayList<Compra_Produto> lcp
-            if (rs.next()) 
+            while (rs.next()) 
             {
                 lista.add(new Compra_Folha(c, new Folha().buscarCodigo(rs.getInt(2)), rs.getInt(3), rs.getDouble(4)));
             }

@@ -4,6 +4,8 @@ import CamadaLogica.ReadOnlyTableModel;
 import CamadaNegocio.Funcionario;
 import Controller.LancarCompraController;
 import java.awt.event.KeyEvent;
+import java.time.Instant;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import util.SystemControl;
 import util.mensagens;
@@ -1033,16 +1035,12 @@ public class MovLancarCompras extends javax.swing.JDialog {
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         if(lcc.gravar(txtCodigo.getText(), txtvalorF.getText(), tbP, tbF))
         {
-            m.InformationMessage("Gravado com sucesso! Sera redirecionado para gerar as parcelas!", "Atenção");
-            GerenciarParcela frm = new GerenciarParcela(null, true, null, lcc.getC(), null);
-            frm.setVisible(true);
-            if(frm.isFlag())
-            {
-                sc.limpar(jPanel1.getComponents());
-                sc.limparTabela(tbF);
-                sc.limparTabela(tbP);
-                sc.Initialize(jPanel2.getComponents());
-            }
+            m.InformationMessage("Gravado com sucesso!", "Atenção");
+            lancarConta();
+            sc.limpar(jPanel1.getComponents());
+            sc.limparTabela(tbF);
+            sc.limparTabela(tbP);
+            sc.Initialize(jPanel2.getComponents());
         }
         else
         {
@@ -1055,8 +1053,10 @@ public class MovLancarCompras extends javax.swing.JDialog {
         {
             if(m.Pergunta("Certesa?", "Atenção") == JOptionPane.YES_OPTION)
             {
-                if(lcc.excluir())
+                if(lcc.excluir()){
                     m.InformationMessage("Excluido com Sucesso!", "Atenção");
+                    btnCancelarActionPerformed(null);
+                }
                 else
                     m.ErroMessage("Erro ao Excluir!", "ERRO");
             }
@@ -1094,6 +1094,8 @@ public class MovLancarCompras extends javax.swing.JDialog {
             }
             else
             {
+                sc.limparTabela(tbF);
+                sc.limparTabela(tbP);
                 consCompra.dispose();
                 txtCodigoFocusLost(null);
                 sc.Alter(jPanel2.getComponents());
@@ -1132,6 +1134,39 @@ public class MovLancarCompras extends javax.swing.JDialog {
         sc.Edity(jPanel2.getComponents());
     }//GEN-LAST:event_btnAlterarActionPerformed
 
+    
+    private void lancarConta()
+    {
+        String lista[] = {"Vista","Parcelado","Prazo"};
+        Object valor;
+        do{
+            valor = JOptionPane.showInputDialog(this, "Atenção", 
+                    "Informe a modeo de pagamento:", JOptionPane.INFORMATION_MESSAGE,
+                    null, lista, lista[0]);
+        }while(valor == null);
+        if(valor.equals("Vista"))
+        {//Vista
+            lcc.lancarContaPagar(Date.from(Instant.now()));
+            m.InformationMessage("Conta a receber Lançado com Sucesso!", "Informação");
+        }
+        else
+        {
+            Date data;
+            DateMessage messegeDate = new DateMessage(null, true, "Atenção", "Informe a Data de Vencimento:");
+            data = messegeDate.getData();
+            if(valor.equals("Parcelado"))
+            {//Parcelado
+                GerenciarParcela formGP = new GerenciarParcela(null, true, null, lcc.getC(), null);
+                formGP.setVisible(true);
+                m.InformationMessage("Parcelas Lançados com Sucesso!", "Informação");
+            }
+            else
+            {//Prazo
+                lcc.lancarContaPagar(data);
+                m.InformationMessage("Conta a receber Lançado com Sucesso!", "Informação");
+            }
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
