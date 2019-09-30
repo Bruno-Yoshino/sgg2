@@ -864,16 +864,16 @@ public class MovLancarCompras extends javax.swing.JDialog {
                 else
                 {
                    ReadOnlyTableModel model = (ReadOnlyTableModel) tbP.getModel();
-                   if(lcc.verificarEstoqueProduto(Integer.parseInt(txtcodP.getText()), Integer.parseInt(txtqtdP.getText())))
+                   if(lcc.buscarTabelaProduto(Integer.parseInt(txtCodigo.getText()), Integer.parseInt(txtCodigoF.getText())) &&lcc.verificarEstoqueProduto(Integer.parseInt(txtCodigoF.getText()), Integer.parseInt(txtQtdF.getText())))
                    {
                         lcc.CalculaTotalI(txtvalorTotP, tbP);
                         lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
-                        txtcodP.setText("");
-                        txtproduto.setText("");
-                        txtqtdP.setText("0");
-                        txtprecoP.setText("1");
-                        txtvalortP.setText("0");
-                        btnLocProd.setEnabled(true);      
+                        txtCodigoF.setText("");
+                        txtFolha.setText("");
+                        txtQtdF.setText("0");
+                        txtPrecoF.setText("1");
+                        txtValorTF.setText("0");
+                        btnlocF.setEnabled(true);      
                    }
                    else
                    {
@@ -903,7 +903,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
                else
                {
                    ReadOnlyTableModel model = (ReadOnlyTableModel) tbP.getModel();
-                   if(lcc.verificarEstoqueProduto(Integer.parseInt(txtcodP.getText()), Integer.parseInt(txtqtdP.getText())))
+                   if(lcc.buscarTabelaProduto(Integer.parseInt(txtCodigo.getText()), Integer.parseInt(txtcodP.getText())) && lcc.verificarEstoqueProduto(Integer.parseInt(txtcodP.getText()), Integer.parseInt(txtqtdP.getText())))
                    {
                         lcc.CalculaTotalI(txtvalorTotP, tbP);
                         lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);

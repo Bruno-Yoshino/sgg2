@@ -9,7 +9,7 @@ Begin
 	for mviews in select * from compra_produto where old.comp_codigo = comp_codigo loop
 		select pro_qtd into qtdItem from produto where pro_codigo = mviews.pro_codigo;
 		
-		select pp.pp_qtd into qtdIR from producao_produto pp, producao prod 
+		select sum(pp.pp_qtd) into qtdIR from producao_produto pp, producao prod 
 		where prod.prod_codigo = pp.prod_codigo and (prod.prod_status = 2 or prod.prod_status = 3);
 		
 		update produto set pro_qtd = (qtdItem - qtdIR - mviews.compp_qtd) where pro_codigo = mviews.pro_codigo;
@@ -21,7 +21,7 @@ Begin
 	for mviews in select * from compra_folha where old.comp_codigo = comp_codigo loop
 		select fo_qtd into qtdItem from folha where fo_codigo = mviews.fo_codigo;
 		
-		select pf.pf_qtd into qtdIR from producao_folha pf, producao prod 
+		select sum(pf.pf_qtd) into qtdIR from producao_folha pf, producao prod 
 		where prod.prod_codigo = pf.prod_codigo and (prod.prod_status = 2 or prod.prod_status = 3);
 		
 		update folha set fo_qtd = (qtdItem - qtdIR - mviews.compf_qtd) where fo_codigo = mviews.fo_codigo;

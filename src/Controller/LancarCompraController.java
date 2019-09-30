@@ -301,12 +301,21 @@ public class LancarCompraController
         try {
             Produto temp = new Produto().buscarCodigo(codigoP);
             Producao_Produto pp = new Producao_Produto();
-            
             return temp.getQtd() - qtd - pp.qtdReserva(codigoP) >= 0;
         } catch (SQLException ex) {
             Logger.getLogger(LancarCompraController.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+    
+    public boolean buscarTabelaProduto(int codigoC, int codigoP)
+    {
+        return c.verificaTabelaProduto(codigoP, codigoC);
+    }
+    
+    public boolean buscarTabelaFolha(int codigoC, int codigoF)
+    {
+        return c.verificaTabelaFolha(codigoF, codigoC);
     }
     
     public boolean verificarEstoqueFolha(int codigoF, int qtd)

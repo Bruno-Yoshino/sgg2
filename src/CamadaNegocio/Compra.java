@@ -273,7 +273,41 @@ public class Compra
         return -1;
     }
     
+    public boolean verificaTabelaProduto(int codigoP, int codigoC)
+    {
+        String sql = "select * from compra_produto where comp_codigo = "+codigoC+" and pro_codigo = "+codigoP+"";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {//int codigo, Fornecedor f, Funcionario func, double valort, Date data, ArrayList<Compra_Folha> lcf, ArrayList<Compra_Produto> lcp
+            if (rs.next()) 
+            {
+                return true;
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
     
+    public boolean verificaTabelaFolha(int codigoF, int codigoC)
+    {
+        String sql = "select * from compra_folha where comp_codigo = "+codigoC+" and fo_codigo = "+codigoF+"";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {//int codigo, Fornecedor f, Funcionario func, double valort, Date data, ArrayList<Compra_Folha> lcf, ArrayList<Compra_Produto> lcp
+            if (rs.next()) 
+            {
+                return true;
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
     
     public static ResultSet ConsultaCompraItem(int codigo, int tipo)
     {
