@@ -250,10 +250,14 @@ public class LancarCompraController
             return false;
         }
         ContaPagar.excluirParcelasCompra(c.getCodigo());
-        //voltar o estoque ->> O triguer esta cuidando dess parte
-        //if(c.excluirItens())
+        //colocar a verificacao pelo Function VerificarEstoque(Codigo Integer)
+        if(!c.Function())
+        {
+            return false;
+        }
+        //voltar o estoque ->> O trigger esta cuidando dess parte
+        
         return c.excluir();
-        //return false;
     }
     
     public boolean verificarParcelars(int codigo)

@@ -273,6 +273,26 @@ public class Compra
         return -1;
     }
     
+    public boolean Function()
+    {
+        String sql;
+        sql = "select VerificarEstoque("+codigo+") "
+                + " from *;";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {//int codigo, Fornecedor f, Funcionario func, double valort, Date data, ArrayList<Compra_Folha> lcf, ArrayList<Compra_Produto> lcp
+            if (rs.next()) 
+            {
+                return rs.getBoolean(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+    
     public boolean verificaTabelaProduto(int codigoP, int codigoC)
     {
         String sql = "select * from compra_produto where comp_codigo = "+codigoC+" and pro_codigo = "+codigoP+"";
