@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CamadaApresentacao;
 
 import CamadaNegocio.Funcionario;
@@ -371,7 +366,7 @@ public class MovCaixaFechar extends javax.swing.JDialog {
             default:
                 if(cc.fechar())
                 {
-                    m.InformationMessage("O Caixa foi fechado com sucesso!", "Atenção"); 
+                    m.InformationMessage("O Caixa fechado com sucesso!", "Atenção"); 
                     btnSairActionPerformed(null);
                 }
                 else
@@ -400,7 +395,9 @@ public class MovCaixaFechar extends javax.swing.JDialog {
             txtFuncionario.setText(cc.getC().getFuncI().getNome());
             txtValor.setText(""+cc.getC().getSaldoI());
             txtValorRetirado.setText(""+cc.SaldoRetirado());
+
             txtValorRecebido.setText(""+cc.buscaTotalRecebido());
+
             txtValorCaixa.requestFocus();
         }
     }//GEN-LAST:event_formWindowActivated

@@ -250,7 +250,7 @@ public class LancarCompraController
             return 1;
         }
         
-        if(!c.verificarEstoque())
+        if(!c.Function())
         {
             return 2;
         }
