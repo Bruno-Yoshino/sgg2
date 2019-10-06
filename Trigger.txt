@@ -12,6 +12,10 @@ Begin
 		select sum(pp.pp_qtd) into qtdIR from producao_produto pp, producao prod 
 		where prod.prod_codigo = pp.prod_codigo and (prod.prod_status = 2 or prod.prod_status = 3);
 		
+		if qtdIR is null then
+			qtdIR := 0;
+		end if;
+	
 		update produto set pro_qtd = (qtdItem - qtdIR - mviews.compp_qtd) where pro_codigo = mviews.pro_codigo;
 		
 		delete from compra_produto where comp_codigo = mviews.comp_codigo and pro_codigo = mviews.pro_codigo;
@@ -24,6 +28,10 @@ Begin
 		select sum(pf.pf_qtd) into qtdIR from producao_folha pf, producao prod 
 		where prod.prod_codigo = pf.prod_codigo and (prod.prod_status = 2 or prod.prod_status = 3);
 		
+		if qtdIR is null then
+			qtdIR := 0;
+		end if;
+
 		update folha set fo_qtd = (qtdItem - qtdIR - mviews.compf_qtd) where fo_codigo = mviews.fo_codigo;
 		
 		delete from compra_folha where comp_codigo = mviews.comp_codigo and fo_codigo = mviews.fo_codigo;

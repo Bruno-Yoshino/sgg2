@@ -1053,18 +1053,27 @@ public class MovLancarCompras extends javax.swing.JDialog {
         {
             if(m.Pergunta("Certesa?", "Atenção") == JOptionPane.YES_OPTION)
             {
-                if(lcc.excluir()){
-                    m.InformationMessage("Excluido com Sucesso!", "Atenção");
-                    btnCancelarActionPerformed(null);
+                switch(lcc.excluir())
+                {
+                    case 1:
+                        m.WarmingMessage("Ja existe uma ou mais parsela paga! Não pode ser excluido!", "Atenção");
+                        break;
+                    case 2:
+                        m.WarmingMessage("Não pode ser excluido pelo fato do estoque ficar negativo!", "Atenção");
+                        break;
+                    case 3:
+                        m.ErroMessage("Erro ao Excluir!", "ERRO");
+                        break;
+                    default:
+                        m.InformationMessage("Excluido com Sucesso!", "Atenção");
+                        btnCancelarActionPerformed(null);
                 }
-                else
-                    m.ErroMessage("Erro ao Excluir!", "ERRO");
             }
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusLost
-        if(!txtCodigo.getText().equals("0"))
+        if(!txtCodigo.getText().equals("0") && !txtCodigo.getText().equals(""))
         {
             lcc.buscaCompra(Integer.parseInt(txtCodigo.getText()));
             txtforn.setText(lcc.getForn().getNome());

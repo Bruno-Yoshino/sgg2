@@ -1,4 +1,0 @@
-INSERT INTO pedido_servico_detalhe( pe_codigo, serv_codigo, ds_codigo, psd_numeracaoini, psd_numeracaofim, psd_vias, psd_outros, ps_sequence)  
-VALUES (6, 1, 4, 0, 0, 0, '', 0);
-
---Analize this SQL anaized

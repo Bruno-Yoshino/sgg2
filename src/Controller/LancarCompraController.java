@@ -163,7 +163,7 @@ public class LancarCompraController
                 p.atualizarEstoque();
             }
 
-            for (int i = 0; i < modelP.getRowCount(); i++) 
+            for (int i = 0; i < modelF.getRowCount(); i++) 
             {
                 c.gravarItem(v.ConverteNumeroInteiro(modelF.getValueAt(i, 0)), v.ConverteNumeroInteiro(modelF.getValueAt(i, 2)), v.ConverteNumeroReal(modelF.getValueAt(i, 3)), false);
 //                lcf.add(new Compra_Folha(c, f.buscarCodigo(v.ConverteNumeroInteiro(modelF.getValueAt(i, 0))), v.ConverteNumeroInteiro(modelF.getValueAt(i, 2)), v.ConverteNumeroReal(modelF.getValueAt(i, 3))));
@@ -242,17 +242,22 @@ public class LancarCompraController
         model.removeRow(tabela.getSelectedRow());
     }
     
-    public boolean excluir()
+    public int excluir()
     {
         //Verificar se existe Parcela paga!
         if(c.buscaQtdParcelas(c.getCodigo()) > 0)
         {
-            return false;
+            return 1;
+        }
+        
+        if(!c.verificarEstoque())
+        {
+            return 2;
         }
         ContaPagar.excluirParcelasCompra(c.getCodigo());
-        //voltar o estoque ->> O triguer esta cuidando dess parte
+        //voltar o estoque ->> O trigger esta cuidando dess parte
         //if(c.excluirItens())
-        return c.excluir();
+        return c.excluir() ? 0 : 3;
         //return false;
     }
     

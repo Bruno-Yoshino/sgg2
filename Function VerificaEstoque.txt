@@ -1,0 +1,34 @@
+create function verificarEstoque(codigo Integer) returns Boolean as $$
+Declare 
+	mviews Record;
+	qtdIR Integer;
+	qtdItem Integer;
+	
+Begin
+	for mviews in select * from compra_produto where codigo = comp_codigo loop
+		select pro_qtd into qtdItem from produto where pro_codigo = mviews.pro_codigo;
+		
+		select sum(pp.pp_qtd) into qtdIR from producao_produto pp, producao prod 
+		where prod.prod_codigo = pp.prod_codigo and (prod.prod_status = 2 or prod.prod_status = 3);
+		
+		if (qtdItem - qtdIR - mviews.compp_qtd) < 0 then
+			return false;
+		end if;
+		
+	end loop;
+	
+	for mviews in select * from compra_folha where codigo = comp_codigo loop
+		select fo_qtd into qtdItem from folha where fo_codigo = mviews.fo_codigo;
+		
+		select sum(pf.pf_qtd) into qtdIR from producao_folha pf, producao prod 
+		where prod.prod_codigo = pf.prod_codigo and (prod.prod_status = 2 or prod.prod_status = 3);
+		
+		if (qtdItem - qtdIR - mviews.compf_qtd) < 0 then
+			return false;
+		end if;
+		
+	end loop;
+	
+	return true;
+End;
+$$ Language plpgsql;

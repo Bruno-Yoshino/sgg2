@@ -291,7 +291,7 @@ public class Caixa
     public double TotalRecebido()
     {
         String sql;
-        sql = "select sum(cr_valorp) "
+        sql = "select sum(cr_vlorp) "
                 + " from conta_receber "
                 + " where caixa_codigo = "+codigo+" and cr_datapago is not null ";
                 ResultSet rs=Banco.getCon().consultar(sql);

@@ -207,7 +207,7 @@ public class Compra
         if (valor.equals(""))
         {
             query = "select c.comp_codigo, c.comp_valortotal, c.comp_data, func.func_nome "
-                + " from compra c, funcionario func where func.func_codigo = c.func_codigo and (select count(*) from conta_pagar cp, compra c where c.comp_codigo = cp.comp_codigo) = 0 "
+                + " from compra c, funcionario func where func.func_codigo = c.func_codigo and (select count(*) from conta_pagar cp where c.comp_codigo = cp.comp_codigo and cp.cp_dtpago is null) != 0  "
                 + " order by comp_codigo";
         }
         else
@@ -218,14 +218,14 @@ public class Compra
                 {
                     query = "select c.comp_codigo, forn.forn_nome, c.comp_valortotal, c.comp_data, func.func_nome "
                              + " from compra c, fornecedor forn, funcionario func "
-                            + "where comp_data = '"+dataI+"' and (func.func_codigo = c.func_codigo and forn_codigo = c.forn_codigo) and (select count(*) from conta_pagar cp, compra c where c.comp_codigo = cp.comp_codigo) = 0 order by comp_codigo";
+                            + "where comp_data = '"+dataI+"' and (func.func_codigo = c.func_codigo and forn_codigo = c.forn_codigo) and (select count(*) from conta_pagar cp where c.comp_codigo = cp.comp_codigo and cp.cp_dtpago is null) != 0  order by comp_codigo";
                     break;
                 }
                 case 1:// periodo
                 {
                     query = "select c.comp_codigo, forn.forn_nome, c.comp_valortotal, c.comp_data, func.func_nome "
                              + " from compra c, fornecedor forn, funcionario func "
-                            + "where comp_data BETWEEN '"+dataI+"' and '"+dataF+"' and func.func_codigo = c.func_codigo and forn_codigo = c.forn_codigo and (select count(*) from conta_pagar cp, compra c where c.comp_codigo = cp.comp_codigo) = 0 order by comp_codigo";
+                            + "where comp_data BETWEEN '"+dataI+"' and '"+dataF+"' and func.func_codigo = c.func_codigo and forn_codigo = c.forn_codigo and (select count(*) from conta_pagar cp where c.comp_codigo = cp.comp_codigo and cp.cp_dtpago is null) != 0  order by comp_codigo";
                     break;
                 }
             }
@@ -271,6 +271,25 @@ public class Compra
             System.out.println(e.getMessage());
         }
         return -1;
+    }
+    
+    public boolean verificarEstoque()
+    {
+        String sql;
+        sql = "select verificarEstoque("+codigo+") ";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {//int codigo, Fornecedor f, Funcionario func, double valort, Date data, ArrayList<Compra_Folha> lcf, ArrayList<Compra_Produto> lcp
+            if (rs.next()) 
+            {
+                return rs.getBoolean(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
     
     public boolean verificaTabelaProduto(int codigoP, int codigoC)

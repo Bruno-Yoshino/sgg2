@@ -92,14 +92,14 @@ public class CaixaController
         return c.TotalDesconto(data);
     }
     
-    public double buscaTotalRecevido()
+    public double buscaTotalRecebido()
     {
         return c.TotalRecebido();
     }
     
-    public double buscaValorReal(String data, String valorC, String valorR)
+    public double buscaValorReal(String totalrecebido, String valorC, String valorR)
     {
-        return c.TotalPedido(data) + v.ConverteNumeroReal(valorC) - v.ConverteNumeroReal(valorR);
+        return v.ConverteNumeroReal(totalrecebido) + v.ConverteNumeroReal(valorC) - v.ConverteNumeroReal(valorR);
     }
     
     public double SaldoRetirado()

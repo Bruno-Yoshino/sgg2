@@ -335,8 +335,8 @@ public class MovCaixaFechar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtValorCaixaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorCaixaFocusLost
-        txtValorReal.setText(""+cc.buscaValorReal(txtDataAberto.getText(), txtValor.getText(), txtValorRetirado.getText()));
-        txtDiferenca.setText(""+cc.diferenca(txtValorCaixa.getText(), txtValorReal.getText()));
+        txtValorReal.setText(""+sc.truncar(cc.buscaValorReal(txtValorRecebido.getText(), txtValor.getText(), txtValorRetirado.getText())));
+        txtDiferenca.setText(""+sc.truncar(cc.diferenca(txtValorCaixa.getText(), txtValorReal.getText())));
         Color c = cc.verificaDiferenca(txtValorCaixa.getText(), txtValorReal.getText());
         txtValorReal.setBackground(c);
         if(c.equals(Color.yellow))
@@ -400,7 +400,7 @@ public class MovCaixaFechar extends javax.swing.JDialog {
             txtFuncionario.setText(cc.getC().getFuncI().getNome());
             txtValor.setText(""+cc.getC().getSaldoI());
             txtValorRetirado.setText(""+cc.SaldoRetirado());
-            txtValorRecebido.setText(""+cc.buscaDesconto(txtDataAberto.getText()));
+            txtValorRecebido.setText(""+cc.buscaTotalRecebido());
             txtValorCaixa.requestFocus();
         }
     }//GEN-LAST:event_formWindowActivated
