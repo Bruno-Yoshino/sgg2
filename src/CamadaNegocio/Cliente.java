@@ -449,17 +449,12 @@ public class Cliente {
         {   //Fisica
             if (valor.equals(""))
             {
-                query = "select c.cli_codigo, c.cli_nome, f.cli_cpf,  c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where c.cli_codigo = f.cli_codigo order by c.cli_nome";
+                query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where c.cli_codigo = f.cli_codigo order by c.cli_nome";
             }
             else
             {
                 switch (tipo)
                 {
-//                    case 0:
-//                    {
-//                        query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where c.cid_codigo = " + Integer.parseInt(valor) + " order by c.cli_nome";
-//                        break;
-//                    }
                     case 0:
                     {
                         query = "select c.cli_codigo, c.cli_nome, f.cli_cpf, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, fisica f where c.cli_nome ilike '%" + valor + "%' and c.cli_codigo = f.cli_codigo order by c.cli_nome";
@@ -490,7 +485,7 @@ public class Cliente {
 //                    }
                     case 0:
                     {
-                        query = "select c.cli_codigo, c.cli_nome, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, juridica j where c.cli_nome ilike '%" + valor + "%' and c.cli_codigo = j.cli_codigo order by c.cli_nome";
+                        query = "select c.cli_codigo, c.cli_nome, j.cli_cnpj, c.cli_telefone, c.cli_celular, c.cli_endereco, c.cli_numero,c.cli_complemento, c.cli_status from cliente c, juridica j where c.cli_nome ilike '%" + valor + "%' order by c.cli_nome";
                         break;
                     }
                     case 2:
@@ -500,6 +495,75 @@ public class Cliente {
                     }
                 }
             }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
+    public static ResultSet buscarDadosRel(String valor, int tipo, boolean flag)//Para consulta
+    {
+      //"Código", "Nome", "CPF/CNPJ", "Telefone", "Celular", "Enderecço", "Numero", "Complemento"
+        String query = null;
+        if(flag)
+        {   //Fisica
+            if (valor.equals(""))
+            {
+                query = "select * from cliente c, fisica f, cidade cid, estado uf where c.cli_codigo = f.cli_codigo and c.cid_codigo = cid.cid_codigo and uf.uf_codigo = cid.uf_codigo order by c.cli_nome";
+            }
+            else
+            {
+                switch (tipo)
+                {
+                    case 0:
+                    {
+                        query = "select * from cliente c, fisica f, cidade cid, estado uf where c.cli_nome ilike '%" + valor + "%' and c.cli_codigo = f.cli_codigo and c.cid_codigo = cid.cid_codigo and uf.uf_codigo = cid.uf_codigo order by c.cli_nome";
+                        break;
+                    }
+                    case 1:
+                    {
+                        query = "select * from cliente c, fisica f, cidade cid, estado uf where f.cli_cpf = " + valor + " and c.cli_codigo = f.cli_codigo and c.cid_codigo = cid.cid_codigo and uf.uf_codigo = cid.uf_codigo order by c.cli_nome";
+                        break;
+                    }
+                }
+            }
+        }
+        else // juridica
+        {
+            if (valor.equals(""))
+            {
+                query = "select * from cliente c, juridica j, cidade cid, estado uf where c.cli_codigo = j.cli_codigo and c.cid_codigo = cid.cid_codigo and uf.uf_codigo = cid.uf_codigo order by c.cli_nome";
+            }
+            else
+            {
+                switch (tipo)
+                {
+                    case 0:
+                    {
+                        query = "select * from cliente c, juridica j, cidade cid, estado uf where c.cli_nome ilike '%" + valor + "%' and c.cli_codigo = j.cli_codigo and c.cid_codigo = cid.cid_codigo and uf.uf_codigo = cid.uf_codigo order by c.cli_nome";
+                        break;
+                    }
+                    case 2:
+                    {
+                        query = "select * from cliente c, juridica j, cidade cid, estado uf where j.cid_cnpj like '%" + valor + "%' and c.cid_codigo = cid.cid_codigo and uf.uf_codigo = cid.uf_codigo order by c.cli_nome";
+                        break;
+                    }
+                }
+            }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
+    public static ResultSet buscarDadosCodigo(int codigo, boolean flag)//Para consulta
+    {
+      //"Código", "Nome", "CPF/CNPJ", "Telefone", "Celular", "Enderecço", "Numero", "Complemento"
+        String query = null;
+        if(flag)
+        {   //Fisica
+            query = "select * from cliente c, fisica f, cidade cid, estado uf where c.cli_codigo = " + codigo + " and c.cli_codigo = f.cli_codigo and c.cid_codigo = cid.cid_codigo and uf.uf_codigo = cid.uf_codigo";
+        }
+        else // juridica
+        {
+            query = "select * from cliente c, juridica j, cidade cid, estado uf where c.cli_codigo = " + codigo + " and c.cli_codigo = j.cli_codigo and c.cid_codigo = cid.cid_codigo and uf.uf_codigo = cid.uf_codigo";
+
         }
         return Banco.getCon().retornaResultSet(query);
     }

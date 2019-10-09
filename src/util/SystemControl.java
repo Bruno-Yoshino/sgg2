@@ -54,6 +54,14 @@ public class SystemControl
         return strDate;
     }
     
+    public final String DataOnlyNow()//Retornar Somente a Data
+    {
+        String strDate;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        strDate = dateFormat.format(Date.from(Instant.now())); 
+        return strDate;
+    }
+    
     public final java.sql.Date DateForSql(Date data)//Converter a Data para Sql Data
     {
         return java.sql.Date.valueOf(DataOnly(data));

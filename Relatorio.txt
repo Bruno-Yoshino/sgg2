@@ -1,0 +1,33 @@
+ @FXML
+    private void evtGerar(ActionEvent event) 
+    {
+        Relatorio r = new Relatorio();
+        if(dpData.getValue() == null)
+        {
+            data = LocalDate.now();
+        }
+        else
+        {
+            data = dpData.getValue();
+        }
+        gerarRelatorio(r.gerarRelatorioAcesso2(data), "MyReports/MyReports/RelAcesso2.jasper");
+       
+    }
+    
+    private void gerarRelatorio(String sql,String relat)
+   {
+    try
+    { //sql para obter os dados para o relatorio
+      ResultSet rs = Banco.getCon().consultar(sql);
+      //implementação da interface JRDataSource para DataSource ResultSet
+      JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
+      //chamando o relatório
+      String jasperPrint =          
+          JasperFillManager.fillReportToFile(relat,null, jrRS);
+      JasperViewer viewer = new JasperViewer(jasperPrint, false, false);
+      viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);//maximizado
+      viewer.setTitle("Relatório 1");//titulo do relatório
+      viewer.setVisible(true);
+    } catch (JRException erro)
+    {}
+   }

@@ -167,8 +167,8 @@ public class LancarCompraController
             {
                 c.gravarItem(v.ConverteNumeroInteiro(modelF.getValueAt(i, 0)), v.ConverteNumeroInteiro(modelF.getValueAt(i, 2)), v.ConverteNumeroReal(modelF.getValueAt(i, 3)), false);
 //                lcf.add(new Compra_Folha(c, f.buscarCodigo(v.ConverteNumeroInteiro(modelF.getValueAt(i, 0))), v.ConverteNumeroInteiro(modelF.getValueAt(i, 2)), v.ConverteNumeroReal(modelF.getValueAt(i, 3))));
-                f = f.buscarCodigo(v.ConverteNumeroInteiro(modelP.getValueAt(i, 0)));
-                f.setQtd(f.getQtd()+v.ConverteNumeroInteiro(modelP.getValueAt(i, 2)));
+                f = f.buscarCodigo(v.ConverteNumeroInteiro(modelF.getValueAt(i, 0)));
+                f.setQtd(f.getQtd()+v.ConverteNumeroInteiro(modelF.getValueAt(i, 2)));
                 f.atualizarEstoque();
             }
             return true;
