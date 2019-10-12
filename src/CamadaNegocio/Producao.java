@@ -137,7 +137,15 @@ public class Producao
     
     public boolean alterar(int codigo)
     {
-        String sql = "update producao set func_codigo = "+f.getCodigo()+", prod_status = "+status+", prod_data = '"+(status==1 ? Date.from(Instant.now()) : null)+"' where prod_codigo = "+codigo+"";
+        String sql = "update producao set func_codigo = "+f.getCodigo()+", prod_status = "+status+", prod_data = "+(status==1 ? Date.from(Instant.now()) : null)+" where prod_codigo = "+codigo+"";
+        if(status==1)
+        {
+            sql = "update producao set func_codigo = "+f.getCodigo()+", prod_status = "+status+", prod_data = '"+Date.from(Instant.now())+"' where prod_codigo = "+codigo+"";
+        }
+        else
+        {
+            sql = "update producao set func_codigo = "+f.getCodigo()+", prod_status = "+status+", prod_data = null where prod_codigo = "+codigo+"";
+        }
         return Banco.getCon().manipular(sql);
     }
     

@@ -100,12 +100,10 @@ public class ChequeController {
                 return 9;
             }
             c.setDataComp(dataComp);
-            
-            if(!flag && motivo.trim().equals(""))
-            {
-                return 10;
-            }
-            c.setMotivo(motivo);
+            if(flag)
+                c.setMotivo(0);
+            else
+                c.setMotivo(v.ConverteNumeroInteiro(motivo));
         }
         c.setObs(obs);
         c.setCliente(cliente);

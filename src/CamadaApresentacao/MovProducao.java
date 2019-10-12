@@ -808,7 +808,7 @@ public class MovProducao extends javax.swing.JDialog {
         {
             pc.buscaFolha(consFolha.getCodigo());
             txtFolha.setText(pc.getF().getTamanho()+ "/" +pc.getF().getDescricao());
-            txtQtdF.setText(""+pc.getF().getQtd());
+            txtEstoqueF.setText(""+pc.getF().getQtd());
             txtReservadoF.setText(""+pc.qtdReservaF());
             consFolha.dispose();
         }
@@ -918,7 +918,7 @@ public class MovProducao extends javax.swing.JDialog {
                     if(pc.Atualizar(Integer.parseInt(String.valueOf(model.getValueAt(jTable2.getSelectedRow(), 0)))))
                     {
                         if(cbStatus.getSelectedIndex() == 0)
-                            pc.gravarItens(Integer.parseInt(String.valueOf(model.getValueAt(jTable2.getSelectedRow(), 0))));
+                            pc.atualizaItens(Integer.parseInt(String.valueOf(model.getValueAt(jTable2.getSelectedRow(), 0))));
                         m.InformationMessage("Atualizado com sucesso", "");
                         sc.limpar(jPanel4.getComponents());
                         sc.limpar(jPanel2.getComponents());

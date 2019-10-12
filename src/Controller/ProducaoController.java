@@ -396,7 +396,7 @@ public class ProducaoController {
         return p.gravar(ps);
     }
     
-    public boolean gravarItens(int codigo)
+    public boolean atualizaItens(int codigo)
     {
         boolean x = true;
         ArrayList<Producao_Folha> listaF = p.getListaF();
@@ -404,14 +404,14 @@ public class ProducaoController {
         AtualizarEstoqueController aec = new AtualizarEstoqueController();
         for(int i = 0; i < listaF.size() && x; i++)
         {
-           x = listaF.get(i).gravar(codigo);
+          // x = listaF.get(i).gravar(codigo);
            aec.setF(listaF.get(i).getF());
            aec.atualizarEstoqueFolha(false, listaF.get(i).getQtd()); //atualizar so depois que a opcao virar Entregue!
         }
         
         for(int i = 0; i < listaP.size() && x; i++)
         {
-            x = listaP.get(i).gravar(codigo);
+          //  x = listaP.get(i).gravar(codigo);
             aec.setP(listaP.get(i).getP());
             aec.atualizarEstoqueProduto(false, listaP.get(i).getQtd());//atualizar so depois que a opcao virar Entregue!
         }

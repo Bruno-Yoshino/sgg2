@@ -752,6 +752,9 @@ public class MovLancarCompras extends javax.swing.JDialog {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         sc.limpar(jPanel1.getComponents());
+        sc.HabilityComponents(jPanel1.getComponents(), false);
+        sc.HabilityComponents(jPanel3.getComponents(), false);
+        sc.HabilityComponents(jPanel5.getComponents(), false);
         sc.limparTabela(tbF);
         sc.limparTabela(tbP);
         sc.Initialize(jPanel2.getComponents());
@@ -1038,9 +1041,12 @@ public class MovLancarCompras extends javax.swing.JDialog {
             m.InformationMessage("Gravado com sucesso!", "Atenção");
             lancarConta();
             sc.limpar(jPanel1.getComponents());
-            sc.limparTabela(tbF);
-            sc.limparTabela(tbP);
+//            sc.limparTabela(tbF);
+//            sc.limparTabela(tbP);
             sc.Initialize(jPanel2.getComponents());
+            sc.HabilityComponents(jPanel1.getComponents(), false);
+            sc.HabilityComponents(jPanel3.getComponents(), false);
+            sc.HabilityComponents(jPanel5.getComponents(), false);
         }
         else
         {

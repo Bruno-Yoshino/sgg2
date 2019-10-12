@@ -850,7 +850,7 @@ public class MovPedido extends javax.swing.JDialog {
          case 3: m.InformationMessage("Informe o Valor!", "Atenção"); txtValor.requestFocus(); break;
          case 4: m.InformationMessage("Informe o Valor e a Quantidade!", "Atenção"); break;
          default: 
-             pc.addTabelaServico(jTable1, linha);
+             pc.addTabelaServico(jTable1, linha); //Mudar aqui
              txtValorT.setText(""+pc.calculoTotal(jTable1));
              linha = -1;
              initializeServico();
@@ -921,7 +921,7 @@ public class MovPedido extends javax.swing.JDialog {
     }//GEN-LAST:event_btnaddServicoActionPerformed
 
     private void btnExcluiServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluiServicoActionPerformed
-        if(pc.excluirServico(jTable1, jTable1.getSelectedRow(), flag))
+        if(pc.excluirServico(jTable1, jTable1.getSelectedRow(), flag)) 
         {
             m.InformationMessage("Excluido com Sucesso", "Informação");
             txtValorT.setText(""+pc.calculoTotal(jTable1));
@@ -1220,7 +1220,7 @@ public class MovPedido extends javax.swing.JDialog {
                 case 1: m.WarmingMessage("Este orcamento esta Vencido!", "Atenção"); break;
                 default:
                     txtValorT.setText(""+pc.getP().getValorTotal());
-                    jTable1.removeAll();
+                    sc.limparTabela(jTable1);
                     txtCliente.setText(pc.getP().getCli().getNome());
                     pc.carregarTabelaServicoOrcamento(jTable1);
             }

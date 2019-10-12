@@ -37,10 +37,10 @@ public class Cheque {
    private String nCheque;
    private String obs;
    private Date dataComp;
-   private String motivo;
+   private int motivo;
    private String cliente;
 
-    public Cheque(int codigo, ContaReceber cr, String dono, String cpf, double valor, Date data, Date predata, String nAgencia, String nConta, String nBanco, String nCheque, String obs, Date dataComp, String motivo, String cliente) {
+    public Cheque(int codigo, ContaReceber cr, String dono, String cpf, double valor, Date data, Date predata, String nAgencia, String nConta, String nBanco, String nCheque, String obs, Date dataComp, int motivo, String cliente) {
         this.codigo = codigo;
         this.cr = cr;
         this.dono = dono;
@@ -165,11 +165,11 @@ public class Cheque {
         this.dataComp = dataComp;
     }
 
-    public String getMotivo() {
+    public int getMotivo() {
         return motivo;
     }
 
-    public void setMotivo(String motivo) {
+    public void setMotivo(int motivo) {
         this.motivo = motivo;
     }
 
@@ -201,7 +201,7 @@ public class Cheque {
    
    public boolean compensar()
    {
-       String sql = "UPDATE cheque set c_datacomp = '"+dataComp+"', c_motivo = '"+motivo+"' where c_codigo = "+codigo+"";
+       String sql = "UPDATE cheque set c_datacomp = '"+dataComp+"', c_motivo = "+motivo+" where c_codigo = "+codigo+"";
        return Banco.getCon().manipular(sql);
    }
    
@@ -221,7 +221,7 @@ public class Cheque {
         {
             if (rs.next()) 
             {
-                return new Cheque(rs.getInt(1), new ContaReceber().buscar(rs.getInt(2)), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getDate(6), rs.getDate(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getDate(13), rs.getString(14), rs.getString(15));
+                return new Cheque(rs.getInt(1), new ContaReceber().buscar(rs.getInt(2)), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getDate(6), rs.getDate(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getDate(13), rs.getInt(14), rs.getString(15));
             }
         } 
         catch (SQLException e) 

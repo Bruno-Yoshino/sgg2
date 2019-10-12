@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -318,6 +319,9 @@ public class SystemControl
                                                 else
                                                     if(c1 instanceof JSpinner)
                                                         ((JSpinner) c1).setValue(0);
+                                                    else
+                                                        if(c1 instanceof JTabbedPane)
+                                                            ((JTabbedPane) c1).setSelectedIndex(0);
                                             }
                                         }
                                     }

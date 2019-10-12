@@ -8,7 +8,6 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.util.JRProperties;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
@@ -111,14 +110,14 @@ public class Relatorio {
         }
         if(!caminho.equals(""))
         {
-            //JasperExportManager.exportReportToPdfFile(jasperPrint, caminho+".pdf");
-            JasperExportManager.exportReportToXmlFile(jasperPrint, caminho+".xml", true);
+            JasperExportManager.exportReportToPdfFile(jasperPrint, caminho+".pdf");
+            //JasperExportManager.exportReportToXmlFile(jasperPrint, caminho+".xml", true);
             file = new File(caminho);
             try
             {
                 //perguntar se deseja ver o pdf
-                //java.awt.Desktop.getDesktop().open( new File(caminho+".pdf"));
-                java.awt.Desktop.getDesktop().open( new File(caminho+".xml"));
+                java.awt.Desktop.getDesktop().open( new File(caminho+".pdf"));
+                //java.awt.Desktop.getDesktop().open( new File(caminho+".xml"));
             }
             catch (IOException ex)
             {

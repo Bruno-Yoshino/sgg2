@@ -15,7 +15,6 @@ import net.sf.jasperreports.engine.JRException;
 import util.SystemControl;
 
 /**
- *
  * @author 吉野　廉
  * @author 羽根川　翼
  * @author モニカ

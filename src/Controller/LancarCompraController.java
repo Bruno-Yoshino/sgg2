@@ -188,7 +188,8 @@ public class LancarCompraController
     
     public void buscFornecedor(int codigo)
     {
-        c.setF(new Fornecedor().buscarCodigo(codigo));
+        forn = new Fornecedor().buscarCodigo(codigo);
+        c.setF(forn);
     }
     
     public void buscaCompra(int codigo)

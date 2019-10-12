@@ -655,14 +655,15 @@ public class PedidoController {
     
     public static void configuraModelServico(JTable jTable) // Configurar Tabela Servico
     {
-        String colunas[] = new String [] {"Serviço", "Valor", "Quantidade", "Desconto", "Valor Total", "Descrição"};
+        String colunas[] = new String [] {"Serviço", "Valor", "Quantidade", "Desconto", "Custo extra", "Valor Total", "Descrição"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));
         jTable.getColumnModel().getColumn(0).setPreferredWidth(150);
         jTable.getColumnModel().getColumn(1).setPreferredWidth(100);
         jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
         jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
         jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(5).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(6).setPreferredWidth(150);
     }
     
     public static void configuraModelDetalhe(JTable jTable) // Configurar Tabela Detalhe

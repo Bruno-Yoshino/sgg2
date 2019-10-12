@@ -17,7 +17,7 @@ package CamadaApresentacao;
  * @author 御子
  * @author 稲荷
  */
-public class Restore extends javax.swing.JDialog {
+public class Restore extends javax.swing.JDialog {  //backup restore
 
 
     public Restore(java.awt.Frame parent, boolean modal) {

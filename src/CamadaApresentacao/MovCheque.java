@@ -117,9 +117,8 @@ public class MovCheque extends javax.swing.JDialog {
         jLabel15 = new javax.swing.JLabel();
         dcCompencado = new br.com.marciorl.beans.DateChooser();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtMotivo = new javax.swing.JTextArea();
         cbCompencar = new javax.swing.JCheckBox();
+        cbMotivo = new javax.swing.JComboBox<>();
         btnlocCliente = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
@@ -181,7 +180,7 @@ public class MovCheque extends javax.swing.JDialog {
         jLabel13.setText("Número da Conta:");
 
         jLabel14.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel14.setText("Número da Banco:");
+        jLabel14.setText("Número do Banco:");
 
         txtValor.setText(".0");
 
@@ -196,12 +195,10 @@ public class MovCheque extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Motivo caso o cheque não foi compensado:");
 
-        txtMotivo.setColumns(20);
-        txtMotivo.setRows(5);
-        jScrollPane2.setViewportView(txtMotivo);
-
         cbCompencar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cbCompencar.setText("Cheque Compensado?");
+
+        cbMotivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -210,16 +207,17 @@ public class MovCheque extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(dcCompencado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cbCompencar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 390, Short.MAX_VALUE)
+                        .addComponent(cbCompencar))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -230,11 +228,11 @@ public class MovCheque extends javax.swing.JDialog {
                     .addComponent(jLabel15)
                     .addComponent(dcCompencado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbCompencar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 11, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(cbMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(84, 84, 84))
         );
 
         btnlocCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
@@ -346,8 +344,8 @@ public class MovCheque extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -509,7 +507,7 @@ public class MovCheque extends javax.swing.JDialog {
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         //int codigo, ContaReceber cr, String dono, String cpf, double valor, Date data, Date predata, int nAgencia, String nConta, String nBanco, String nCheque, String obs, Date dataComp, String motivo
-        switch(cc.varidar(codigo, txtPessoa.getText(), txtCpf.getText(), txtValor.getText(), dcData.getData(), dcPredata.getData(), txtAgencia.getText(), txtConta.getText(), txtBanco.getText(), txtNumeroCheque.getText(), txtObs.getText(), dcCompencado.getData(), txtMotivo.getText(), cbCompencar.isSelected(), op, txtCliente.getText()))
+        switch(cc.varidar(codigo, txtPessoa.getText(), txtCpf.getText(), txtValor.getText(), dcData.getData(), dcPredata.getData(), txtAgencia.getText(), txtConta.getText(), txtBanco.getText(), txtNumeroCheque.getText(), txtObs.getText(), dcCompencado.getData(), ""+cbMotivo.getSelectedItem(), cbCompencar.isSelected(), op, txtCliente.getText()))
         {
             case 1: m.InformationMessage("Informe o Dono do Cheque!", "Atenção"); txtPessoa.requestFocus(); break;
             case 2: m.InformationMessage("Informe o CPF!", "Atenção"); txtCpf.requestFocus(); break;
@@ -520,7 +518,7 @@ public class MovCheque extends javax.swing.JDialog {
             case 7: m.InformationMessage("Informe o Nuúmero do Banco!", "Atenção"); txtBanco.requestFocus(); break;
             case 8: m.InformationMessage("Informe o Nuúmero do Cheque!", "Atenção"); txtNumeroCheque.requestFocus(); break;
             case 9: m.InformationMessage("A data Compençado é menor que a Data Recebido!", "Atenção"); dcCompencado.requestFocus(); break;
-            case 10: m.InformationMessage("Informe o motivo!", "Atenção"); txtMotivo.requestFocus(); break;
+            //case 10: m.InformationMessage("Informe o motivo!", "Atenção"); cbMotivo.requestFocus(); break;
             default:
                 if(op)
                 {
@@ -644,6 +642,7 @@ public class MovCheque extends javax.swing.JDialog {
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnlocCliente;
     private javax.swing.JCheckBox cbCompencar;
+    private javax.swing.JComboBox<String> cbMotivo;
     private br.com.marciorl.beans.DateChooser dcCompencado;
     private br.com.marciorl.beans.DateChooser dcData;
     private br.com.marciorl.beans.DateChooser dcPredata;
@@ -664,13 +663,11 @@ public class MovCheque extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField txtAgencia;
     private javax.swing.JTextField txtBanco;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtConta;
     private br.com.ikeda.beans.jFormatTextCpf txtCpf;
-    private javax.swing.JTextArea txtMotivo;
     private javax.swing.JTextField txtNumeroCheque;
     private javax.swing.JTextArea txtObs;
     private javax.swing.JTextField txtPessoa;
