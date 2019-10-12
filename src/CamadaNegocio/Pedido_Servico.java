@@ -26,14 +26,16 @@ public class Pedido_Servico {
     private double valor;
     private int qtd;
     private double desconto;
+    private double valorExtra;
     private String descricao;
     private int sequence;
     private ArrayList<Pedido_Servico_Detalhe> lista;
 
-    public Pedido_Servico(Servico serv, double valor, int qtd, double desconto, String descricao, int sequence, ArrayList<Pedido_Servico_Detalhe> lista) {
+    public Pedido_Servico(Servico serv, double valor, int qtd, double valorExtra, double desconto, String descricao, int sequence, ArrayList<Pedido_Servico_Detalhe> lista) {
         this.serv = serv;
         this.valor = valor;
         this.qtd = qtd;
+        this.valorExtra = valorExtra;
         this.desconto = desconto;
         this.descricao = descricao;
         this.sequence = sequence;
@@ -100,18 +102,26 @@ public class Pedido_Servico {
         this.lista = lista;
     }
 
-    public boolean gravar(int codigoP)
+    public double getValorExtra() {
+        return valorExtra;
+    }
+
+    public void setValorExtra(double valorExtra) {
+        this.valorExtra = valorExtra;
+    }
+    
+     public boolean gravar(int codigoP)
     {
         String sql =  "INSERT INTO pedido_servico( " +
-                  " pe_codigo, serv_codigo, ps_valor, ps_qtd, ps_desconto, ps_descricao) " +
-                  " VALUES ("+codigoP+", "+serv.getCodigo()+", "+valor+", "+qtd+", "+desconto+", '"+descricao+"');";
+                  " pe_codigo, serv_codigo, ps_valor, ps_qtd, ps_desconto, ps_descricao, ps_valorextra) " +
+                  " VALUES ("+codigoP+", "+serv.getCodigo()+", "+valor+", "+qtd+", "+desconto+", '"+descricao+"', "+valorExtra+");";
         return Banco.getCon().manipular(sql);
     }
     
     public boolean alterar(int codigoP)
     {
         String sql =  "UPDATE pedido_servico " +
-                  " SET serv_codigo="+serv.getCodigo()+", ps_valor="+valor+", ps_qtd="+qtd+", ps_desconto="+desconto+", ps_descricao='"+descricao+"' " +
+                  " SET serv_codigo="+serv.getCodigo()+", ps_valor="+valor+", ps_qtd="+qtd+", ps_desconto="+desconto+", ps_descricao='"+descricao+"', ps_valorextra = "+valorExtra+" " +
                   " WHERE pe_codigo="+codigoP+" and ps_sequence = "+sequence+";";
         return Banco.getCon().manipular(sql);
     }
@@ -153,7 +163,7 @@ public class Pedido_Servico {
     {
         ArrayList<Pedido_Servico> lista = new ArrayList<>();
         String sql;
-        sql = "SELECT pe_codigo, serv_codigo, ps_valor, ps_qtd, ps_desconto, ps_descricao, ps_sequence   " +
+        sql = "SELECT pe_codigo, serv_codigo, ps_valor, ps_qtd, ps_desconto, ps_descricao, ps_sequence, ps_valorextra  " +
               " FROM pedido_servico"
             + " WHERE pe_codigo = "+codigo+";";
         ResultSet rs=Banco.getCon().consultar(sql);
@@ -161,7 +171,7 @@ public class Pedido_Servico {
         {
             while (rs.next()) 
             {
-                lista.add(new Pedido_Servico(new Servico().buscarCodigo(rs.getInt(2)), rs.getDouble(3), rs.getInt(4), rs.getDouble(5), rs.getString(6), rs.getInt(7), new Pedido_Servico_Detalhe().buscar(rs.getInt(1), rs.getInt(7))));
+                lista.add(new Pedido_Servico(new Servico().buscarCodigo(rs.getInt(2)), rs.getDouble(3), rs.getInt(4), rs.getDouble(8), rs.getDouble(5), rs.getString(6), rs.getInt(7), new Pedido_Servico_Detalhe().buscar(rs.getInt(1), rs.getInt(7))));
             }
         } 
         catch (SQLException e) 

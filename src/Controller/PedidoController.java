@@ -121,7 +121,7 @@ public class PedidoController {
         return 0;
     }
     
-    public int varidarAddServico(String servico, String valor, String qtd, String descricao, String desconto, int linha, String total)
+    public int varidarAddServico(String servico, String valor, String qtd, String descricao, String desconto, int linha, String total, String valorE)
     {
         ArrayList<Pedido_Servico> temp = p.getLista();
         if(servico.equals(""))
@@ -134,8 +134,10 @@ public class PedidoController {
             return 3;
         if(v.ConverteNumeroReal(total) <= 0)
             return 4;
+        if(v.ConverteNumeroReal(valorE) < 0)
+            return 5;
         if(linha == -1)
-            temp.add(new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd),  v.ConverteNumeroReal(desconto), descricao, 0, new ArrayList<>()));
+            temp.add(new Pedido_Servico(ser, v.ConverteNumeroReal(valor), v.ConverteNumeroInteiro(qtd),  v.ConverteNumeroReal(valorE), v.ConverteNumeroReal(desconto), descricao, 0, new ArrayList<>()));
         else //addではなく、temp.get(Linha).setXXXXX();で処理を行ってください。
         {   
             temp.get(linha).setQtd(v.ConverteNumeroInteiro(qtd));
@@ -205,7 +207,8 @@ public class PedidoController {
                 temp.get(temp.size()-1).getValor(),
                 temp.get(temp.size()-1).getQtd(),
                 temp.get(temp.size()-1).getDesconto(),
-                temp.get(temp.size()-1).getValor()*temp.get(temp.size()-1).getQtd()-temp.get(temp.size()-1).getDesconto(),
+                temp.get(temp.size()-1).getValorExtra(),
+                temp.get(temp.size()-1).getValor()*temp.get(temp.size()-1).getQtd()-temp.get(temp.size()-1).getDesconto()+temp.get(temp.size()-1).getValorExtra(),
                 temp.get(temp.size()-1).getDescricao()
             });
         }
@@ -215,8 +218,9 @@ public class PedidoController {
             model.setValueAt(temp.get(linha).getValor(), linha, 1);
             model.setValueAt(temp.get(linha).getQtd(), linha, 2);
             model.setValueAt(temp.get(linha).getDesconto(), linha, 3);
-            model.setValueAt(temp.get(linha).getValor()*temp.get(linha).getQtd()-temp.get(linha).getDesconto(), linha, 4);
-            model.setValueAt(temp.get(linha).getDescricao(), linha, 5);
+            model.setValueAt(temp.get(linha).getDesconto(), linha, 4);
+            model.setValueAt(temp.get(linha).getValor()*temp.get(linha).getQtd()-temp.get(linha).getDesconto(), linha, 5);
+            model.setValueAt(temp.get(linha).getDescricao(), linha, 6);
         }
     }
     
@@ -523,7 +527,8 @@ public class PedidoController {
                 temp.get(i).getValor(),
                 temp.get(i).getQtd(),
                 temp.get(i).getDesconto(),
-                temp.get(i).getValor()*temp.get(i).getQtd()-temp.get(i).getDesconto(),
+                temp.get(i).getValorExtra(),
+                temp.get(i).getValor()*temp.get(i).getQtd()-temp.get(i).getDesconto()+temp.get(i).getValorExtra(),
                 temp.get(i).getDescricao()
             });
         }
@@ -540,7 +545,8 @@ public class PedidoController {
                 temp.get(i).getValor(),
                 temp.get(i).getQtd(),
                 temp.get(i).getDesconto(),
-                temp.get(i).getValor()-temp.get(i).getDesconto(),
+                temp.get(i).getValorExtra(),
+                temp.get(i).getValor()-temp.get(i).getDesconto()+temp.get(i).getValorExtra(),
                 temp.get(i).getDescricao()
             });
         }
@@ -620,10 +626,12 @@ public class PedidoController {
                 }
                 //                                          Servico serv, double valor, int qtd, double desconto, String descricao, int sequence, ArrayList<Pedido_Servico_Detalhe> lista
                 listaPS.add(new Pedido_Servico(temp.getLista().get(i).getServ(), 
-                        (temp.getLista().get(i).getValor()*temp.getLista().get(i).getQtd()+temp.getLista().get(i).getCustoAcab()
-                                +temp.getLista().get(i).getCustoArte()+temp.getLista().get(i).getCustoChapa()
-                                +temp.getLista().get(i).getCustoImpre()+temp.getLista().get(i).getCustoMdO()
-                                +temp.getLista().get(i).getCustoPapel()), temp.getLista().get(i).getQtd(), temp.getLista().get(i).getDesconto(), temp.getLista().get(i).getDescricao(), 0, listaPSD));
+                        temp.getLista().get(i).getValor()*temp.getLista().get(i).getQtd(), temp.getLista().get(i).getQtd(), 
+                        temp.getLista().get(i).getCustoAcab()+temp.getLista().get(i).getCustoArte()
+                        +temp.getLista().get(i).getCustoChapa()
+                        +temp.getLista().get(i).getCustoImpre()+temp.getLista().get(i).getCustoMdO()
+                        +temp.getLista().get(i).getCustoPapel()
+                        ,temp.getLista().get(i).getDesconto(), temp.getLista().get(i).getDescricao(), 0, listaPSD));
                 listaPSD = new ArrayList<>();
             }
         } catch (SQLException ex) 
@@ -655,7 +663,7 @@ public class PedidoController {
     
     public static void configuraModelServico(JTable jTable) // Configurar Tabela Servico
     {
-        String colunas[] = new String [] {"Serviço", "Valor", "Quantidade", "Desconto", "Custo extra", "Valor Total", "Descrição"};
+        String colunas[] = new String [] {"Serviço", "Valor", "Quantidade", "Desconto", "Custo Extra", "Valor Total", "Descrição"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));
         jTable.getColumnModel().getColumn(0).setPreferredWidth(150);
         jTable.getColumnModel().getColumn(1).setPreferredWidth(100);

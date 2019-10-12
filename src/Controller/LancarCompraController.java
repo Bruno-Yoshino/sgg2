@@ -141,6 +141,7 @@ public class LancarCompraController
     
     public boolean gravar(String codigo, String valorT, JTable tabelaP, JTable tabelaF)
     {
+        boolean x = true;
         c.setCodigo(v.ConverteNumeroInteiro(codigo));
         c.setValort(v.ConverteNumeroReal(valorT));
         c.setData(Date.from(Instant.now()));
@@ -154,24 +155,26 @@ public class LancarCompraController
         if(c.gravar())
         {
             c.setCodigo(c.maxCodigo());
-            for (int i = 0; i < modelP.getRowCount(); i++) 
+            for (int i = 0; i < modelP.getRowCount() && x; i++) 
             {
-                c.gravarItem(v.ConverteNumeroInteiro(modelP.getValueAt(i, 0)), v.ConverteNumeroInteiro(modelP.getValueAt(i, 2)), v.ConverteNumeroReal(modelP.getValueAt(i, 3)), true);
+                x = c.gravarItem(v.ConverteNumeroInteiro(modelP.getValueAt(i, 0)), v.ConverteNumeroInteiro(modelP.getValueAt(i, 2)), v.ConverteNumeroReal(modelP.getValueAt(i, 3)), true);
 //                lcp.add(new Compra_Produto(c, p.buscarCodigo(v.ConverteNumeroInteiro(modelP.getValueAt(i, 0))), v.ConverteNumeroInteiro(modelP.getValueAt(i, 2)), v.ConverteNumeroReal(modelP.getValueAt(i, 3))));
                 p = p.buscarCodigo(v.ConverteNumeroInteiro(modelP.getValueAt(i, 0)));
                 p.setQtd(p.getQtd()+v.ConverteNumeroInteiro(modelP.getValueAt(i, 2)));
                 p.atualizarEstoque();
             }
 
-            for (int i = 0; i < modelF.getRowCount(); i++) 
+            for (int i = 0; i < modelF.getRowCount() && x; i++) 
             {
-                c.gravarItem(v.ConverteNumeroInteiro(modelF.getValueAt(i, 0)), v.ConverteNumeroInteiro(modelF.getValueAt(i, 2)), v.ConverteNumeroReal(modelF.getValueAt(i, 3)), false);
+                x = c.gravarItem(v.ConverteNumeroInteiro(modelF.getValueAt(i, 0)), v.ConverteNumeroInteiro(modelF.getValueAt(i, 2)), v.ConverteNumeroReal(modelF.getValueAt(i, 3)), false);
 //                lcf.add(new Compra_Folha(c, f.buscarCodigo(v.ConverteNumeroInteiro(modelF.getValueAt(i, 0))), v.ConverteNumeroInteiro(modelF.getValueAt(i, 2)), v.ConverteNumeroReal(modelF.getValueAt(i, 3))));
                 f = f.buscarCodigo(v.ConverteNumeroInteiro(modelF.getValueAt(i, 0)));
                 f.setQtd(f.getQtd()+v.ConverteNumeroInteiro(modelF.getValueAt(i, 2)));
                 f.atualizarEstoque();
             }
-            return true;
+            if(!x)
+                c.excluir();
+            return x;
         }
         return false;
     }

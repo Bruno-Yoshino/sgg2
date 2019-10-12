@@ -449,7 +449,7 @@ public class MovReceberContas extends javax.swing.JDialog {
                     }
                     else
                     {
-                        m.ErroMessage("ERRO1", "ERRO1");
+                        m.ErroMessage("ERRO ao gerar nova parcela!", "ERRO");
                     }
                     if(rcc.getCr().getP().getFp().getCodigo() == 4)
                     {

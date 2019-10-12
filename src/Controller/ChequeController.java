@@ -2,6 +2,7 @@ package Controller;
 
 import CamadaNegocio.Cheque;
 import CamadaNegocio.Cliente;
+import CamadaNegocio.ContaReceber;
 import java.util.Date;
 import util.Validacao;
 
@@ -25,10 +26,12 @@ public class ChequeController {
     
     private final util.Validacao v;
     private Cheque c;
+    private ContaReceber cr;
 
     public ChequeController() {
         this.v = new Validacao();
         this.c = new Cheque();
+        this.cr = new ContaReceber();
     }
 
     public Cheque getC() {
@@ -38,8 +41,17 @@ public class ChequeController {
     public void setC(Cheque c) {
         this.c = c;
     }
+
+    public ContaReceber getCr() {
+        return cr;
+    }
+
+    public void setCr(ContaReceber cr) {
+        this.cr = cr;
+    }
+    
     //int codigo, ContaReceber cr, String dono, String cpf, double valor, Date data, Date predata, int nAgencia, String nConta, String nBanco, String nCheque, String obs, Date dataComp, String motivo
-    public int varidar(int codigo, String dono, String cpf, String valor, Date data, Date predata, String nAgencia, String nConta, String nBanco, String nCheque, String obs, Date dataComp, String motivo, boolean flag, boolean op, String cliente)
+    public int varidar(int codigo, String dono, String cpf, String valor, Date data, Date predata, String nAgencia, String nConta, String nBanco, String nCheque, String obs, Date dataComp, String motivo, boolean flag, boolean op, String cliente, String codigoCR)
     {
         c.setCodigo(codigo);
         if(dono.trim().equals(""))
@@ -93,6 +105,15 @@ public class ChequeController {
         }
         c.setnCheque(nCheque);
         
+        if(codigoCR.equals(""))
+        {
+            c.setCr(null);
+        }
+        else
+        {
+            c.setCr(cr);
+        }
+        
         if(codigo != 0 && !op)
         {
             if(!v.ValidarDataDuasData(data, dataComp))
@@ -105,6 +126,8 @@ public class ChequeController {
             else
                 c.setMotivo(v.ConverteNumeroInteiro(motivo));
         }
+        
+
         c.setObs(obs);
         c.setCliente(cliente);
         return 0;
@@ -135,4 +158,12 @@ public class ChequeController {
         Cliente c = new Cliente().buscarCodigo(codigo);
         this.c.setCliente(c.getNome());
     }
+    
+    public void buscaContaReceber(int codigo)
+    {
+        ContaReceber c = new ContaReceber().buscar(codigo);
+        cr = c;
+    }
+    
+    
 }
