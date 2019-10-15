@@ -418,6 +418,39 @@ public class ProducaoController {
         return x;
     }
     
+    public void excluirItem(JTable tabela, int row)
+    {
+        ArrayList<Producao_Folha> tempF = p.getListaF();
+        ArrayList<Producao_Produto> tempP = p.getListaP();
+        boolean flag = true;
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        if(tabela.getValueAt(row, 0).equals("0"))
+        {
+           for(int i = 0; i < tempF.size() && flag; i++)
+           {
+                if(tempF.get(i).getF().getCodigo() == v.ConverteNumeroInteiro(tabela.getValueAt(row, 1)))
+                {
+                   tempF.remove(i);
+                   flag = false;
+                }
+           }
+           p.setListaF(tempF);
+        }
+        else
+        {
+            for(int i = 0; i < tempP.size() && flag; i++)
+            {
+                 if(tempP.get(i).getP().getCodigo() == v.ConverteNumeroInteiro(tabela.getValueAt(row, 1)))
+                 {
+                    tempP.remove(i);
+                    flag = false;
+                 }
+            }
+            p.setListaP(tempP);
+        }
+        model.removeRow(row);
+    }
+    
     //------------------------------------------------------------------------------------------------------------------
     public static void configuraModelTabela1(JTable jTable) // Configurar Tabela Detalhe
     {

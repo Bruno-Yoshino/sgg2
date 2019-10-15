@@ -23,11 +23,12 @@ import java.util.ArrayList;
  */
 public class Pedido_Servico_Detalhe {
     private DetalheServico ds;
-    private int numeracaoI, numeracaoF, vias;
+    private String numeracaoI, numeracaoF;
+    private int vias;
     private String outros;
     private int sequence;
 
-    public Pedido_Servico_Detalhe(DetalheServico ds, int numeracaoI, int numeracaoF, int vias, String outros, int sequence) {
+    public Pedido_Servico_Detalhe(DetalheServico ds, String numeracaoI, String numeracaoF, int vias, String outros, int sequence) {
         this.ds = ds;
         this.numeracaoI = numeracaoI;
         this.numeracaoF = numeracaoF;
@@ -47,19 +48,19 @@ public class Pedido_Servico_Detalhe {
         this.ds = ds;
     }
 
-    public int getNumeracaoI() {
+    public String getNumeracaoI() {
         return numeracaoI;
     }
 
-    public void setNumeracaoI(int numeracaoI) {
+    public void setNumeracaoI(String numeracaoI) {
         this.numeracaoI = numeracaoI;
     }
 
-    public int getNumeracaoF() {
+    public String getNumeracaoF() {
         return numeracaoF;
     }
 
-    public void setNumeracaoF(int numeracaoF) {
+    public void setNumeracaoF(String numeracaoF) {
         this.numeracaoF = numeracaoF;
     }
 
@@ -97,7 +98,7 @@ public class Pedido_Servico_Detalhe {
     {
         String sql =  "INSERT INTO pedido_servico_detalhe(" +
                     " pe_codigo, serv_codigo, ds_codigo, psd_numeracaoini, psd_numeracaofim, psd_vias, psd_outros, ps_sequence) " +
-                    " VALUES ("+codigoP+", "+codigoS+", "+ds.getCodigo()+", "+numeracaoI+", "+numeracaoF+", "+vias+", '"+outros+"', "+sequence+");";
+                    " VALUES ("+codigoP+", "+codigoS+", "+ds.getCodigo()+", '"+numeracaoI+"', '"+numeracaoF+"', "+vias+", '"+outros+"', "+sequence+");";
         return Banco.getCon().manipular(sql);
     }
     
@@ -105,14 +106,14 @@ public class Pedido_Servico_Detalhe {
     {
          String sql =  "INSERT INTO pedido_servico_detalhe( " +
                     " pe_codigo, serv_codigo, ds_codigo, psd_numeracaoini, psd_numeracaofim, psd_vias, psd_outros, ps_sequence) " +
-                    " VALUES ("+codigoP+", "+codigoS+", "+ds.getCodigo()+", "+numeracaoI+", "+numeracaoF+", "+vias+", '"+outros+"', "+sequence+");";
+                    " VALUES ("+codigoP+", "+codigoS+", "+ds.getCodigo()+", '"+numeracaoI+"', '"+numeracaoF+"', "+vias+", '"+outros+"', "+sequence+");";
         return Banco.getCon().manipular(sql);
     }
     
     public boolean alterar(int codigoP, int codigoS)
     {
         String sql =  "UPDATE pedido_servico_detalhe" +
-                      " SET psd_numeracaoini="+numeracaoI+", psd_numeracaofim="+numeracaoF+", psd_vias="+vias+", psd_outros='"+outros+"' " +
+                      " SET psd_numeracaoini='"+numeracaoI+"', psd_numeracaofim='"+numeracaoF+"', psd_vias="+vias+", psd_outros='"+outros+"' " +
                       " WHERE pe_codigo="+codigoP+" and ps_sequence="+sequence+" and serv_codigo="+codigoS+" and ds_codigo="+ds.getCodigo()+";";
         return Banco.getCon().manipular(sql);
     }
@@ -167,7 +168,7 @@ public class Pedido_Servico_Detalhe {
         {
             while (rs.next()) 
             {
-                lista.add(new Pedido_Servico_Detalhe(new DetalheServico().buscarCodigo(rs.getInt(3)), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getInt(8)));
+                lista.add(new Pedido_Servico_Detalhe(new DetalheServico().buscarCodigo(rs.getInt(3)), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getInt(8)));
             }
         } 
         catch (SQLException e) 

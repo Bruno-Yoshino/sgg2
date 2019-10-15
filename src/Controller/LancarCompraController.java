@@ -93,21 +93,39 @@ public class LancarCompraController
     }
     
     // c.getLcp().add(new Compra_Produto(new Compra(), new Produto().buscarCodigo(v.ConverteNumeroInteiro(codigo)), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(preco)));
-    public int validar(String codigo, String nome, String qtd, String preco, JTable tabela)
-    {
+    public int validar(String codigo, String nome, String qtd, String preco, JTable tabela, boolean flag, String codigoC, int tipo)
+    {//Adicionar mais um campo para ver se eh Folha ou Produto OK 追加済みです
         int task = 1; // Verifica se nao tem na tabela
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
         if(codigo.equals(""))
         {
             return 3;
         }
-
+        
+        if(!flag)
+        {
+            if(tipo == 1 && buscarTabelaProduto(Integer.parseInt(codigoC), Integer.parseInt(codigo)) && verificarEstoqueProduto(Integer.parseInt(codigo), Integer.parseInt(qtd)))
+            {
+                return 5;
+            }
+            if(tipo == 2 && buscarTabelaFolha(Integer.parseInt(codigoC), Integer.parseInt(codigo)) && verificarEstoqueFolha(Integer.parseInt(codigo), Integer.parseInt(qtd)))
+            {
+                return 6;
+            }
+        }
         for (int i = 0; i < model.getRowCount() && task == 1; i++) 
         {
             if(String.valueOf(model.getValueAt(i, 0)).equals(codigo))
             {
                 if(m.Pergunta("Este item ja esta inserido! Deseja somar com o item ja inserido?", "Confirmação") == JOptionPane.YES_OPTION)
                 {
+                    if(v.ConverteNumeroReal(model.getValueAt(i, 3)) != v.ConverteNumeroReal(preco))
+                    {
+                        if(m.Pergunta("Deseja manter o preço?", "Confirmação") == JOptionPane.NO_OPTION)
+                        {
+                            model.setValueAt(v.ConverteNumeroReal(model.getValueAt(i, 3)), i, 3);
+                        }
+                    }
                     model.setValueAt((v.ConverteNumeroInteiro(model.getValueAt(i, 2)) + v.ConverteNumeroInteiro(qtd)), i, 2);
                     model.setValueAt((v.ConverteNumeroReal(model.getValueAt(i, 3)) * v.ConverteNumeroInteiro(model.getValueAt(i, 2))), i, 4);
                     task = 2;

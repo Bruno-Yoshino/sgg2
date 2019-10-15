@@ -21,11 +21,12 @@ import java.util.ArrayList;
  */
 public class Orcamento_Servico_Detalhe {
     private DetalheServico ds;
-    private int numeracaoI, numeracaoF, vias;
+    private String numeracaoI, numeracaoF;
+    private int vias;
     private String outros;
     private int sequence;
 
-    public Orcamento_Servico_Detalhe(DetalheServico ds, int numeracaoI, int numeracaoF, int vias, String outros, int sequence) {
+    public Orcamento_Servico_Detalhe(DetalheServico ds, String numeracaoI, String numeracaoF, int vias, String outros, int sequence) {
         this.ds = ds;
         this.numeracaoI = numeracaoI;
         this.numeracaoF = numeracaoF;
@@ -45,19 +46,19 @@ public class Orcamento_Servico_Detalhe {
         this.ds = ds;
     }
 
-    public int getNumeracaoI() {
+    public String getNumeracaoI() {
         return numeracaoI;
     }
 
-    public void setNumeracaoI(int numeracaoI) {
+    public void setNumeracaoI(String numeracaoI) {
         this.numeracaoI = numeracaoI;
     }
 
-    public int getNumeracaoF() {
+    public String getNumeracaoF() {
         return numeracaoF;
     }
 
-    public void setNumeracaoF(int numeracaoF) {
+    public void setNumeracaoF(String numeracaoF) {
         this.numeracaoF = numeracaoF;
     }
 
@@ -95,14 +96,14 @@ public class Orcamento_Servico_Detalhe {
     {
         String sql =  "INSERT INTO orcamento_servico_detalhe( " +
                     " orc_numero, serv_codigo, ds_codigo, osd_numeracaoini, osd_numeracaofim, osd_vias, osd_outros, os_sequence) " +
-                    " VALUES ("+codigoO+", "+codigoS+", "+ds.getCodigo()+", "+numeracaoI+", "+numeracaoF+", "+vias+", '"+outros+"', "+sequence+");";
+                    " VALUES ("+codigoO+", "+codigoS+", "+ds.getCodigo()+", '"+numeracaoI+"', '"+numeracaoF+"', "+vias+", '"+outros+"', "+sequence+");";
         return Banco.getCon().manipular(sql);
     }
     
     public boolean alterar(int codigoO, int codigoS)
     {
         String sql =  "UPDATE orcamento_servico_detalhe" +
-                      " SET serv_codigo="+codigoS+", ds_codigo="+ds.getCodigo()+", osd_numeracaoini="+numeracaoI+", osd_numeracaofim="+numeracaoF+", osd_vias="+vias+", osd_outros='"+outros+"' " +
+                      " SET serv_codigo="+codigoS+", ds_codigo="+ds.getCodigo()+", osd_numeracaoini='"+numeracaoI+"', osd_numeracaofim='"+numeracaoF+"', osd_vias="+vias+", osd_outros='"+outros+"' " +
                       " WHERE orc_numero="+codigoO+" and os_sequence="+sequence+";";
         return Banco.getCon().manipular(sql);
     }
@@ -164,7 +165,7 @@ public class Orcamento_Servico_Detalhe {
         {
             while (rs.next()) 
             {
-                lista.add(new Orcamento_Servico_Detalhe(new DetalheServico().buscarCodigo(rs.getInt(3)), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getInt(8)));
+                lista.add(new Orcamento_Servico_Detalhe(new DetalheServico().buscarCodigo(rs.getInt(3)), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getInt(8)));
             }
         } 
         catch (SQLException e) 

@@ -10,7 +10,7 @@ Begin
 		select pro_qtd into qtdItem from produto where pro_codigo = mviews.pro_codigo;
 		
 		select sum(pp.pp_qtd) into qtdIR from producao_produto pp, producao prod 
-		where prod.prod_codigo = pp.prod_codigo and (prod.prod_status = 2 or prod.prod_status = 3);
+		where prod.prod_codigo = pp.prod_codigo and (prod.prod_status = 2 or prod.prod_status = 3) and pp.pro_codigo = mviews.pro_codigo;
 		
 		if qtdIR is null then
 			qtdIR := 0;
@@ -26,7 +26,7 @@ Begin
 		select fo_qtd into qtdItem from folha where fo_codigo = mviews.fo_codigo;
 		
 		select sum(pf.pf_qtd) into qtdIR from producao_folha pf, producao prod 
-		where prod.prod_codigo = pf.prod_codigo and (prod.prod_status = 2 or prod.prod_status = 3);
+		where prod.prod_codigo = pf.prod_codigo and (prod.prod_status = 2 or prod.prod_status = 3) and pf.fo_codigo = mviews.fo_codigo;
 		
 		if qtdIR is null then
 			qtdIR := 0;

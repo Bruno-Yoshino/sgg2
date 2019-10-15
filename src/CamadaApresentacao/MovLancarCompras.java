@@ -849,10 +849,11 @@ public class MovLancarCompras extends javax.swing.JDialog {
     }//GEN-LAST:event_btnLocFornActionPerformed
 
     private void btnaddDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddDFActionPerformed
-       switch(lcc.validar(txtCodigoF.getText(), txtFolha.getText(), txtQtdF.getText(), txtPrecoF.getText(), tbF))
+       switch(lcc.validar(txtCodigoF.getText(), txtFolha.getText(), txtQtdF.getText(), txtPrecoF.getText(), tbF, flag, txtCodigo.getText(), 2))
        {
            case 3: m.InformationMessage("Informe a Folha!", "Atenção"); btnLocProd.requestFocus(); break;
            case 4: m.InformationMessage("O item não pode ser inserido!", "Atenção"); break;
+           case 6: m.WarmingMessage("Ao alterar essa quantidade o estoque ficara negativa!\n Por esse motivo, não pode ser alterado!", "Atenção"); break;
            default:
                 if(flag)
                 {
@@ -867,7 +868,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
                 else
                 {
                    ReadOnlyTableModel model = (ReadOnlyTableModel) tbP.getModel();
-                   if(lcc.buscarTabelaProduto(Integer.parseInt(txtCodigo.getText()), Integer.parseInt(txtCodigoF.getText())) &&lcc.verificarEstoqueProduto(Integer.parseInt(txtCodigoF.getText()), Integer.parseInt(txtQtdF.getText())))
+                   if(lcc.buscarTabelaProduto(Integer.parseInt(txtCodigo.getText()), Integer.parseInt(txtCodigoF.getText())) && lcc.verificarEstoqueProduto(Integer.parseInt(txtCodigoF.getText()), Integer.parseInt(txtQtdF.getText())))
                    {
                         lcc.CalculaTotalI(txtvalorTotP, tbP);
                         lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
@@ -887,13 +888,14 @@ public class MovLancarCompras extends javax.swing.JDialog {
     }//GEN-LAST:event_btnaddDFActionPerformed
 
     private void btnaddDPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddDPActionPerformed
-       switch(lcc.validar(txtcodP.getText(), txtproduto.getText(), txtqtdP.getText(), txtprecoP.getText(), tbP))
+       switch(lcc.validar(txtcodP.getText(), txtproduto.getText(), txtqtdP.getText(), txtprecoP.getText(), tbP, flag, txtCodigo.getText(), 1))
        {
            case 3: m.InformationMessage("Informe o Produto!", "Atenção"); btnlocF.requestFocus(); break;
            case 4: m.InformationMessage("O item não pode ser inserido!", "Atenção"); break;
+           case 5: m.WarmingMessage("Ao alterar essa quantidade o estoque ficara negativa!\n Por esse motivo, não pode ser alterado!", "Atenção"); break;
            default: 
-               if(flag)
-               {
+//               if(flag)
+//               {
                     lcc.CalculaTotalI(txtvalorTotP, tbP);
                     lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
                     txtcodP.setText("");
@@ -902,26 +904,26 @@ public class MovLancarCompras extends javax.swing.JDialog {
                     txtprecoP.setText("1");
                     txtvalortP.setText("0");
                     btnLocProd.setEnabled(true);
-               }
-               else
-               {
-                   ReadOnlyTableModel model = (ReadOnlyTableModel) tbP.getModel();
-                   if(lcc.buscarTabelaProduto(Integer.parseInt(txtCodigo.getText()), Integer.parseInt(txtcodP.getText())) && lcc.verificarEstoqueProduto(Integer.parseInt(txtcodP.getText()), Integer.parseInt(txtqtdP.getText())))
-                   {
-                        lcc.CalculaTotalI(txtvalorTotP, tbP);
-                        lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
-                        txtcodP.setText("");
-                        txtproduto.setText("");
-                        txtqtdP.setText("0");
-                        txtprecoP.setText("1");
-                        txtvalortP.setText("0");
-                        btnLocProd.setEnabled(true);      
-                   }
-                   else
-                   {
-                       m.WarmingMessage("Ao alterar essa quantidade o estoque ficara negativa!\n Por esse motivo, não pode ser alterado!", "Atenção");
-                   }
-               }
+//               }
+//               else
+//               {
+//                   ReadOnlyTableModel model = (ReadOnlyTableModel) tbP.getModel();
+//                   if(lcc.buscarTabelaProduto(Integer.parseInt(txtCodigo.getText()), Integer.parseInt(txtcodP.getText())) && lcc.verificarEstoqueProduto(Integer.parseInt(txtcodP.getText()), Integer.parseInt(txtqtdP.getText())))
+//                   {
+//                        lcc.CalculaTotalI(txtvalorTotP, tbP);
+//                        lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
+//                        txtcodP.setText("");
+//                        txtproduto.setText("");
+//                        txtqtdP.setText("0");
+//                        txtprecoP.setText("1");
+//                        txtvalortP.setText("0");
+//                        btnLocProd.setEnabled(true);      
+//                   }
+//                   else
+//                   {
+//                       m.WarmingMessage("Ao alterar essa quantidade o estoque ficara negativa!\n Por esse motivo, não pode ser alterado!", "Atenção");
+//                   }
+//               }
        }
     }//GEN-LAST:event_btnaddDPActionPerformed
 
@@ -1041,8 +1043,8 @@ public class MovLancarCompras extends javax.swing.JDialog {
             m.InformationMessage("Gravado com sucesso!", "Atenção");
             lancarConta();
             sc.limpar(jPanel1.getComponents());
-//            sc.limparTabela(tbF);
-//            sc.limparTabela(tbP);
+            sc.limparTabela(tbF);
+            sc.limparTabela(tbP);
             sc.Initialize(jPanel2.getComponents());
             sc.HabilityComponents(jPanel1.getComponents(), false);
             sc.HabilityComponents(jPanel3.getComponents(), false);

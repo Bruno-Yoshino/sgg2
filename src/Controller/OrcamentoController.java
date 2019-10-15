@@ -178,12 +178,15 @@ public class OrcamentoController {
                     return 1;
                 if(numeracaoF.equals(""))
                     return 2;
-                if(v.ConverteNumeroInteiro(numeracaoI) < 0)
-                    return 3;
-                if(v.ConverteNumeroInteiro(numeracaoF) <= 0)
-                    return 4;
-                if(v.ConverteNumeroInteiro(numeracaoI) > v.ConverteNumeroInteiro(numeracaoF))
-                    return 5;
+                if(v.isNumber(numeracaoI) && v.isNumber(numeracaoF))
+                {
+                    if(v.ConverteNumeroInteiro(numeracaoI) < 0)
+                        return 3;
+                    if(v.ConverteNumeroInteiro(numeracaoF) <= 0)
+                        return 4;
+                    if(v.ConverteNumeroInteiro(numeracaoI) > v.ConverteNumeroInteiro(numeracaoF))
+                        return 5;
+                }
                 break;
             case "VIAS":
                 if(via.equals(""))
@@ -204,7 +207,7 @@ public class OrcamentoController {
                 return 9;
         }
        // if(linhaD < 0)
-            tempSD.add(new Orcamento_Servico_Detalhe(ds, v.ConverteNumeroInteiro(numeracaoI), v.ConverteNumeroInteiro(numeracaoF), v.ConverteNumeroInteiro(via), outros, tempS.get(linhaS).getSequence()));
+            tempSD.add(new Orcamento_Servico_Detalhe(ds, numeracaoI, numeracaoF, v.ConverteNumeroInteiro(via), outros, tempS.get(linhaS).getSequence()));
         //else
         //    tempSD.add(linhaD, new Orcamento_Servico_Detalhe(ds, v.ConverteNumeroInteiro(numeracaoI), v.ConverteNumeroInteiro(numeracaoF), v.ConverteNumeroInteiro(via), outros, tempS.get(linhaS).getSequence()));
         o.getLista().get(linhaS).setLista(tempSD);
@@ -529,7 +532,7 @@ public class OrcamentoController {
         if(temp != null)
         {   
             o = temp;
-            sequenceOS = temp.getLista().get(temp.getLista().size()-1).getSequence() + 1;
+            //sequenceOS = temp.getLista().get(temp.getLista().size()-1).getSequence() + 1;
         }
         else
             o = new Orcamento();

@@ -97,6 +97,19 @@ public class Validacao
             return -999;
         }
     }
+    
+    public final boolean isNumber(String texto)// return == -999 -> Nuber Invalid | return != -999 -> OK
+    {
+        try 
+        {
+            Double.parseDouble(texto);
+            return true;
+        } 
+        catch (NumberFormatException e) 
+        {
+            return false;
+        }
+    }
         
     public final boolean ValidarDataMenorAtual(LocalDate data)
     {

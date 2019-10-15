@@ -750,8 +750,8 @@ public class ConsultaMov extends javax.swing.JDialog {
                  //"Descrição", "Vias", "Numeração I.", "Numeração F", "Outros"   
                     rs.getString(1),
                     rs.getInt(4),
-                    rs.getInt(2),
-                    rs.getInt(3),
+                    rs.getString(2),
+                    rs.getString(3),
                     rs.getString(5),
                 });
             }
@@ -809,8 +809,8 @@ public class ConsultaMov extends javax.swing.JDialog {
                 {
                     rs.getString(1),
                     rs.getInt(4),
-                    rs.getInt(2),
-                    rs.getInt(3),
+                    rs.getString(2),
+                    rs.getString(3),
                     rs.getString(5),
                 });
             }

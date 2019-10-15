@@ -276,8 +276,7 @@ public class Compra
     public boolean Function()
     {
         String sql;
-        sql = "select VerificarEstoque("+codigo+") "
-                + " from *;";
+        sql = "select VerificarEstoque("+codigo+");";
 
         ResultSet rs=Banco.getCon().consultar(sql);
         try 

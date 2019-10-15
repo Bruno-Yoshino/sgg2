@@ -164,8 +164,7 @@ public class DetalheServico {
     
     public ResultSet buscarDetalhes()
     {
-      
-        String query = "select ds_codigo, ds_descricao, ds_status from detalhe_serv order by ds_descricao";
+        String query = "select ds_codigo, ds_descricao, ds_status from detalhe_serv where ds_status = true order by ds_descricao";
         return Banco.getCon().retornaResultSet(query);
     }
     

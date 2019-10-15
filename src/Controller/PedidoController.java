@@ -163,12 +163,15 @@ public class PedidoController {
                     return 1;
                 if(numeracaoF.equals(""))
                     return 2;
-                if(v.ConverteNumeroInteiro(numeracaoI) < 0)
-                    return 3;
-                if(v.ConverteNumeroInteiro(numeracaoF) <= 0)
-                    return 4;
-                if(v.ConverteNumeroInteiro(numeracaoI) > v.ConverteNumeroInteiro(numeracaoF))
-                    return 5;
+                if(v.isNumber(numeracaoI) && v.isNumber(numeracaoF))
+                {
+                    if(v.ConverteNumeroInteiro(numeracaoI) < 0)
+                        return 3;
+                    if(v.ConverteNumeroInteiro(numeracaoF) <= 0)
+                        return 4;
+                    if(v.ConverteNumeroInteiro(numeracaoI) > v.ConverteNumeroInteiro(numeracaoF))
+                        return 5;
+                }
                 break;
             case "VIAS":
                 if(numeracaoI.equals(""))
@@ -189,7 +192,7 @@ public class PedidoController {
                 return 9;
         }
        // if(linhaD < 0)
-            tempSD.add(new Pedido_Servico_Detalhe(ds, v.ConverteNumeroInteiro(numeracaoI), v.ConverteNumeroInteiro(numeracaoF), v.ConverteNumeroInteiro(via), outros, tempS.get(linhaS).getSequence()));
+            tempSD.add(new Pedido_Servico_Detalhe(ds, numeracaoI, numeracaoF, v.ConverteNumeroInteiro(via), outros, tempS.get(linhaS).getSequence()));
         //else
         //    tempSD.add(linhaD, new Pedido_Servico_Detalhe(ds, v.ConverteNumeroInteiro(numeracaoI), v.ConverteNumeroInteiro(numeracaoF), v.ConverteNumeroInteiro(via), outros, tempS.get(linhaS).getSequence()));
         p.getLista().get(linhaS).setLista(tempSD);
@@ -445,7 +448,7 @@ public class PedidoController {
         {
             for(int y = 0; y < p.getLista().get(i).getLista().size() && control; y++)
             {
-                control = p.getLista().get(i).getLista().get(y).gravar2(p.getCodigo(), p.getLista().get(i).getServ().getCodigo());
+                control = p.getLista().get(i).getLista().get(y).gravar(p.getCodigo(), p.getLista().get(i).getServ().getCodigo());
             }
         }
         return control;
@@ -622,7 +625,7 @@ public class PedidoController {
             {
                 for(int x = 0; x < temp.getLista().get(i).getLista().size(); x++)
                 {//                                         DetalheServico ds, int numeracaoI, int numeracaoF, int vias, String outros, int sequence
-                    listaPSD.add(new Pedido_Servico_Detalhe(temp.getLista().get(i).getLista().get(x).getDs(), temp.getLista().get(i).getLista().get(x).getNumeracaoI(), temp.getLista().get(i).getLista().get(x).getNumeracaoF(), temp.getLista().get(i).getLista().get(x).getVias(), temp.getLista().get(i).getLista().get(x).getOutros(), 0));
+                    listaPSD.add(new Pedido_Servico_Detalhe(temp.getLista().get(i).getLista().get(x).getDs(),temp.getLista().get(i).getLista().get(x).getNumeracaoI(),temp.getLista().get(i).getLista().get(x).getNumeracaoF(), temp.getLista().get(i).getLista().get(x).getVias(), temp.getLista().get(i).getLista().get(x).getOutros(), 0));
                 }
                 //                                          Servico serv, double valor, int qtd, double desconto, String descricao, int sequence, ArrayList<Pedido_Servico_Detalhe> lista
                 listaPS.add(new Pedido_Servico(temp.getLista().get(i).getServ(), 

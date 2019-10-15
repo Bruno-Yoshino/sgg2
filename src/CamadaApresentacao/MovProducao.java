@@ -518,6 +518,11 @@ public class MovProducao extends javax.swing.JDialog {
         });
 
         btnexcluir.setText("Excluir");
+        btnexcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnexcluirActionPerformed(evt);
+            }
+        });
 
         btnremoveAll.setText("Remover todos Itens");
         btnremoveAll.addActionListener(new java.awt.event.ActionListener() {
@@ -708,7 +713,7 @@ public class MovProducao extends javax.swing.JDialog {
         {
             if(evt.getClickCount() == 1)
             {
-//                jTable3.removeAll();
+//              jTable3.removeAll();
                 sc.limparTabela(jTable3);
                 sc.HabilityComponents(jPanel4.getComponents(), true);
                 sc.Alter(jPanel3.getComponents());
@@ -1003,6 +1008,14 @@ public class MovProducao extends javax.swing.JDialog {
            txtFiltroFocusLost(null);
        }
     }//GEN-LAST:event_txtFiltroKeyPressed
+
+    private void btnexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexcluirActionPerformed
+        if(m.Pergunta("Deseja remover o item selecionado?", "Atenção") == JOptionPane.YES_OPTION)
+        {
+            pc.excluirItem(jTable3, jTable3.getSelectedRow());
+            m.InformationMessage("Removido com sucesso!", "Atenção");
+        }
+    }//GEN-LAST:event_btnexcluirActionPerformed
 
 
 
