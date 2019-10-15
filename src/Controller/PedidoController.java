@@ -263,9 +263,9 @@ public class PedidoController {
     }
     
     
-    public double calcular(String valor, String qtd, String desconto)
+    public double calcular(String valor, String qtd, String desconto, String valorExtra)
     {
-        return (v.ConverteNumeroReal(valor) * v.ConverteNumeroInteiro(qtd) - v.ConverteNumeroReal(desconto));
+        return (v.ConverteNumeroReal(valor) * v.ConverteNumeroInteiro(qtd) - v.ConverteNumeroReal(desconto) + v.ConverteNumeroReal(valorExtra));
     }
     
     public void excluirDetalheServico(JTable tabela, int linhaS, int linhaDS, boolean flag, String codigoO)
@@ -517,6 +517,11 @@ public class PedidoController {
     {
         Pedido temp = p.buscar(codigo);
         p = temp == null ? new Pedido() : temp;
+        System.out.println(p.getCodigo());
+        System.out.println(p.getPedido());
+        System.out.println(p.getValorTotal());
+        System.out.println(p.getCli().getCodigo());
+        System.out.println(p.getEntrega());
     }
     
     public void carregarTabelaServico(JTable tabela)
@@ -549,7 +554,7 @@ public class PedidoController {
                 temp.get(i).getQtd(),
                 temp.get(i).getDesconto(),
                 temp.get(i).getValorExtra(),
-                temp.get(i).getValor()-temp.get(i).getDesconto()+temp.get(i).getValorExtra(),
+                temp.get(i).getValor()*temp.get(i).getQtd()-temp.get(i).getDesconto()+temp.get(i).getValorExtra(),
                 temp.get(i).getDescricao()
             });
         }
@@ -646,18 +651,34 @@ public class PedidoController {
         return 0;
     }
     
-    public void gerarContaReceber()
+    public void gerarContaReceber(String codigo)
     {
         ContaReceber cr = new ContaReceber();
+        try {
+            p = new Pedido().buscar(v.ConverteNumeroInteiro(codigo));
+        } catch (SQLException ex) {
+            Logger.getLogger(PedidoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(p.getCodigo());
+        System.out.println(p.getPedido());
+        System.out.println(p.getValorTotal());
+        System.out.println(p.getCli().getCodigo());
+        System.out.println(p.getEntrega());
         cr.setP(p);
         cr.setDataV(Date.from(Instant.now()));
         cr.setValor(p.getValorTotal());
+        cr.setFlag(true);
         cr.gravar();
     }
     
-    public void gerarContaReceber(Date dataV)
+    public void gerarContaReceber(Date dataV, String codigo)
     {
         ContaReceber cr = new ContaReceber();
+        try {
+            p = new Pedido().buscar(v.ConverteNumeroInteiro(codigo));
+        } catch (SQLException ex) {
+            Logger.getLogger(PedidoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         cr.setP(p);
         cr.setDataV(dataV);
         cr.setValor(p.getValorTotal());

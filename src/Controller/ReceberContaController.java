@@ -67,10 +67,6 @@ public class ReceberContaController {
     {
         int add = 0;
         String resp;
-//        do{
-//            resp = JOptionPane.showInputDialog(null, "Informe apos quantos dias: ", "Atenção", JOptionPane.INFORMATION_MESSAGE);
-//            add = v.ConverteNumeroInteiro(resp);
-//        }while (add < 0);
         cr.setValor(cr.getValor()-cr.getValorP());
         cr.setValorP(0);
         cr.setDataP(null);

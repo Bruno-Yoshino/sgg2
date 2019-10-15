@@ -1124,6 +1124,9 @@ public class MovPedido extends javax.swing.JDialog {
                             }
                             else
                             {
+
+                                m.InformationMessage("Pedido Entregue com Sucesso!", "Informação");
+                                lancarConta();
                                 sc.limpar(jPanel1.getComponents());
                                 sc.limparTabela(jTable1);
                                 sc.limparTabela(jTable2);
@@ -1133,9 +1136,6 @@ public class MovPedido extends javax.swing.JDialog {
                                 linha = -1;
                                 lbEntrega.setVisible(false);
                                 dcEntrega.setVisible(false);
-                                m.InformationMessage("Pedido Entregue com Sucesso!", "Informação");
-                                lancarConta();
-                                
                                 //Alterar a data da entrega
                                 //m.ErroMessage("ERRO2", "ERRO2");
                             }
@@ -1156,9 +1156,6 @@ public class MovPedido extends javax.swing.JDialog {
                                 {
                                     if(pc.alterarPedidoServicoDetalhe())
                                     {
-                                        //Excluir as parcelas!  OK
-                                        //pc.excluirContaReceber();
-                                        
                                         m.InformationMessage("Alterardo com Sucesso!", "Informação");
                                         sc.limparTabela(jTable1);
                                         sc.limparTabela(jTable2);
@@ -1302,27 +1299,27 @@ public class MovPedido extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowOpened
 
     private void txtDescontoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescontoFocusLost
-        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
+        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText(), txtValorExtra.getText()));
     }//GEN-LAST:event_txtDescontoFocusLost
 
     private void txtValorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusLost
-        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
+        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText(), txtValorExtra.getText()));
     }//GEN-LAST:event_txtValorFocusLost
 
     private void spQtdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spQtdFocusLost
-        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
+        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText(), txtValorExtra.getText()));
     }//GEN-LAST:event_spQtdFocusLost
 
     private void spQtdStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spQtdStateChanged
-        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText()));
+        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText(), txtValorExtra.getText()));
     }//GEN-LAST:event_spQtdStateChanged
 
     private void txtValorExtraFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorExtraFocusLost
-        // TODO add your handling code here:
+       txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText(), txtValorExtra.getText()));
     }//GEN-LAST:event_txtValorExtraFocusLost
 
     private void txtValorExtraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorExtraActionPerformed
-        // TODO add your handling code here:
+       txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText(), txtValorExtra.getText()));
     }//GEN-LAST:event_txtValorExtraActionPerformed
 
     private void startDescricao()
@@ -1340,6 +1337,7 @@ public class MovPedido extends javax.swing.JDialog {
         txtValor_total.setText("0");
         txtValor.setText("0");
         spQtd.setValue(0);
+        txtValorExtra.setText("0");
         txtDescricao.setText("");
         txtDesconto.setText("0");
     }
@@ -1368,7 +1366,7 @@ public class MovPedido extends javax.swing.JDialog {
         }while(valor == null);
         if(valor.equals("Vista"))
         {//Vista
-            pc.gerarContaReceber();
+            pc.gerarContaReceber(txtCodigo.getText());
             m.InformationMessage("Conta a receber Lançado com Sucesso!", "Informação");
         }
         else
@@ -1384,7 +1382,7 @@ public class MovPedido extends javax.swing.JDialog {
             }
             else
             {//Prazo
-                pc.gerarContaReceber(data);
+                pc.gerarContaReceber(data, txtCodigo.getText());
                 m.InformationMessage("Conta a receber Lançado com Sucesso!", "Informação");
             }
         }

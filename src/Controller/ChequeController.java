@@ -161,9 +161,17 @@ public class ChequeController {
     
     public void buscaContaReceber(int codigo)
     {
-        ContaReceber c = new ContaReceber().buscar(codigo);
-        cr = c;
+        cr = new ContaReceber().buscar(codigo);
+        c.setCr(cr);
     }
     
+    public String retornaCPF()
+    {
+        String cpf = new Cliente().retornaCPF(cr.getP().getCli().getCodigo());
+        cpf = cpf.replaceAll("/", "");
+        cpf = cpf.replaceAll("-", "");
+        cpf = cpf.replaceAll("\\.", "");
+        return cpf;
+    }
     
 }

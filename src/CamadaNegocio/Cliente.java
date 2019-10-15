@@ -441,6 +441,24 @@ public class Cliente {
         return 0;
     }
     
+    public String retornaCPF(int codigo)
+    {
+        String sql = "select cli_cpf from fisica where cli_codigo = "+codigo+"";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return rs.getString(1);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return "";
+    }
+    
     public static ResultSet buscarDados(String valor, int tipo, boolean flag)//Para consulta
     {
       //"Código", "Nome", "CPF/CNPJ", "Telefone", "Celular", "Enderecço", "Numero", "Complemento"

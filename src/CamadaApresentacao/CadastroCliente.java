@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CamadaApresentacao;
 
 import Controller.ClienteController;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import util.SystemControl;
@@ -261,7 +255,7 @@ public class CadastroCliente extends javax.swing.JDialog {
         panefisica.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fisica", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
 
         try {
-            txtcli_cpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###/##")));
+            txtcli_cpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }

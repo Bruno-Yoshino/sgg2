@@ -61,15 +61,22 @@ public class MovCheque extends javax.swing.JDialog {
         btnLocalizar.setName("btnLocalizar");
         btnSair.setName("btnSair");
         btnlocCliente.setName("btnlocCliente");
+        btnlocContaReceber.setName("btnlocContaReceber");
         setLocationRelativeTo(null);
         if(codigoCR > 0)
         {
+            cc.buscaContaReceber(codigoCR);
             txtCliente.setText(cc.getC().getCr().getP().getCli().getNome());
+            txtCodigoContaR.setText(""+cc.getCr().getCodigo());
+
             txtPessoa.setText(cc.getC().getCr().getP().getCli().getNome());
-            txtCpf.setText(cc.getC().getCr().getP().getCli().getCpf());
-            txtValor.setText(""+cc.getC().getCr().getValor());
+            txtCpf.setText(""+cc.retornaCPF());
+            txtValor.setText(""+sc.verificaValor(String.valueOf(cc.getC().getCr().getValor())));
             btnNovoActionPerformed(null);
-            txtCliente.setEditable(false);
+            txtCliente.setEnabled(false);
+            txtCodigoContaR.setEnabled(false);
+            btnlocCliente.setEnabled(false);
+            btnlocContaReceber.setEnabled(false);
         }
         else
         {
@@ -253,6 +260,7 @@ public class MovCheque extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel8.setText("Numero da Conta Recebido: ");
 
+        txtCodigoContaR.setEditable(false);
         txtCodigoContaR.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         btnlocContaReceber.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N

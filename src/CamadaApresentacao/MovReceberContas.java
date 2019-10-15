@@ -451,6 +451,8 @@ public class MovReceberContas extends javax.swing.JDialog {
                     {
                         m.ErroMessage("ERRO ao gerar nova parcela!", "ERRO");
                     }
+                    sc.limparTabela(jTable1);
+                    rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
                     if(rcc.getCr().getP().getFp().getCodigo() == 4)
                     {
                         if(m.Pergunta("Deseja lançar o cheque agora?", "Pergunta") == JOptionPane.YES_OPTION)
@@ -459,8 +461,7 @@ public class MovReceberContas extends javax.swing.JDialog {
                             frmCheque.setVisible(true);
                         }
                     }
-                    sc.limparTabela(jTable1);
-                    rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
+
                     break;
                 default:
                     if(rcc.alterar())
