@@ -715,10 +715,17 @@ public class MovProducao extends javax.swing.JDialog {
             {
 //              jTable3.removeAll();
                 sc.limparTabela(jTable3);
-                sc.HabilityComponents(jPanel4.getComponents(), true);
                 sc.Alter(jPanel3.getComponents());
                 //carregar os Itens Folha e produto  OK 
                 pc.carregarListaItens(Integer.valueOf(String.valueOf(model.getValueAt(jTable2.getSelectedRow(), 0))), jTable3);
+                if(!model.getValueAt(jTable2.getSelectedRow(), 2).equals("Aguardando"))
+                {
+                    sc.HabilityComponents(jPanel4.getComponents(), false);
+                }
+                else
+                {
+                    sc.HabilityComponents(jPanel4.getComponents(), true);
+                }
                 sc.Edity(jPanel3.getComponents());
             }
             else
@@ -848,6 +855,8 @@ public class MovProducao extends javax.swing.JDialog {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         sc.limpar(jPanel4.getComponents());
         sc.limpar(jPanel2.getComponents());
+        sc.limparTabela(jTable2);
+        sc.limparTabela(jTable3);
         sc.Initialize(jPanel3.getComponents());
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -939,6 +948,7 @@ public class MovProducao extends javax.swing.JDialog {
                         }
                         else
                         {
+                            sc.limparTabela(jTable1);
                             pc.carregarListaCliente(rbClienteOP2.isSelected() ? 1 : 2, txtFiltro.getText(), jTable1);
                             sc.Alter(jPanel3.getComponents());
                             sc.HabilityComponents(jPanel2.getComponents(), false);

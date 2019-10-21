@@ -1,6 +1,7 @@
 package CamadaApresentacao;
 
 import CamadaLogica.ReadOnlyTableModel;
+import CamadaNegocio.Cheque;
 import Controller.ReceberContaController;
 import java.sql.SQLException;
 import java.time.Instant;
@@ -36,6 +37,7 @@ public class MovReceberContas extends javax.swing.JDialog {
     private final SystemControl sc = new SystemControl();
     private final mensagens m = new mensagens();
     private final ReceberContaController rcc = new ReceberContaController();
+    private int forma;
     
     public MovReceberContas(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
@@ -48,10 +50,15 @@ public class MovReceberContas extends javax.swing.JDialog {
         btnSair.setName("btnSair");
         btnImprimir.setName("btnImprimir");
         btnExtornar.setName("btnExtornar");
+        btnAdicionar.setName("btnAdicionar");
+        btnRemover.setName("btnRemover");
         sc.Alter(jPanel3.getComponents());
         sc.HabilityComponents(jPanel2.getComponents(), false);
+        sc.HabilityComponents(jPanel4.getComponents(), false);
         rcc.carregarTabela(jTable1, 1);
-        
+        Cheque.configuraModel(jTable2);
+        //jPanel4.setVisible(false);
+
     }
     
     /*
@@ -92,6 +99,11 @@ public class MovReceberContas extends javax.swing.JDialog {
         btnImprimir = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExtornar = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        btnAdicionar = new javax.swing.JButton();
+        btnRemover = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -329,6 +341,65 @@ public class MovReceberContas extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Cheque"));
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane3.setViewportView(jTable2);
+
+        btnAdicionar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnAdicionar.setText("Adicionar");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
+
+        btnRemover.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 602, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(btnAdicionar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRemover)
+                .addGap(27, 27, 27))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -338,7 +409,8 @@ public class MovReceberContas extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -348,9 +420,11 @@ public class MovReceberContas extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -386,6 +460,10 @@ public class MovReceberContas extends javax.swing.JDialog {
         if(evt.getClickCount() == 2)
         {
             btnAlterarActionPerformed(null);
+            //Check this is Cheque ok
+            //Is true, Hability ok
+            //Is false, No Hability ok
+
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -400,6 +478,29 @@ public class MovReceberContas extends javax.swing.JDialog {
             sc.Edity(jPanel3.getComponents());
             sc.HabilityComponents(jPanel1.getComponents(), false);
             sc.HabilityComponents(jPanel2.getComponents(), true);
+              try {
+//              try
+//              {
+//                  rcc.buscar(Integer.valueOf(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 5))));
+//              } catch (SQLException ex) {
+//                  Logger.getLogger(MovReceberContas.class.getName()).log(Level.SEVERE, null, ex);
+//              }
+              forma = rcc.buscar(Integer.valueOf(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 1))));
+              } catch (SQLException ex) {
+                  Logger.getLogger(MovReceberContas.class.getName()).log(Level.SEVERE, null, ex);
+              }
+            //if(rcc.getCr().getP().getFp().getCodigo() == 4)
+            if(forma == 4)
+            {
+                //jPanel4.setVisible(true);
+//                if(m.Pergunta("Deseja lançar o cheque agora?", "Pergunta") == JOptionPane.YES_OPTION)
+//                {
+//                    
+//                }
+                sc.HabilityComponents(jPanel4.getComponents(), true);
+            }
+            //else
+                //jPanel4.setVisible(false);
           }
           else
           {
@@ -417,6 +518,9 @@ public class MovReceberContas extends javax.swing.JDialog {
         sc.Alter(jPanel3.getComponents());
         sc.HabilityComponents(jPanel2.getComponents(), false);
         sc.HabilityComponents(jPanel1.getComponents(), true);
+        sc.HabilityComponents(jPanel4.getComponents(), false);
+        if(forma == 4)
+            rcc.CleanUpCheque(Integer.valueOf(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 5))));
         dcPagamento.setData(Date.from(Instant.now()));
         txtValorP.setText("0");
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -453,14 +557,7 @@ public class MovReceberContas extends javax.swing.JDialog {
                     }
                     sc.limparTabela(jTable1);
                     rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
-                    if(rcc.getCr().getP().getFp().getCodigo() == 4)
-                    {
-                        if(m.Pergunta("Deseja lançar o cheque agora?", "Pergunta") == JOptionPane.YES_OPTION)
-                        {
-                            MovCheque frmCheque = new MovCheque(null, true, rcc.getCr().getCodigo());
-                            frmCheque.setVisible(true);
-                        }
-                    }
+  
 
                     break;
                 default:
@@ -474,14 +571,14 @@ public class MovReceberContas extends javax.swing.JDialog {
                         } catch (SQLException ex) {
                             Logger.getLogger(MovPagarContas.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        if(rcc.getCr().getP().getFp().getCodigo() == 4)
-                        {
-                            if(m.Pergunta("Deseja lançar o cheque agora?", "Pergunta") == JOptionPane.YES_OPTION)
-                            {
-                                MovCheque frmCheque = new MovCheque(null, true, rcc.getCr().getCodigo());
-                                frmCheque.setVisible(true);
-                            }
-                        }
+//                        if(rcc.getCr().getP().getFp().getCodigo() == 4)
+//                        {
+//                            if(m.Pergunta("Deseja lançar o cheque agora?", "Pergunta") == JOptionPane.YES_OPTION)
+//                            {
+//                                MovCheque frmCheque = new MovCheque(null, true, rcc.getCr().getCodigo());
+//                                frmCheque.setVisible(true);
+//                            }
+//                        }
                         sc.limparTabela(jTable1);
                         rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
                     }
@@ -508,7 +605,7 @@ public class MovReceberContas extends javax.swing.JDialog {
         consEstornoCR.setVisible(true);
         if (consEstornoCR.getCodigo() != 0)
         {
-            if(rcc.estornarValor(consEstornoCR.getCodigo()))
+            if(rcc.estornarValor(consEstornoCR.getCodigo()))///exclir cheque
             {
                 m.InformationMessage("Estornado com sucesso!", "Informação");
                 try
@@ -533,13 +630,36 @@ public class MovReceberContas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnExtornarActionPerformed
 
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        MovCheque frmCheque = new MovCheque(null, true, Integer.valueOf(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 5))), true);
+        frmCheque.setVisible(true);
+        if(frmCheque.isFlagReturn())
+        {
+            rcc.addTabelaCheque(jTable2);
+        }
+        frmCheque.dispose();
+    }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        if(rcc.excluirCheque(jTable2))
+        {
+            m.InformationMessage("Removido com sucesso!", "Informação");
+        }
+        else
+        {
+            m.ErroMessage("Erro ao excluir!", "ERRO");
+        }
+    }//GEN-LAST:event_btnRemoverActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExtornar;
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnImprimir;
+    private javax.swing.JButton btnRemover;
     private javax.swing.JButton btnSair;
     private br.com.marciorl.beans.DateChooser dcPagamento;
     private javax.swing.JLabel jLabel10;
@@ -550,9 +670,12 @@ public class MovReceberContas extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JRadioButton rbOP1;
     private javax.swing.JRadioButton rbOP2;
     private javax.swing.JTextField txtCliente;

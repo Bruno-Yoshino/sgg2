@@ -126,8 +126,6 @@ public class ChequeController {
             else
                 c.setMotivo(v.ConverteNumeroInteiro(motivo));
         }
-        
-
         c.setObs(obs);
         c.setCliente(cliente);
         return 0;

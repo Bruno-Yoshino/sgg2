@@ -1,6 +1,7 @@
 package Controller;
 
 import CamadaLogica.ReadOnlyTableModel;
+import CamadaNegocio.Cheque;
 import CamadaNegocio.ContaReceber;
 import CamadaNegocio.Pedido;
 import java.sql.ResultSet;
@@ -208,6 +209,7 @@ public class ReceberContaController {
             }
             if(lista.size() - 1 == i)
             {
+                cr.excluirCheques(codigoCR);
                 crTemp.estornarValor(codigoCR);
                 return true;
             }
@@ -219,33 +221,11 @@ public class ReceberContaController {
                     {
                         lista.get(i+1).excluir();
                     }
+                    cr.excluirCheques(codigoCR);
                     crTemp.estornarValor(codigoCR);
                     return true;
                 }
             }
-//            if(notNull == lista.size())
-//                notNull--;
-//            if(i == notNull)//Igual sob a parcela (Sem Parcela)
-//            {
-//                if(!lista.get(notNull).isFlag())
-//                {
-//                    lista.get(notNull).excluir();
-//                }
-//                crTemp.estornarValor(codigoCR);
-//                return true;
-//            }
-//            else//Tratar o Proximo (Tiver Parcela)
-//            {
-//                if(i == lista.size()-2)
-//                {
-//                    if(!lista.get(notNull).isFlag())
-//                    {
-//                        lista.get(notNull).excluir();
-//                    }
-//                    crTemp.estornarValor(codigoCR);
-//                    return true;
-//                }
-//            }
         }
         return false;
     }
@@ -259,6 +239,45 @@ public class ReceberContaController {
     {
        return nconta == cr.minCodioParcela(npedido);
     }
+    
+//    public void buscar(int codigo) throws SQLException
+//    {
+//        cr = new ContaReceber().buscaContaReceber(codigo);
+//    }
+    
+    public int buscar(int codigo) throws SQLException
+    {
+        return new ContaReceber().buscarForma(codigo);
+    }
+    
+    public void addTabelaCheque(JTable tabela)
+    {
+        Cheque c = new Cheque().buscarMax();
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        model.addRow(new Object[]
+        {//"Código", "Dono", "CPF", "Valor", "Data Lançado", "Pré Data"
+            c.getCodigo(),
+            c.getDono(),
+            c.getCpf(),
+            c.getValor(),
+            c.getData(),
+            c.getPredata(),
+        });
+    }
+    
+    public boolean excluirCheque(JTable tabela)
+    {
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        Cheque c = new Cheque();
+        c.setCodigo(v.ConverteNumeroInteiro(model.getValueAt(tabela.getSelectedRow(), 1)));
+        return c.excluir();
+    }
+    
+    public void CleanUpCheque(int codigoCR)
+    {
+        cr.excluirCheques(codigoCR);
+    }
+        
     
     public static void configuraModel(JTable jTable)
     {

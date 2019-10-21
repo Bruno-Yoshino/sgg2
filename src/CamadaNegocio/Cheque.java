@@ -187,14 +187,14 @@ public class Cheque {
         if(this.codigo == 0)
         {
             sql = "INSERT INTO cheque (cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo, c_cliente) VALUES "
-                    + " ("+(cr == null ? null : cr.getCodigo())+", '"+dono+"', '"+cpf+"', "+valor+", '"+data+"', '"+predata+"', '"+nAgencia+"', '"+nConta+"', '"+nBanco+"', '"+nCheque+"', '"+obs+"', "+null+", '', '"+cliente+"')";
+                    + " ("+(cr == null ? null : cr.getCodigo())+", '"+dono+"', '"+cpf+"', "+valor+", '"+data+"', '"+predata+"', '"+nAgencia+"', '"+nConta+"', '"+nBanco+"', '"+nCheque+"', '"+obs+"', "+null+", 0, '"+cliente+"')";
         }
         else
         {
              sql = "UPDATE cheque set cr_codigo = "+(cr == null ? null : cr.getCodigo())+", c_dono = '"+dono+"', c_cpfdono = '"+cpf+"', "
                      + " c_valor = "+valor+", c_datal = '"+data+"', c_predata = '"+predata+"', "
                      + " c_nagencia = '"+nAgencia+"', c_nconta = '"+nConta+"', c_nbanco = '"+nBanco+"', c_ncheque = '"+nCheque+"',"
-                     + " c_obs = '"+obs+"', c_datacomp = "+null+", c_motivo = '', c_cliente = '"+cliente+"' where c_codigo = "+codigo+" ";
+                     + " c_obs = '"+obs+"', c_datacomp = "+null+", c_motivo = 0, c_cliente = '"+cliente+"' where c_codigo = "+codigo+" ";
         }
         return Banco.getCon().manipular(sql);
    }
@@ -216,6 +216,28 @@ public class Cheque {
         String sql;
         sql = "select c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo, c_cliente "
                 + " from cheque where c_codigo = "+codigo+"";
+                ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            if (rs.next()) 
+            {
+                return new Cheque(rs.getInt(1), new ContaReceber().buscar(rs.getInt(2)), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getDate(6), rs.getDate(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getDate(13), rs.getInt(14), rs.getString(15));
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return null;
+   }
+   
+   public Cheque buscarMax()
+   {
+        String sql;
+        sql = "select c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo, c_cliente "
+                + " from cheque "
+                + " GROUP BY c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo, c_cliente " +
+                  " having c_codigo = max(c_codigo);";
                 ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {

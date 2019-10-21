@@ -277,8 +277,8 @@ public class ProducaoController {
             while(rs.next())
             {
                 model.addRow(new Object[]{
-                    0,
                     rs.getInt(1),
+                    0,
                     rs.getString(2),
                     rs.getInt(3)
                 });
@@ -452,7 +452,7 @@ public class ProducaoController {
     }
     
     //------------------------------------------------------------------------------------------------------------------
-    public static void configuraModelTabela1(JTable jTable) // Configurar Tabela Detalhe
+    public static void configuraModelTabela1(JTable jTable) 
     {
         String colunas[] = new String [] {"Código do Cliente", "Nome", "Número do Pedido", "Data Pedido"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));
@@ -462,7 +462,7 @@ public class ProducaoController {
         jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
     }
     
-    public static void configuraModelTabela2(JTable jTable) // Configurar Tabela Detalhe
+    public static void configuraModelTabela2(JTable jTable) 
     {
         String colunas[] = new String [] {"Número Produção", "Serviço", "Status"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));
@@ -471,7 +471,7 @@ public class ProducaoController {
         jTable.getColumnModel().getColumn(2).setPreferredWidth(150);
     }
     
-    public static void configuraModelTabela3(JTable jTable) // Configurar Tabela Detalhe
+    public static void configuraModelTabela3(JTable jTable) 
     {
         String colunas[] = new String [] {"Código Produto", "Código Folha", "Descrição", "Quantidade"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));

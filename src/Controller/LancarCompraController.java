@@ -10,16 +10,12 @@ import CamadaNegocio.Fornecedor;
 import CamadaNegocio.Producao_Folha;
 import CamadaNegocio.Producao_Produto;
 import CamadaNegocio.Produto;
-import CamadaNegocio.TipoConta;
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.sql.SQLException;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import util.Validacao;
@@ -123,7 +119,7 @@ public class LancarCompraController
                     {
                         if(m.Pergunta("Deseja manter o preço?", "Confirmação") == JOptionPane.NO_OPTION)
                         {
-                            model.setValueAt(v.ConverteNumeroReal(model.getValueAt(i, 3)), i, 3);
+                            model.setValueAt(preco, i, 3);
                         }
                     }
                     model.setValueAt((v.ConverteNumeroInteiro(model.getValueAt(i, 2)) + v.ConverteNumeroInteiro(qtd)), i, 2);

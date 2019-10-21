@@ -8,16 +8,11 @@ import CamadaNegocio.Funcionario;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import util.ClassHome;
 import util.SystemControl;
@@ -1313,7 +1308,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem26ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        MovCheque frm = new MovCheque(this, true, 0);
+        MovCheque frm = new MovCheque(this, true, 0, false);
         frm.setTitle("Cheque");
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem10ActionPerformed

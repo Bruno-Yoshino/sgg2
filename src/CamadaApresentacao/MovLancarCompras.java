@@ -855,8 +855,8 @@ public class MovLancarCompras extends javax.swing.JDialog {
            case 4: m.InformationMessage("O item não pode ser inserido!", "Atenção"); break;
            case 6: m.WarmingMessage("Ao alterar essa quantidade o estoque ficara negativa!\n Por esse motivo, não pode ser alterado!", "Atenção"); break;
            default:
-                if(flag)
-                {
+//                if(flag)
+//                {
                     lcc.CalculaTotalI(txtvalorTotF, tbF);
                     lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
                     txtCodigoF.setText("");
@@ -864,26 +864,26 @@ public class MovLancarCompras extends javax.swing.JDialog {
                     txtQtdF.setText("0");
                     txtPrecoF.setText("1");
                     txtValorTF.setText("0");
-                }
-                else
-                {
-                   ReadOnlyTableModel model = (ReadOnlyTableModel) tbP.getModel();
-                   if(lcc.buscarTabelaProduto(Integer.parseInt(txtCodigo.getText()), Integer.parseInt(txtCodigoF.getText())) && lcc.verificarEstoqueProduto(Integer.parseInt(txtCodigoF.getText()), Integer.parseInt(txtQtdF.getText())))
-                   {
-                        lcc.CalculaTotalI(txtvalorTotP, tbP);
-                        lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
-                        txtCodigoF.setText("");
-                        txtFolha.setText("");
-                        txtQtdF.setText("0");
-                        txtPrecoF.setText("1");
-                        txtValorTF.setText("0");
-                        btnlocF.setEnabled(true);      
-                   }
-                   else
-                   {
-                       m.WarmingMessage("Ao alterar essa quantidade o estoque ficara negativa!\n Por esse motivo, não pode ser alterado!", "Atenção");
-                   }
-                }
+//                }
+//                else
+//                {
+//                   ReadOnlyTableModel model = (ReadOnlyTableModel) tbP.getModel();
+//                   if(lcc.buscarTabelaProduto(Integer.parseInt(txtCodigo.getText()), Integer.parseInt(txtCodigoF.getText())) && lcc.verificarEstoqueProduto(Integer.parseInt(txtCodigoF.getText()), Integer.parseInt(txtQtdF.getText())))
+//                   {
+//                        lcc.CalculaTotalI(txtvalorTotP, tbP);
+//                        lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
+//                        txtCodigoF.setText("");
+//                        txtFolha.setText("");
+//                        txtQtdF.setText("0");
+//                        txtPrecoF.setText("1");
+//                        txtValorTF.setText("0");
+//                        btnlocF.setEnabled(true);      
+//                   }
+//                   else
+//                   {
+//                       m.WarmingMessage("Ao alterar essa quantidade o estoque ficara negativa!\n Por esse motivo, não pode ser alterado!", "Atenção");
+//                   }
+//                }
        }
     }//GEN-LAST:event_btnaddDFActionPerformed
 
@@ -1084,7 +1084,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         if(!txtCodigo.getText().equals("0") && !txtCodigo.getText().equals(""))
         {
             lcc.buscaCompra(Integer.parseInt(txtCodigo.getText()));
-            txtforn.setText(lcc.getForn().getNome());
+            txtforn.setText(lcc.getC().getF().getNome());
             txtvalorF.setText(""+lcc.getC().getValort());
             lcc.addItens(tbF, tbP, txtvalorTotF, txtvalorTotP);
             sc.Alter(jPanel2.getComponents());
@@ -1148,6 +1148,8 @@ public class MovLancarCompras extends javax.swing.JDialog {
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         flag = false;
         sc.HabilityComponents(jPanel1.getComponents(), true);
+        sc.HabilityComponents(jPanel3.getComponents(), true);
+        sc.HabilityComponents(jPanel5.getComponents(), true);
         sc.Edity(jPanel2.getComponents());
     }//GEN-LAST:event_btnAlterarActionPerformed
 

@@ -717,7 +717,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
         }
         else
         {
-            if(JOptionPane.showConfirmDialog(null, "Confirama a demição deste funcioanrio?", "Atenção", JOptionPane.INFORMATION_MESSAGE) == JOptionPane.YES_OPTION)
+            if(JOptionPane.showConfirmDialog(null, "Confirama a demissão deste funcioanrio?", "Atenção", JOptionPane.INFORMATION_MESSAGE) == JOptionPane.YES_OPTION)
             {
                 if(fc.excluir(Integer.parseInt(txtCodigo.getText())))
                 {

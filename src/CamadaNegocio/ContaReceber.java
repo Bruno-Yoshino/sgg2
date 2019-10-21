@@ -156,6 +156,12 @@ public class ContaReceber {
         return Banco.getCon().manipular(sql);
     }
     
+    public boolean excluirCheques(int codigo)
+    {
+        String sql = "delete from cheque where cr_codigo = "+codigo+";";
+        return Banco.getCon().manipular(sql);
+    }
+    
     public ContaReceber buscaContaReceber(int codigo) throws SQLException
     {
         //int codigo, Pedido p, Date dataV, String obs, double valor, Date dataP, double valorP
@@ -176,6 +182,20 @@ public class ContaReceber {
         }
         return null;
         //p = new Pedido().buscar(codigo);
+    }
+    
+    public int buscarForma(int codigo) throws SQLException
+    {
+        Pedido temp = new Pedido();
+        String sql = "SELECT fpg_codigo " +
+                     " FROM pedido "
+                    +" WHERE pe_codigo = "+codigo+"";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        if(rs.next())
+        {
+            return rs.getInt(1);
+        }
+        return 0;
     }
     
     public ContaReceber buscar(int codigo)

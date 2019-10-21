@@ -31,6 +31,12 @@ import util.mensagens;
  * @author 香椎
  * @author 彩斗
  * @author 高広
+ * 
+ * Tester 2019/07/28 第三テスト
+ * @author 巴御前
+ * @author 高村　結衣
+ * @author 里川　麗奈
+ * @author アナスタシア
  */
 /*
     2019年07月17日
@@ -48,8 +54,10 @@ public class MovCheque extends javax.swing.JDialog {
     private final ChequeController cc = new ChequeController();
     private int codigo;
     private boolean op;
+    private final boolean flagCR;
+    private boolean flagReturn;
     
-    public MovCheque(java.awt.Frame parent, boolean modal, int codigoCR) {
+    public MovCheque(java.awt.Frame parent, boolean modal, int codigoCR, boolean flagcr) {
         super(parent, modal);
         initComponents();
         btnNovo.setName("btnNovo");
@@ -62,6 +70,7 @@ public class MovCheque extends javax.swing.JDialog {
         btnSair.setName("btnSair");
         btnlocCliente.setName("btnlocCliente");
         btnlocContaReceber.setName("btnlocContaReceber");
+        flagCR = flagcr;
         setLocationRelativeTo(null);
         if(codigoCR > 0)
         {
@@ -88,6 +97,14 @@ public class MovCheque extends javax.swing.JDialog {
         //cbCompencar.setVisible(false);
     }
 
+    public boolean isFlagReturn() {
+        return flagReturn;
+    }
+
+    public void setFlagReturn(boolean flagReturn) {
+        this.flagReturn = flagReturn;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -115,11 +132,9 @@ public class MovCheque extends javax.swing.JDialog {
         jLabel11 = new javax.swing.JLabel();
         txtCpf = new br.com.ikeda.beans.jFormatTextCpf();
         jLabel12 = new javax.swing.JLabel();
-        txtAgencia = new javax.swing.JTextField();
         txtConta = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        txtBanco = new javax.swing.JTextField();
         txtValor = new br.com.ikeda.beans.jTextFieldMonetario();
         jPanel3 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
@@ -131,6 +146,8 @@ public class MovCheque extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         txtCodigoContaR = new javax.swing.JTextField();
         btnlocContaReceber = new javax.swing.JButton();
+        txtAgencia = new javax.swing.JFormattedTextField();
+        txtBanco = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
         btnCompensar = new javax.swing.JButton();
@@ -270,6 +287,18 @@ public class MovCheque extends javax.swing.JDialog {
             }
         });
 
+        try {
+            txtAgencia.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            txtBanco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -288,27 +317,17 @@ public class MovCheque extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 744, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtAgencia, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtAgencia, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtConta, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtBanco, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel14))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -333,7 +352,18 @@ public class MovCheque extends javax.swing.JDialog {
                                 .addComponent(txtCodigoContaR, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnlocContaReceber)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtBanco, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel11)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -370,10 +400,10 @@ public class MovCheque extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(txtAgencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
                     .addComponent(txtConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14)
+                    .addComponent(txtAgencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBanco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -543,7 +573,8 @@ public class MovCheque extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-       dispose();
+        flagReturn = false;
+        dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
@@ -569,6 +600,11 @@ public class MovCheque extends javax.swing.JDialog {
                         btnCancelarActionPerformed(null);
                         sc.Initialize(jPanel2.getComponents());
                         sc.limpar(jPanel1.getComponents());
+                        if(flagCR)
+                        {
+                            flagReturn = true;
+                            dispose();
+                        }
                     }
                     else
                     {
@@ -741,8 +777,8 @@ public class MovCheque extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txtAgencia;
-    private javax.swing.JTextField txtBanco;
+    private javax.swing.JFormattedTextField txtAgencia;
+    private javax.swing.JFormattedTextField txtBanco;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtCodigoContaR;
     private javax.swing.JTextField txtConta;
