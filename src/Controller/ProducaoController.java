@@ -375,7 +375,7 @@ public class ProducaoController {
     public boolean Atualizar(int codigo)
     {
         p.setCodigo(codigo);
-        if(p.getStatus() == 4)
+        if(p.getStatus() != 4 && (new Producao_Produto().verificar(codigo) == false && new Producao_Folha().verificar(codigo) == false))//// not equas 4
         {
             //insere os itens
             for(int i = 0; i < p.getListaF().size(); i++)//Folha

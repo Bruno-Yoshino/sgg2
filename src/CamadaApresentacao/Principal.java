@@ -1393,7 +1393,7 @@ public class Principal extends javax.swing.JFrame {
                 {//"Nome", "Valor", "Data Vencimento"
                     while(rs.next())
                     {
-                         model.addRow(new Object[]{
+                        model.addRow(new Object[]{
                         rs.getString(1) != null ? rs.getString(1) : "Compra" ,//Nome Clietne
                         rs.getDouble(3),
                         rs.getDate(4)

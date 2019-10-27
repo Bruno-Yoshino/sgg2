@@ -236,8 +236,9 @@ public class Cheque {
         String sql;
         sql = "select c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo, c_cliente "
                 + " from cheque "
-                + " GROUP BY c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo, c_cliente " +
-                  " having c_codigo = max(c_codigo);";
+                + " where c_codigo = (select max(c_codigo)from cheque )";
+//                + " GROUP BY c_codigo, cr_codigo, c_dono, c_cpfdono, c_valor, c_datal, c_predata, c_nagencia, c_nconta, c_nbanco, c_ncheque, c_obs, c_datacomp, c_motivo, c_cliente " +
+//                  " having c_codigo = max(c_codigo);";
                 ResultSet rs=Banco.getCon().consultar(sql);
         try 
         {

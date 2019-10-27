@@ -743,6 +743,8 @@ public class MovLancarCompras extends javax.swing.JDialog {
         txtvalorTotF.setText("0"); 
         txtvalorF.setText("0");
         txtvalortP.setText("0");
+        sc.HabilityComponents(jPanel3.getComponents(), true);
+        sc.HabilityComponents(jPanel5.getComponents(), true);
         flag = true;
     }//GEN-LAST:event_btnNovoActionPerformed
 

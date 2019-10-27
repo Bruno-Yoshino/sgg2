@@ -8,6 +8,8 @@ package CamadaNegocio;
 import CamadaLogica.Banco;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -55,6 +57,21 @@ public class Producao_Produto {
     {
         String sql = "insert into producao_produto (prod_codigo, pro_codigo, pp_qtd) values ("+codigo+","+p.getCodigo()+","+qtd+")";
         return Banco.getCon().manipular(sql);
+    }
+    
+    public boolean verificar(int codigo)
+    {
+        String sql = "select * from  producao_produto where prod_codigo = "+codigo+";";
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try {
+            if(rs.next())
+            {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Producao_Folha.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
     
     public int qtdReserva(int codigo) throws SQLException

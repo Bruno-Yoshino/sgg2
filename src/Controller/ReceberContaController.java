@@ -265,6 +265,16 @@ public class ReceberContaController {
         });
     }
     
+    public double SumTotalCheque(JTable tabela)
+    {
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        double tot = 0;
+        for (int i = 0; i < tabela.getRowCount(); i++) {
+            tot += v.ConverteNumeroReal(model.getValueAt(i, 3)); 
+        }
+        return tot;
+    }
+    
     public boolean excluirCheque(JTable tabela)
     {
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();

@@ -104,6 +104,8 @@ public class MovReceberContas extends javax.swing.JDialog {
         jTable2 = new javax.swing.JTable();
         btnAdicionar = new javax.swing.JButton();
         btnRemover = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        txtValorTCheque = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -198,7 +200,7 @@ public class MovReceberContas extends javax.swing.JDialog {
         dcPagamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel6.setText("Valor Pago:");
+        jLabel6.setText("Valor Recebido:");
 
         txtValorP.setText(".0");
 
@@ -373,31 +375,49 @@ public class MovReceberContas extends javax.swing.JDialog {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel7.setText("Valor total do Cheque recebido:");
+
+        txtValorTCheque.setEditable(false);
+        txtValorTCheque.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 602, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 602, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                            .addComponent(btnRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtValorTCheque, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(btnAdicionar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRemover)
-                .addGap(27, 27, 27))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(btnAdicionar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addComponent(btnRemover)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtValorTCheque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -460,16 +480,17 @@ public class MovReceberContas extends javax.swing.JDialog {
         if(evt.getClickCount() == 2)
         {
             btnAlterarActionPerformed(null);
+            
             //Check this is Cheque ok
             //Is true, Hability ok
             //Is false, No Hability ok
-
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
        if(jTable1.getSelectedRow() >= 0)
        {
+          sc.limparTabela(jTable2);
           ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
           if(rcc.verificaConta(Integer.parseInt(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 1))), Integer.parseInt(sc.converteString(model.getValueAt(jTable1.getSelectedRow(), 5)))))
           {
@@ -547,6 +568,7 @@ public class MovReceberContas extends javax.swing.JDialog {
                         btnCancelarActionPerformed(null);
                         try {
                             rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
+                            sc.limparTabela(jTable2);
                         } catch (SQLException ex) {
                             Logger.getLogger(MovPagarContas.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -580,6 +602,7 @@ public class MovReceberContas extends javax.swing.JDialog {
 //                            }
 //                        }
                         sc.limparTabela(jTable1);
+                        sc.limparTabela(jTable2);
                         rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
                     }
                     else
@@ -636,6 +659,12 @@ public class MovReceberContas extends javax.swing.JDialog {
         if(frmCheque.isFlagReturn())
         {
             rcc.addTabelaCheque(jTable2);
+            double tot = rcc.SumTotalCheque(jTable2);
+            txtValorTCheque.setText(""+tot);
+            txtValorP.setText(sc.verificaValor(tot+"")); 
+            //Verificar o total aqui para ver se vai deixar ou adicionar
+            //Caso deixa, nao adeixar adicionar mais.
+            //Caso nao deixe, Exclua o mesmo.
         }
         frmCheque.dispose();
     }//GEN-LAST:event_btnAdicionarActionPerformed
@@ -644,6 +673,7 @@ public class MovReceberContas extends javax.swing.JDialog {
         if(rcc.excluirCheque(jTable2))
         {
             m.InformationMessage("Removido com sucesso!", "Informação");
+            txtValorTCheque.setText(""+rcc.SumTotalCheque(jTable2));
         }
         else
         {
@@ -667,6 +697,7 @@ public class MovReceberContas extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -682,5 +713,6 @@ public class MovReceberContas extends javax.swing.JDialog {
     private javax.swing.JTextArea txtObs;
     private javax.swing.JTextField txtValor;
     private br.com.ikeda.beans.jTextFieldMonetario txtValorP;
+    private javax.swing.JTextField txtValorTCheque;
     // End of variables declaration//GEN-END:variables
 }
