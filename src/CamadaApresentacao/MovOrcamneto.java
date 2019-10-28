@@ -230,6 +230,11 @@ public class MovOrcamneto extends javax.swing.JDialog {
         btnPDF.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/pdf32.png"))); // NOI18N
         btnPDF.setText("Gerar PDF");
+        btnPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPDFActionPerformed(evt);
+            }
+        });
 
         btnLocalizar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
@@ -1426,6 +1431,18 @@ public class MovOrcamneto extends javax.swing.JDialog {
     private void cbDescricaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbDescricaoFocusLost
         enableComponents(String.valueOf(cbDescricao.getSelectedItem()));
     }//GEN-LAST:event_cbDescricaoFocusLost
+
+    private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
+        if(txtCodigo.getText().equals("") || txtCodigo.getText().equals("0"))
+        {
+            m.InformationMessage("Localize um orçamento!", "Atenção");
+            btnLocalizar.requestFocus();
+        }
+        else
+        {
+            oc.gerarPDF(txtCodigo.getText());
+        }
+    }//GEN-LAST:event_btnPDFActionPerformed
 
     private void clearLocalComponents()
     {

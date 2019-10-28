@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2019-10-27T12:30:25 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Orcamento" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4ffaccd9-edd5-475c-baf5-79e51574164e">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[select * from empresa, cliente, orcamento, orcamento_servico, orcamento_servico_detalhe, funcionario, servico, detalhe_serv]]>
+	</queryString>
+	<field name="cid_codigo" class="java.lang.Integer"/>
+	<field name="emp_nome" class="java.lang.String"/>
+	<field name="emp_cnpj" class="java.lang.String"/>
+	<field name="emp_endereco" class="java.lang.String"/>
+	<field name="emp_numero" class="java.lang.Integer"/>
+	<field name="emp_telefone" class="java.lang.String"/>
+	<field name="emp_caminho" class="java.lang.String"/>
+	<field name="emp_email" class="java.lang.String"/>
+	<field name="emp_cep" class="java.lang.String"/>
+	<field name="cli_codigo" class="java.lang.Integer"/>
+	<field name="COLUMN_11" class="java.lang.Integer"/>
+	<field name="cli_nome" class="java.lang.String"/>
+	<field name="cli_endereco" class="java.lang.String"/>
+	<field name="cli_numero" class="java.lang.Integer"/>
+	<field name="cli_cep" class="java.lang.String"/>
+	<field name="cli_complemento" class="java.lang.String"/>
+	<field name="cli_telefone" class="java.lang.String"/>
+	<field name="cli_celular" class="java.lang.String"/>
+	<field name="cli_status" class="java.lang.Boolean"/>
+	<field name="cli_email" class="java.lang.String"/>
+	<field name="cli_cadastro" class="java.sql.Date"/>
+	<field name="orc_numero" class="java.lang.Integer"/>
+	<field name="COLUMN_23" class="java.lang.Integer"/>
+	<field name="func_codigo" class="java.lang.Integer"/>
+	<field name="fpg_codigo" class="java.lang.Integer"/>
+	<field name="orc_valortotal" class="java.lang.Double"/>
+	<field name="orc_dataorc" class="java.sql.Date"/>
+	<field name="orc_validade" class="java.sql.Date"/>
+	<field name="os_sequence" class="java.lang.Integer"/>
+	<field name="COLUMN_30" class="java.lang.Integer"/>
+	<field name="serv_codigo" class="java.lang.Integer"/>
+	<field name="os_valor" class="java.lang.Double"/>
+	<field name="os_qtd" class="java.lang.Integer"/>
+	<field name="os_custopapel" class="java.lang.Double"/>
+	<field name="os_custoimpressao" class="java.lang.Double"/>
+	<field name="os_custoacabamento" class="java.lang.Double"/>
+	<field name="os_custoarte" class="java.lang.Double"/>
+	<field name="os_custochapa" class="java.lang.Double"/>
+	<field name="os_customdo" class="java.lang.Double"/>
+	<field name="os_desconto" class="java.lang.Double"/>
+	<field name="os_descricao" class="java.lang.String"/>
+	<field name="COLUMN_42" class="java.lang.Integer"/>
+	<field name="COLUMN_43" class="java.lang.Integer"/>
+	<field name="COLUMN_44" class="java.lang.Integer"/>
+	<field name="ds_codigo" class="java.lang.Integer"/>
+	<field name="osd_numeracaoini" class="java.lang.String"/>
+	<field name="osd_numeracaofim" class="java.lang.String"/>
+	<field name="osd_vias" class="java.lang.Integer"/>
+	<field name="osd_outros" class="java.lang.String"/>
+	<field name="COLUMN_50" class="java.lang.Integer"/>
+	<field name="COLUMN_51" class="java.lang.Integer"/>
+	<field name="func_nome" class="java.lang.String"/>
+	<field name="func_login" class="java.lang.String"/>
+	<field name="func_senha" class="java.lang.String"/>
+	<field name="func_nivel" class="java.lang.Integer"/>
+	<field name="func_cpf" class="java.lang.String"/>
+	<field name="func_rg" class="java.lang.String"/>
+	<field name="func_orgemi" class="java.lang.String"/>
+	<field name="func_endereco" class="java.lang.String"/>
+	<field name="func_numero" class="java.lang.Integer"/>
+	<field name="func_complemento" class="java.lang.String"/>
+	<field name="func_telefone" class="java.lang.String"/>
+	<field name="func_celular" class="java.lang.String"/>
+	<field name="func_caminho" class="java.lang.String"/>
+	<field name="func_dtadimicao" class="java.sql.Date"/>
+	<field name="func_dtdemissao" class="java.sql.Date"/>
+	<field name="func_cep" class="java.lang.String"/>
+	<field name="COLUMN_68" class="java.lang.Integer"/>
+	<field name="serv_nome" class="java.lang.String"/>
+	<field name="serv_status" class="java.lang.Boolean"/>
+	<field name="COLUMN_71" class="java.lang.Integer"/>
+	<field name="ds_descricao" class="java.lang.String"/>
+	<field name="ds_status" class="java.lang.Boolean"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="88" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="180" height="79" uuid="d4d76e72-fc01-44e2-b7e3-df1abd73d8c9"/>
+				<box>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</box>
+				<imageExpression><![CDATA[$F{emp_caminho}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="180" y="0" width="370" height="20" uuid="3291a845-c91b-47e0-869f-109357121cd9"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emp_endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="20" width="370" height="20" uuid="1971eef1-810d-47bd-a3bc-ba5c400caeca"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emp_telefone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="40" width="370" height="20" uuid="ccc00374-afff-4915-bbbc-5418b21ecbaa"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emp_email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="60" width="370" height="19" uuid="042a0d61-c7b3-4c1e-8063-a8c798becdcd"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emp_cep}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="71">
+			<textField>
+				<reportElement x="120" y="20" width="100" height="20" uuid="f31d6c50-b9d7-4252-9263-32b04feeedaf"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orc_numero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="120" height="20" backcolor="#E3DCDC" uuid="ff4722ea-6b8d-4387-b8a0-802188bf2bf5"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Número orçamento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="55" width="60" height="16" backcolor="#E3DCDC" uuid="320f6f47-5a7c-4f82-8d81-1a47824303ca"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Funcionário:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="40" width="100" height="15" uuid="125849ac-368b-42c0-b4a3-fa49f8e15e1b"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orc_dataorc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="230" y="41" width="60" height="14" backcolor="#E3DCDC" uuid="9b4887af-2f8f-4fdf-bf88-e0433b1dc9ca"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Validade:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="40" height="20" backcolor="#E3DCDC" uuid="2e4f4936-549b-413b-baf3-56b8b84cc08f"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="110" height="15" backcolor="#E3DCDC" uuid="2c64c2ae-ccf2-4fa8-8045-c5867c6fcd50"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Data do orçamento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="40" y="0" width="510" height="20" uuid="06dda0ee-6d27-4f0e-a775-a84ac6be8bd2"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="55" width="490" height="16" uuid="4f260d69-09e6-45b4-895f-311bba6506f4"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{func_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="41" width="100" height="14" uuid="17c956c6-dfa1-481a-a454-0c5d15dda9f6"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orc_validade}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="19" backcolor="#E3DCDC" uuid="374f18b3-26bb-43e1-95ee-96b2db6f6aab"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Serviço:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="0" width="450" height="19" uuid="79f4260e-b162-4e83-b461-a920b3275833"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{serv_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="24" width="100" height="20" backcolor="#E3DCDC" uuid="18dcb0e3-4674-494f-baad-d869199c315d"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Preço do serviço:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="24" width="100" height="20" uuid="fba74118-32c6-4498-b9b0-40e2409812f0"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{os_valor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="24" width="70" height="20" backcolor="#E3DCDC" uuid="d271cbb4-3c17-4c03-a909-c45b3233464e"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Quantidade:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="270" y="24" width="80" height="20" uuid="b7d02744-79dd-4ea5-8530-ce315a2e5980"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{os_qtd}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="24" width="70" height="20" backcolor="#E3DCDC" uuid="be2680fd-87ea-4f3a-80bd-23ef3168e9a8"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Custo papel:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="420" y="25" width="100" height="18" uuid="17576c1f-3397-4e5d-83b2-9fa03248233f"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{os_custopapel}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="48" width="100" height="22" backcolor="#E3DCDC" uuid="b81ba12d-d47e-4ac3-a9c1-b3ea4ee10636"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Custo implessão:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="48" width="70" height="22" uuid="e03021b1-b215-4e53-a475-76061e031df3"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{os_custoimpressao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="175" y="49" width="115" height="20" backcolor="#E3DCDC" uuid="4b7bd9c3-46c3-49ed-b66e-473773b80285"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Custo acabamento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="290" y="49" width="60" height="20" uuid="c61cb568-6388-4f60-b5fd-f78f83e26e0e"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{os_custoacabamento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="357" y="49" width="70" height="20" backcolor="#E3DCDC" uuid="69603698-1447-4e33-ad2f-ffd97bad7b67"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Custo arte:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="427" y="49" width="100" height="20" uuid="c0930ee2-72e4-44a1-be74-a3a05ccbd73c"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{os_custoarte}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="75" width="110" height="20" backcolor="#E3DCDC" uuid="00f4f604-145a-4cdf-93d2-86d7e214c578"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Custo mão de obra:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="75" width="90" height="20" uuid="227811fb-38b6-4af1-98b4-aed67262449e"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{os_customdo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="208" y="75" width="62" height="20" backcolor="#E3DCDC" uuid="92ff3e73-0068-407f-bf3e-dc6fec11a38a"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Desconto:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="270" y="75" width="80" height="20" uuid="dd5f7f0a-7a8f-4f71-9e3a-6efd7108a193"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{os_desconto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="360" y="75" width="40" height="20" backcolor="#E3DCDC" uuid="a9fab404-772c-4239-8fcc-901b97e7b83d"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="400" y="75" width="150" height="20" uuid="6030cf76-3a92-42c7-99a4-92d69dc85d4b"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{os_valor}*$F{os_qtd}+$F{os_custopapel}-$F{os_desconto}+$F{os_customdo}+$F{os_custochapa}+$F{os_custoarte}+$F{os_custoacabamento}+$F{os_custoimpressao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="47" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="550" height="30" uuid="f1f487f2-ea14-476a-a694-f0052ebf211a"/>
+				<textFieldExpression><![CDATA[$F{ds_descricao}.equals("Numeração") ? "Numeração de"+$F{osd_numeracaoini} + " a " +$F{osd_numeracaofim} : $F{ds_descricao}.equals("Vias") ? "Vias: " + $F{osd_vias} : $F{ds_descricao}.equals("Outros") ? "Outros: " + $F{osd_outros} : $F{ds_descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7">
+			<line>
+				<reportElement x="2" y="3" width="551" height="1" uuid="217ed2c2-9431-4662-b8af-2055fb06f671"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="60" splitType="Stretch">
+			<textField pattern="d/M/yyyy">
+				<reportElement x="3" y="33" width="119" height="16" uuid="1006f67a-e287-45b9-a1ea-87b610c1c057"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="494" y="35" width="60" height="14" uuid="830354f8-cb02-40f7-a3f4-1ba64c95c7c7"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="73" y="0" width="100" height="20" uuid="f54dcc13-0027-4f70-be66-3bb74caccd2a"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orc_valortotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="70" height="20" backcolor="#E3DCDC" uuid="cd2ee6af-2bfc-4598-acaf-f3067288aa63"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Valor total:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

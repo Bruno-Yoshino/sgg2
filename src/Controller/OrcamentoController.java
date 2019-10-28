@@ -1,6 +1,7 @@
 package Controller;
 
 import CamadaLogica.ReadOnlyTableModel;
+import CamadaLogica.Relatorio;
 import CamadaNegocio.Cliente;
 import CamadaNegocio.DetalheServico;
 import CamadaNegocio.FormaPagamento;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import net.sf.jasperreports.engine.JRException;
 import util.SystemControl;
 import util.Validacao;
 import util.mensagens;
@@ -558,6 +560,16 @@ public class OrcamentoController {
                 temp.get(i).getValor()*temp.get(i).getQtd()+temp.get(i).getCustoPapel()+temp.get(i).getCustoImpre()+temp.get(i).getCustoAcab()+temp.get(i).getCustoArte()+temp.get(i).getCustoChapa()+temp.get(i).getCustoMdO(),
                 temp.get(i).getDescricao()
             });
+        }
+    }
+    
+    public void gerarPDF(String codigo)
+    {
+        Relatorio rel = new Relatorio();
+        try {
+            rel.ImprimirRelatorioPDF(Orcamento.RelatorioOrcamento(codigo, 3, null, null), "Relatorio\\Orcamento.jasper");
+        } catch (JRException ex) {
+            Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

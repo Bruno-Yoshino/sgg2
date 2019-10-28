@@ -231,6 +231,79 @@ public class Orcamento {
         return Banco.getCon().retornaResultSet(query);
     }
     
+    public static ResultSet RelatorioOrcamento(String valor, int tipo, Date dataI, Date dataF)
+    {
+        String query = null;
+        if (valor.equals("")) // Tudo
+        {
+            query = "select * "
+                  + " from empresa emp, cliente cli, orcamento o, orcamento_servico os, orcamento_servico_detalhe osd, funcionario f, servico s, detalhe_serv ds "
+                  + " WHERE o.cli_codigo = c.cli_codigo and "
+                         + " o.orc_numero = os.orc_numero and "
+                         + " os.serv_codigo = s.serv_codigo and "
+                         + " osd.os_sequence = os_sequence and "
+                         + " osd.ds_codigo = ds.ds_codigo";
+        }
+        else
+        {
+            switch (tipo)
+            {
+                case 0:// Tudo
+                {
+                    query = "select * "
+                        + " from empresa emp, cliente c, orcamento o, orcamento_servico os, orcamento_servico_detalhe osd, funcionario f, servico s, detalhe_serv ds "
+                        + " WHERE o.cli_codigo = c.cli_codigo and "
+                         + " o.orc_numero = os.orc_numero and "
+                         + " os.serv_codigo = s.serv_codigo and "
+                         + " osd.os_sequence = os.os_sequence and "
+                         + " osd.ds_codigo = ds.ds_codigo and " +
+                           " f.func_codigo = o.func_codigo";
+                    break;
+                }
+                case 1:// Data
+                {
+                    query = "SELECT * "
+                          + " FROM empresa emp, cliente c, orcamento o, orcamento_servico os, orcamento_servico_detalhe osd, funcionario f, servico s, detalhe_serv ds "
+                          + " WHERE o.orc_dataorc = '"+valor+"' and "
+                         + " o.cli_codigo = c.cli_codigo and "
+                         + " o.orc_numero = os.orc_numero and "
+                         + " os.serv_codigo = s.serv_codigo and "
+                         + " osd.os_sequence = os.os_sequence and "
+                         + " osd.ds_codigo = ds.ds_codigo and " +
+                           " f.func_codigo = o.func_codigo";
+                    break;
+                }
+                case 2:// Periodo
+                {
+                    query = "select * "
+                            + " from empresa emp, cliente c, orcamento o, orcamento_servico os, orcamento_servico_detalhe osd, funcionario f, servico s, detalhe_serv ds "
+                            + " WHERE o.orc_dataorc BETWEEN '"+dataI+"' and '"+dataF+"' and "
+                         + " o.cli_codigo = c.cli_codigo and "
+                         + " o.orc_numero = os.orc_numero and "
+                         + " os.serv_codigo = s.serv_codigo and "
+                         + " osd.os_sequence = os.os_sequence and "
+                         + " osd.ds_codigo = ds.ds_codigo and " +
+                           " f.func_codigo = o.func_codigo";
+                    break;
+                }
+                case 3:// Numero
+                {
+                    query = "select * "
+                  + " from empresa emp, cliente c, orcamento o, orcamento_servico os, orcamento_servico_detalhe osd, funcionario f, servico s, detalhe_serv ds "
+                  + " WHERE o.orc_numero = "+valor+" and "
+                         + " o.cli_codigo = c.cli_codigo and "
+                         + " o.orc_numero = os.orc_numero and "
+                         + " os.serv_codigo = s.serv_codigo and "
+                         + " osd.os_sequence = os.os_sequence and "
+                         + " osd.ds_codigo = ds.ds_codigo and " +
+                           " f.func_codigo = o.func_codigo";
+                    break;
+                }
+            }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
     public static ResultSet ConsultaOrcamentoServico(int codigo)
     {
         String query = null;
