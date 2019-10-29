@@ -326,16 +326,16 @@ public class ContaReceber {
         switch(op)
         {//"Cliente", "Número Pedido", "Valor a ser Cobrado", "Data de Vencimento", "Data do Peido", "Numero da conta"
             case 1: // nome
-                sql = "select c.cli_nome, cr.pe_codigo, cr.cr_valor, cr.cr_datavenc, p.pe_datapedido, cr.cr_codigo "
-                    + " from conta_receber cr, pedido p, cliente c "
-                    + " where cr.cr_datapago is null and p.pe_codigo = cr.pe_codigo and p.cli_codigo = c.cli_codigo "
+                sql = "select c.cli_nome, cr.pe_codigo, cr.cr_valor, cr.cr_datavenc, p.pe_datapedido, cr.cr_codigo, fp.fpg_nome "
+                    + " from conta_receber cr, pedido p, cliente c, forma_pagamento fp "
+                    + " where cr.cr_datapago is null and p.pe_codigo = cr.pe_codigo and p.cli_codigo = c.cli_codigo and fp.fpg_codigo = p.fpg_codigo "
                     + " order by c.cli_nome;";
                 break;
             case 2: // data vencimento
                 //sql = "select cr.cr_codigo, cr.pe_codigo, cr.cr_datavenc, cr.cr_obs, cr.cr_valor, cr.cr_datapago, cr.cr_vlorp "
-                sql = "select c.cli_nome, cr.pe_codigo, cr.cr_valor, cr.cr_datavenc, p.pe_datapedido, cr.cr_codigo "
-                    + " from conta_receber cr, pedido p, cliente c "
-                    + " where cr.cr_datapago is null and p.pe_codigo = cr.pe_codigo and p.cli_codigo = c.cli_codigo "
+                sql = "select c.cli_nome, cr.pe_codigo, cr.cr_valor, cr.cr_datavenc, p.pe_datapedido, cr.cr_codigo, fp.fpg_nome "
+                    + " from conta_receber cr, pedido p, cliente c, forma_pagamento fp "
+                    + " where cr.cr_datapago is null and p.pe_codigo = cr.pe_codigo and p.cli_codigo = c.cli_codigo and fp.fpg_codigo = p.fpg_codigo "
                     + " order by cr.cr_datavenc;";
                 break;
             default:

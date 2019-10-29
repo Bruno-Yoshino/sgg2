@@ -157,7 +157,8 @@ public class ReceberContaController {
                 sc.truncar(rs.getDouble(3)),//Valor Conta 
                 sc.DataOnly(rs.getDate(4)),// Data Vencimento
                 sc.DataOnly(rs.getDate(5)),// Data Pedido
-                rs.getInt(6)// Numero Conta
+                rs.getInt(6),// Numero Conta
+                rs.getString(7)
             });
         }
     }
@@ -279,7 +280,15 @@ public class ReceberContaController {
     {
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
         Cheque c = new Cheque();
-        c.setCodigo(v.ConverteNumeroInteiro(model.getValueAt(tabela.getSelectedRow(), 1)));
+        c.setCodigo(v.ConverteNumeroInteiro(model.getValueAt(tabela.getSelectedRow(), 0)));
+        return c.excluir();
+    }
+    
+    public boolean excluirUltimoCheque(JTable tabela)
+    {
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        Cheque c = new Cheque();
+        c.setCodigo(v.ConverteNumeroInteiro(model.getValueAt(tabela.getRowCount()-1, 0)));
         return c.excluir();
     }
     
@@ -291,13 +300,14 @@ public class ReceberContaController {
     
     public static void configuraModel(JTable jTable)
     {
-        String colunas[] = new String [] {"Cliente", "Número Pedido", "Valor a ser Cobrado", "Data de Vencimento", "Data do Peido", "Numero da conta"};
+        String colunas[] = new String [] {"Cliente", "Número Pedido", "Valor a ser Cobrado", "Data de Vencimento", "Data do Pedio", "Numero da conta", "Tipo"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));
-        jTable.getColumnModel().getColumn(0).setPreferredWidth(250);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(200);
         jTable.getColumnModel().getColumn(1).setPreferredWidth(150);
-        jTable.getColumnModel().getColumn(2).setPreferredWidth(125);
-        jTable.getColumnModel().getColumn(3).setPreferredWidth(125);
-        jTable.getColumnModel().getColumn(4).setPreferredWidth(125);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
         jTable.getColumnModel().getColumn(5).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
     }
 }

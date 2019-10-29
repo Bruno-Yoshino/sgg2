@@ -746,7 +746,7 @@ public class CadastroCliente extends javax.swing.JDialog {
             }
             else
             {
-                m.ErroMessage("Erro ao excluir", "Erro");
+                m.ErroMessage("Erro ao excluir!", "Erro");
             }
             
         }
@@ -784,18 +784,18 @@ public class CadastroCliente extends javax.swing.JDialog {
         boolean flag = rbfisica.isSelected();
         switch(cc.validar(txtcli_cod.getText(), txtcid_codigo.getText(), txtcli_nome.getText(), txtcli_endereco.getText(), txtcli_numero.getText(), txtcli_complemento.getText(), txtcli_cep.getText(), txtcli_telefone.getText(), txtcli_telefone1.getText(), txtEmail.getText(), txtcli_cpf.getText(), txtcli_rg.getText(), c, txtcli_datanasc.getData(), txtcli_rs.getText(), txtcli_cnpj.getText(), flag))
         {//              String codigo, String cidade,                     String nome, String endereco,                    String numero,          String complemento, String cep,                 String telefone, String celular,                                String email, String cpf, String rg, String orgemi_insc,                                                                                    LocalDate dataNasc, String razasoci, String cnpj, boolean flag
-            case 1: JOptionPane.showMessageDialog(this, "Codigo Invalido","Alerta", JOptionPane.WARNING_MESSAGE); break;
-            case 2: JOptionPane.showMessageDialog(this, "Informe o Nome","Alerta", JOptionPane.WARNING_MESSAGE);
+            case 1: JOptionPane.showMessageDialog(this, "Informe a cidade!","Alerta", JOptionPane.WARNING_MESSAGE); break;
+            case 2: JOptionPane.showMessageDialog(this, "Informe o Nome!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtcli_nome.requestFocus(); break;
             case 7:
                 if(flag)
                 {
-                    JOptionPane.showMessageDialog(this, "Informe o Orgão emissor","Alerta", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Informe o Orgão emissor!","Alerta", JOptionPane.WARNING_MESSAGE);
                     txtcli_orgEmi.requestFocus();
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(this, "Informe Inscrição Estadual","Alerta", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Informe Inscrição Estadual!","Alerta", JOptionPane.WARNING_MESSAGE);
                     txtcli_ie.requestFocus();
                 }
 
@@ -803,21 +803,21 @@ public class CadastroCliente extends javax.swing.JDialog {
             case 8:
                 if(flag)
                 {
-                    JOptionPane.showMessageDialog(this, "O tamanho do Orgão emissor deve ser 2 caracteres","Alerta", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "O tamanho do Orgão emissor deve ser 2 caracteres!","Alerta", JOptionPane.WARNING_MESSAGE);
                     txtcli_orgEmi.requestFocus();
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(this, "O tamanho da Inscrição Estadual deve ser 2 caracteres","Alerta", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "O tamanho da Inscrição Estadual deve ser 2 caracteres!","Alerta", JOptionPane.WARNING_MESSAGE);
                     txtcli_ie.requestFocus();
                 }
             break;
             case 9:
-            JOptionPane.showMessageDialog(this, "Informe o endereço","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Informe o endereço!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtcli_endereco.requestFocus();
             break;
             case 10:
-            JOptionPane.showMessageDialog(this, "Inforem o Número","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Inforem o Número!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtcli_numero.requestFocus();
             break;
             case 11:
@@ -826,39 +826,39 @@ public class CadastroCliente extends javax.swing.JDialog {
             txtcli_numero.setText("");
             break;
             case 12:
-            JOptionPane.showMessageDialog(this, "Inforem pelomenos o celular ou telefone","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Inforem pelomenos o celular ou telefone!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtcli_telefone.requestFocus();
             break;
             case 13:
-            JOptionPane.showMessageDialog(this, "Inforem o CEP","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Inforem o CEP!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtcli_cep.requestFocus();
             break;
             case 14:
-            JOptionPane.showMessageDialog(this, "E-Mail Invalido","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "E-Mail Invalido!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtEmail.requestFocus();
             break;
             case 15:
-            JOptionPane.showMessageDialog(this, "Inforem o CPF","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Inforem o CPF!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtcli_cpf.requestFocus();
             break;
             case 16:
-            JOptionPane.showMessageDialog(this, "Inforem o RG","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Inforem o RG!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtcli_rg.requestFocus();
             break;
             case 17:
-            JOptionPane.showMessageDialog(this, "Inforem uma data menor que a data de hoje","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Inforem uma data menor que a data de hoje!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtcli_datanasc.requestFocus();
             break;
             case 18:
-            JOptionPane.showMessageDialog(this, "Inforem o CNPJ","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Inforem o CNPJ!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtcli_cnpj.requestFocus();
             break;
             case 19:
-            JOptionPane.showMessageDialog(this, "Inforem a Rasão Social","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Inforem a Rasão Social!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtcli_rs.requestFocus();
             break;
             case 21:
-            JOptionPane.showMessageDialog(this, "CPF invárido","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "CPF invárido!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtcli_cpf.requestFocus();
             break;
             case 20:
@@ -874,17 +874,17 @@ public class CadastroCliente extends javax.swing.JDialog {
                         }
                         else
                         {
-                            m.InformationMessage("Erro ao recuperar", "Informação");
+                            m.InformationMessage("Erro ao recuperar!", "Informação");
                         }
                     }
                     else
                     {
-                        m.ErroMessage("Cliente ja cadastrado", "ERRO"); 
+                        m.ErroMessage("Cliente ja cadastrado!", "ERRO"); 
                     }
                 }
                 else
                 {
-                    m.ErroMessage("Cliente ja cadastrado", "ERRO"); 
+                    m.ErroMessage("Cliente ja cadastrado!", "ERRO"); 
                 }
             break;
             default:

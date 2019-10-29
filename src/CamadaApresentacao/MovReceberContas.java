@@ -537,13 +537,16 @@ public class MovReceberContas extends javax.swing.JDialog {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         sc.limpar(jPanel2.getComponents());
         sc.Alter(jPanel3.getComponents());
+
+        if(forma == 4)
+            rcc.CleanUpCheque(Integer.valueOf(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 5))));
         sc.HabilityComponents(jPanel2.getComponents(), false);
         sc.HabilityComponents(jPanel1.getComponents(), true);
         sc.HabilityComponents(jPanel4.getComponents(), false);
-        if(forma == 4)
-            rcc.CleanUpCheque(Integer.valueOf(String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 5))));
         dcPagamento.setData(Date.from(Instant.now()));
         txtValorP.setText("0");
+        txtValorTCheque.setText("0");
+        sc.limparTabela(jTable2);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -565,7 +568,7 @@ public class MovReceberContas extends javax.swing.JDialog {
                     if(rcc.SeocndInserting())
                     {
                         m.InformationMessage("Lançado e Alterado com Sucesso!", "Atenção");
-                        btnCancelarActionPerformed(null);
+                        //btnCancelarActionPerformed(null);
                         try {
                             rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
                             sc.limparTabela(jTable2);
@@ -579,7 +582,13 @@ public class MovReceberContas extends javax.swing.JDialog {
                     }
                     sc.limparTabela(jTable1);
                     rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
-  
+                    sc.HabilityComponents(jPanel2.getComponents(), false);
+                    sc.HabilityComponents(jPanel1.getComponents(), true);
+                    sc.HabilityComponents(jPanel4.getComponents(), false);
+                    dcPagamento.setData(Date.from(Instant.now()));
+                    txtValorP.setText("0");
+                    txtValorTCheque.setText("0");
+                    //sc.limparTabela(jTable2);
 
                     break;
                 default:
@@ -587,7 +596,7 @@ public class MovReceberContas extends javax.swing.JDialog {
                     {
                         m.InformationMessage("Alterado com Sucesso!", "Atenção");
                         sc.limpar(jPanel2.getComponents());
-                        btnCancelarActionPerformed(null);
+                        //btnCancelarActionPerformed(null);
                         try {
                             rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
                         } catch (SQLException ex) {
@@ -604,6 +613,12 @@ public class MovReceberContas extends javax.swing.JDialog {
                         sc.limparTabela(jTable1);
                         sc.limparTabela(jTable2);
                         rcc.carregarTabela(jTable1, rbOP1.isSelected() ? 1 : 2);
+                        sc.HabilityComponents(jPanel2.getComponents(), false);
+                        sc.HabilityComponents(jPanel1.getComponents(), true);
+                        sc.HabilityComponents(jPanel4.getComponents(), false);
+                        dcPagamento.setData(Date.from(Instant.now()));
+                        txtValorP.setText("0");
+                        txtValorTCheque.setText("0");
                     }
                     else
                     {
@@ -628,7 +643,7 @@ public class MovReceberContas extends javax.swing.JDialog {
         consEstornoCR.setVisible(true);
         if (consEstornoCR.getCodigo() != 0)
         {
-            if(rcc.estornarValor(consEstornoCR.getCodigo()))///exclir cheque
+            if(rcc.estornarValor(consEstornoCR.getCodigo()))///exclir cheque  OK
             {
                 m.InformationMessage("Estornado com sucesso!", "Informação");
                 try
@@ -662,9 +677,16 @@ public class MovReceberContas extends javax.swing.JDialog {
             double tot = rcc.SumTotalCheque(jTable2);
             txtValorTCheque.setText(""+tot);
             txtValorP.setText(sc.verificaValor(tot+"")); 
-            //Verificar o total aqui para ver se vai deixar ou adicionar
-            //Caso deixa, nao adeixar adicionar mais.
-            //Caso nao deixe, Exclua o mesmo.
+            if(tot > Double.valueOf(txtValor.getText()))
+            {
+                if(m.Pergunta("O valor total do cheque utrapassou o valor a ser recebido! Deseja continuar?\n (sim - para continuar; não - para cancelar o cheque)", "Atenção") == JOptionPane.NO_OPTION)
+                {
+                    rcc.excluirUltimoCheque(jTable1);
+                    tot = rcc.SumTotalCheque(jTable2);
+                    txtValorTCheque.setText(""+tot);
+                    txtValorP.setText(sc.verificaValor(tot+""));
+                }
+            }
         }
         frmCheque.dispose();
     }//GEN-LAST:event_btnAdicionarActionPerformed
