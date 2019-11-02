@@ -41,8 +41,8 @@ public class EstadoController
     public int validar(String cod, String uf)
     {
         int id = v.ConverteNumeroInteiro(cod);
-        if( id == -999)
-            return 1;
+//        if( id == -999)
+//            return 0;
         if(v.ValidaTexto(uf) == 1)
             return 2;
         if(est.CheckEstado(uf) && est.getCodigo() == 0)

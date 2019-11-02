@@ -70,6 +70,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         lcc.getForn().setCodigo(0);
         
         lcc.getC().setFunc(f);
+        lcc.setFunc(f);
         LancarCompraController.configuraModelItem(tbF);
         LancarCompraController.configuraModelItem(tbP);
         sc.HabilityComponents(jPanel1.getComponents(), false);
@@ -1086,7 +1087,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         if(!txtCodigo.getText().equals("0") && !txtCodigo.getText().equals(""))
         {
             lcc.buscaCompra(Integer.parseInt(txtCodigo.getText()));
-            txtforn.setText(lcc.getC().getF().getNome());
+            txtforn.setText(lcc.getC().getF() == null ? "" : lcc.getC().getF().getNome());
             txtvalorF.setText(""+lcc.getC().getValort());
             lcc.addItens(tbF, tbP, txtvalorTotF, txtvalorTotP);
             sc.Alter(jPanel2.getComponents());

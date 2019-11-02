@@ -308,11 +308,11 @@ public class CadastroCidade extends javax.swing.JDialog {
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         switch(cc.validar(txtCodigo.getText(), txtNome.getText(), cbEstado.getSelectedItem().toString()))
         {
-            case 1: JOptionPane.showMessageDialog(this, "Codigo Invalido","Alerta", JOptionPane.WARNING_MESSAGE); break;
-            case 2: JOptionPane.showMessageDialog(this, "Informe a Cidade","Alerta", JOptionPane.WARNING_MESSAGE);
+            //case 1: JOptionPane.showMessageDialog(this, "Codigo Invalido","Alerta", JOptionPane.WARNING_MESSAGE); break;
+            case 2: JOptionPane.showMessageDialog(this, "Informe a Cidade!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtNome.requestFocus(); break;
             case 3:
-            JOptionPane.showMessageDialog(this, "Cidade já cadastrado com o Estado selecioando","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Cidade já cadastrado com o Estado selecioando!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtNome.requestFocus();
             break;
             default:
@@ -323,7 +323,7 @@ public class CadastroCidade extends javax.swing.JDialog {
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "Erro ao Gravar","Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro ao Gravar!","Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnGravarActionPerformed

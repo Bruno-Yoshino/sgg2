@@ -703,7 +703,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
     sc.HabilityComponents(jPanel4.getComponents(), true);
     if(fc.checkADMCount() && fc.getFunc().getNivel() == 64) /// colocar uma outra checaem verificando o nivel dele se for iguala 64.
     {
-        m.ErroMessage("Como existe apenas um Administrador, não sera permitido alterar o nivel", "Erro");
+        m.ErroMessage("Como existe apenas um Administrador, não sera permitido alterar o nivel!", "Erro");
         sc.HabilityComponents(jPanel3.getComponents(), false);
         sc.HabilityComponents(jPanel3.getComponents(), false);
         sc.HabilityComponents(jPanel4.getComponents(), false);
@@ -726,7 +726,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
                 }
                 else
                 {
-                    m.ErroMessage("Erro ao Demitir o Funcioanrio", "Erro");
+                    m.ErroMessage("Erro ao Demitir o Funcioanrio!", "Erro");
                 }
             }            
         }
@@ -760,62 +760,62 @@ public class CadastroFuncionario extends javax.swing.JDialog {
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         switch(fc.validar(txtCodigo.getText(), txtCodCid.getText(), txtNome.getText(), txtUsuario.getText(), txtSenha.getText(), soma, txtCpf.getText(), txtRg.getText(), txtOrgemi.getText(), txtEndereco.getText(), txtNumero.getText(), txtComplemento.getText(), txtTelefone.getText(), txtCelular.getText(), txtCaminho.getText(), txtCep.getText(), txtSenha1.getText()))
         {
-            case 1: JOptionPane.showMessageDialog(this, "Informe a Cidade","Alerta", JOptionPane.WARNING_MESSAGE); 
+            case 1: JOptionPane.showMessageDialog(this, "Informe a Cidade!","Alerta", JOptionPane.WARNING_MESSAGE); 
             btnLocCidade.requestFocus();
             break;
-            case 2: JOptionPane.showMessageDialog(this, "Informe o Nome","Alerta", JOptionPane.WARNING_MESSAGE);
+            case 2: JOptionPane.showMessageDialog(this, "Informe o Nome!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtNome.requestFocus(); break;
             case 3:
-            JOptionPane.showMessageDialog(this, "Informe o Login","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Informe o Login!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtUsuario.requestFocus();
             break;
             case 4:
-            JOptionPane.showMessageDialog(this, "Informe a Senha","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Informe a Senha!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtSenha.requestFocus();
             break;
             case 5:
-            JOptionPane.showMessageDialog(this, "A senha não pode ter mais que 15 caracteres","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "A senha não pode ter mais que 15 caracteres!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtSenha.requestFocus();
             break;
             case 6:
-            JOptionPane.showMessageDialog(this, "Informe o Nivel desse usuraio","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Informe o Nivel desse usuraio!","Alerta", JOptionPane.WARNING_MESSAGE);
             cbCadastro.requestFocus();
             break;
             case 7:
-            JOptionPane.showMessageDialog(this, "Informe o Orgão emissor","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Informe o Orgão emissor!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtOrgemi.requestFocus();
             break;
             case 8:
-            JOptionPane.showMessageDialog(this, "Orgão emissor não pode ter mais que 2 caracteres","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Orgão emissor não pode ter mais que 2 caracteres!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtOrgemi.requestFocus();
             break;
             case 9:
-            JOptionPane.showMessageDialog(this, "Informe o endereço","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Informe o endereço!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtEndereco.requestFocus();
             break;
             case 10:
-            JOptionPane.showMessageDialog(this, "Inforem o Número","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Inforem o Número!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtNumero.requestFocus();
             break;
             case 11:
-            JOptionPane.showMessageDialog(this, "informe Número","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Informe Número!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtNumero.requestFocus();
             txtNumero.setText("");
             break;
             case 12:
-            JOptionPane.showMessageDialog(this, "Inforem pelomenos o celular ou telefone","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Inforem pelomenos o celular ou telefone!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtCelular.requestFocus();
             break;
             case 13:
-            JOptionPane.showMessageDialog(this, "Inforem o CEP","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Inforem o CEP!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtCep.requestFocus();
             break;
             case 14:
-            JOptionPane.showMessageDialog(this, "CPF ja Cadastrado","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "CPF ja Cadastrado!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtCpf.requestFocus();
             break;
             case 15:
-            JOptionPane.showMessageDialog(this, "A senha não são iguais","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "A senha não são iguais!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtSenha.requestFocus();
             txtSenha1.setText("");
             break;
@@ -832,7 +832,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
             //m.WarmingMessage("Soma Atual"+soma, "Erro");
             break;
             case 19:
-            JOptionPane.showMessageDialog(this, "CPF invárido","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "CPF invárido!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtCpf.requestFocus();
             break;
             default:
@@ -847,7 +847,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "Erro ao Gravar","Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro ao Gravar!","Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnGravarActionPerformed
@@ -873,7 +873,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
                         }
                         else
                         {
-                            m.ErroMessage("Erro ao Contratar", "Erro");
+                            m.ErroMessage("Erro ao Contratar!", "Erro");
                         }
                     }
                     else
@@ -914,7 +914,7 @@ public class CadastroFuncionario extends javax.swing.JDialog {
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "Funcionario não Encontrado", "Informação", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Funcionario não Encontrado!", "Informação", JOptionPane.INFORMATION_MESSAGE);
                 limpar();
                 btnNovo.requestFocus();
             }

@@ -156,7 +156,7 @@ public class CadastroEstado extends javax.swing.JDialog {
         });
 
         btnGravar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
+        btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Gravar16.png"))); // NOI18N
         btnGravar.setText("Gravar");
         btnGravar.setName("btnGravar"); // NOI18N
         btnGravar.addActionListener(new java.awt.event.ActionListener() {
@@ -261,7 +261,7 @@ public class CadastroEstado extends javax.swing.JDialog {
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "Erro ao Excluir","Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro ao Excluir!","Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -295,11 +295,11 @@ public class CadastroEstado extends javax.swing.JDialog {
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         switch(ec.validar(txtuf_cod.getText(), txtuf_sigla.getText()))
         {
-            case 1: JOptionPane.showMessageDialog(this, "Codigo Invalido","Alerta", JOptionPane.WARNING_MESSAGE); break;
-            case 2: JOptionPane.showMessageDialog(this, "Informe a Sigla","Alerta", JOptionPane.WARNING_MESSAGE);
+            //case 1: JOptionPane.showMessageDialog(this, "Codigo Invalido","Alerta", JOptionPane.WARNING_MESSAGE); break;
+            case 2: JOptionPane.showMessageDialog(this, "Informe a Sigla!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtuf_sigla.requestFocus(); break;
             case 3:
-            JOptionPane.showMessageDialog(this, "Estao já cadastrado","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Estao já cadastrado!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtuf_sigla.requestFocus();
             break;
             default:
@@ -311,7 +311,7 @@ public class CadastroEstado extends javax.swing.JDialog {
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "Erro ao Gravar","Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro ao Gravar!","Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnGravarActionPerformed

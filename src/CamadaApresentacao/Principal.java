@@ -797,7 +797,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu5.setText("Receber");
 
-        jMenuItem26.setText("Recebaer Conta");
+        jMenuItem26.setText("Receber Conta");
         jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem26ActionPerformed(evt);
@@ -805,7 +805,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem26);
 
-        jMenuItem10.setText("Compençar Cheque");
+        jMenuItem10.setText("Compensar Cheque");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem10ActionPerformed(evt);

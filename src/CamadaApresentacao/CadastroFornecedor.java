@@ -435,7 +435,7 @@ public class CadastroFornecedor extends javax.swing.JDialog {
             }
             else
             {
-                m.ErroMessage("Erro ao Excluir o Fornecedor", "Erro");
+                m.ErroMessage("Erro ao Excluir o Fornecedor!", "Erro");
             }
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -443,11 +443,11 @@ public class CadastroFornecedor extends javax.swing.JDialog {
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         switch(fc.validar(txtCodigo.getText(), txtCodCid.getText(), txtNome.getText(), txtTelefone.getText(), txtCelular.getText(), txtEmail.getText()))
         {
-            case 1: JOptionPane.showMessageDialog(this, "Informe a Cidade","Alerta", JOptionPane.WARNING_MESSAGE); btnLocCidade.requestFocus(); break;
-            case 2: JOptionPane.showMessageDialog(this, "Informe o Nome","Alerta", JOptionPane.WARNING_MESSAGE);
+            case 1: JOptionPane.showMessageDialog(this, "Informe a Cidade!","Alerta", JOptionPane.WARNING_MESSAGE); btnLocCidade.requestFocus(); break;
+            case 2: JOptionPane.showMessageDialog(this, "Informe o Nome!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtNome.requestFocus(); break;
             case 12:
-            JOptionPane.showMessageDialog(this, "Inforem pelomenos o celular ou telefone","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Inforem pelomenos o celular ou telefone!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtCelular.requestFocus();
             break;
             default:
@@ -458,7 +458,7 @@ public class CadastroFornecedor extends javax.swing.JDialog {
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "Erro ao Gravar","Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro ao Gravar!","Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnGravarActionPerformed

@@ -243,7 +243,7 @@
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="jMenuItem26">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Recebaer Conta"/>
+                    <Property name="text" type="java.lang.String" value="Receber Conta"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem26ActionPerformed"/>
@@ -251,7 +251,7 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Compen&#xe7;ar Cheque"/>
+                    <Property name="text" type="java.lang.String" value="Compensar Cheque"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem10ActionPerformed"/>

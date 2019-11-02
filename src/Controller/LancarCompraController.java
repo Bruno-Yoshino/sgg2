@@ -7,6 +7,7 @@ import CamadaNegocio.Compra_Produto;
 import CamadaNegocio.ContaPagar;
 import CamadaNegocio.Folha;
 import CamadaNegocio.Fornecedor;
+import CamadaNegocio.Funcionario;
 import CamadaNegocio.Producao_Folha;
 import CamadaNegocio.Producao_Produto;
 import CamadaNegocio.Produto;
@@ -46,6 +47,7 @@ public class LancarCompraController
     private ContaPagar contP;
     private Compra_Folha cf = new Compra_Folha();
     private final mensagens m = new mensagens();
+    private Funcionario func = new Funcionario();
 
     public LancarCompraController() {
         c = new Compra();
@@ -87,6 +89,16 @@ public class LancarCompraController
     public void setForn(Fornecedor forn) {
         this.forn = forn;
     }
+
+    public Funcionario getFunc() {
+        return func;
+    }
+
+    public void setFunc(Funcionario func) {
+        this.func = func;
+    }
+    
+    
     
     // c.getLcp().add(new Compra_Produto(new Compra(), new Produto().buscarCodigo(v.ConverteNumeroInteiro(codigo)), v.ConverteNumeroInteiro(qtd), v.ConverteNumeroReal(preco)));
     public int validar(String codigo, String nome, String qtd, String preco, JTable tabela, boolean flag, String codigoC, int tipo)
@@ -214,6 +226,7 @@ public class LancarCompraController
         c = c.buscaCompra(codigo);
         cf.setC(c);
         cp.setC(c);
+        c.setFunc(func);
         c.setLcf(cf.buscaCompraFolha(codigo));
         c.setLcp(cp.buscaCompraProduto(codigo));
     }   
