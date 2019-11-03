@@ -405,32 +405,32 @@ public class CadastroEmpresa extends javax.swing.JDialog {
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         switch(ec.validar(txtCodCid.getText(), txtNome.getText(), txtCnpj.getText(), txtEndereco.getText(), txtNumero.getText(),txtTelefone.getText(), txtEmail.getText(), txtCaminho.getText(), txtCep.getText()))
         {
-            case 1: JOptionPane.showMessageDialog(this, "Codigo Invalido","Alerta", JOptionPane.WARNING_MESSAGE); break;
-            case 2: JOptionPane.showMessageDialog(this, "Informe o Nome","Alerta", JOptionPane.WARNING_MESSAGE);
+            //case 1: JOptionPane.showMessageDialog(this, "Codigo Invalido","Alerta", JOptionPane.WARNING_MESSAGE); break;
+            case 2: JOptionPane.showMessageDialog(this, "Informe o Nome!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtNome.requestFocus(); break;
             case 9:
-            JOptionPane.showMessageDialog(this, "Informe o endereço","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Informe o endereço!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtEndereco.requestFocus();
             break;
             case 10:
-            JOptionPane.showMessageDialog(this, "Inforem o Número","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Inforem o Número!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtNumero.requestFocus();
             break;
             case 11:
-            JOptionPane.showMessageDialog(this, "informe Número","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Informe Número!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtNumero.requestFocus();
             txtNumero.setText("");
             break;
             case 12:
-            JOptionPane.showMessageDialog(this, "Informa o telefone","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Informa o telefone!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtTelefone.requestFocus();
             break;
             case 13:
-            JOptionPane.showMessageDialog(this, "Inforem o CEP","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Inforem o CEP!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtCep.requestFocus();
             break;
             case 14:
-            JOptionPane.showMessageDialog(this, "Inforem o CNPJ","Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Inforem o CNPJ!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtCnpj.requestFocus();
             break;
             default:
@@ -444,7 +444,7 @@ public class CadastroEmpresa extends javax.swing.JDialog {
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "Erro ao Gravar","Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro ao Gravar!","Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnGravarActionPerformed

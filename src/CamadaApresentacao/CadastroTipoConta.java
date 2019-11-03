@@ -290,8 +290,8 @@ public class CadastroTipoConta extends javax.swing.JDialog {
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         switch(tcc.validar(txtCodigo.getText(), txtTipo.getText()))
         {
-            case 1: JOptionPane.showMessageDialog(this, "Codigo Invalido","Alerta", JOptionPane.WARNING_MESSAGE); break;
-            case 2: JOptionPane.showMessageDialog(this, "Informe o Tipo","Alerta", JOptionPane.WARNING_MESSAGE);
+            //case 1: JOptionPane.showMessageDialog(this, "Codigo Invalido","Alerta", JOptionPane.WARNING_MESSAGE); break;
+            case 2: JOptionPane.showMessageDialog(this, "Informe o Tipo!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtTipo.requestFocus(); break;
             case 3:
             JOptionPane.showMessageDialog(this, "Tipo ja cadastrado!","Alerta", JOptionPane.WARNING_MESSAGE);

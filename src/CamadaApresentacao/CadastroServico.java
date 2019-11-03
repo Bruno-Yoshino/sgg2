@@ -252,7 +252,7 @@ public class CadastroServico extends javax.swing.JDialog {
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "Serviço não Encontrado", "Informação", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Serviço não Encontrado!", "Informação", JOptionPane.INFORMATION_MESSAGE);
                 limpar();
                 btnNovo.requestFocus();
             }
