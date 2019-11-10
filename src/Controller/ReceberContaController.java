@@ -296,6 +296,24 @@ public class ReceberContaController {
     {
         cr.excluirCheques(codigoCR);
     }
+    
+    public void carregarCheques(int codigo, JTable tabela)
+    {
+        ArrayList<Cheque> c = new Cheque().buscarCheques(codigo);
+        ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
+        c.forEach((c1) -> {
+            model.addRow(new Object[]
+            {//"Código", "Dono", "CPF", "Valor", "Data Lançado", "Pré Data"
+                c1.getCodigo(),
+                c1.getDono(),
+                c1.getCpf(),
+                c1.getValor(),
+                c1.getData(),
+                c1.getPredata(),
+            });
+        });
+
+    }
         
     
     public static void configuraModel(JTable jTable)

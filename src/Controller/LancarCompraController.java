@@ -268,7 +268,7 @@ public class LancarCompraController
     public void ExcluirLinha(JTable tabela, JTextField valorTM, JTextField valorTF)
     {
         valorTM.setText(""+(v.ConverteNumeroReal(valorTM.getText()) - v.ConverteNumeroReal(String.valueOf(tabela.getValueAt(tabela.getSelectedRow(), 4)))));
-        valorTF.setText(""+(v.ConverteNumeroReal(valorTF.getText()) - v.ConverteNumeroReal(valorTM.getText())));
+        //valorTF.setText(""+(v.ConverteNumeroReal(valorTF.getText()) - v.ConverteNumeroReal(valorTM.getText())));
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
         model.removeRow(tabela.getSelectedRow());
     }
@@ -290,11 +290,6 @@ public class LancarCompraController
         //if(c.excluirItens())
         return c.excluir() ? 0 : 3;
         //return false;
-    }
-    
-    public boolean verificarParcelars(int codigo)
-    {
-        return c.buscaQtdParcelas(codigo) == 0;
     }
     
     public void addItens(JTable tabelaF, JTable tabelaP, JTextField valorTF, JTextField valorTP)
@@ -382,6 +377,16 @@ public class LancarCompraController
         contP.setParcela(0);
         contP.setFunc(c.getFunc());
         return contP.gravar();
+    }
+    
+    public void excluirContaPagar(int codigo)
+    {
+        ContaPagar.excluirParcelasCompra(c.getCodigo());
+    }
+    
+    public boolean verificarParcelas(int codigo)
+    {
+        return c.buscaQtdParcelas(codigo) == 0;
     }
     
     public static void configuraModelItem(JTable jTable) // Configurar Tabela Para consulta ou para Alterar

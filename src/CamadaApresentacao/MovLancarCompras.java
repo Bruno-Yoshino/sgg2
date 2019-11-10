@@ -991,7 +991,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         {    
             if(flag)
             {
-                    lcc.ExcluirLinha(tbP, txtvalorTotP, txtValorTF);
+                    lcc.ExcluirLinha(tbP, txtvalorTotP, txtvalortP);
                     lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
                     m.InformationMessage("Excluido com Sucesso!", "Atenção");
 
@@ -999,9 +999,12 @@ public class MovLancarCompras extends javax.swing.JDialog {
             else
             {
                 ReadOnlyTableModel model = (ReadOnlyTableModel) tbP.getModel();
-                if(lcc.verificarEstoqueProduto(Integer.parseInt(txtcodP.getText()), Integer.parseInt(txtqtdP.getText())))
+                if(lcc.verificarEstoqueProduto(Integer.parseInt(""+model.getValueAt(tbP.getSelectedRow(), 0)), Integer.parseInt(""+model.getValueAt(tbP.getSelectedRow(), 2))))
                 {
+                    lcc.ExcluirLinha(tbP, txtvalorTotP, txtvalortP);
+                    lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
                     m.InformationMessage("Excluido com Sucesso!", "Atenção");
+                    //model.removeRow(tbP.getSelectedRow());
                 }
                 else
                 {
@@ -1025,12 +1028,13 @@ public class MovLancarCompras extends javax.swing.JDialog {
             }
             else
             {
-                ReadOnlyTableModel model = (ReadOnlyTableModel) tbP.getModel();
-                if(lcc.verificarEstoqueProduto(Integer.parseInt(txtcodP.getText()), Integer.parseInt(txtqtdP.getText())))
+                ReadOnlyTableModel model = (ReadOnlyTableModel) tbF.getModel();
+                if(lcc.verificarEstoqueFolha(Integer.parseInt(""+model.getValueAt(tbF.getSelectedRow(), 0)), Integer.parseInt(""+model.getValueAt(tbF.getSelectedRow(), 2))))
                 {
                     lcc.ExcluirLinha(tbF, txtvalorTotF, txtValorTF);
                     lcc.CalculaTotal(txtvalorTotP, txtvalorTotF, txtvalorF);
                     m.InformationMessage("Excluido com Sucesso!", "Atenção");
+                    //model.removeRow(tbF.getSelectedRow());
                 }
                 else
                 {
@@ -1044,6 +1048,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         if(lcc.gravar(txtCodigo.getText(), txtvalorF.getText(), tbP, tbF))
         {
             m.InformationMessage("Gravado com sucesso!", "Atenção");
+            lcc.excluirContaPagar(Integer.parseInt(txtCodigo.getText()));
             lancarConta();
             sc.limpar(jPanel1.getComponents());
             sc.limparTabela(tbF);
@@ -1084,14 +1089,14 @@ public class MovLancarCompras extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusLost
-        if(!txtCodigo.getText().equals("0") && !txtCodigo.getText().equals(""))
+      /*  if(!txtCodigo.getText().equals("0") && !txtCodigo.getText().equals(""))
         {
             lcc.buscaCompra(Integer.parseInt(txtCodigo.getText()));
             txtforn.setText(lcc.getC().getF() == null ? "" : lcc.getC().getF().getNome());
             txtvalorF.setText(""+lcc.getC().getValort());
             lcc.addItens(tbF, tbP, txtvalorTotF, txtvalorTotP);
             sc.Alter(jPanel2.getComponents());
-        }
+        }*/
     }//GEN-LAST:event_txtCodigoFocusLost
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
@@ -1106,7 +1111,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
         if (consCompra.getCodigo() != 0)
         {
             txtCodigo.setText(String.valueOf(consCompra.getCodigo()));
-            if(!lcc.verificarParcelars(consCompra.getCodigo()))
+            if(!lcc.verificarParcelas(consCompra.getCodigo()))
             {
                 m.InformationMessage("Esta compra não pode ser alterada pelo fato de já existir\n uma ou mais parcelas paga!", "Atenção");
                 consCompra.dispose();
@@ -1117,7 +1122,12 @@ public class MovLancarCompras extends javax.swing.JDialog {
                 sc.limparTabela(tbF);
                 sc.limparTabela(tbP);
                 consCompra.dispose();
-                txtCodigoFocusLost(null);
+                //txtCodigoFocusLost(null);
+                lcc.buscaCompra(Integer.parseInt(txtCodigo.getText()));
+                txtforn.setText(lcc.getC().getF() == null ? "" : lcc.getC().getF().getNome());
+                txtvalorF.setText(""+lcc.getC().getValort());
+                lcc.addItens(tbF, tbP, txtvalorTotF, txtvalorTotP);
+                sc.Alter(jPanel2.getComponents());
                 sc.Alter(jPanel2.getComponents());
             }
         }
@@ -1149,11 +1159,18 @@ public class MovLancarCompras extends javax.swing.JDialog {
     }//GEN-LAST:event_txtPrecoFFocusLost
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        flag = false;
-        sc.HabilityComponents(jPanel1.getComponents(), true);
-        sc.HabilityComponents(jPanel3.getComponents(), true);
-        sc.HabilityComponents(jPanel5.getComponents(), true);
-        sc.Edity(jPanel2.getComponents());
+        if(lcc.verificarParcelas(Integer.parseInt(txtCodigo.getText())))
+        {
+            flag = false;
+            sc.HabilityComponents(jPanel1.getComponents(), true);
+            sc.HabilityComponents(jPanel3.getComponents(), true);
+            sc.HabilityComponents(jPanel5.getComponents(), true);
+            sc.Edity(jPanel2.getComponents());
+        }
+        else
+        {
+            m.WarmingMessage("Ja existe uma ou mais parsela paga! Não pode ser Alterado!", "Atenção");
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     
@@ -1173,9 +1190,6 @@ public class MovLancarCompras extends javax.swing.JDialog {
         }
         else
         {
-            Date data;
-            DateMessage messegeDate = new DateMessage(null, true, "Atenção", "Informe a Data de Vencimento:");
-            data = messegeDate.getData();
             if(valor.equals("Parcelado"))
             {//Parcelado
                 GerenciarParcela formGP = new GerenciarParcela(null, true, null, lcc.getC(), null);
@@ -1184,6 +1198,11 @@ public class MovLancarCompras extends javax.swing.JDialog {
             }
             else
             {//Prazo
+                Date data;
+                DateMessage messegeDate = new DateMessage(null, true, "Atenção", "Informe a Data de Vencimento:");
+                messegeDate.setVisible(true);
+                data = messegeDate.getData();
+                messegeDate.dispose();
                 lcc.lancarContaPagar(data);
                 m.InformationMessage("Conta a receber Lançado com Sucesso!", "Informação");
             }

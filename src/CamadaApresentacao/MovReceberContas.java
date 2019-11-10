@@ -497,6 +497,7 @@ public class MovReceberContas extends javax.swing.JDialog {
             txtCliente.setText(""+model.getValueAt(jTable1.getSelectedRow(), 0));
             txtValor.setText(""+model.getValueAt(jTable1.getSelectedRow(), 2));
             sc.Edity(jPanel3.getComponents());
+            jTable1.setEnabled(false);
             sc.HabilityComponents(jPanel1.getComponents(), false);
             sc.HabilityComponents(jPanel2.getComponents(), true);
               try {
@@ -520,12 +521,13 @@ public class MovReceberContas extends javax.swing.JDialog {
 //                }
                 sc.HabilityComponents(jPanel4.getComponents(), true);
             }
+            //rcc.carregarCheques(Integer.valueOf(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 5))), jTable2);
             //else
                 //jPanel4.setVisible(false);
           }
           else
           {
-             m.InformationMessage("Exixte parcelas anteriores que ainda não foram pagos!", "Informação");
+             m.InformationMessage("Existe parcelas anteriores que ainda não foram pagos!", "Informação");
           }
        }
        else
@@ -544,6 +546,7 @@ public class MovReceberContas extends javax.swing.JDialog {
         sc.HabilityComponents(jPanel1.getComponents(), true);
         sc.HabilityComponents(jPanel4.getComponents(), false);
         dcPagamento.setData(Date.from(Instant.now()));
+        jTable1.setEnabled(true);
         txtValorP.setText("0");
         txtValorTCheque.setText("0");
         sc.limparTabela(jTable2);
@@ -588,6 +591,7 @@ public class MovReceberContas extends javax.swing.JDialog {
                     dcPagamento.setData(Date.from(Instant.now()));
                     txtValorP.setText("0");
                     txtValorTCheque.setText("0");
+                    jTable1.setEnabled(true);
                     //sc.limparTabela(jTable2);
 
                     break;
@@ -619,6 +623,7 @@ public class MovReceberContas extends javax.swing.JDialog {
                         dcPagamento.setData(Date.from(Instant.now()));
                         txtValorP.setText("0");
                         txtValorTCheque.setText("0");
+                        jTable1.setEnabled(true);
                     }
                     else
                     {

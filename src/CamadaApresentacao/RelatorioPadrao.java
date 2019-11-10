@@ -514,9 +514,9 @@ public class RelatorioPadrao extends javax.swing.JDialog {
             
                 try {
                     if(cbFlagCliente.isSelected())
-                        rel.ImprimirRelatorioPDF(rs, "Relatorio\\cliente.jasper");//D:\\SGG\\src
+                        rel.ImprimirRelatorioPDF(rs, "Relatorios\\cliente.jasper");//D:\\SGG\\src
                     else
-                        rel.ImprimirRelatorioPDF(rs, "Relatorio\\clienteJ.jasper");
+                        rel.ImprimirRelatorioPDF(rs, "Relatorios\\clienteJ.jasper");
                 } catch (JRException ex) {
                     Logger.getLogger(RelatorioPadrao.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -526,9 +526,9 @@ public class RelatorioPadrao extends javax.swing.JDialog {
             default:
                     try {
                     if(cbFlagCliente.isSelected())
-                        rel.ImprimirRelatorio(rs, "Relatorio\\cliente.jasper", "Relatorio Cliente");//D:\\SGG\\src
+                        rel.ImprimirRelatorio(rs, "Relatorios\\cliente.jasper", "Relatorio Cliente");//D:\\SGG\\src
                     else
-                        rel.ImprimirRelatorio(rs, "Relatorio\\clienteJ.jasper", "Relatorio Cliente");
+                        rel.ImprimirRelatorio(rs, "Relatorios\\clienteJ.jasper", "Relatorio Cliente");
                 } catch (JRException ex) {
                     Logger.getLogger(RelatorioPadrao.class.getName()).log(Level.SEVERE, null, ex);
                 }

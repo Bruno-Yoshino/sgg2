@@ -4,6 +4,7 @@ import CamadaLogica.Banco;
 import CamadaLogica.ReadOnlyTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JTable;
 
@@ -229,6 +230,27 @@ public class Cheque {
             System.out.println(e.getMessage());
         }
         return null;
+   }
+   
+   public ArrayList<Cheque> buscarCheques(int codigoCR)
+   {
+        String sql;
+        ArrayList<Cheque> lista = new ArrayList<>();
+        sql = "select c.c_codigo, c.cr_codigo, c.c_dono, c.c_cpfdono, c.c_valor, c_datal, c.c_predata, c.c_nagencia, c.c_nconta, c.c_nbanco, c.c_ncheque, c.c_obs, c.c_datacomp, c.c_motivo, c.c_cliente "
+                + " from cheque c where c.cr_codigo = "+codigoCR+"";
+                ResultSet rs=Banco.getCon().consultar(sql);
+        try 
+        {
+            while (rs.next()) 
+            {
+                lista.add(new Cheque(rs.getInt(1), new ContaReceber().buscar(rs.getInt(2)), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getDate(6), rs.getDate(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getDate(13), rs.getInt(14), rs.getString(15)));
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        return lista;
    }
    
    public Cheque buscarMax()

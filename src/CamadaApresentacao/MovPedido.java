@@ -1371,9 +1371,7 @@ public class MovPedido extends javax.swing.JDialog {
         }
         else
         {
-            Date data;
-            DateMessage messegeDate = new DateMessage(null, true, "Atenção", "Informe a Data de Vencimento:");
-            data = messegeDate.getData();
+
             if(valor.equals("Parcelado"))
             {//Parcelado
                 GerenciarParcela formGP = new GerenciarParcela(null, true, null, null, pc.getP());
@@ -1382,6 +1380,11 @@ public class MovPedido extends javax.swing.JDialog {
             }
             else
             {//Prazo
+                Date data;
+                DateMessage messegeDate = new DateMessage(null, true, "Atenção", "Informe a Data de Vencimento:");
+                messegeDate.setVisible(true);
+                data = messegeDate.getData();
+                messegeDate.dispose();
                 pc.gerarContaReceber(data, txtCodigo.getText());
                 m.InformationMessage("Conta a receber Lançado com Sucesso!", "Informação");
             }

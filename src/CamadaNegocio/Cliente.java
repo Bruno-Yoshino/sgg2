@@ -34,6 +34,14 @@ public class Cliente {
     private Boolean status;
     private String email;
     private Date dataC;
+    private String cpf;
+    private String rg;
+    private Date dataNasc;
+    
+    private String org_insc;
+    
+    private String razasoci;
+    private String cnpj;
 
     public Cliente(int codigo, Cidade cid, String nome, String endereco, int nunero, String cep, String complemento, String telefone, String celular, Boolean status, String email, Date dataC, String cpf, String rg, Date dataNasc, String org_insc, String razasoci, String cnpj) {
         this.codigo = codigo;
@@ -56,14 +64,7 @@ public class Cliente {
         this.cnpj = cnpj;
     }
     
-    private String cpf;
-    private String rg;
-    private Date dataNasc;
-    
-    private String org_insc;
-    
-    private String razasoci;
-    private String cnpj;
+
 
     public Cliente(int codigo, Cidade cid, String nome, String endereco, int nunero, String cep, String complemento, String telefone, String celular, Boolean status, String email, String cpf, String rg, String org_insc, Date dataNasc, String razasoci, String cnpj) {
         this.codigo = codigo;

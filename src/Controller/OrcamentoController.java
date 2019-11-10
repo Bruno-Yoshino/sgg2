@@ -567,7 +567,7 @@ public class OrcamentoController {
     {
         Relatorio rel = new Relatorio();
         try {
-            rel.ImprimirRelatorioPDF(Orcamento.RelatorioOrcamento(codigo, 3, null, null), "Relatorio\\Orcamento.jasper");
+            rel.ImprimirRelatorioPDF(Orcamento.RelatorioOrcamento(codigo, 1, null, null), "Relatorios\\Orcamento.jasper");
         } catch (JRException ex) {
             Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
         }

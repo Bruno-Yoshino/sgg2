@@ -336,6 +336,38 @@ public class Pedido {
         return false;
     }
     
+    public static ResultSet RelatorioPedido(String valor, int tipo, Date dataI, Date dataF)
+    {
+        String query = null;
+        switch (tipo)
+        {
+            case 0:// Periodo e nome(Codigo do Cliente)
+            {
+                query = "select * "
+                    + " from empresa emp, cliente c, pedido p, pedido_servico ps, funcionario f, servico s " +
+                    " WHERE p.cli_codigo = "+valor+" "
+                  + "p.pe_dataorc BETWEEN '"+dataI+"' and '"+dataF+"' and " +
+                    " p.cli_codigo = c.cli_codigo and " +
+                    " ps.pe_numero = p.pe_numero and " +
+                    " ps.serv_codigo = s.serv_codigo and " +
+                    " f.func_codigo = p.func_codigo";
+                break;
+            }
+            case 1:// Numero
+            {
+                query = "select * "
+              + " from empresa emp, cliente c, pedido p, pedido_servico ps, funcionario f, servico s " +
+                " WHERE p.pe_numero = "+valor+" and " +
+                " p.cli_codigo = c.cli_codigo and " +
+                " ps.pe_numero = p.pe_numero and " +
+                " ps.serv_codigo = s.serv_codigo and " +
+                " f.func_codigo = p.func_codigo";
+                break;
+            }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
     public static void configuraModel(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
     {
         String colunas[] = new String [] {"Número", "Cliente", "Data Pedido", "Data Vencimento", "Valor Total"};

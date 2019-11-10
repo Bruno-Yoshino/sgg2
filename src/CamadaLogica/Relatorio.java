@@ -103,7 +103,6 @@ public class Relatorio {
         int retorno = chooser.showSaveDialog(null);
         JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
         String jasperPrint = JasperFillManager.fillReportToFile(ArqNome, null, jrRS);
-        
         if (retorno == JFileChooser.APPROVE_OPTION)
         {
             caminho = chooser.getSelectedFile().getAbsolutePath();

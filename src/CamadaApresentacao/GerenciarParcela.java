@@ -52,7 +52,9 @@ public class GerenciarParcela extends javax.swing.JDialog {
         {
             Date data;
             DateMessage messegeDate = new DateMessage(null, true, "Atenção", "Informe a Data de Vencimento:");
+            messegeDate.setVisible(true);
             data = messegeDate.getData();
+            messegeDate.dispose();
             dtData.setData(data);
             dtData.setEditable(false);
             dtData.setEditable(false);
@@ -75,6 +77,7 @@ public class GerenciarParcela extends javax.swing.JDialog {
             DateMessage messegeDate = new DateMessage(null, true, "Atenção", "Informe a Data de Vencimento:");
             messegeDate.setVisible(true);
             data = messegeDate.getData();
+            messegeDate.dispose();
             dtData.setData(data);
             dtData.setEditable(false);
             dtData.setEnabled(false);

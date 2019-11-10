@@ -1373,6 +1373,10 @@ public class Principal extends javax.swing.JFrame {
         } catch (URISyntaxException | IOException e) {
             
         }
+        
+        /*Desenvolvimento e ajuste de Relatórios.
+Correção de Bug.
+Desenvolvimento, correção e melhoria no Manual do Usuário.*/
     }//GEN-LAST:event_jMenuItem33ActionPerformed
 
 

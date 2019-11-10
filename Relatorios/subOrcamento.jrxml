@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2019-11-04T20:01:41 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subOrcamento" pageWidth="595" pageHeight="842" orientation="Landscape" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="a94edd3e-eafc-4a8c-a9f7-36fee678fc70">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="sequence" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="numero" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from  orcamento_servico_detalhe osd, detalhe_serv ds
+where osd.os_sequence = $P{sequence} and osd.ds_codigo = ds.ds_codigo and osd.orc_numero = $P{numero}]]>
+	</queryString>
+	<field name="os_sequence" class="java.lang.Integer"/>
+	<field name="orc_numero" class="java.lang.Integer"/>
+	<field name="serv_codigo" class="java.lang.Integer"/>
+	<field name="ds_codigo" class="java.lang.Integer"/>
+	<field name="osd_numeracaoini" class="java.lang.String"/>
+	<field name="osd_numeracaofim" class="java.lang.String"/>
+	<field name="osd_vias" class="java.lang.Integer"/>
+	<field name="osd_outros" class="java.lang.String"/>
+	<field name="COLUMN_9" class="java.lang.Integer"/>
+	<field name="ds_descricao" class="java.lang.String"/>
+	<field name="ds_status" class="java.lang.Boolean"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="1" width="549" height="18" uuid="3f070618-42e9-44d0-807d-42b8a1fa1029"/>
+				<textFieldExpression><![CDATA[$F{ds_descricao}.equals("Numeração") ? "Numeração de"+$F{osd_numeracaoini} + " a " +$F{osd_numeracaofim} : $F{ds_descricao}.equals("Vias") ? "Vias: " + $F{osd_vias} : $F{ds_descricao}.equals("Outros") ? "Outros: " + $F{osd_outros} : $F{ds_descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="11">
+			<line>
+				<reportElement x="3" y="5" width="551" height="1" uuid="dd9d136f-32ad-4418-b530-9952b1fc4ad9"/>
+			</line>
+		</band>
+	</columnFooter>
+</jasperReport>
