@@ -1292,7 +1292,7 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         try {
             MovOrcamneto frm = new MovOrcamneto(this, true, funcL);
-            frm.setTitle("Oraçamento");
+            frm.setTitle("Orçamento");
             frm.setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);

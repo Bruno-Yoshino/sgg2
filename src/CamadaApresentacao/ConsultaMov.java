@@ -569,7 +569,7 @@ public class ConsultaMov extends javax.swing.JDialog {
         {
             ResultSet rs;
             int tipo = cbOpcao.getSelectedIndex();
-//            Compra.configuraModel(jTable1);
+            Compra.configuraModelAE(jTable1);
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             rs = Compra.ConsultaCompraAE(txtValor.getText(), tipo, dateInicio.getData(), dateFim.getData());
             while (rs.next())

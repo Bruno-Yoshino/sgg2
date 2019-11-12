@@ -2,7 +2,9 @@ package CamadaLogica;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import javax.swing.JFileChooser;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
@@ -103,6 +105,39 @@ public class Relatorio {
         int retorno = chooser.showSaveDialog(null);
         JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
         String jasperPrint = JasperFillManager.fillReportToFile(ArqNome, null, jrRS);
+        if (retorno == JFileChooser.APPROVE_OPTION)
+        {
+            caminho = chooser.getSelectedFile().getAbsolutePath();
+        }
+        if(!caminho.equals(""))
+        {
+            JasperExportManager.exportReportToPdfFile(jasperPrint, caminho+".pdf");
+            //JasperExportManager.exportReportToXmlFile(jasperPrint, caminho+".xml", true);
+            file = new File(caminho);
+            try
+            {
+                //perguntar se deseja ver o pdf
+                java.awt.Desktop.getDesktop().open( new File(caminho+".pdf"));
+                //java.awt.Desktop.getDesktop().open( new File(caminho+".xml"));
+            }
+            catch (IOException ex)
+            {
+            }
+        }
+    }
+    
+    public void ImprimirRelatorioPDF(int codigoCli, Date dataIni, Date dataFim, String ArqNome) throws JRException
+    {
+        JFileChooser chooser = new JFileChooser();
+        String caminho = "";
+        File file = null;
+        int retorno = chooser.showSaveDialog(null);
+        HashMap parametros = new HashMap();
+        parametros.put("clienteCodigo", codigoCli);
+        parametros.put("dataIni", dataIni);
+        parametros.put("dataFim", dataFim);
+        
+        String jasperPrint = JasperFillManager.fillReportToFile(ArqNome, parametros, Banco.getCon().getConnection());
         if (retorno == JFileChooser.APPROVE_OPTION)
         {
             caminho = chooser.getSelectedFile().getAbsolutePath();

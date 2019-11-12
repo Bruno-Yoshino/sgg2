@@ -27,6 +27,11 @@ public class Conexao
         if(connect==null)  return false;
         else return true;
     }
+    
+    public Connection getConnection()
+    {
+        return connect;
+    }
     public boolean manipular(String sql) // inserir, alterar,excluir
 	{
         try {

@@ -5,6 +5,8 @@ import CamadaNegocio.Funcionario;
 import Controller.OrcamentoController;
 import java.awt.Font;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -1440,7 +1442,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         }
         else
         {
-            oc.gerarPDF(txtCodigo.getText());
+            oc.gerarPDF(dcDataPedido.getData() ,Date.from(Instant.now()));
         }
     }//GEN-LAST:event_btnPDFActionPerformed
 

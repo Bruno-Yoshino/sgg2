@@ -112,11 +112,11 @@ public class LancarCompraController
         
         if(!flag)
         {
-            if(tipo == 1 && buscarTabelaProduto(Integer.parseInt(codigoC), Integer.parseInt(codigo)) && verificarEstoqueProduto(Integer.parseInt(codigo), Integer.parseInt(qtd)))
+            if(tipo == 1 && buscarTabelaProduto(Integer.parseInt(codigoC), Integer.parseInt(codigo)) && !verificarEstoqueProduto(Integer.parseInt(codigo), Integer.parseInt(qtd)))
             {
                 return 5;
             }
-            if(tipo == 2 && buscarTabelaFolha(Integer.parseInt(codigoC), Integer.parseInt(codigo)) && verificarEstoqueFolha(Integer.parseInt(codigo), Integer.parseInt(qtd)))
+            if(tipo == 2 && buscarTabelaFolha(Integer.parseInt(codigoC), Integer.parseInt(codigo)) && !verificarEstoqueFolha(Integer.parseInt(codigo), Integer.parseInt(qtd)))
             {
                 return 6;
             }

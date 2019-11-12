@@ -123,8 +123,8 @@ public class Compra
               " forn_codigo, comp_valortotal, comp_data, func_codigo) " +
               " VALUES ("+(f == null ? null : f.getCodigo())+", "+valort+", '"+data+"', "+func.getCodigo()+");";
         else
-            sql = "UPDATE compra\n" +
-                  "SET forn_codigo="+(f == null ? null : f.getCodigo())+", comp_valortotal="+valort+", comp_data='"+data+"', func_codigo="+func.getCodigo()+"\n" +
+            sql = "UPDATE compra " +
+                  "SET forn_codigo="+(f == null ? null : f.getCodigo())+", comp_valortotal="+valort+", comp_data='"+data+"', func_codigo="+func.getCodigo()+" " +
                   "WHERE comp_codigo="+codigo+";";
         return Banco.getCon().manipular(sql);
     }
@@ -356,6 +356,16 @@ public class Compra
         jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
         jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
         jTable.getColumnModel().getColumn(4).setPreferredWidth(250);
+    }
+    
+    public static void configuraModelAE(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
+    {
+        String colunas[] = new String [] {"Código",  "Valor Total", "Data", "Funcionario"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(250);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(250);
     }
     
     public static void configuraModelItem(JTable jTable, String texto) // Configurar Tabela Para consulta ou para Alterar

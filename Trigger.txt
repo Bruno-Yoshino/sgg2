@@ -37,7 +37,7 @@ Begin
 		delete from compra_folha where comp_codigo = mviews.comp_codigo and fo_codigo = mviews.fo_codigo;
 	end loop;
 	
-	return old;
+	return new;
 End;
 $$ Language plpgsql;
 
@@ -45,3 +45,49 @@ $$ Language plpgsql;
 -----  Trigger
 
 Create trigger compra_atualizar Before UPDATE or delete on compra for each row execute PROCEDURE AtualizarCompra();
+
+--- Function
+create function ExcluirCompra() returns TRIGGER as $$
+Declare 
+	mviews Record;
+	qtdIR Integer;
+	qtdItem Integer;
+	
+Begin
+	for mviews in select * from compra_produto where old.comp_codigo = comp_codigo loop
+		select pro_qtd into qtdItem from produto where pro_codigo = mviews.pro_codigo;
+		
+		select sum(pp.pp_qtd) into qtdIR from producao_produto pp, producao prod 
+		where prod.prod_codigo = pp.prod_codigo and (prod.prod_status = 2 or prod.prod_status = 3) and pp.pro_codigo = mviews.pro_codigo;
+		
+		if qtdIR is null then
+			qtdIR := 0;
+		end if;
+	
+		update produto set pro_qtd = (qtdItem - qtdIR - mviews.compp_qtd) where pro_codigo = mviews.pro_codigo;
+		
+		delete from compra_produto where comp_codigo = mviews.comp_codigo and pro_codigo = mviews.pro_codigo;
+		
+	end loop;
+	
+	for mviews in select * from compra_folha where old.comp_codigo = comp_codigo loop
+		select fo_qtd into qtdItem from folha where fo_codigo = mviews.fo_codigo;
+		
+		select sum(pf.pf_qtd) into qtdIR from producao_folha pf, producao prod 
+		where prod.prod_codigo = pf.prod_codigo and (prod.prod_status = 2 or prod.prod_status = 3) and pf.fo_codigo = mviews.fo_codigo;
+		
+		if qtdIR is null then
+			qtdIR := 0;
+		end if;
+
+		update folha set fo_qtd = (qtdItem - qtdIR - mviews.compf_qtd) where fo_codigo = mviews.fo_codigo;
+		
+		delete from compra_folha where comp_codigo = mviews.comp_codigo and fo_codigo = mviews.fo_codigo;
+	end loop;
+	
+	return old;
+End;
+$$ Language plpgsql;
+
+
+Create trigger compra_excluir After Delete on compra for each row execute PROCEDURE AtualizarCompra();

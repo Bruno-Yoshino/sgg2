@@ -563,11 +563,11 @@ public class OrcamentoController {
         }
     }
     
-    public void gerarPDF(String codigo)
+    public void gerarPDF(Date dataIni, Date dataFim)
     {
         Relatorio rel = new Relatorio();
         try {
-            rel.ImprimirRelatorioPDF(Orcamento.RelatorioOrcamento(codigo, 1, null, null), "Relatorios\\Orcamento.jasper");
+            rel.ImprimirRelatorioPDF(o.getCli().getCodigo(), dataIni, dataFim, "Relatorios\\Orcamento.jasper");
         } catch (JRException ex) {
             Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
         }
