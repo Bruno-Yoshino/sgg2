@@ -1263,6 +1263,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
                             if(oc.gravarOrcemntoServico())
                             {
                                     m.InformationMessage("Gravado com Sucesso", "Informação");
+                                    DocumentPDF();
                                     sc.limpar(jPanel1.getComponents());
                                     sc.limparTabela(jTable1);
                                     sc.limparTabela(jTable2);
@@ -1442,7 +1443,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         }
         else
         {
-            oc.gerarPDF(dcDataPedido.getData() ,Date.from(Instant.now()));
+            oc.gerarPDF(Integer.valueOf(txtCodigo.getText())); 
         }
     }//GEN-LAST:event_btnPDFActionPerformed
 
@@ -1480,6 +1481,18 @@ public class MovOrcamneto extends javax.swing.JDialog {
             default:
                 txtNumeracaoI.setEnabled(false); txtNumeracaoF.setEnabled(false); txtVia.setEnabled(false); txtOutros.setEnabled(false);
                 labelTexto1.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto2.setFont(new Font("Arial", Font.PLAIN, 14)); labelTexto3.setFont(new Font("Arial", Font.PLAIN, 14));
+        }
+    }
+    
+    private void DocumentPDF()
+    {
+        if(m.Pergunta("Deseja gererar o PDF?", "Informação") == JOptionPane.YES_OPTION)
+        {
+            try { 
+                oc.gerarPDF(oc.MaxCodigoOrc());
+            } catch (SQLException ex) {
+                Logger.getLogger(MovPedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

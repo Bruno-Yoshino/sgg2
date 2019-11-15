@@ -1,6 +1,7 @@
 package Controller;
 
 import CamadaLogica.ReadOnlyTableModel;
+import CamadaLogica.Relatorio;
 import CamadaNegocio.Caixa;
 import CamadaNegocio.Cliente;
 import CamadaNegocio.ContaReceber;
@@ -22,6 +23,7 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import net.sf.jasperreports.engine.JRException;
 import util.SystemControl;
 import util.Validacao;
 import util.mensagens;
@@ -348,6 +350,11 @@ public class PedidoController {
     public int ultimoCodigoInserido()
     {
         return new Pedido_Servico().buscarUltimoCodigo();
+    }
+    
+    public int MaxCodigoPed() throws SQLException
+    {
+        return new Pedido().UltimoCodigo();
     }
     
     public boolean verificaStatus(int codigo, int linha)//Pedido
@@ -683,6 +690,16 @@ public class PedidoController {
         cr.setDataV(dataV);
         cr.setValor(p.getValorTotal());
         cr.gravar();
+    }
+    
+    public void gerarPDF(int codigo)
+    {
+        Relatorio rel = new Relatorio();
+        try {
+            rel.ImprimirRelatorioPDFNumero(codigo, "Relatorios\\PedidoCodigo.jasper");
+        } catch (JRException ex) {
+            Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public static void configuraModelServico(JTable jTable) // Configurar Tabela Servico

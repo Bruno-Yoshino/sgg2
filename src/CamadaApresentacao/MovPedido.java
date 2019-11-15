@@ -248,6 +248,11 @@ public class MovPedido extends javax.swing.JDialog {
         btnPDF.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/pdf32.png"))); // NOI18N
         btnPDF.setText("Gerar PDF");
+        btnPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPDFActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
@@ -1102,25 +1107,22 @@ public class MovPedido extends javax.swing.JDialog {
                                     if(pc.gerarProducao())
                                     {
                                         m.InformationMessage("Producão gerado com Sucesso!", "Informação");
+                                        DocumentPDF();
+                                        sc.limpar(jPanel1.getComponents());
+                                        sc.limparTabela(jTable1);
+                                        sc.limparTabela(jTable2);
+                                        sc.HabilityComponents(jPanel1.getComponents(), false);
+                                        sc.Initialize(jPanel2.getComponents());
+                                        flag = true;
+                                        linha = -1;
+                                        lbEntrega.setVisible(false);
+                                        dcEntrega.setVisible(false);
                                     }
                                     else
                                     {
                                         m.ErroMessage("ERRO", "ERRO2");
                                     }
                                     //lancarConta();
-                                    
-                                    sc.limpar(jPanel1.getComponents());
-                                    sc.limparTabela(jTable1);
-                                    sc.limparTabela(jTable2);
-                                    sc.HabilityComponents(jPanel1.getComponents(), false);
-                                    sc.Initialize(jPanel2.getComponents());
-                                    flag = true;
-                                    linha = -1;
-                                    lbEntrega.setVisible(false);
-                                    dcEntrega.setVisible(false);
-//                                }
-//                                else
-//                                    m.ErroMessage("ERRO3", "ERRO3");
                             }
                             else
                             {
@@ -1322,6 +1324,18 @@ public class MovPedido extends javax.swing.JDialog {
        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText(), txtValorExtra.getText()));
     }//GEN-LAST:event_txtValorExtraActionPerformed
 
+    private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
+        if(txtCodigo.getText().equals("") || txtCodigo.getText().equals("0"))
+        {
+            m.InformationMessage("Localize um pedido!", "Atenção");
+            btnLocalizar.requestFocus();
+        }
+        else
+        {
+            pc.gerarPDF(Integer.valueOf(txtCodigo.getText())); 
+        }
+    }//GEN-LAST:event_btnPDFActionPerformed
+
     private void startDescricao()
     {
         txtNumeracaoI.setText("0");
@@ -1387,6 +1401,18 @@ public class MovPedido extends javax.swing.JDialog {
                 messegeDate.dispose();
                 pc.gerarContaReceber(data, txtCodigo.getText());
                 m.InformationMessage("Conta a receber Lançado com Sucesso!", "Informação");
+            }
+        }
+    }
+    
+    private void DocumentPDF()
+    {
+        if(m.Pergunta("Deseja gererar o PDF?", "Informação") == JOptionPane.YES_OPTION)
+        {
+            try { 
+                pc.gerarPDF(pc.MaxCodigoPed());
+            } catch (SQLException ex) {
+                Logger.getLogger(MovPedido.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

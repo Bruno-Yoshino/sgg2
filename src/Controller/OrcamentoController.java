@@ -563,14 +563,19 @@ public class OrcamentoController {
         }
     }
     
-    public void gerarPDF(Date dataIni, Date dataFim)
+    public void gerarPDF(int codigo)
     {
         Relatorio rel = new Relatorio();
         try {
-            rel.ImprimirRelatorioPDF(o.getCli().getCodigo(), dataIni, dataFim, "Relatorios\\Orcamento.jasper");
+            rel.ImprimirRelatorioPDFNumero(codigo, "Relatorios\\OrcamentoCodigo.jasper");
         } catch (JRException ex) {
             Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public int MaxCodigoOrc() throws SQLException
+    {
+        return new Orcamento().UltimoCodigo();
     }
     
     public static void configuraModelServico(JTable jTable) // Configurar Tabela Servico

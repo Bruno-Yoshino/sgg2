@@ -127,7 +127,7 @@ public class Relatorio {
     }
     
     public void ImprimirRelatorioPDF(int codigoCli, Date dataIni, Date dataFim, String ArqNome) throws JRException
-    {
+    {//Passando pelo parametro. Orcamento e Pedido Only
         JFileChooser chooser = new JFileChooser();
         String caminho = "";
         File file = null;
@@ -136,6 +136,37 @@ public class Relatorio {
         parametros.put("clienteCodigo", codigoCli);
         parametros.put("dataIni", dataIni);
         parametros.put("dataFim", dataFim);
+        
+        String jasperPrint = JasperFillManager.fillReportToFile(ArqNome, parametros, Banco.getCon().getConnection());
+        if (retorno == JFileChooser.APPROVE_OPTION)
+        {
+            caminho = chooser.getSelectedFile().getAbsolutePath();
+        }
+        if(!caminho.equals(""))
+        {
+            JasperExportManager.exportReportToPdfFile(jasperPrint, caminho+".pdf");
+            //JasperExportManager.exportReportToXmlFile(jasperPrint, caminho+".xml", true);
+            file = new File(caminho);
+            try
+            {
+                //perguntar se deseja ver o pdf
+                java.awt.Desktop.getDesktop().open( new File(caminho+".pdf"));
+                //java.awt.Desktop.getDesktop().open( new File(caminho+".xml"));
+            }
+            catch (IOException ex)
+            {
+            }
+        }
+    }
+    
+    public void ImprimirRelatorioPDFNumero(int codigo, String ArqNome) throws JRException
+    {//Passando pelo parametro. Orcamento e Pedido Only
+        JFileChooser chooser = new JFileChooser();
+        String caminho = "";
+        File file = null;
+        int retorno = chooser.showSaveDialog(null);
+        HashMap parametros = new HashMap();
+        parametros.put("codigo", codigo);
         
         String jasperPrint = JasperFillManager.fillReportToFile(ArqNome, parametros, Banco.getCon().getConnection());
         if (retorno == JFileChooser.APPROVE_OPTION)
