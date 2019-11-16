@@ -190,4 +190,34 @@ public class Relatorio {
         }
     }
     
+    public void ImprimirRelatorio(int codigoCli, Date dataIni, Date dataFim, String ArqNome, String TituloRelatorio) throws JRException
+    {
+      //implementação da interface JRDataSource para DataSource ResultSet
+      //chamando o relatório
+        HashMap parametros = new HashMap();
+        parametros.put("clienteCodigo", codigoCli);
+        parametros.put("dataIni", dataIni);
+        parametros.put("dataFim", dataFim);
+        
+        String jasperPrint = JasperFillManager.fillReportToFile(ArqNome, parametros, Banco.getCon().getConnection());
+      JasperViewer viewer = new JasperViewer(jasperPrint, false, false);
+      viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);//maximizado
+      viewer.setTitle(TituloRelatorio);//titulo do relatório
+      viewer.setVisible(true);
+    }
+    
+    public void ImprimirRelatorioNumero(int codigo, String ArqNome, String TituloRelatorio) throws JRException
+    {
+      //implementação da interface JRDataSource para DataSource ResultSet
+      //chamando o relatório
+        HashMap parametros = new HashMap();
+        parametros.put("codigo", codigo);
+        
+        String jasperPrint = JasperFillManager.fillReportToFile(ArqNome, parametros, Banco.getCon().getConnection());
+      JasperViewer viewer = new JasperViewer(jasperPrint, false, false);
+      viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);//maximizado
+      viewer.setTitle(TituloRelatorio);//titulo do relatório
+      viewer.setVisible(true);
+    }
+    
 }

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2019-11-15T19:20:11 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AjusteProduto" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8c1cc705-0402-4167-931a-38a68419d0a0">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SGGAdapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[select * from produto, ajuste_produto, funcionario, empresa, servico]]>
+	</queryString>
+	<field name="pro_codigo" class="java.lang.Integer"/>
+	<field name="pro_nome" class="java.lang.String"/>
+	<field name="pro_tipo" class="java.lang.String"/>
+	<field name="pro_status" class="java.lang.Boolean"/>
+	<field name="pro_qtd" class="java.lang.Integer"/>
+	<field name="pro_caminho" class="java.lang.String"/>
+	<field name="ap_codigo" class="java.lang.Integer"/>
+	<field name="serv_codigo" class="java.lang.Integer"/>
+	<field name="func_codigo" class="java.lang.Integer"/>
+	<field name="ap_qtd" class="java.lang.Integer"/>
+	<field name="ap_data" class="java.sql.Date"/>
+	<field name="ap_flag" class="java.lang.Boolean"/>
+	<field name="ap_obs" class="java.lang.String"/>
+	<field name="cid_codigo" class="java.lang.Integer"/>
+	<field name="func_nome" class="java.lang.String"/>
+	<field name="func_login" class="java.lang.String"/>
+	<field name="func_senha" class="java.lang.String"/>
+	<field name="func_nivel" class="java.lang.Integer"/>
+	<field name="func_cpf" class="java.lang.String"/>
+	<field name="func_rg" class="java.lang.String"/>
+	<field name="func_orgemi" class="java.lang.String"/>
+	<field name="func_endereco" class="java.lang.String"/>
+	<field name="func_numero" class="java.lang.Integer"/>
+	<field name="func_complemento" class="java.lang.String"/>
+	<field name="func_telefone" class="java.lang.String"/>
+	<field name="func_celular" class="java.lang.String"/>
+	<field name="func_caminho" class="java.lang.String"/>
+	<field name="func_dtadimicao" class="java.sql.Date"/>
+	<field name="func_dtdemissao" class="java.sql.Date"/>
+	<field name="func_cep" class="java.lang.String"/>
+	<field name="emp_nome" class="java.lang.String"/>
+	<field name="emp_cnpj" class="java.lang.String"/>
+	<field name="emp_endereco" class="java.lang.String"/>
+	<field name="emp_numero" class="java.lang.Integer"/>
+	<field name="emp_telefone" class="java.lang.String"/>
+	<field name="emp_caminho" class="java.lang.String"/>
+	<field name="emp_email" class="java.lang.String"/>
+	<field name="emp_cep" class="java.lang.String"/>
+	<field name="serv_nome" class="java.lang.String"/>
+	<field name="serv_status" class="java.lang.Boolean"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="72" splitType="Stretch">
+			<staticText>
+				<reportElement x="156" y="32" width="395" height="40" uuid="5f751054-3365-459b-b278-ce4706bdb39b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="25"/>
+				</textElement>
+				<text><![CDATA[Relatório de Ajuste de Produto]]></text>
+			</staticText>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="2" y="0" width="148" height="72" uuid="1b8d9226-f194-4d63-991c-5b4c435d990e"/>
+				<imageExpression><![CDATA[$F{emp_caminho}]]></imageExpression>
+			</image>
+			<textField pattern="d/M/yyyy">
+				<reportElement x="433" y="0" width="119" height="22" uuid="00baf43b-8459-462d-af75-a74d091368a4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="0" width="83" height="22" uuid="43c9d627-6951-420f-9b6a-f62cedd110a4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Data emissão:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="190" splitType="Stretch">
+			<staticText>
+				<reportElement x="156" y="5" width="140" height="22" uuid="4ae6f2dc-2323-4964-bd7b-54bde57366bf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Funcionario responsavel:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="5" width="50" height="22" uuid="809d0c3c-47c7-4078-bc1e-04eae5be14b1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Código:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="77" width="75" height="22" uuid="af7359e2-0f3c-46c6-90bd-71194d023479"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Quantidade:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="77" width="30" height="22" uuid="f693078e-4fae-455f-88f5-69fb30858b2f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Tipo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="77" width="35" height="22" uuid="6f133aa5-9282-4830-baf5-61a5e5565c7b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="119" width="75" height="22" uuid="8d778e0e-2a94-464e-9a6a-f52f6cf5aaac"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Observação:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="40" width="55" height="22" uuid="62f459b8-23bf-475d-a9fe-def147c4307e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Produto:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="183" width="550" height="1" uuid="bc1a5809-ae25-4978-bf28-0d3758457eb1"/>
+			</line>
+			<textField>
+				<reportElement x="296" y="5" width="255" height="22" uuid="3000eb60-1ec9-4de8-b249-c1d748f228f5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{func_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="55" y="5" width="94" height="22" uuid="3b7c9042-8c41-4af3-833e-c8d9dca45bcf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ap_codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="40" width="487" height="22" uuid="81a331d5-d41b-414f-87b6-34716c4a0f34"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pro_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="77" width="100" height="23" uuid="e337eb5d-486c-4754-9f7a-cf354993c34e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ap_qtd}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="415" y="77" width="100" height="21" uuid="dee14007-9197-423c-8147-76e841347d34"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ap_data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="119" width="471" height="61" uuid="3244439a-3324-4e8e-bb55-0b5523c4f3cd"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ap_obs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="77" width="125" height="23" uuid="f5d06012-09b3-49c3-963c-804d3776e1f7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ap_flag} ? "Adicionar" : "Retirar"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="32" splitType="Stretch">
+			<textField>
+				<reportElement x="460" y="0" width="100" height="30" uuid="88fbd4c4-9f14-4143-833c-6404a71e4b95"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

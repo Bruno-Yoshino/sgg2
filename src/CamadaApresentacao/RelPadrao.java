@@ -1,7 +1,13 @@
 package CamadaApresentacao;
 
 import CamadaLogica.Relatorio;
+import CamadaNegocio.AjustarFolha;
+import CamadaNegocio.AjustarProduto;
+import CamadaNegocio.Pedido;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
 import util.SystemControl;
 
 /**
@@ -22,7 +28,7 @@ public class RelPadrao extends javax.swing.JDialog {
     public RelPadrao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+        setLocationRelativeTo(null);
         txtValor.setVisible(true);
         lbData.setVisible(false);
         dataInicio.setVisible(false);
@@ -47,6 +53,7 @@ public class RelPadrao extends javax.swing.JDialog {
         dataInicio = new br.com.marciorl.beans.DateChooser();
         lbA = new javax.swing.JLabel();
         dataFim = new br.com.marciorl.beans.DateChooser();
+        lbTexto1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -73,6 +80,9 @@ public class RelPadrao extends javax.swing.JDialog {
         lbA.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lbA.setText("a");
 
+        lbTexto1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lbTexto1.setText("Opção:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -81,28 +91,34 @@ public class RelPadrao extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lbTexto)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbTexto)
+                            .addComponent(lbTexto1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtValor))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lbData)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbA)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(cbOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtValor))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(lbData)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbA)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cbOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbTexto1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbTexto)
@@ -119,6 +135,11 @@ public class RelPadrao extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Sair.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/relatorio.png"))); // NOI18N
         jButton2.setText("Gerar Relatorio");
@@ -193,13 +214,17 @@ public class RelPadrao extends javax.swing.JDialog {
         }        
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public void configuraOpcoes(String[] vetOpcoes, int tl, int posDefault, String tabela)
     {
         this.tl = tl;
         this.vetOpcoes = vetOpcoes;
         this.posDefault = posDefault;
         this.tabela = tabela;
-        this.setTitle("Localiza " + tabela);
+        this.setTitle(tabela);
         for (int i = 0; i < tl; i++)
         {
             cbOpcao.addItem(vetOpcoes[i]);
@@ -216,6 +241,8 @@ public class RelPadrao extends javax.swing.JDialog {
             txtValor.setVisible(false);
             lbData.setVisible(true);
             dataInicio.setVisible(true);
+            dataFim.setVisible(false);
+            lbA.setVisible(false);
         }
         else
         {
@@ -241,21 +268,28 @@ public class RelPadrao extends javax.swing.JDialog {
     
     private void AjusteProduto(String op)
     {
-        /*
+        
         try {
             if(op.equals("PDF"))
-                rel.ImprimirRelatorioPDF(Pedido.RelatorioPedido(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\Pedido.jasper");
+                rel.ImprimirRelatorioPDF(AjustarProduto.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\AjusteProduto.jasper");
             else
-                rel.ImprimirRelatorio(Pedido.RelatorioPedido(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\Pedido.jasper", "Relatorio Pedido");
+                rel.ImprimirRelatorio(AjustarProduto.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\AjusteProduto.jasper", "Relatorio Ajuste Produto");
         } catch (JRException ex) {
-            Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(""+ex.toString());
         }
-        */
+        
     }
     
     private void AjusteFolha(String op)
     {
-        
+        try {
+            if(op.equals("PDF"))
+                rel.ImprimirRelatorioPDF(AjustarFolha.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\AjusteFolha.jasper");
+            else
+                rel.ImprimirRelatorio(AjustarFolha.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\AjusteFolha.jasper", "Relatorio Ajuste Folha");
+        } catch (JRException ex) {
+            System.out.println(""+ex.toString());
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -269,6 +303,7 @@ public class RelPadrao extends javax.swing.JDialog {
     private javax.swing.JLabel lbA;
     private javax.swing.JLabel lbData;
     private javax.swing.JLabel lbTexto;
+    private javax.swing.JLabel lbTexto1;
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }

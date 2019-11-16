@@ -147,6 +147,7 @@ public class PedidoController {
             temp.get(linha).setDescricao(descricao);
             temp.get(linha).setServ(ser);
             temp.get(linha).setValor(v.ConverteNumeroReal(valor));
+            temp.get(linha).setValorExtra(v.ConverteNumeroReal(valorE));
         }
         p.setLista(temp);
         return 0;
@@ -524,11 +525,11 @@ public class PedidoController {
     {
         Pedido temp = p.buscar(codigo);
         p = temp == null ? new Pedido() : temp;
-        System.out.println(p.getCodigo());
-        System.out.println(p.getPedido());
-        System.out.println(p.getValorTotal());
-        System.out.println(p.getCli().getCodigo());
-        System.out.println(p.getEntrega());
+//        System.out.println(p.getCodigo());
+//        System.out.println(p.getPedido());
+//        System.out.println(p.getValorTotal());
+//        System.out.println(p.getCli().getCodigo());
+//        System.out.println(p.getEntrega());
     }
     
     public void carregarTabelaServico(JTable tabela)
@@ -696,7 +697,7 @@ public class PedidoController {
     {
         Relatorio rel = new Relatorio();
         try {
-            rel.ImprimirRelatorioPDFNumero(codigo, "Relatorios\\PedidoCodigo.jasper");
+            rel.ImprimirRelatorioPDFNumero(codigo, "Relatorios\\pedidoCodigo.jasper");
         } catch (JRException ex) {
             Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
         }

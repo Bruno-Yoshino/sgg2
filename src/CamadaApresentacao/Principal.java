@@ -298,6 +298,9 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem22 = new javax.swing.JMenuItem();
         Relatorio = new javax.swing.JMenu();
         jMenuItem32 = new javax.swing.JMenuItem();
+        jMenuItem36 = new javax.swing.JMenuItem();
+        jMenuItem34 = new javax.swing.JMenuItem();
+        jMenuItem35 = new javax.swing.JMenuItem();
         Configuracao = new javax.swing.JMenu();
         jMenuItem29 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
@@ -909,13 +912,37 @@ public class Principal extends javax.swing.JFrame {
 
         Relatorio.setText("Relatorio");
 
-        jMenuItem32.setText("Cliente");
+        jMenuItem32.setText("Ajuste Folha");
         jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem32ActionPerformed(evt);
             }
         });
         Relatorio.add(jMenuItem32);
+
+        jMenuItem36.setText("Ajuste Produto");
+        jMenuItem36.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem36ActionPerformed(evt);
+            }
+        });
+        Relatorio.add(jMenuItem36);
+
+        jMenuItem34.setText("Orçamento");
+        jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem34ActionPerformed(evt);
+            }
+        });
+        Relatorio.add(jMenuItem34);
+
+        jMenuItem35.setText("Pedido");
+        jMenuItem35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem35ActionPerformed(evt);
+            }
+        });
+        Relatorio.add(jMenuItem35);
 
         jMenuBar1.add(Relatorio);
 
@@ -1354,16 +1381,6 @@ public class Principal extends javax.swing.JFrame {
 //        System.out.println("sssss");
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
-    private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
-        RelatorioPadrao frm = new RelatorioPadrao(null, false);
-        String[] vet = new String[3];
-        vet[0] = "Nome";
-        vet[1] = "CPF";
-        vet[2] = "CNPJ";
-        frm.configuraOpcoes(vet, 3, 0, "Cliente");
-        frm.setVisible(true);
-    }//GEN-LAST:event_jMenuItem32ActionPerformed
-
     private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
         Desktop desktop = Desktop.getDesktop();
         String uriString = "https://www.youtube.com/watch?v=C_laSSuC8jI";
@@ -1373,11 +1390,44 @@ public class Principal extends javax.swing.JFrame {
         } catch (URISyntaxException | IOException e) {
             
         }
-        
-        /*Desenvolvimento e ajuste de Relatórios.
-Correção de Bug.
-Desenvolvimento, correção e melhoria no Manual do Usuário.*/
+
     }//GEN-LAST:event_jMenuItem33ActionPerformed
+
+    private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
+        RelPadraoPed_Orc frm = new RelPadraoPed_Orc(this, false);
+        String[] vet = new String[2];
+        vet[0] = "Número";
+        vet[1] = "Periodo e Nome";
+        frm.configuraOpcoes(vet, 2, 0, "Orçamento");
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem34ActionPerformed
+
+    private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
+        RelPadraoPed_Orc frm = new RelPadraoPed_Orc(this, false);
+        String[] vet = new String[2];
+        vet[0] = "Número";
+        vet[1] = "Periodo e Nome";
+        frm.configuraOpcoes(vet, 2, 0, "Pedido");
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem35ActionPerformed
+
+    private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
+        RelPadrao frm = new RelPadrao(this, false);
+        String[] vet = new String[2];
+        vet[0] = "Periodo";
+        vet[1] = "Data";
+        frm.configuraOpcoes(vet, 2, 0, "AjusteEstoqueFolha");
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem32ActionPerformed
+
+    private void jMenuItem36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem36ActionPerformed
+        RelPadrao frm = new RelPadrao(this, false);
+        String[] vet = new String[2];
+        vet[0] = "Periodo";
+        vet[1] = "Data";
+        frm.configuraOpcoes(vet, 2, 0, "AjusteEstoqueProduto");
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem36ActionPerformed
 
 
     private void AccessLevel(int soma)
@@ -1522,6 +1572,9 @@ Desenvolvimento, correção e melhoria no Manual do Usuário.*/
     private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem32;
     private javax.swing.JMenuItem jMenuItem33;
+    private javax.swing.JMenuItem jMenuItem34;
+    private javax.swing.JMenuItem jMenuItem35;
+    private javax.swing.JMenuItem jMenuItem36;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2019-11-15T15:27:51 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subPed" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="30daff83-5e6f-4cb8-99ac-34730d6e0ef5">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SGGAdapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="numero" class="java.lang.Integer"/>
+	<parameter name="sequence" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select * from  pedido_servico_detalhe psd, detalhe_serv ds
+where psd.ps_sequence = $P{sequence} and psd.ds_codigo = ds.ds_codigo and psd.pe_codigo = $P{numero}]]>
+	</queryString>
+	<field name="ps_sequence" class="java.lang.Integer"/>
+	<field name="pe_codigo" class="java.lang.Integer"/>
+	<field name="serv_codigo" class="java.lang.Integer"/>
+	<field name="ds_codigo" class="java.lang.Integer"/>
+	<field name="psd_numeracaoini" class="java.lang.String"/>
+	<field name="psd_numeracaofim" class="java.lang.String"/>
+	<field name="psd_vias" class="java.lang.Integer"/>
+	<field name="psd_outros" class="java.lang.String"/>
+	<field name="COLUMN_9" class="java.lang.Integer"/>
+	<field name="ds_descricao" class="java.lang.String"/>
+	<field name="ds_status" class="java.lang.Boolean"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="1" width="549" height="18" uuid="381b3144-bc96-42cc-bdfa-391040ddba0a"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ds_descricao}.equals("Numeração") ? "Numeração de"+$F{psd_numeracaoini} + " a " +$F{psd_numeracaofim} : $F{ds_descricao}.equals("Vias") ? "Vias: " + $F{psd_vias} : $F{ds_descricao}.equals("Outros") ? "Outros: " + $F{psd_outros} : $F{ds_descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="11" splitType="Stretch">
+			<line>
+				<reportElement x="2" y="5" width="551" height="1" uuid="466f715e-7089-45ac-aa80-68f6146463a6"/>
+			</line>
+		</band>
+	</columnFooter>
+</jasperReport>

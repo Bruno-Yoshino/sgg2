@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import util.SystemControl;
+import util.Validacao;
 import util.mensagens;
 
 /**
@@ -28,11 +29,12 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
     boolean jtableEditavel;
     private final Relatorio rel = new Relatorio();
     private Cliente cli;
+    private final util.Validacao v = new Validacao();
 
     public RelPadraoPed_Orc(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+        setLocationRelativeTo(null);
         txtValor.setVisible(true);
         lbData.setVisible(true);
         dataInicio.setVisible(true);
@@ -105,6 +107,7 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addComponent(lbData)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -112,11 +115,11 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
                         .addComponent(lbA)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbTexto)
-                            .addComponent(lbTexto1))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbTexto1)
+                            .addComponent(lbTexto))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -125,17 +128,17 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtValor)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnlocCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
+                                .addComponent(btnlocCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(17, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbTexto1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(lbTexto1)
+                    .addComponent(cbOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, 22, Short.MAX_VALUE))
+                .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lbTexto)
@@ -153,6 +156,11 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Sair.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/relatorio.png"))); // NOI18N
         jButton2.setText("Gerar Relatorio");
@@ -221,8 +229,8 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
         }while(valor == null);
         switch(tabela)
         {
-            case "Orcamento": Orcamento(""+valor);  break;
-
+            case "Orçamento": Orcamento(""+valor);  break;
+            case "Pedido" : Pedido(""+valor); break;
         }   
     }
     else
@@ -255,6 +263,10 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
             consCliente.dispose();
         }
     }//GEN-LAST:event_btnlocClienteActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public void configuraOpcoes(String[] vetOpcoes, int tl, int posDefault, String tabela)
     {
@@ -300,9 +312,27 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
     {
         try {
             if(op.equals("PDF"))
-                rel.ImprimirRelatorioPDF(Orcamento.RelatorioOrcamento(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\Orcamento.jasper");
+            {
+                switch(cbOpcao.getSelectedIndex())
+                {
+                    case 1:
+                        rel.ImprimirRelatorioPDF(cli.getCodigo(), dataInicio.getData(), dataFim.getData(), "Relatorios\\Orcamento.jasper");
+                        break;
+                    case 0:
+                        rel.ImprimirRelatorioPDFNumero(v.ConverteNumeroInteiro(txtValor.getText()), "Relatorios\\OrcamentoCodigo.jasper");
+                        break;
+                }
+            }
             else
-                rel.ImprimirRelatorio(Orcamento.RelatorioOrcamento(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\Orcamento.jasper", "Relatorio Orçamento");
+                switch(cbOpcao.getSelectedIndex())
+                {
+                    case 1:
+                        rel.ImprimirRelatorio(cli.getCodigo(), dataInicio.getData(), dataFim.getData(), "Relatorios\\Orcamento.jasper", "Relatorio Orçamento");
+                        break;
+                    case 0:
+                        rel.ImprimirRelatorioNumero(v.ConverteNumeroInteiro(txtValor.getText()), "Relatorios\\OrcamentoCodigo.jasper", "Relatorio Orçamento");
+                        break;
+                }
         } catch (JRException ex) {
             Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -312,9 +342,27 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
     {
         try {
             if(op.equals("PDF"))
-                rel.ImprimirRelatorioPDF(Pedido.RelatorioPedido(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\Pedido.jasper");
+            {
+                switch(cbOpcao.getSelectedIndex())
+                {
+                    case 1:
+                        rel.ImprimirRelatorioPDF(cli.getCodigo(), dataInicio.getData(), dataFim.getData(), "Relatorios\\pedido.jasper");
+                        break;
+                    case 0:
+                        rel.ImprimirRelatorioPDFNumero(v.ConverteNumeroInteiro(txtValor.getText()), "Relatorios\\pedidoCodigo.jasper");
+                        break;
+                }
+            }
             else
-                rel.ImprimirRelatorio(Pedido.RelatorioPedido(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\Pedido.jasper", "Relatorio Pedido");
+                switch(cbOpcao.getSelectedIndex())
+                {
+                    case 1:
+                        rel.ImprimirRelatorio(cli.getCodigo(), dataInicio.getData(), dataFim.getData(), "Relatorios\\pedido.jasper", "Relatorio Pedido");
+                        break;
+                    case 0:
+                        rel.ImprimirRelatorioNumero(v.ConverteNumeroInteiro(txtValor.getText()), "Relatorios\\pedidoCodigo.jasper", "Relatorio Pedido");
+                        break;
+                }
         } catch (JRException ex) {
             Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
         }

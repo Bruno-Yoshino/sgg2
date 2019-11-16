@@ -130,7 +130,7 @@ public class AjustarProduto {
     {
         String sql;
         sql = "SELECT ap.ap_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.ap_qtd, ap.ap_data, ap.ap_flag, ap.ap_obs " +
-              "FROM ajuste_produto ap, servico s, folha p, funcionario func "
+              "FROM ajuste_produto ap, servico s, produto p, funcionario func "
             + "Where ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo "
             + "and ap.ap_codigo = "+i+"";
         ResultSet rs=Banco.getCon().consultar(sql);
@@ -155,7 +155,7 @@ public class AjustarProduto {
         if (valor.equals(""))
         {
             query = "SELECT ap.ap_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.ap_qtd, ap.ap_data, ap.ap_flag, ap.ap_obs " +
-                    "FROM ajuste_produto ap, servico s, folha p, funcionario func "
+                    "FROM ajuste_produto ap, servico s, produto p, funcionario func "
                     + "Where ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo "
                     + "Order by ap.ap_data";
         }
@@ -175,23 +175,48 @@ public class AjustarProduto {
                 case 0:
                 {
                     query = "SELECT ap.ap_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.ap_qtd, ap.ap_data, ap.ap_flag, ap.ap_obs " +
-                            "FROM ajuste_produto ap, servico s, folha p, funcionario func "
+                            "FROM ajuste_produto ap, servico s, produto p, funcionario func "
                             + "Where ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo and func.func_nome ilike '%"+valor+"%' "
                             + "Order by ap.ap_data";
                     break;
                 }
                 case 1:
                     query = "SELECT ap.ap_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.ap_qtd, ap.ap_data, ap.ap_flag, ap.ap_obs " +
-                            "FROM ajuste_produto ap, servico s, folha p, funcionario func "
+                            "FROM ajuste_produto ap, servico s, produto p, funcionario func "
                             + "Where ap.ap_data = '"+data1+"' and ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo "
                             + "Order by ap.ap_data";
                     break;
                 case 2:
                     query = "SELECT ap.ap_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.ap_qtd, ap.ap_data, ap.ap_flag, ap.ap_obs " +
-                            "FROM ajuste_produto ap, servico s, folha p, funcionario func "
+                            "FROM ajuste_produto ap, servico s, produto p, funcionario func "
                             + "Where ap.ap_data BETWEEN '"+data1+"' and '"+data2+"' and  ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo "
                             + "Order by ap.ap_data";
                     break;
+            }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
+    public static ResultSet Relatorio(String valor, int tipo, Date dataI, Date dataF)
+    {
+        String query = null;
+        switch (tipo)
+        {
+            case 0:// Periodo
+            {
+                query = "SELECT * " +
+                            "FROM ajuste_produto ap, servico s, produto p, funcionario func, empresa emp "
+                            + "Where ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo and ap.ap_data between  '"+dataI+"'  and  '"+dataF+"'  "
+                            + "Order by ap.ap_data";
+                break;
+            }
+            case 1:// Data
+            {
+                query = "SELECT * " +
+                            "FROM ajuste_produto ap, servico s, produto p, funcionario func, empresa emp "
+                            + "Where ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo and ap.ap_data = '"+dataI+"'  "
+                            + "Order by ap.ap_data";
+                break;
             }
         }
         return Banco.getCon().retornaResultSet(query);

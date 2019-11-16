@@ -198,6 +198,31 @@ public class AjustarFolha {
         return Banco.getCon().retornaResultSet(query);
     }
     
+     public static ResultSet Relatorio(String valor, int tipo, Date dataI, Date dataF)
+    {
+        String query = null;
+        switch (tipo)
+        {
+            case 0:// Periodo
+            {
+                query = "SELECT * " +
+                            "FROM ajuste_folha af, servico s, folha f, funcionario func, empresa emp "
+                            + "Where af.serv_codigo = s.serv_codigo and af.fo_codigo = f.fo_codigo and af.func_codigo = func.func_codigo and af.af_data between  '"+dataI+"'  and  '"+dataF+"'  "
+                            + "Order by af.af_data";
+                break;
+            }
+            case 1:// Data
+            {
+                query = "SELECT * " +
+                            "FROM ajuste_folha af, servico s, folha f, funcionario func, empresa emp "
+                            + "Where af.serv_codigo = s.serv_codigo and af.fo_codigo = f.fo_codigo and af.func_codigo = func.func_codigo and af.af_data = '"+dataI+"'  "
+                            + "Order by af.af_data";
+                break;
+            }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
     public static void configuraModel(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
     {//int codigo, Servico serv, Folha f, int qtd, Date data, boolean flag, String obs, Funcionario func
         String colunas[] = new String [] {"Código", "Servico", "Folha", "Qtd", "Data", "Tipo", "Obs", "Funcionario"};
