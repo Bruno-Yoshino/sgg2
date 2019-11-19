@@ -336,13 +336,13 @@ public class MovCaixaFechar extends javax.swing.JDialog {
         txtValorReal.setBackground(c);
         if(c.equals(Color.yellow))
         {
-            m.WarmingMessage("Esta sobrando Dinheiro no caixa!", "Atenção");
+            m.InformationMessage("Esta sobrando Dinheiro no caixa!", "Atenção");
         }
         else
         {
             if(c.equals(Color.red))
             {
-                m.WarmingMessage("Esta faltando dinheiro no Caixa!", "Atenção");
+                m.InformationMessage("Esta faltando dinheiro no Caixa!", "Atenção");
             } 
         }
     }//GEN-LAST:event_txtValorCaixaFocusLost
@@ -366,7 +366,7 @@ public class MovCaixaFechar extends javax.swing.JDialog {
             default:
                 if(cc.fechar())
                 {
-                    m.InformationMessage("O Caixa fechado com sucesso!", "Atenção"); 
+                    m.InformationMessage("Caixa fechado com sucesso!", "Atenção"); 
                     btnSairActionPerformed(null);
                 }
                 else

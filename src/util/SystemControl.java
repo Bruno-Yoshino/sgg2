@@ -63,6 +63,22 @@ public class SystemControl
         return strDate;
     }
     
+    public final String getMes(Date data)//Retornar Somente a Data
+    {
+        String strDate;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM");
+        strDate = dateFormat.format(data); 
+        return strDate;
+    }
+    
+    public final String getAno(Date data)//Retornar Somente a Data
+    {
+        String strDate;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+        strDate = dateFormat.format(data); 
+        return strDate;
+    }
+    
     public final java.sql.Date DateForSql(Date data)//Converter a Data para Sql Data
     {
         return java.sql.Date.valueOf(DataOnly(data));

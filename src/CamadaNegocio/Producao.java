@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CamadaNegocio;
 
 import CamadaLogica.Banco;
@@ -256,6 +251,24 @@ public class Producao
                      + " WHERE pp.prod_codigo = "+codigoP+" and pp.pro_codigo = p.pro_codigo ";
 
         return Banco.getCon().retornaResultSet(query);
+    }
+    
+    public int buscarQTD()
+    {
+        String sql = "SELECT count(*) "
+                     + " FROM producao "
+                     + " WHERE prod_status != 1 ";
+
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try {
+            if(rs.next())
+            {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Producao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
     
     public boolean VerificaItensP(int codigo)

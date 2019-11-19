@@ -5,6 +5,8 @@ import CamadaNegocio.ContaPagar;
 import CamadaNegocio.ContaReceber;
 import CamadaNegocio.Empresa;
 import CamadaNegocio.Funcionario;
+import CamadaNegocio.Producao;
+import CamadaNegocio.TipoConta;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -20,6 +22,8 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
+import util.mensagens;
 
 /*
 Important Data Base
@@ -180,6 +184,7 @@ public class Principal extends javax.swing.JFrame {
     private final java.awt.Frame log;
     private ClassHome ch;
     private Clip clip;
+    private mensagens m = new mensagens();
     
     public Principal(java.awt.Frame parent, boolean modal, Funcionario func, Empresa emp) {
         //super(parent, modal);
@@ -205,19 +210,8 @@ public class Principal extends javax.swing.JFrame {
         ClassHome.configuraModel(jTable1);
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
         carregaTabela();
+        
         //ここで最初のリロード、残りはそれぞれの処理を終えた後。
-       
-//        try {
-//            //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/Rekotyoku.wav").getAbsoluteFile());
-//            //AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/05 - Eight Minutes.wav").getAbsoluteFile());
-//            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("D:/SGG/Oda Nobuna no Yabou OST - Kishuu.wav").getAbsoluteFile());
-//            clip = AudioSystem.getClip();
-//            clip.open(audioInputStream);
-//            clip.start();
-//            clip.loop(Clip.LOOP_CONTINUOUSLY);
-//        } catch(IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
-//            System.out.println("Error with playing sound.");
-//        }
         
     }
 
@@ -312,6 +306,11 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Home");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1378,7 +1377,6 @@ public class Principal extends javax.swing.JFrame {
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         sc.limparTabela(jTable1);
         carregaTabela();     
-//        System.out.println("sssss");
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
@@ -1429,6 +1427,10 @@ public class Principal extends javax.swing.JFrame {
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem36ActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        m.InformationMessage("Ola "+funcL.getNome()+".\n Existe no total "+new Producao().buscarQTD()+" pedido(s) que estão no modo de Aguardando, Produção e Pausado." , "Informação");
+    }//GEN-LAST:event_formWindowOpened
+
 
     private void AccessLevel(int soma)
     {  
@@ -1468,6 +1470,9 @@ public class Principal extends javax.swing.JFrame {
     private void carregaTabela()
     {
         sc.limparTabela(jTable1);
+        Date data;
+        String mes = "00", temp;
+        int x = 0;
         switch(jComboBox1.getSelectedIndex())
         {
             case 0:
@@ -1477,10 +1482,27 @@ public class Principal extends javax.swing.JFrame {
                 {//"Nome", "Valor", "Data Vencimento"
                     while(rs.next())
                     {
-                        model.addRow(new Object[]{
-                        rs.getString(1) != null ? rs.getString(1) : "Compra" ,//Nome Clietne
-                        rs.getDouble(3),
-                        rs.getDate(4)
+                        data = rs.getDate(3);
+                        
+                        if(!mes.equals(sc.getMes(data)))
+                        {
+                            if(x != 0)
+                            {
+                                model.addRow(new Object[]{"", "  ", ""});
+                            }
+                            mes = sc.getMes(data);
+                            model.addRow(new Object[]{buscaMes(mes), " ---------------- ", sc.getAno(data)});
+                            x = 1;
+                        }
+                        temp = new TipoConta().buscarCodigo(rs.getInt(1)).getTipo();
+                        if(temp == null)
+                        {
+                            temp = "Compra";
+                        }
+                        model.addRow(new Object[]{//tc.tc_codigo, cp_valorc, cp_datavencimento
+                        temp ,//Nome Clietne
+                        rs.getDouble(2),
+                        rs.getDate(3)
                         });
                     }
                 } catch (SQLException ex) {
@@ -1505,6 +1527,25 @@ public class Principal extends javax.swing.JFrame {
                     Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
+        }
+    }
+    
+    private String buscaMes(String mes)
+    {
+        switch(mes)
+        {
+            case "01": return "Janeiro"; 
+            case "02": return "Fevereiro"; 
+            case "03": return "Março"; 
+            case "04": return "Abriu"; 
+            case "05": return "Maio"; 
+            case "06": return "Julho"; 
+            case "07": return "Junho"; 
+            case "08": return "Agosto"; 
+            case "09": return "Setembro"; 
+            case "10": return "Outubro"; 
+            case "11": return "Novembro"; 
+            default: return "Dezenmbro"; 
         }
     }
     
