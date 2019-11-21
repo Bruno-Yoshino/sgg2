@@ -353,6 +353,16 @@ public class ContaReceber {
         return Banco.getCon().retornaResultSet(sql);
     }
     
+    public static ResultSet buscarDadosRel(int codigo)//Para Emitir Comprovante
+    {
+        String sql = "select cli.cli_nome, c.cr_codigo, c.cr_valor, c.cr_vlorp, c.cr_datapago, e.emp_caminho " +
+                    "from cliente cli, conta_receber c, pedido p, empresa e " +
+                    "where c.cr_codigo = "+codigo+" and " +
+                    "cli.cli_codigo = p.cli_codigo and " +
+                    "p.pe_codigo = c.pe_codigo";
+        return Banco.getCon().retornaResultSet(sql);
+    }
+    
     public static ResultSet buscarDadosCEstornoCR(Date Inicio, Date Fim, int tipo)//CLancarDespesa
     {
         String query = null; /// falta alterar o sql

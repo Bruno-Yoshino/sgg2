@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CamadaApresentacao;
 
 import CamadaNegocio.Funcionario;
@@ -80,7 +75,7 @@ public class MovAjustarCaixaBanco extends javax.swing.JDialog {
         txtNome.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         labelTexto.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        labelTexto.setText("Saldoa ser Debitado:");
+        labelTexto.setText("Saldo a ser Debitado:");
 
         txtValor.setText(".0");
 
@@ -295,6 +290,7 @@ public class MovAjustarCaixaBanco extends javax.swing.JDialog {
             txtSaldo.setText(""+cc.getC().getSaldoI());
             consCaixaBanco.dispose();
             sc.Edity(jPanel3.getComponents());
+            sc.HabilityComponents(jPanel2.getComponents(), true);
         }
         else
         {

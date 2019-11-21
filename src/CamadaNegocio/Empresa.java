@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CamadaNegocio;
 
 import CamadaLogica.Banco;
@@ -10,8 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- *
- * @author Bruno Yoshino
+ * @author 吉野　廉
+ * @author 羽根川　翼
+ * @author モニカ
+ * @author 海女
+ * @author 御子
+ * @author 稲荷
  */
 public class Empresa {
     private Cidade cid;

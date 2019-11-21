@@ -176,7 +176,7 @@ public class login extends javax.swing.JFrame
     private void btnLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogarActionPerformed
         switch(fc.validar(txtusuario.getText(), txtsenha.getText()))
         {
-            case 1: m.InformationMessage("Informe o Usuario", "Atenção"); txtusuario.requestFocus(); break;
+            case 1: m.InformationMessage("Informe o Usuário", "Atenção"); txtusuario.requestFocus(); break;
             case 2: m.InformationMessage("Informe a Senha", "Atenção"); txtsenha.requestFocus(); break;
             default: 
                 if(fc.logar() == null)

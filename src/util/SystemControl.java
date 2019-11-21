@@ -3,11 +3,14 @@ package util;
 import CamadaLogica.ReadOnlyTableModel;
 import br.com.marciorl.beans.DateChooser;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.math.RoundingMode;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -628,5 +631,18 @@ public class SystemControl
             case "084": return "Unicred Norte do Paraná";
             default: return "Desconhecido";
         }
+    }
+    
+    public final boolean help(String file, String local)
+    {
+        Desktop desktop = Desktop.getDesktop();
+        
+        try {
+            URI uri = new URI(local+file);
+            desktop.browse(uri);
+        } catch (URISyntaxException | IOException e) {
+            return false;
+        }
+        return true;
     }
 }

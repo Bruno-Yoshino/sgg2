@@ -253,7 +253,7 @@ public class MovCaixaRetirada extends javax.swing.JDialog {
                     txtValorAtual.setText(""+crc.saldoAtual());
                     txtValorRetirada.setText("");
                     txtMotivo.setText("");
-                    //btnSairActionPerformed(null);
+                    btnSairActionPerformed(null);
                 }
                 else
                 {

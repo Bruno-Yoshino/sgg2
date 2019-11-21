@@ -7,7 +7,6 @@ import util.SystemControl;
 import util.mensagens;
 
 /**
- * 
  * @author 吉野　廉
  * @author 吉野　鈴
  * @author アナスタシア
@@ -76,7 +75,7 @@ public class MovCaixaBanco extends javax.swing.JDialog {
         txtCodigo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel5.setText("Nome da Caixa:");
+        jLabel5.setText("Nome do Caixa:");
 
         txtNome.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -288,7 +287,7 @@ public class MovCaixaBanco extends javax.swing.JDialog {
         {
             case 1: m.InformationMessage("Informe o valor!", "Atenção"); txtValor.requestFocus(); txtValor.setText(""); break;
             case 2: m.InformationMessage("Valor negativo!", "Atenção"); txtValor.requestFocus();  break;
-            case 3: m.InformationMessage("Informe o nome da Caixa!", "Atenção"); txtNome.requestFocus();  break;
+            case 3: m.InformationMessage("Informe o nome do Caixa!", "Atenção"); txtNome.requestFocus();  break;
             default:
                  if(cc.abrirBanco())
                  {

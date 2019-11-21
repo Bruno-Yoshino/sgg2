@@ -1,5 +1,6 @@
 package CamadaLogica;
 
+import CamadaNegocio.Pedido;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -126,6 +127,41 @@ public class Relatorio {
         }
     }
     
+    public void ImprimirRelatorioPDFNNF(Pedido p, String ArqNome) throws JRException
+    {
+        JFileChooser chooser = new JFileChooser();
+        String caminho = "";
+        File file = null;
+        int retorno = chooser.showSaveDialog(null);
+        HashMap parametros = new HashMap();
+        parametros.put("texto1", (p.getCli().getCpf() != null ? "CPF" : "CNPJ"));
+        parametros.put("texto2", (p.getCli().getCpf() != null ? " " : "Insc."));
+        parametros.put("dado", (p.getCli().getCpf() != null ? p.getCli().getCpf() : p.getCli().getCnpj()));
+        parametros.put("insc", (p.getCli().getCpf() != null ? " " : p.getCli().getOrg_insc()));
+        parametros.put("codigo", p.getCodigo());
+        
+        String jasperPrint = JasperFillManager.fillReportToFile(ArqNome, parametros, Banco.getCon().getConnection());
+        if (retorno == JFileChooser.APPROVE_OPTION)
+        {
+            caminho = chooser.getSelectedFile().getAbsolutePath();
+        }
+        if(!caminho.equals(""))
+        {
+            JasperExportManager.exportReportToPdfFile(jasperPrint, caminho+".pdf");
+            //JasperExportManager.exportReportToXmlFile(jasperPrint, caminho+".xml", true);
+            file = new File(caminho);
+            try
+            {
+                //perguntar se deseja ver o pdf
+                java.awt.Desktop.getDesktop().open( new File(caminho+".pdf"));
+                //java.awt.Desktop.getDesktop().open( new File(caminho+".xml"));
+            }
+            catch (IOException ex)
+            {
+            }
+        }
+    }
+    
     public void ImprimirRelatorioPDF(int codigoCli, Date dataIni, Date dataFim, String ArqNome) throws JRException
     {//Passando pelo parametro. Orcamento e Pedido Only
         JFileChooser chooser = new JFileChooser();
@@ -204,6 +240,22 @@ public class Relatorio {
       viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);//maximizado
       viewer.setTitle(TituloRelatorio);//titulo do relatório
       viewer.setVisible(true);
+    }
+    
+    public void ImprimirRelatorioNNF(Pedido p, String ArqNome, String TituloRelatorio) throws JRException
+    {
+        HashMap parametros = new HashMap();
+        parametros.put("texto1", (p.getCli().getCpf() != null ? "CPF" : "CNPJ"));
+        parametros.put("texto2", (p.getCli().getCpf() != null ? " " : "Insc."));
+        parametros.put("dado", (p.getCli().getCpf() != null ? p.getCli().getCpf() : p.getCli().getCnpj()));
+        parametros.put("insc", (p.getCli().getCpf() != null ? " " : p.getCli().getOrg_insc()));
+        parametros.put("codigo", p.getCodigo());
+        
+        String jasperPrint = JasperFillManager.fillReportToFile(ArqNome, parametros, Banco.getCon().getConnection());
+        JasperViewer viewer = new JasperViewer(jasperPrint, false, false);
+        viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);//maximizado
+        viewer.setTitle(TituloRelatorio);//titulo do relatório
+        viewer.setVisible(true);
     }
     
     public void ImprimirRelatorioNumero(int codigo, String ArqNome, String TituloRelatorio) throws JRException

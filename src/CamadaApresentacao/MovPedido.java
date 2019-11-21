@@ -1,6 +1,7 @@
 package CamadaApresentacao;
 
 import CamadaLogica.ReadOnlyTableModel;
+import CamadaLogica.Relatorio;
 import CamadaNegocio.Funcionario;
 import Controller.PedidoController;
 import java.awt.Font;
@@ -10,6 +11,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
 import util.SystemControl;
 import util.Validacao;
 import util.mensagens;
@@ -30,6 +32,9 @@ import util.mensagens;
  * @author 海女
  * @author 御子
  * @author 稲荷
+ * @author 川内
+ * @author 神通
+ * @author 那珂 
  * 
  * Tester 2019年07月25日
  * @author 吹雪
@@ -891,7 +896,7 @@ public class MovPedido extends javax.swing.JDialog {
          case 4: m.InformationMessage("Informe o Valor e a Quantidade!", "Atenção"); spQtd.requestFocus(); break;
          case 5: m.InformationMessage("Valor Extra não deve ser menor que 0!", "Atenção"); txtValorExtra.requestFocus(); break;
          default: 
-             pc.addTabelaServico(jTable1, linha); //Mudar aqui
+             pc.addTabelaServico(jTable1, linha); //Mudar aqui OK
              txtValorT.setText(""+pc.calculoTotal(jTable1));
              linha = -1;
              initializeServico();
@@ -1129,6 +1134,7 @@ public class MovPedido extends javax.swing.JDialog {
 
                                 m.InformationMessage("Pedido Entregue com Sucesso!", "Informação");
                                 lancarConta();
+                                emitirNotaNF(); //responsavel em perguntar se vai emitir Nota NF.
                                 sc.limpar(jPanel1.getComponents());
                                 sc.limparTabela(jTable1);
                                 sc.limparTabela(jTable2);
@@ -1138,6 +1144,7 @@ public class MovPedido extends javax.swing.JDialog {
                                 linha = -1;
                                 lbEntrega.setVisible(false);
                                 dcEntrega.setVisible(false);
+                                
                                 //Alterar a data da entrega
                                 //m.ErroMessage("ERRO2", "ERRO2");
                             }
@@ -1401,6 +1408,19 @@ public class MovPedido extends javax.swing.JDialog {
                 messegeDate.dispose();
                 pc.gerarContaReceber(data, txtCodigo.getText());
                 m.InformationMessage("Conta a receber Lançado com Sucesso!", "Informação");
+            }
+        }
+    }
+    
+    private void emitirNotaNF()
+    {
+        if(m.Pergunta("Deseja emitir a Nota Não Fiscal?", "Emitir?") == JOptionPane.YES_OPTION)
+        {
+            Relatorio rel = new Relatorio();
+            try {
+                rel.ImprimirRelatorioPDFNNF(pc.getP(), "Relatorios\\notaNF.jasper");
+            } catch (JRException ex) {
+                Logger.getLogger(MovPedido.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

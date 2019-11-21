@@ -1,6 +1,7 @@
 package CamadaApresentacao;
 
 import CamadaLogica.ReadOnlyTableModel;
+import CamadaLogica.Relatorio;
 import CamadaNegocio.Cheque;
 import Controller.ReceberContaController;
 import java.sql.SQLException;
@@ -9,6 +10,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
 import util.SystemControl;
 import util.mensagens;
 
@@ -38,6 +40,7 @@ public class MovReceberContas extends javax.swing.JDialog {
     private final mensagens m = new mensagens();
     private final ReceberContaController rcc = new ReceberContaController();
     private int forma;
+    private final Relatorio rel = new Relatorio();
     
     public MovReceberContas(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
@@ -291,6 +294,11 @@ public class MovReceberContas extends javax.swing.JDialog {
 
         btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Imprimir16.png"))); // NOI18N
         btnImprimir.setText("Imprimir");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Alterar16.png"))); // NOI18N
         btnAlterar.setText("Alterar");
@@ -708,6 +716,46 @@ public class MovReceberContas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
 
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        ConsultaPadrao consEstornoCR = new ConsultaPadrao(null, true);
+        String[] vet = new String[5];
+        vet[0] = "Data Vencimento";
+        vet[1] = "Periodo Vencimento";
+        vet[2] = "Data Pagamento";
+        vet[3] = "Periodo Pagamento";
+        vet[4] = "Tudo";
+        consEstornoCR.configuraOpcoes(vet, 5, 4, "CEstornoCR", false);
+        consEstornoCR.verificaconsulta(true);
+        consEstornoCR.setVisible(true);
+        if (consEstornoCR.getCodigo() != 0)
+        {
+            gerarComprovante(consEstornoCR.getCodigo());
+            consEstornoCR.dispose();
+        }
+        else
+        {
+            consEstornoCR.dispose();
+        }
+    }//GEN-LAST:event_btnImprimirActionPerformed
+
+    
+    private void gerarComprovantePagamento()
+    {
+        if(m.Pergunta("Deseja gerar um Comprovante de Pagamento?", "Gerar?") == JOptionPane.YES_OPTION)
+        {
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            gerarComprovante(Integer.parseInt(""+model.getValueAt(jTable1.getSelectedRow(), 5))); 
+        }
+    }
+    
+    private void gerarComprovante(int codigo)
+    {
+        try {
+            rel.ImprimirRelatorioPDF(rcc.retornaResultSet(codigo), "Relatorios\\comprovantep.jasper");
+        } catch (JRException ex) {
+            System.out.println(""+ex.toString());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;

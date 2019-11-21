@@ -314,6 +314,11 @@ public class ReceberContaController {
         });
 
     }
+    
+    public ResultSet retornaResultSet(int codigo)
+    {
+        return ContaReceber.buscarDadosRel(codigo);
+    }
         
     
     public static void configuraModel(JTable jTable)

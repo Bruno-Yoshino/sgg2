@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CamadaNegocio;
 
 import CamadaLogica.Banco;
 import CamadaLogica.ReadOnlyTableModel;
-import Controller.AjusteFolhaController;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -155,7 +149,7 @@ public class AjustarFolha {
         String query = null;
         if (valor.equals(""))
         {
-            query = "SELECT af.af_codigo, af.serv_codigo, af.fo_codigo, af.func_codigo, af.af_qtd, af.af_data, af.af_flag, af.af_obs " +
+            query = "SELECT af.af_codigo, s.serv_nome, f.fo_tamanho, f.fo_descricao, af.af_qtd, af.af_data, af.af_flag, af.af_obs, func.func_nome " +
                     "FROM ajuste_folha af, servico s, folha f, funcionario func "
                     + "Where af.serv_codigo = s.serv_codigo and af.fo_codigo = f.fo_codigo and af.func_codigo = func.func_codigo "
                     + "Order by af.af_data";
@@ -175,20 +169,20 @@ public class AjustarFolha {
 //                }
                 case 0:
                 {
-                    query = "SELECT af.af_codigo, af.serv_codigo, af.fo_codigo, af.func_codigo, af.af_qtd, af.af_data, af.af_flag, af.af_obs " +
+                    query = "SELECT af.af_codigo, s.serv_nome, f.fo_tamanho, f.fo_descricao, af.af_qtd, af.af_data, af.af_flag, af.af_obs, func.func_nome " +
                             "FROM ajuste_folha af, servico s, folha f, funcionario func "
                             + "Where af.serv_codigo = s.serv_codigo and af.fo_codigo = f.fo_codigo and af.func_codigo = func.func_codigo and func.func_nome ilike '%"+valor+"%' "
                             + "Order by af.af_data";
                     break;
                 }
                 case 1:
-                    query = "SELECT af.af_codigo, af.serv_codigo, af.fo_codigo, af.func_codigo, af.af_qtd, af.af_data, af.af_flag, af.af_obs " +
+                    query = "SELECT af.af_codigo, s.serv_nome, f.fo_tamanho, f.fo_descricao, af.af_qtd, af.af_data, af.af_flag, af.af_obs, func.func_nome " +
                             "FROM ajuste_folha af, servico s, folha f, funcionario func "
                             + "Where af.af_data = '"+data1+"' and af.serv_codigo = s.serv_codigo and af.fo_codigo = f.fo_codigo and af.func_codigo = func.func_codigo "
                             + "Order by af.af_data";
                     break;
                 case 2:
-                    query = "SELECT af.af_codigo, af.serv_codigo, af.fo_codigo, af.func_codigo, af.af_qtd, af.af_data, af.af_flag, af.af_obs " +
+                    query = "SELECT af.af_codigo, s.serv_nome, f.fo_tamanho, f.fo_descricao, af.af_qtd,  af.af_data, af.af_flag, af.af_obs, func.func_nome " +
                             "FROM ajuste_folha af, servico s, folha f, funcionario func "
                             + "Where af.af_data BETWEEN '"+data1+"' and '"+data2+"' and  af.serv_codigo = s.serv_codigo and af.fo_codigo = f.fo_codigo and af.func_codigo = func.func_codigo "
                             + "Order by af.af_data";

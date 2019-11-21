@@ -356,8 +356,16 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                     {
                         if(tabela.equals("Cliente"))
                             cbFlagCliente.setVisible(true);
-                        txtValor.setVisible(true);
-                        jLTexto.setText("Valor");
+                        if(nome.equals("Caixa Atual"))
+                        {
+                            txtValor.setVisible(false);
+                            jLTexto.setText("");
+                        }
+                        else
+                        {
+                            txtValor.setVisible(true);
+                            jLTexto.setText("Valor");
+                        }
                     }
                 }
             }
@@ -426,6 +434,9 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             case "CCaixaGeral": CCaixaGeral(); break;
             case "CEstornoCP": CEstornoCP(); break;
             case "CEstornoCR": CEstornoCR(); break;
+            case "Ajuste Folha": AjusteFolha(); break;
+            case "Ajuste Produto": AjusteProduto(); break;
+            case "Caixa Retirada": CaixaRetirada(); break;
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
@@ -976,6 +987,100 @@ public class ConsultaPadrao extends javax.swing.JDialog {
                     rs.getDouble(3),
                     sc.DataOnly(rs.getDate(4)),
                     sc.DataOnly(rs.getDate(5)),
+                    rs.getString(6)
+                });
+            }
+        }
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void AjusteFolha() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            AjustarFolha.configuraModel(jTable1);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
+            rs = AjustarFolha.buscarDados(txtValor.getText(), tipo, dateInicio.getData(), dateFim.getData());
+            while (rs.next())
+            {
+                model.addRow(new Object[]//adicionar true; retirar false
+                {//af.af_codigo, s.serv_nome, af.af_qtd, af.af_data, af.af_flag, af.af_obs, func.func_nome
+                //"Código",       "Servico", "Folha", "Qtd", "Data", "Tipo", "Obs", "Funcionario"
+                    rs.getInt(1), 
+                    rs.getString(2),
+                    rs.getString(3)+"/"+rs.getString(4),
+                    rs.getInt(5),
+                    rs.getDate(6),
+                    rs.getBoolean(7) ? "Adicionar" : "Retirar",
+                    rs.getString(8),
+                    rs.getString(9)
+                });
+            }
+        }
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void AjusteProduto() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            AjustarProduto.configuraModel(jTable1);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
+            rs = AjustarProduto.buscarDados(txtValor.getText(), tipo, dateInicio.getData(), dateFim.getData());
+            while (rs.next())
+            {//"Código", "Servico", "Produto", "Qtd", "Data", "Tipo", "Obs", "Funcionario"
+             //ap.ap_codigo, s.serv_nome, p.pro_nome, ap.ap_qtd, ap.ap_data, ap.ap_flag, ap.ap_obs, f.func_nome
+                model.addRow(new Object[]//adicionar true; retirar false
+                {
+                    rs.getInt(1), 
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getInt(4),
+                    rs.getDate(5),
+                    rs.getBoolean(6) ? "Adicionar" : "Retirar",
+                    rs.getString(7),
+                    rs.getString(8)
+                });
+            }
+        }
+        catch (SQLException sqlEmp)
+        {
+            System.out.println("Erro: \n" + sqlEmp.toString());
+        }
+    }
+    
+    private void CaixaRetirada() 
+    {
+        try
+        {
+            ResultSet rs;
+            int tipo = cbOpcao.getSelectedIndex();
+            ContaPagar.configuraModelCaixaRetirada(jTable1);
+            ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
+            sc.limparTabela(jTable1);
+            rs = ContaPagar.buscaCaixaretirada(tipo, txtValor.getText(), dateInicio.getData(), dateFim.getData());
+            while (rs.next())
+            {////"Código", "Caixa", "Data Retirada", "Valor", "Funcionario", "Obs"
+             //cp.cp_codigo, cp.caixa_codigo, cp.cp_data, cp.cp_valorc, f.func_nome, cp.cp_obs
+                model.addRow(new Object[]
+                {
+                    rs.getInt(1), 
+                    rs.getInt(2),
+                    rs.getDate(3),
+                    rs.getDouble(4),
+                    rs.getString(5),
                     rs.getString(6)
                 });
             }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2019-11-16T15:11:04 -->
+<!-- 2019-11-21T03:13:24 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pedido" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ee86db4-151d-428a-9982-5e9fc0b9732e">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SGGAdapter"/>
@@ -27,7 +27,6 @@
 	<field name="emp_email" class="java.lang.String"/>
 	<field name="emp_cep" class="java.lang.String"/>
 	<field name="cli_codigo" class="java.lang.Integer"/>
-	<field name="COLUMN_11" class="java.lang.Integer"/>
 	<field name="cli_nome" class="java.lang.String"/>
 	<field name="cli_endereco" class="java.lang.String"/>
 	<field name="cli_numero" class="java.lang.Integer"/>
@@ -39,7 +38,6 @@
 	<field name="cli_email" class="java.lang.String"/>
 	<field name="cli_cadastro" class="java.sql.Date"/>
 	<field name="pe_codigo" class="java.lang.Integer"/>
-	<field name="COLUMN_23" class="java.lang.Integer"/>
 	<field name="orc_numero" class="java.lang.Integer"/>
 	<field name="fpg_codigo" class="java.lang.Integer"/>
 	<field name="func_codigo" class="java.lang.Integer"/>
@@ -48,15 +46,12 @@
 	<field name="pe_dataentrega" class="java.sql.Date"/>
 	<field name="caixa_codigo" class="java.lang.Integer"/>
 	<field name="ps_sequence" class="java.lang.Integer"/>
-	<field name="COLUMN_32" class="java.lang.Integer"/>
 	<field name="serv_codigo" class="java.lang.Integer"/>
 	<field name="ps_valor" class="java.lang.Double"/>
 	<field name="ps_qtd" class="java.lang.Integer"/>
 	<field name="ps_desconto" class="java.lang.Double"/>
 	<field name="ps_descricao" class="java.lang.String"/>
 	<field name="ps_valorextra" class="java.lang.Double"/>
-	<field name="COLUMN_39" class="java.lang.Integer"/>
-	<field name="COLUMN_40" class="java.lang.Integer"/>
 	<field name="func_nome" class="java.lang.String"/>
 	<field name="func_login" class="java.lang.String"/>
 	<field name="func_senha" class="java.lang.String"/>
@@ -73,7 +68,6 @@
 	<field name="func_dtadimicao" class="java.sql.Date"/>
 	<field name="func_dtdemissao" class="java.sql.Date"/>
 	<field name="func_cep" class="java.lang.String"/>
-	<field name="COLUMN_57" class="java.lang.Integer"/>
 	<field name="serv_nome" class="java.lang.String"/>
 	<field name="serv_status" class="java.lang.Boolean"/>
 	<background>
@@ -155,7 +149,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="282" splitType="Stretch">
+		<band height="178" splitType="Stretch">
 			<staticText>
 				<reportElement x="4" y="60" width="100" height="19" backcolor="#E3DCDC" uuid="74eb764a-5716-49ab-a55a-02a0e7bd959e"/>
 				<textElement>
@@ -213,14 +207,14 @@
 				<textFieldExpression><![CDATA[$F{ps_valorextra}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="5" y="110" width="62" height="20" backcolor="#E3DCDC" uuid="08ae28e1-0f46-4742-9600-ce18576cc05d"/>
+				<reportElement x="3" y="110" width="62" height="20" backcolor="#E3DCDC" uuid="08ae28e1-0f46-4742-9600-ce18576cc05d"/>
 				<textElement>
 					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Desconto:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="67" y="110" width="80" height="20" uuid="c173b7fd-dc14-4d1d-9237-bff2dc364ce7"/>
+				<reportElement x="65" y="110" width="80" height="20" uuid="c173b7fd-dc14-4d1d-9237-bff2dc364ce7"/>
 				<textElement>
 					<font fontName="Arial" size="12"/>
 				</textElement>
@@ -283,7 +277,7 @@
 				<text><![CDATA[Número pedido:]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="2" y="236" width="550" height="40" uuid="14b70173-db68-4fb6-ad16-bdcae0e4cfe4"/>
+				<reportElement x="2" y="153" width="550" height="20" uuid="14b70173-db68-4fb6-ad16-bdcae0e4cfe4"/>
 				<subreportParameter name="numero">
 					<subreportParameterExpression><![CDATA[$F{pe_codigo}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -294,14 +288,11 @@
 				<subreportExpression><![CDATA["Relatorios/subPed.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
-				<reportElement x="3" y="158" width="542" height="70" uuid="08ec74bf-fb97-407b-ad3a-72bc8680643b"/>
-				<textElement>
-					<font fontName="Arial" size="14"/>
-				</textElement>
+				<reportElement x="80" y="132" width="472" height="19" uuid="9e6d1ba9-c972-4b37-828b-fec5408be395"/>
 				<textFieldExpression><![CDATA[$F{ps_descricao}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="3" y="136" width="100" height="20" uuid="e887324c-5421-427e-8d69-614244b622b9"/>
+				<reportElement x="3" y="132" width="77" height="19" uuid="09e9fb42-cf44-4e18-ad03-45bfe7abd395"/>
 				<textElement>
 					<font fontName="Arial" size="14"/>
 				</textElement>

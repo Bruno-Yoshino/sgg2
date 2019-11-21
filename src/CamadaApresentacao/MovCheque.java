@@ -589,7 +589,7 @@ public class MovCheque extends javax.swing.JDialog {
             case 6: m.InformationMessage("Informe o Nuúmero da Conta!", "Atenção"); txtConta.requestFocus(); break;
             case 7: m.InformationMessage("Informe o Nuúmero do Banco!", "Atenção"); txtBanco.requestFocus(); break;
             case 8: m.InformationMessage("Informe o Nuúmero do Cheque!", "Atenção"); txtNumeroCheque.requestFocus(); break;
-            case 9: m.InformationMessage("A data Compençado é menor que a Data Recebido!", "Atenção"); dcCompencado.requestFocus(); break;
+            case 9: m.InformationMessage("A data Compensado é menor que a Data Recebido!", "Atenção"); dcCompencado.requestFocus(); break;
             //case 10: m.InformationMessage("Informe o motivo!", "Atenção"); cbMotivo.requestFocus(); break;
             default:
                 if(op)

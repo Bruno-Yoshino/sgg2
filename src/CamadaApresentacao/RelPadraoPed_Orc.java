@@ -2,8 +2,6 @@ package CamadaApresentacao;
 
 import CamadaLogica.Relatorio;
 import CamadaNegocio.Cliente;
-import CamadaNegocio.Orcamento;
-import CamadaNegocio.Pedido;
 import Controller.OrcamentoController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,7 +13,15 @@ import util.mensagens;
 
 /**
  *
- * @author Bruno Yoshino
+ * @author 吉野　廉
+ * @author 羽根川　翼
+ * @author モニカ
+ * @author 稲荷
+ * @author 天野
+ * @author 紅葉
+ * @author 川内
+ * @author 神通
+ * @author 那珂
  */
 public class RelPadraoPed_Orc extends javax.swing.JDialog {
 
@@ -41,7 +47,7 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
         dataFim.setVisible(true);
         lbA.setVisible(true);
         btnlocCliente.setVisible(true);
-        txtValor.setText("Nome:");
+        lbTexto.setText("Nome:");
     }
 
     /**
@@ -78,12 +84,12 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
             }
         });
 
-        lbTexto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lbTexto.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lbTexto.setText("Valor:");
 
         txtValor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        lbData.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lbData.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lbData.setText("Data:");
 
         lbA.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -115,7 +121,7 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
                         .addComponent(lbA)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(187, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lbTexto1)
@@ -123,12 +129,10 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cbOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtValor)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnlocCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnlocCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbOpcao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -140,10 +144,10 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
                     .addComponent(cbOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, 22, Short.MAX_VALUE))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnlocCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lbTexto)
-                        .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnlocCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbData)
@@ -195,11 +199,12 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,17 +299,19 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
             dataFim.setVisible(true);
             lbA.setVisible(true);
             btnlocCliente.setVisible(true);
-            txtValor.setText("Nome:");
+            lbTexto.setText("Nome:");
+            txtValor.setText("");
         }
         else
         {
             txtValor.setVisible(true);
-            txtValor.setText("Número:");
+            lbTexto.setText("Número:");
             lbData.setVisible(false);
             dataInicio.setVisible(false);
             dataFim.setVisible(false);
             lbA.setVisible(false);
             btnlocCliente.setVisible(false);
+            txtValor.setText("");
         }
     }
     

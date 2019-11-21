@@ -232,6 +232,7 @@ public class Estado
                    sql = "insert into estado (uf_sigla) values ('SE')"; Banco.getCon().manipular(sql);
                    sql = "insert into estado (uf_sigla) values ('SP')"; Banco.getCon().manipular(sql);
                    sql = "insert into estado (uf_sigla) values ('TO')"; Banco.getCon().manipular(sql);
+                   sql = "insert into cidade (cid_nome, uf_codigo) values ('Teodoro Sampaio', 26)"; Banco.getCon().manipular(sql);
                    sql = "insert into forma_pagamento (fpg_nome, fpg_status) values ('Dinheiro', true),('Cartão Credito', true),('Cartão Débito', true),('Cheque', true), ('Fiado', true)"; Banco.getCon().manipular(sql);
                    sql = "insert into detalhe_serv (ds_descricao, ds_status) values ('Numeração', true),('Vias', true),('Outros', true)"; Banco.getCon().manipular(sql);
                    return false;

@@ -534,7 +534,7 @@ public class MovDespesa extends javax.swing.JDialog {
             case 7:
                 m.InformationMessage("Informe a data de Vencimento!", "Atenção"); dcDataVencimento.requestFocus(); break;
             case 8:
-                m.InformationMessage("Informe a data do pagamento!", "Atenção"); dcDataPagamento.requestFocus(); break;
+                m.InformationMessage("Informe a data de pagamento!", "Atenção"); dcDataPagamento.requestFocus(); break;
             
             default: 
                 if(flag == 1)

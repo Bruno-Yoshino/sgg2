@@ -129,6 +129,9 @@ Add conection Caixa -- Pedido and constraint FK caixa_codigo in Pedido
  * @author レレイナ
  * @author レオナ
  * @author 明石
+ * @author 川内
+ * @author 神通
+ * @author 那珂
  * 
  * Tester
  * @author 吉野　廉
@@ -290,11 +293,19 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem22 = new javax.swing.JMenuItem();
+        jMenuItem37 = new javax.swing.JMenuItem();
+        jMenuItem38 = new javax.swing.JMenuItem();
+        jMenuItem39 = new javax.swing.JMenuItem();
+        jMenuItem40 = new javax.swing.JMenuItem();
+        jMenuItem41 = new javax.swing.JMenuItem();
+        jMenuItem42 = new javax.swing.JMenuItem();
+        jMenuItem43 = new javax.swing.JMenuItem();
         Relatorio = new javax.swing.JMenu();
         jMenuItem32 = new javax.swing.JMenuItem();
         jMenuItem36 = new javax.swing.JMenuItem();
         jMenuItem34 = new javax.swing.JMenuItem();
         jMenuItem35 = new javax.swing.JMenuItem();
+        jMenuItem44 = new javax.swing.JMenuItem();
         Configuracao = new javax.swing.JMenu();
         jMenuItem29 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
@@ -554,7 +565,7 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(calendario1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(165, 165, 165)
                         .addComponent(relogio1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 13, Short.MAX_VALUE))
+                        .addGap(0, 20, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -907,6 +918,62 @@ public class Principal extends javax.swing.JFrame {
         });
         Consulta.add(jMenuItem22);
 
+        jMenuItem37.setText("Ajuste Estoque Folha");
+        jMenuItem37.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem37ActionPerformed(evt);
+            }
+        });
+        Consulta.add(jMenuItem37);
+
+        jMenuItem38.setText("Ajuste Estoque Produto");
+        jMenuItem38.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem38ActionPerformed(evt);
+            }
+        });
+        Consulta.add(jMenuItem38);
+
+        jMenuItem39.setText("Caixa Retirada");
+        jMenuItem39.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem39ActionPerformed(evt);
+            }
+        });
+        Consulta.add(jMenuItem39);
+
+        jMenuItem40.setText("Cheque");
+        jMenuItem40.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem40ActionPerformed(evt);
+            }
+        });
+        Consulta.add(jMenuItem40);
+
+        jMenuItem41.setText("Compra");
+        jMenuItem41.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem41ActionPerformed(evt);
+            }
+        });
+        Consulta.add(jMenuItem41);
+
+        jMenuItem42.setText("Orçamento");
+        jMenuItem42.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem42ActionPerformed(evt);
+            }
+        });
+        Consulta.add(jMenuItem42);
+
+        jMenuItem43.setText("Pedido");
+        jMenuItem43.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem43ActionPerformed(evt);
+            }
+        });
+        Consulta.add(jMenuItem43);
+
         jMenuBar1.add(Consulta);
 
         Relatorio.setText("Relatorio");
@@ -942,6 +1009,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         Relatorio.add(jMenuItem35);
+
+        jMenuItem44.setText("Nota Não Fiscal");
+        jMenuItem44.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem44ActionPerformed(evt);
+            }
+        });
+        Relatorio.add(jMenuItem44);
 
         jMenuBar1.add(Relatorio);
 
@@ -1001,8 +1076,8 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1366,11 +1441,13 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
         MovCaixaBanco frm = new MovCaixaBanco(this, true, funcL);
+        frm.setTitle("Abrir Caixa Conta Banco"); 
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem30ActionPerformed
 
     private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
         MovAjustarCaixaBanco frm = new MovAjustarCaixaBanco(this, true, funcL);
+        frm.setTitle("Ajustar Caixa Banco"); 
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem31ActionPerformed
 
@@ -1380,15 +1457,10 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
-        Desktop desktop = Desktop.getDesktop();
-        String uriString = "https://www.youtube.com/watch?v=C_laSSuC8jI";
-        try {
-                URI uri = new URI(uriString);
-                desktop.browse(uri);
-        } catch (URISyntaxException | IOException e) {
-            
+        if(!sc.help("SGG/SGGOnlineHelp/principal.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/principal.html", "D:/");
         }
-
     }//GEN-LAST:event_jMenuItem33ActionPerformed
 
     private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
@@ -1431,6 +1503,93 @@ public class Principal extends javax.swing.JFrame {
         m.InformationMessage("Ola "+funcL.getNome()+".\n Existe no total "+new Producao().buscarQTD()+" pedido(s) que estão no modo de Aguardando, Produção e Pausado." , "Informação");
     }//GEN-LAST:event_formWindowOpened
 
+    private void jMenuItem37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem37ActionPerformed
+        ConsultaPadrao frm = new ConsultaPadrao(null, true);
+        String[] vet = new String[3];
+        vet[0] = "Funcionario";
+        vet[1] = "Data";
+        vet[2] = "Periodo";
+        frm.configuraOpcoes(vet, 3, 0, "Ajuste Folha", false);
+        frm.verificaconsulta(false);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem37ActionPerformed
+
+    private void jMenuItem38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem38ActionPerformed
+        ConsultaPadrao frm = new ConsultaPadrao(null, true);
+        String[] vet = new String[3];
+        vet[0] = "Funcionario";
+        vet[1] = "Data";
+        vet[2] = "Periodo";
+        frm.configuraOpcoes(vet, 3, 0, "Ajuste Produto", false);
+        frm.verificaconsulta(false);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem38ActionPerformed
+
+    private void jMenuItem39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem39ActionPerformed
+        ConsultaPadrao frm = new ConsultaPadrao(null, true);
+        String[] vet = new String[4];
+        vet[0] = "Caixa Atual";
+        vet[1] = "Periodo";
+        vet[2] = "Data";
+        vet[3] = "Caixa";
+        frm.configuraOpcoes(vet, 3, 0, "Caixa Retirada", false);
+        frm.verificaconsulta(false);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem39ActionPerformed
+
+    private void jMenuItem40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem40ActionPerformed
+        ConsultaPadrao consCheque = new ConsultaPadrao(null, true);
+        String[] vet = new String[3];
+        vet[0] = "Dono";
+        vet[1] = "Data";
+        vet[2] = "Tudo";
+        consCheque.configuraOpcoes(vet, 2, 0, "Cheque", false);
+        consCheque.verificaconsulta(false);
+        consCheque.setVisible(true);
+    }//GEN-LAST:event_jMenuItem40ActionPerformed
+
+    private void jMenuItem41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem41ActionPerformed
+        ConsultaMov consCompra = new ConsultaMov(null, true);
+        String[] vet = new String[3];
+        vet[0] = "Tudo";
+        vet[1] = "Data";
+        vet[2] = "Periodo";
+        consCompra.configuraOpcoes(vet, 3, 0, "CCompra", false);
+        consCompra.verificaconsulta(false);
+        consCompra.setVisible(true);
+    }//GEN-LAST:event_jMenuItem41ActionPerformed
+
+    private void jMenuItem42ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem42ActionPerformed
+        ConsultaMov consOrcamento = new ConsultaMov(null, true);
+        String[] vet = new String[4];
+        vet[0] = "Tudo";
+        vet[1] = "Data";
+        vet[2] = "Periodo";
+        vet[3] = "Numero";
+        consOrcamento.configuraOpcoes(vet, 4, 0, "Orçamento", false);
+        consOrcamento.verificaconsulta(false);
+        consOrcamento.setVisible(true);
+    }//GEN-LAST:event_jMenuItem42ActionPerformed
+
+    private void jMenuItem43ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem43ActionPerformed
+        ConsultaMov consPedido = new ConsultaMov(null, true);
+        String[] vet = new String[4];
+        vet[0] = "Tudo";
+        vet[1] = "Data";
+        vet[2] = "Periodo";
+        vet[3] = "Numero";
+        consPedido.configuraOpcoes(vet, 4, 0, "Pedido", false);
+        consPedido.verificaconsulta(false);
+        consPedido.setVisible(true);
+    }//GEN-LAST:event_jMenuItem43ActionPerformed
+
+    private void jMenuItem44ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem44ActionPerformed
+        RelPadrao frm = new RelPadrao(this, false);
+        String[] vet = new String[1];
+        vet[0] = "Codigo";
+        frm.configuraOpcoes(vet, 1, 0, "Nota NF");
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem44ActionPerformed
 
     private void AccessLevel(int soma)
     {  
@@ -1473,6 +1632,7 @@ public class Principal extends javax.swing.JFrame {
         Date data;
         String mes = "00", temp;
         int x = 0;
+        TipoConta tempTC = new TipoConta(), temp2;
         switch(jComboBox1.getSelectedIndex())
         {
             case 0:
@@ -1494,8 +1654,12 @@ public class Principal extends javax.swing.JFrame {
                             model.addRow(new Object[]{buscaMes(mes), " ---------------- ", sc.getAno(data)});
                             x = 1;
                         }
-                        temp = new TipoConta().buscarCodigo(rs.getInt(1)).getTipo();
-                        if(temp == null)
+                        temp2 = tempTC.buscarCodigo(rs.getInt(1));
+                        if(temp2 != null)
+                        {
+                            temp = temp2.getTipo();
+                        }
+                        else
                         {
                             temp = "Compra";
                         }
@@ -1616,7 +1780,15 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem34;
     private javax.swing.JMenuItem jMenuItem35;
     private javax.swing.JMenuItem jMenuItem36;
+    private javax.swing.JMenuItem jMenuItem37;
+    private javax.swing.JMenuItem jMenuItem38;
+    private javax.swing.JMenuItem jMenuItem39;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem40;
+    private javax.swing.JMenuItem jMenuItem41;
+    private javax.swing.JMenuItem jMenuItem42;
+    private javax.swing.JMenuItem jMenuItem43;
+    private javax.swing.JMenuItem jMenuItem44;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;

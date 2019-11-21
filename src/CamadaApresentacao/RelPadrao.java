@@ -3,7 +3,9 @@ package CamadaApresentacao;
 import CamadaLogica.Relatorio;
 import CamadaNegocio.AjustarFolha;
 import CamadaNegocio.AjustarProduto;
+import CamadaNegocio.Cliente;
 import CamadaNegocio.Pedido;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -11,8 +13,15 @@ import net.sf.jasperreports.engine.JRException;
 import util.SystemControl;
 
 /**
- *
- * @author Bruno Yoshino
+ * @author 吉野　廉
+ * @author 羽根川　翼
+ * @author モニカ
+ * @author 稲荷
+ * @author 天野
+ * @author 紅葉
+ * @author 川内
+ * @author 神通
+ * @author 那珂
  */
 public class RelPadrao extends javax.swing.JDialog {
 
@@ -24,6 +33,7 @@ public class RelPadrao extends javax.swing.JDialog {
     private int posDefault;
     boolean jtableEditavel;
     private final Relatorio rel = new Relatorio();
+    private Pedido ped;
 
     public RelPadrao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -54,6 +64,7 @@ public class RelPadrao extends javax.swing.JDialog {
         lbA = new javax.swing.JLabel();
         dataFim = new br.com.marciorl.beans.DateChooser();
         lbTexto1 = new javax.swing.JLabel();
+        btnloc = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -83,6 +94,13 @@ public class RelPadrao extends javax.swing.JDialog {
         lbTexto1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lbTexto1.setText("Opção:");
 
+        btnloc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Localizar 16.png"))); // NOI18N
+        btnloc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlocActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -96,11 +114,11 @@ public class RelPadrao extends javax.swing.JDialog {
                             .addComponent(lbTexto1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cbOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtValor))
-                        .addContainerGap())
+                                .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnloc, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(lbData)
@@ -109,8 +127,8 @@ public class RelPadrao extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbA)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,9 +138,11 @@ public class RelPadrao extends javax.swing.JDialog {
                     .addComponent(cbOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbTexto1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbTexto)
-                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbTexto)
+                        .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnloc, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbData)
@@ -210,13 +230,22 @@ public class RelPadrao extends javax.swing.JDialog {
         {
             case "AjusteEstoqueProduto": AjusteProduto(""+valor); break;
             case "AjusteEstoqueFolha": AjusteFolha(""+valor); break;
-
+            case "Nota NF": NNF(""+valor); break;
+            case "Comprovante": Comprovante(""+valor); break;
         }        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnlocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlocActionPerformed
+        switch(tabela)
+        {
+            case "Nota NF": consultaPedido(); break;
+            default: btnloc.setVisible(false);
+        }
+    }//GEN-LAST:event_btnlocActionPerformed
 
     public void configuraOpcoes(String[] vetOpcoes, int tl, int posDefault, String tabela)
     {
@@ -264,6 +293,53 @@ public class RelPadrao extends javax.swing.JDialog {
                 lbA.setVisible(false);
             }
         }
+        controlaTabela();
+    }
+    
+    private void controlaTabela()
+    {
+        switch(tabela)
+        {
+            case "Nota NF": btnloc.setVisible(true); break;
+            default: btnloc.setVisible(false);
+        }
+    }
+    
+    private void consultaPedido()
+    {
+        ConsultaMov consPedido = new ConsultaMov(null, true);
+        String[] vet = new String[4];
+        vet[0] = "Tudo";
+        vet[1] = "Data";
+        vet[2] = "Periodo";
+        vet[3] = "Numero";
+        consPedido.configuraOpcoes(vet, 4, 0, "Pedido", false);
+        consPedido.verificaconsulta(true);
+        consPedido.setVisible(true);
+        if (consPedido.getCodigo() != 0)
+        {
+            Pedido p;
+            Cliente cli;
+            int cod = consPedido.getCodigo();
+            try {
+                p = new Pedido().buscar(cod);
+                txtValor.setText(""+p.getCodigo());
+                cli = p.getCli();
+                cli.buscarCodigoFisica(p.getCli().getCodigo());
+                if(cli.getCpf() == null)
+                    cli.buscarCodigoJuridica(p.getCli().getCodigo());
+                p.setCli(cli);
+                ped = p;
+                txtValor.setText("Número Pedido: "+p.getCodigo());
+            } catch (SQLException ex) {
+                Logger.getLogger(RelPadrao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            consPedido.dispose();
+        }
+        else
+        {
+            consPedido.dispose();
+        }
     }
     
     private void AjusteProduto(String op)
@@ -291,8 +367,36 @@ public class RelPadrao extends javax.swing.JDialog {
             System.out.println(""+ex.toString());
         }
     }
+    
+    private void Comprovante(String op)
+    {
+        try {
+            if(op.equals("PDF"))
+                rel.ImprimirRelatorioPDF(AjustarFolha.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\AjusteFolha.jasper");
+            else
+                rel.ImprimirRelatorio(AjustarFolha.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\AjusteFolha.jasper", "Relatorio Ajuste Folha");
+        } catch (JRException ex) {
+            System.out.println(""+ex.toString());
+        }
+    }
+    
+    private void NNF(String op)//Nota Nao Fiscal
+    {
+        if(!txtValor.getText().equals(""))
+        {
+            try {
+                if(op.equals("PDF"))
+                    rel.ImprimirRelatorioPDFNNF(ped, "Relatorios\\notaNF.jasper");
+                else
+                    rel.ImprimirRelatorioNNF(ped, "Relatorios\\notaNF.jasper", "Nota Não Fiscal");
+            } catch (JRException ex) {
+                System.out.println(""+ex.toString());
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnloc;
     private javax.swing.JComboBox<String> cbOpcao;
     private br.com.marciorl.beans.DateChooser dataFim;
     private br.com.marciorl.beans.DateChooser dataInicio;

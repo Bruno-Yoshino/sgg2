@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CamadaNegocio;
 
 import CamadaLogica.Banco;
@@ -17,6 +12,9 @@ import javax.swing.JTable;
  * @author 羽根川　翼
  * @author 阿賀野
  * @author 矢矧
+ * @author 川内
+ * @author 神通
+ * @author 那珂
  */
 public class AjustarProduto {
     private int codigo;
@@ -154,7 +152,7 @@ public class AjustarProduto {
         String query = null;
         if (valor.equals(""))
         {
-            query = "SELECT ap.ap_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.ap_qtd, ap.ap_data, ap.ap_flag, ap.ap_obs " +
+            query = "SELECT ap.ap_codigo, s.serv_nome, p.pro_nome, ap.ap_qtd, ap.ap_data, ap.ap_flag, ap.ap_obs, func.func_nome " +
                     "FROM ajuste_produto ap, servico s, produto p, funcionario func "
                     + "Where ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo "
                     + "Order by ap.ap_data";
@@ -163,31 +161,22 @@ public class AjustarProduto {
         {
             switch (tipo)
             {
-//                case 0:
-//                {
-//                    query = "select func_codigo, cid_codigo, func_nome, func_login, func_senha, func_nivel, func_cpf, "
-//                    + "func_rg, func_orgemi, func_endereco, func_numero, func_complemento, func_telefone, "
-//                    + "func_celular, func_caminho, func_dtadimicao, func_dtdemissao, func_cep "
-//                    + "from funcionario "
-//                    + "where func_codigo = "+valor+"  order by func_nome";
-//                    break;
-//                }
                 case 0:
                 {
-                    query = "SELECT ap.ap_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.ap_qtd, ap.ap_data, ap.ap_flag, ap.ap_obs " +
+                    query = "SELECT ap.ap_codigo, s.serv_nome, p.pro_nome, ap.ap_qtd, ap.ap_data, ap.ap_flag, ap.ap_obs, func.func_nome " +
                             "FROM ajuste_produto ap, servico s, produto p, funcionario func "
                             + "Where ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo and func.func_nome ilike '%"+valor+"%' "
                             + "Order by ap.ap_data";
                     break;
                 }
                 case 1:
-                    query = "SELECT ap.ap_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.ap_qtd, ap.ap_data, ap.ap_flag, ap.ap_obs " +
+                    query = "SELECT ap.ap_codigo, s.serv_nome, p.pro_nome, ap.ap_qtd, ap.ap_data, ap.ap_flag, ap.ap_obs, func.func_nome " +
                             "FROM ajuste_produto ap, servico s, produto p, funcionario func "
                             + "Where ap.ap_data = '"+data1+"' and ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo "
                             + "Order by ap.ap_data";
                     break;
                 case 2:
-                    query = "SELECT ap.ap_codigo, ap.serv_codigo, ap.pro_codigo, ap.func_codigo, ap.ap_qtd, ap.ap_data, ap.ap_flag, ap.ap_obs " +
+                    query = "SELECT ap.ap_codigo, s.serv_nome, p.pro_nome, ap.ap_qtd, ap.ap_data, ap.ap_flag, ap.ap_obs, func.func_nome " +
                             "FROM ajuste_produto ap, servico s, produto p, funcionario func "
                             + "Where ap.ap_data BETWEEN '"+data1+"' and '"+data2+"' and  ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo "
                             + "Order by ap.ap_data";
@@ -224,6 +213,7 @@ public class AjustarProduto {
     
     public static void configuraModel(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
     {//int codigo, Servico serv, Produto p, int qtd, Date data, boolean flag, String obs, Funcionario func
+        //ap.ap_codigo, s.serv_nome, p.pro_nome, ap.ap_qtd, ap.ap_data, ap.ap_flag, ap.ap_obs, f.func_nome
         String colunas[] = new String [] {"Código", "Servico", "Produto", "Qtd", "Data", "Tipo", "Obs", "Funcionario"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));
         jTable.getColumnModel().getColumn(0).setPreferredWidth(15);

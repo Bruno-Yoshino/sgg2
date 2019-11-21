@@ -571,9 +571,9 @@ public class ContaPagar {
     
     public static ResultSet buscarDadosHomeContaP()//CLancarDespesa
     {
-        String query = "SELECT tc.tc_codigo, cp_valorc, cp_datavencimento "
-                    + "FROM conta_pagar cp, tipo_conta tc "
-                    + "WHERE cp_dtpago is null and (tc.tc_codigo = cp.tc_codigo or cp.comp_codigo is not null) "
+        String query = "SELECT tc_codigo, cp_valorc, cp_datavencimento "
+                    + "FROM conta_pagar "
+                    + "WHERE cp_dtpago is null and caixa_codigo is null "
                     + "Order by cp_datavencimento;";    
         
         return Banco.getCon().retornaResultSet(query);
@@ -625,6 +625,51 @@ public class ContaPagar {
         return Banco.getCon().retornaResultSet(query);
     }
     
+    public static ResultSet buscaCaixaretirada(int tipo, String valor, Date Inicio, Date Fim)//CLancarDespesa
+    {
+        String query = null;
+        if(valor.equals(""))
+        {
+            valor = ""+new Caixa().buscaCaixa().getCodigo();
+        }
+        switch (tipo)
+        {
+            case 0: //caixa atual
+            {//"Código", "Caixa", "Data Retirada", "Valor", "Funcionario", "Obs"
+                query = "SELECT cp.cp_codigo, cp.caixa_codigo, cp.cp_data, cp.cp_valorc, f.func_nome, cp.cp_obs "
+                      + "FROM conta_pagar cp, funcionario f "
+                      + "WHERE cp.comp_codigo is null and cp.tc_codigo is null and cp.caixa_codigo = "+new Caixa().buscaCaixa().getCodigo()+" and f.func_codigo = cp.func_codigo "
+                      + "Order by cp.cp_valorc;";                
+                break;
+            }
+            case 1://Periodo
+            {
+                query = "SELECT cp.cp_codigo, cp.caixa_codigo, cp.cp_data, cp.cp_valorc, f.func_nome, cp.cp_obs "
+                      + "FROM conta_pagar cp, funcionario f "
+                      + "WHERE cp.comp_codigo is null and cp.tc_codigo is null and cp.cp_data BETWEEN '"+Inicio+"' and '"+Fim+"' and f.func_codigo = cp.func_codigo "
+                      + "Order by cp.cp_valorc;";            
+                break;
+            }
+            case 2://Data
+            {
+                query = "SELECT cp.cp_codigo, cp.caixa_codigo, cp.cp_data, cp.cp_valorc, f.func_nome, cp.cp_obs "
+                      + "FROM conta_pagar cp, funcionario f "
+                      + "WHERE cp.comp_codigo is null and cp.tc_codigo is null and cp.cp_data = '"+Inicio+"' and f.func_codigo = cp.func_codigo "
+                      + "Order by cp.cp_valorc;";               
+                break;
+            }
+            case 3://Caixa
+            {
+                query = "SELECT cp.cp_codigo, cp.caixa_codigo, cp.cp_data, cp.cp_valorc, f.func_nome, cp.cp_obs "
+                      + "FROM conta_pagar cp, funcionario f "
+                      + "WHERE cp.comp_codigo is null and cp.tc_codigo is null and cp.caixa_codigo = "+valor+" and f.func_codigo = cp.func_codigo "
+                      + "Order by cp.cp_valorc;";               
+                break;
+            }
+        }
+        return Banco.getCon().retornaResultSet(query);
+    }
+    
     public static void configuraModelCLD(JTable jTable) // CLancarDespesa
     {
         String colunas[] = new String [] {"Código", "Valor da Conta", "Data Vencimento", "Obs"};
@@ -635,9 +680,21 @@ public class ContaPagar {
         jTable.getColumnModel().getColumn(2).setPreferredWidth(300);
     }
     
-    public static void configuraModelCEstornoCP(JTable jTable) 
+    public static void configuraModelCEstornoCP(JTable jTable) //C == Consulta
     {
         String colunas[] = new String [] {"Código", "Valor da Conta", "Valor Pago", "Data Vencimento", "Data Pagamento", "Obs"};
+        jTable.setModel(new ReadOnlyTableModel(colunas, 0));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(300);
+    }
+    
+    public static void configuraModelCaixaRetirada(JTable jTable) 
+    {
+        String colunas[] = new String [] {"Código", "Caixa", "Data Retirada", "Valor", "Funcionario", "Obs"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));
         jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
         jTable.getColumnModel().getColumn(1).setPreferredWidth(100);

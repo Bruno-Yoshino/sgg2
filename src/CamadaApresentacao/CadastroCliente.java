@@ -125,6 +125,9 @@ public class CadastroCliente extends javax.swing.JDialog {
         btnSair = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnLocalizar = new javax.swing.JButton();
+        jMenuBar15 = new javax.swing.JMenuBar();
+        jMenu15 = new javax.swing.JMenu();
+        jMenuItem15 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -604,6 +607,21 @@ public class CadastroCliente extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jMenu15.setText("Help");
+
+        jMenuItem15.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem15.setText("Help");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu15.add(jMenuItem15);
+
+        jMenuBar15.add(jMenu15);
+
+        setJMenuBar(jMenuBar15);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -621,10 +639,11 @@ public class CadastroCliente extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
-        setBounds(0, 0, 779, 650);
+        setBounds(0, 0, 779, 693);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtcli_codFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtcli_codFocusLost
@@ -988,6 +1007,13 @@ public class CadastroCliente extends javax.swing.JDialog {
             txtcid_codigo.setText(""+cc.buscaCodigoCidade((String)cbcidade.getSelectedItem(), (String)cbuf.getSelectedItem()));
     }//GEN-LAST:event_cbcidadeFocusLost
 
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        if(!sc.help("SGG/SGGOnlineHelp/cadastrocliente.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/cadastrocliente.html", "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
     private void limpar()
     {
         txtcli_cod.setText("");
@@ -1053,6 +1079,9 @@ public class CadastroCliente extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu15;
+    private javax.swing.JMenuBar jMenuBar15;
+    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel panefisica;
