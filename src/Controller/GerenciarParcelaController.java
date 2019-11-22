@@ -134,7 +134,7 @@ public class GerenciarParcelaController {
             strDate = dateFormat.format(dataT);
             model.addRow(new Object[]{
                 i,
-                i == par ? sc.arredondar(valor - total) : sc.arredondar(valor/par),
+                i == par ? sc.arredondar(valor - total).replace(",", ".") : sc.arredondar(valor/par).replace(",", "."),
                 strDate
             });
             
@@ -145,7 +145,7 @@ public class GerenciarParcelaController {
     
     private double PrimeiraParcela(int qtd, double valor)
     {
-        return v.ConverteNumeroReal(sc.arredondar(valor / qtd));
+        return v.ConverteNumeroReal(sc.arredondar(valor / qtd).replace(",", "."));
     }
     
     public int varidar(String valor)
@@ -216,7 +216,7 @@ public class GerenciarParcelaController {
         {
             tot += v.ConverteNumeroReal(model.getValueAt(i, 1));
         }
-        if(v.ConverteNumeroReal(sc.truncar(tot)) != v.ConverteNumeroReal(total.getText()))
+        if(v.ConverteNumeroReal(sc.truncar(tot).replace(",", ".")) != v.ConverteNumeroReal(total.getText()))
             return 1;
         
         return 0;

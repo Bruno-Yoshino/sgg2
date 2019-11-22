@@ -315,7 +315,7 @@ public class SystemControl
                             else
                             {
                                 if(c1 instanceof JComboBox)
-                                    ((JComboBox) c1).setSelectedIndex(1);
+                                    ((JComboBox) c1).setSelectedIndex(0);
                                 else
                                 {
                                     if(c1 instanceof JTable)
@@ -427,13 +427,13 @@ public class SystemControl
     
     public final String arredondar(Double valor) 
     {
-        return new DecimalFormat("#,##0.00").format(valor).replaceAll(",", "");
+        return new DecimalFormat("#,##0.00").format(valor);
     }
     
     public final String truncar(Double valor) {
         DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
         decimalFormat.setRoundingMode(RoundingMode.DOWN);
-        return decimalFormat.format(valor).replaceAll(",", "");
+        return decimalFormat.format(valor);
     }
     
     public final String BankCheck(String number)

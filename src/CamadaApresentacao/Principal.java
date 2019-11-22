@@ -329,6 +329,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/AbrirCaixa323.jpg"))); // NOI18N
+        btn1.setToolTipText("Abrir Caixa");
         btn1.setName("btn1"); // NOI18N
         btn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -337,6 +338,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/MovimentarCaixa2 32.jpg"))); // NOI18N
+        btn2.setToolTipText("Retirar Dinheiro Caixa");
         btn2.setName("btn1"); // NOI18N
         btn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -345,6 +347,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/MovimentarCaixa32.jpg"))); // NOI18N
+        btn3.setToolTipText("Fechar Caixa");
         btn3.setName("btn1"); // NOI18N
         btn3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -353,6 +356,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Folha32.jpg"))); // NOI18N
+        btn4.setToolTipText("Ajustar Estoque Folha");
         btn4.setName("btn1"); // NOI18N
         btn4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -362,6 +366,7 @@ public class Principal extends javax.swing.JFrame {
 
         btn5.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         btn5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Produto32.jpg"))); // NOI18N
+        btn5.setToolTipText("Ajustar Estoque Produto");
         btn5.setName("btn1"); // NOI18N
         btn5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -370,6 +375,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Orcamento.jpg"))); // NOI18N
+        btn6.setToolTipText("Orçamento");
         btn6.setName("btn1"); // NOI18N
         btn6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -378,6 +384,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Pedido32.jpg"))); // NOI18N
+        btn7.setToolTipText("Pedido");
         btn7.setName("btn1"); // NOI18N
         btn7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -386,6 +393,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo Pessoa.png"))); // NOI18N
+        btn8.setToolTipText("Cadastrar Cliente");
         btn8.setName("btn1"); // NOI18N
         btn8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -394,6 +402,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Funcionario32.jpg"))); // NOI18N
+        btn9.setToolTipText("Cadastrar Funcionário");
         btn9.setName("btn1"); // NOI18N
         btn9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -402,6 +411,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/PagarContas32.jpg"))); // NOI18N
+        btn10.setToolTipText("Pagar Conta");
         btn10.setName("btn1"); // NOI18N
         btn10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -410,6 +420,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Sair.png"))); // NOI18N
+        btn11.setToolTipText("Sair");
         btn11.setName("btn1"); // NOI18N
         btn11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

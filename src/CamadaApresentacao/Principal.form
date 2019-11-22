@@ -701,6 +701,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Icon/AbrirCaixa323.jpg"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Abrir Caixa"/>
                 <Property name="name" type="java.lang.String" value="btn1" noResource="true"/>
               </Properties>
               <Events>
@@ -712,6 +713,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Icon/MovimentarCaixa2 32.jpg"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Retirar Dinheiro Caixa"/>
                 <Property name="name" type="java.lang.String" value="btn1" noResource="true"/>
               </Properties>
               <Events>
@@ -723,6 +725,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Icon/MovimentarCaixa32.jpg"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Fechar Caixa"/>
                 <Property name="name" type="java.lang.String" value="btn1" noResource="true"/>
               </Properties>
               <Events>
@@ -734,6 +737,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Icon/Folha32.jpg"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Ajustar Estoque Folha"/>
                 <Property name="name" type="java.lang.String" value="btn1" noResource="true"/>
               </Properties>
               <Events>
@@ -748,6 +752,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Icon/Produto32.jpg"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Ajustar Estoque Produto"/>
                 <Property name="name" type="java.lang.String" value="btn1" noResource="true"/>
               </Properties>
               <Events>
@@ -759,6 +764,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Icon/Orcamento.jpg"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Or&#xe7;amento"/>
                 <Property name="name" type="java.lang.String" value="btn1" noResource="true"/>
               </Properties>
               <Events>
@@ -770,6 +776,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Icon/Pedido32.jpg"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Pedido"/>
                 <Property name="name" type="java.lang.String" value="btn1" noResource="true"/>
               </Properties>
               <Events>
@@ -781,6 +788,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Icon/Novo Pessoa.png"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Cadastrar Cliente"/>
                 <Property name="name" type="java.lang.String" value="btn1" noResource="true"/>
               </Properties>
               <Events>
@@ -792,6 +800,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Icon/Funcionario32.jpg"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Cadastrar Funcion&#xe1;rio"/>
                 <Property name="name" type="java.lang.String" value="btn1" noResource="true"/>
               </Properties>
               <Events>
@@ -803,6 +812,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Icon/PagarContas32.jpg"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Pagar Conta"/>
                 <Property name="name" type="java.lang.String" value="btn1" noResource="true"/>
               </Properties>
               <Events>
@@ -814,6 +824,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Icon/Sair.png"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Sair"/>
                 <Property name="name" type="java.lang.String" value="btn1" noResource="true"/>
               </Properties>
               <Events>
