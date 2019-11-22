@@ -214,7 +214,7 @@ public class PedidoController {
                 temp.get(temp.size()-1).getQtd(),
                 temp.get(temp.size()-1).getDesconto(),
                 temp.get(temp.size()-1).getValorExtra(),
-                temp.get(temp.size()-1).getValor()*temp.get(temp.size()-1).getQtd()-temp.get(temp.size()-1).getDesconto()+temp.get(temp.size()-1).getValorExtra(),
+                sc.alteraValorPadraoBR(sc.truncar(temp.get(temp.size()-1).getValor()*temp.get(temp.size()-1).getQtd()-temp.get(temp.size()-1).getDesconto()+temp.get(temp.size()-1).getValorExtra())),
                 temp.get(temp.size()-1).getDescricao()
             });
         }
@@ -225,7 +225,7 @@ public class PedidoController {
             model.setValueAt(temp.get(linha).getQtd(), linha, 2);
             model.setValueAt(temp.get(linha).getDesconto(), linha, 3);
             model.setValueAt(temp.get(linha).getDesconto(), linha, 4);
-            model.setValueAt(temp.get(linha).getValor()*temp.get(linha).getQtd()-temp.get(linha).getDesconto(), linha, 5);
+            model.setValueAt(sc.alteraValorPadraoBR(sc.truncar(temp.get(linha).getValor()*temp.get(linha).getQtd()-temp.get(linha).getDesconto())), linha, 5);
             model.setValueAt(temp.get(linha).getDescricao(), linha, 6);
         }
     }
@@ -268,7 +268,7 @@ public class PedidoController {
     
     public double calcular(String valor, String qtd, String desconto, String valorExtra)
     {
-        return (v.ConverteNumeroReal(valor) * v.ConverteNumeroInteiro(qtd) - v.ConverteNumeroReal(desconto) + v.ConverteNumeroReal(valorExtra));
+        return (v.ConverteNumeroReal(valor.replace(",", ".")) * v.ConverteNumeroInteiro(qtd.replace(",", ".")) - v.ConverteNumeroReal(desconto.replace(",", ".")) + v.ConverteNumeroReal(valorExtra.replace(",", ".")));
     }
     
     public void excluirDetalheServico(JTable tabela, int linhaS, int linhaDS, boolean flag, String codigoO)
@@ -369,7 +369,7 @@ public class PedidoController {
         ReadOnlyTableModel model = (ReadOnlyTableModel) tabela.getModel();
         for(int i = 0; i < model.getRowCount(); i++)
         {
-            total += v.ConverteNumeroReal(model.getValueAt(i, 4));
+            total += v.ConverteNumeroReal(model.getValueAt(i, 5));
         }
         return total;
     }

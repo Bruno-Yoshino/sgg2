@@ -118,6 +118,9 @@ public class GerenciarParcela extends javax.swing.JDialog {
         txtDataVencimento = new javax.swing.JTextField();
         jLTexto9 = new javax.swing.JLabel();
         dtNovo = new br.com.marciorl.beans.DateChooser();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -160,7 +163,7 @@ public class GerenciarParcela extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -432,6 +435,21 @@ public class GerenciarParcela extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jMenu1.setText("Help");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setText("Ajuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -610,6 +628,13 @@ public class GerenciarParcela extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDataVencimentoKeyPressed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if(!sc.help("SGG/SGGOnlineHelp/parcela.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/parcela.html", "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -628,6 +653,9 @@ public class GerenciarParcela extends javax.swing.JDialog {
     private javax.swing.JLabel jLTexto7;
     private javax.swing.JLabel jLTexto8;
     private javax.swing.JLabel jLTexto9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

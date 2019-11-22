@@ -235,7 +235,7 @@ public class Relatorio {
         parametros.put("dataIni", dataIni);
         parametros.put("dataFim", dataFim);
         
-        String jasperPrint = JasperFillManager.fillReportToFile(ArqNome, parametros, Banco.getCon().getConnection());
+      String jasperPrint = JasperFillManager.fillReportToFile(ArqNome, parametros, Banco.getCon().getConnection());
       JasperViewer viewer = new JasperViewer(jasperPrint, false, false);
       viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);//maximizado
       viewer.setTitle(TituloRelatorio);//titulo do relatório

@@ -6,6 +6,7 @@ import CamadaNegocio.Producao;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import util.SystemControl;
 
 /**
  *
@@ -19,6 +20,7 @@ public class CheckDetalheServico extends javax.swing.JDialog
 {
     private final int codigoP;
     private final int sequence;
+    private final SystemControl sc = new SystemControl();
 
     public CheckDetalheServico(java.awt.Frame parent, boolean modal, int codigoPe) throws SQLException {
         super(parent, modal);
@@ -59,6 +61,8 @@ public class CheckDetalheServico extends javax.swing.JDialog
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
@@ -145,6 +149,19 @@ public class CheckDetalheServico extends javax.swing.JDialog
                 .addContainerGap())
         );
 
+        jMenu1.setText("Help");
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem2.setText("Ajuda");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
+
         jMenu2.setText("Fechar");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
@@ -182,6 +199,13 @@ public class CheckDetalheServico extends javax.swing.JDialog
        carregaTabela();
     }//GEN-LAST:event_formWindowOpened
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        if(!sc.help("SGG/SGGOnlineHelp/cds.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/cds.html", "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     private void carregaTabela()
     {
         try
@@ -212,9 +236,11 @@ public class CheckDetalheServico extends javax.swing.JDialog
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

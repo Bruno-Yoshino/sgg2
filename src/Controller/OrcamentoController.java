@@ -233,7 +233,7 @@ public class OrcamentoController {
                 temp.get(temp.size()-1).getCustoChapa(),
                 temp.get(temp.size()-1).getCustoMdO(),
                 temp.get(temp.size()-1).getDesconto(),
-                sc.truncar(temp.get(temp.size()-1).getValor()*temp.get(temp.size()-1).getQtd()+temp.get(temp.size()-1).getCustoPapel()+temp.get(temp.size()-1).getCustoImpre()+temp.get(temp.size()-1).getCustoAcab()+temp.get(temp.size()-1).getCustoArte()+temp.get(temp.size()-1).getCustoChapa()+temp.get(temp.size()-1).getCustoMdO()-temp.get(temp.size()-1).getDesconto()),
+                sc.alteraValorPadraoBR(sc.truncar(temp.get(temp.size()-1).getValor()*temp.get(temp.size()-1).getQtd()+temp.get(temp.size()-1).getCustoPapel()+temp.get(temp.size()-1).getCustoImpre()+temp.get(temp.size()-1).getCustoAcab()+temp.get(temp.size()-1).getCustoArte()+temp.get(temp.size()-1).getCustoChapa()+temp.get(temp.size()-1).getCustoMdO()-temp.get(temp.size()-1).getDesconto())),
                 temp.get(temp.size()-1).getDescricao()
             });
         }
@@ -249,7 +249,7 @@ public class OrcamentoController {
             model.setValueAt(temp.get(linha).getCustoChapa(), linha, 7);
             model.setValueAt(temp.get(linha).getCustoMdO(), linha, 8);
             model.setValueAt(temp.get(linha).getDesconto(), linha, 9);
-            model.setValueAt(sc.truncar(temp.get(linha).getValor()*temp.get(linha).getQtd()+temp.get(linha).getCustoPapel()+temp.get(linha).getCustoImpre()+temp.get(linha).getCustoAcab()+temp.get(linha).getCustoArte()+temp.get(linha).getCustoChapa()+temp.get(linha).getCustoMdO()- temp.get(linha).getDesconto()), linha, 10);
+            model.setValueAt(sc.alteraValorPadraoBR(sc.truncar(temp.get(linha).getValor()*temp.get(linha).getQtd()+temp.get(linha).getCustoPapel()+temp.get(linha).getCustoImpre()+temp.get(linha).getCustoAcab()+temp.get(linha).getCustoArte()+temp.get(linha).getCustoChapa()+temp.get(linha).getCustoMdO()- temp.get(linha).getDesconto())), linha, 10);
             model.setValueAt(temp.get(linha).getDescricao(), linha, 11);
         }
     }
@@ -294,7 +294,7 @@ public class OrcamentoController {
     
     public double calcular(String valor, String qtd, String custoP, String custoI, String custoAca, String custoArt, String custoChap, String custoMdO, String desconto)
     {
-        return (v.ConverteNumeroReal(valor) * v.ConverteNumeroInteiro(qtd)) + v.ConverteNumeroReal(custoP) + v.ConverteNumeroReal(custoI) + v.ConverteNumeroReal(custoAca) + v.ConverteNumeroReal(custoArt) + v.ConverteNumeroReal(custoChap) + v.ConverteNumeroReal(custoMdO) - v.ConverteNumeroReal(desconto);
+        return (v.ConverteNumeroReal(valor.replace(",", ".")) * v.ConverteNumeroInteiro(qtd)) + v.ConverteNumeroReal(custoP.replace(",", ".")) + v.ConverteNumeroReal(custoI.replace(",", ".")) + v.ConverteNumeroReal(custoAca.replace(",", ".")) + v.ConverteNumeroReal(custoArt.replace(",", ".")) + v.ConverteNumeroReal(custoChap.replace(",", ".")) + v.ConverteNumeroReal(custoMdO.replace(",", ".")) - v.ConverteNumeroReal(desconto.replace(",", "."));
     }
     
     public void excluirDetalheServico(JTable tabela, int linhaS, int linhaDS, boolean flag, String codigoO)

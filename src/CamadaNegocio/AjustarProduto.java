@@ -194,7 +194,7 @@ public class AjustarProduto {
             case 0:// Periodo
             {
                 query = "SELECT * " +
-                            "FROM ajuste_produto ap, servico s, produto p, funcionario func, empresa emp "
+                            "FROM ajuste_produto ap, servico s, produto p, funcionario func "
                             + "Where ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo and ap.ap_data between  '"+dataI+"'  and  '"+dataF+"'  "
                             + "Order by ap.ap_data";
                 break;
@@ -202,7 +202,7 @@ public class AjustarProduto {
             case 1:// Data
             {
                 query = "SELECT * " +
-                            "FROM ajuste_produto ap, servico s, produto p, funcionario func, empresa emp "
+                            "FROM ajuste_produto ap, servico s, produto p, funcionario func "
                             + "Where ap.serv_codigo = s.serv_codigo and ap.pro_codigo = p.pro_codigo and ap.func_codigo = func.func_codigo and ap.ap_data = '"+dataI+"'  "
                             + "Order by ap.ap_data";
                 break;

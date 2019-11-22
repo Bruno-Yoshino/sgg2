@@ -63,6 +63,9 @@ public class MovCaixaRetirada extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         btnGravar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -212,6 +215,21 @@ public class MovCaixaRetirada extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jMenu1.setText("Help");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setText("Ajuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -241,7 +259,7 @@ public class MovCaixaRetirada extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        switch(crc.validar(txtValorRetirada.getText(), txtData.getData(), txtMotivo.getText(), txtValorAtual.getText()))
+        switch(crc.validar(txtValorRetirada.getText().replace(",", "."), txtData.getData(), txtMotivo.getText(), txtValorAtual.getText()))
         {
             case 1: m.WarmingMessage("Informe o Valor a ser retirado!", "Atenção"); txtValorRetirada.requestFocus(); break;
             case 2: m.WarmingMessage("O valor a ser retirado não pode ser maior que o Valor Atual!" , "Atenção"); txtValorRetirada.requestFocus(); break;
@@ -303,6 +321,13 @@ public class MovCaixaRetirada extends javax.swing.JDialog {
         txtValorRetirada.setText("");
     }//GEN-LAST:event_txtValorRetiradaFocusGained
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if(!sc.help("SGG/SGGOnlineHelp/movcaixaretirada.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/movcaixaretirada.html", "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
 
 
 
@@ -313,6 +338,9 @@ public class MovCaixaRetirada extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

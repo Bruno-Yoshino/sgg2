@@ -7,6 +7,7 @@ import Controller.FuncionarioController;
 import java.awt.event.KeyEvent;
 import static javafx.application.Application.launch;
 import javax.swing.JOptionPane;
+import util.SystemControl;
 import util.mensagens;
 
 /**
@@ -22,6 +23,7 @@ public class login extends javax.swing.JFrame
     private final util.mensagens m = new mensagens();
     private final Estado est = new Estado();
     private Empresa emp = new Empresa();
+    private final SystemControl sc = new SystemControl();
     /**
      * Creates new form login
      */
@@ -207,16 +209,31 @@ public class login extends javax.swing.JFrame
     private void txtusuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtusuarioKeyPressed
     if(evt.getKeyCode() == KeyEvent.VK_ENTER)
         btnLogarActionPerformed(null);
+    if(evt.getKeyCode() == KeyEvent.VK_F1)
+        if(!sc.help("SGG/SGGOnlineHelp/login.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/login.html", "D:/");
+        }
     }//GEN-LAST:event_txtusuarioKeyPressed
 
     private void txtsenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtsenhaKeyPressed
     if(evt.getKeyCode() == KeyEvent.VK_ENTER)
         btnLogarActionPerformed(null);
+    if(evt.getKeyCode() == KeyEvent.VK_F1)
+        if(!sc.help("SGG/SGGOnlineHelp/login.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/login.html", "D:/");
+        }
     }//GEN-LAST:event_txtsenhaKeyPressed
 
     private void btnLogarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnLogarKeyPressed
     if(evt.getKeyCode() == KeyEvent.VK_ENTER)
         btnLogarActionPerformed(null);
+    if(evt.getKeyCode() == KeyEvent.VK_F1)
+        if(!sc.help("SGG/SGGOnlineHelp/login.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/login.html", "D:/");
+        }
     }//GEN-LAST:event_btnLogarKeyPressed
 
     /**

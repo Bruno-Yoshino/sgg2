@@ -68,6 +68,9 @@ public class RelPadrao extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -190,6 +193,21 @@ public class RelPadrao extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jMenu1.setText("Help");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setText("Ajuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,6 +264,21 @@ public class RelPadrao extends javax.swing.JDialog {
             default: btnloc.setVisible(false);
         }
     }//GEN-LAST:event_btnlocActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        String caminho = "";
+        switch(tabela)
+        {
+            case "AjusteEstoqueProduto": caminho = "SGG/SGGOnlineHelp/relaep.html"; break;
+            case "AjusteEstoqueFolha":caminho = "SGG/SGGOnlineHelp/relaef.html"; break;
+            case "Nota NF": caminho = "SGG/SGGOnlineHelp/relnnf.html"; break;
+            case "Comprovante": caminho = "SGG/SGGOnlineHelp/relcomprovante.html"; break;
+        }
+        if(!sc.help(caminho, "C:/"))
+        {
+            sc.help(caminho, "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public void configuraOpcoes(String[] vetOpcoes, int tl, int posDefault, String tabela)
     {
@@ -360,9 +393,9 @@ public class RelPadrao extends javax.swing.JDialog {
     {
         try {
             if(op.equals("PDF"))
-                rel.ImprimirRelatorioPDF(AjustarFolha.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\AjusteFolha.jasper");
+                rel.ImprimirRelatorioPDF(AjustarFolha.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\ajustefolha.jasper");
             else
-                rel.ImprimirRelatorio(AjustarFolha.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\AjusteFolha.jasper", "Relatorio Ajuste Folha");
+                rel.ImprimirRelatorio(AjustarFolha.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\ajustefolha.jasper", "Relatorio Ajuste Folha");
         } catch (JRException ex) {
             System.out.println(""+ex.toString());
         }
@@ -372,9 +405,9 @@ public class RelPadrao extends javax.swing.JDialog {
     {
         try {
             if(op.equals("PDF"))
-                rel.ImprimirRelatorioPDF(AjustarFolha.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\AjusteFolha.jasper");
+                rel.ImprimirRelatorioPDF(AjustarFolha.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\comprovantep.jasper");
             else
-                rel.ImprimirRelatorio(AjustarFolha.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\AjusteFolha.jasper", "Relatorio Ajuste Folha");
+                rel.ImprimirRelatorio(AjustarFolha.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\comprovantep.jasper", "Relatorio Ajuste Folha");
         } catch (JRException ex) {
             System.out.println(""+ex.toString());
         }
@@ -402,6 +435,9 @@ public class RelPadrao extends javax.swing.JDialog {
     private br.com.marciorl.beans.DateChooser dataInicio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lbA;

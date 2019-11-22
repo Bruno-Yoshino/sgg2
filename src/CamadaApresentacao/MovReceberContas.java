@@ -109,6 +109,9 @@ public class MovReceberContas extends javax.swing.JDialog {
         btnRemover = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtValorTCheque = new javax.swing.JTextField();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -428,6 +431,21 @@ public class MovReceberContas extends javax.swing.JDialog {
                 .addGap(1, 1, 1))
         );
 
+        jMenu1.setText("Help");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setText("Ajuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -568,7 +586,7 @@ public class MovReceberContas extends javax.swing.JDialog {
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
         try {
             //String codigoC, String valorPag, Date pagamento, String obs
-            switch(rcc.validarContasReceber(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 5)), txtValorP.getText(), dcPagamento.getData(), txtObs.getText()))
+            switch(rcc.validarContasReceber(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 5)), txtValorP.getText().replace(",", "."), dcPagamento.getData(), txtObs.getText()))
             {
                 case 1: m.InformationMessage("Informe o valor a ser Recebido!", "Atenção"); txtValorP.requestFocus(); break;
                 case 2: m.InformationMessage("Valor precisa ser maior ou igual a 0!", "Atenção"); txtValorP.requestFocus(); break;
@@ -738,6 +756,13 @@ public class MovReceberContas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnImprimirActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if(!sc.help("SGG/SGGOnlineHelp/movreceberc.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/movreceberc.html", "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     
     private void gerarComprovantePagamento()
     {
@@ -773,6 +798,9 @@ public class MovReceberContas extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

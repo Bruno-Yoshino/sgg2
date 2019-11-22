@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2019-11-15T19:20:11 -->
+<!-- 2019-11-22T02:23:45 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AjusteProduto" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8c1cc705-0402-4167-931a-38a68419d0a0">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SGGAdapter"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<queryString>
-		<![CDATA[select * from produto, ajuste_produto, funcionario, empresa, servico]]>
+		<![CDATA[select * from produto, ajuste_produto, funcionario, servico]]>
 	</queryString>
 	<field name="pro_codigo" class="java.lang.Integer"/>
 	<field name="pro_nome" class="java.lang.String"/>
@@ -37,14 +37,6 @@
 	<field name="func_dtadimicao" class="java.sql.Date"/>
 	<field name="func_dtdemissao" class="java.sql.Date"/>
 	<field name="func_cep" class="java.lang.String"/>
-	<field name="emp_nome" class="java.lang.String"/>
-	<field name="emp_cnpj" class="java.lang.String"/>
-	<field name="emp_endereco" class="java.lang.String"/>
-	<field name="emp_numero" class="java.lang.Integer"/>
-	<field name="emp_telefone" class="java.lang.String"/>
-	<field name="emp_caminho" class="java.lang.String"/>
-	<field name="emp_email" class="java.lang.String"/>
-	<field name="emp_cep" class="java.lang.String"/>
 	<field name="serv_nome" class="java.lang.String"/>
 	<field name="serv_status" class="java.lang.Boolean"/>
 	<background>
@@ -53,16 +45,12 @@
 	<title>
 		<band height="72" splitType="Stretch">
 			<staticText>
-				<reportElement x="156" y="32" width="395" height="40" uuid="5f751054-3365-459b-b278-ce4706bdb39b"/>
+				<reportElement x="2" y="32" width="549" height="40" uuid="5f751054-3365-459b-b278-ce4706bdb39b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="25"/>
 				</textElement>
 				<text><![CDATA[Relatório de Ajuste de Produto]]></text>
 			</staticText>
-			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="2" y="0" width="148" height="72" uuid="1b8d9226-f194-4d63-991c-5b4c435d990e"/>
-				<imageExpression><![CDATA[$F{emp_caminho}]]></imageExpression>
-			</image>
 			<textField pattern="d/M/yyyy">
 				<reportElement x="433" y="0" width="119" height="22" uuid="00baf43b-8459-462d-af75-a74d091368a4"/>
 				<textElement verticalAlignment="Middle">
@@ -80,7 +68,7 @@
 		</band>
 	</title>
 	<detail>
-		<band height="190" splitType="Stretch">
+		<band height="159" splitType="Stretch">
 			<staticText>
 				<reportElement x="156" y="5" width="140" height="22" uuid="4ae6f2dc-2323-4964-bd7b-54bde57366bf"/>
 				<textElement verticalAlignment="Middle">
@@ -131,7 +119,7 @@
 				<text><![CDATA[Produto:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="2" y="183" width="550" height="1" uuid="bc1a5809-ae25-4978-bf28-0d3758457eb1"/>
+				<reportElement x="1" y="150" width="550" height="1" uuid="bc1a5809-ae25-4978-bf28-0d3758457eb1"/>
 			</line>
 			<textField>
 				<reportElement x="296" y="5" width="255" height="22" uuid="3000eb60-1ec9-4de8-b249-c1d748f228f5"/>
@@ -169,7 +157,7 @@
 				<textFieldExpression><![CDATA[$F{ap_data}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="80" y="119" width="471" height="61" uuid="3244439a-3324-4e8e-bb55-0b5523c4f3cd"/>
+				<reportElement x="80" y="119" width="471" height="22" uuid="3244439a-3324-4e8e-bb55-0b5523c4f3cd"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>

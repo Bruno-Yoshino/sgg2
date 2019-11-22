@@ -200,7 +200,7 @@ public class AjustarFolha {
             case 0:// Periodo
             {
                 query = "SELECT * " +
-                            "FROM ajuste_folha af, servico s, folha f, funcionario func, empresa emp "
+                            "FROM ajuste_folha af, servico s, folha f, funcionario func "
                             + "Where af.serv_codigo = s.serv_codigo and af.fo_codigo = f.fo_codigo and af.func_codigo = func.func_codigo and af.af_data between  '"+dataI+"'  and  '"+dataF+"'  "
                             + "Order by af.af_data";
                 break;
@@ -208,7 +208,7 @@ public class AjustarFolha {
             case 1:// Data
             {
                 query = "SELECT * " +
-                            "FROM ajuste_folha af, servico s, folha f, funcionario func, empresa emp "
+                            "FROM ajuste_folha af, servico s, folha f, funcionario func "
                             + "Where af.serv_codigo = s.serv_codigo and af.fo_codigo = f.fo_codigo and af.func_codigo = func.func_codigo and af.af_data = '"+dataI+"'  "
                             + "Order by af.af_data";
                 break;

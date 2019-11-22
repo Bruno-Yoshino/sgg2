@@ -404,6 +404,27 @@ public class SystemControl
         }
     }
     
+    public final String alteraValorPadraoBR(String valor)
+    {
+        if(valor.contains("."))
+        {
+            return valor;
+        }
+        else
+        {
+            int tam = valor.length();
+            String alt = "";
+            for(int i = 0; i <= tam-3; i++)
+            {
+                alt = alt + valor.charAt(i);
+            }
+            alt = alt + ".";
+            alt = alt + valor.charAt(tam-2);
+            alt = alt + valor.charAt(tam-1);
+            return alt;
+        }
+    }
+    
     public final String arredondar(Double valor) 
     {
         return new DecimalFormat("#,##0.00").format(valor).replaceAll(",", "");

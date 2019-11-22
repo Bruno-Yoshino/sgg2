@@ -80,7 +80,7 @@ Begin
 			qtdIR := 0;
 		end if;
 
-		update folha set fo_qtd = (qtdItem - qtdIR - mviews.compf_qtd) where fo_codigo = mviews.fo_codigo;
+		update folha set fo_qtd = (qtdItem - mviews.compf_qtd) where fo_codigo = mviews.fo_codigo;
 		
 		delete from compra_folha where comp_codigo = mviews.comp_codigo and fo_codigo = mviews.fo_codigo;
 	end loop;

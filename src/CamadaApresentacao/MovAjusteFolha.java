@@ -92,6 +92,9 @@ public class MovAjusteFolha extends javax.swing.JDialog
         btnGravar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         jFormattedTextField1.setText("jFormattedTextField1");
 
@@ -356,6 +359,21 @@ public class MovAjusteFolha extends javax.swing.JDialog
                 .addContainerGap())
         );
 
+        jMenu1.setText("Help");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setText("Ajuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -490,6 +508,13 @@ public class MovAjusteFolha extends javax.swing.JDialog
     
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if(!sc.help("SGG/SGGOnlineHelp/movajustarfolha.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/movajustarfolha.html", "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     private void limpar()
     {
         txtObs.setText("");
@@ -522,6 +547,9 @@ public class MovAjusteFolha extends javax.swing.JDialog
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

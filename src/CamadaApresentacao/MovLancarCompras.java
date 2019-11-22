@@ -145,6 +145,9 @@ public class MovLancarCompras extends javax.swing.JDialog {
         btnSair = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnLocalizar = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -300,8 +303,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnexcP)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnaltP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnaltP)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(btnLocProd)
                 .addContainerGap())
@@ -712,6 +714,21 @@ public class MovLancarCompras extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jMenu1.setText("Help");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setText("Ajuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -852,7 +869,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
     }//GEN-LAST:event_btnLocFornActionPerformed
 
     private void btnaddDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddDFActionPerformed
-       switch(lcc.validar(txtCodigoF.getText(), txtFolha.getText(), txtQtdF.getText(), txtPrecoF.getText(), tbF, flag, txtCodigo.getText(), 2))
+       switch(lcc.validar(txtCodigoF.getText(), txtFolha.getText(), txtQtdF.getText(), txtPrecoF.getText().replace(",", "."), tbF, flag, txtCodigo.getText(), 2))
        {
            case 3: m.InformationMessage("Informe a Folha!", "Atenção"); btnLocProd.requestFocus(); break;
            case 4: m.InformationMessage("O item não pode ser inserido!", "Atenção"); break;
@@ -891,7 +908,7 @@ public class MovLancarCompras extends javax.swing.JDialog {
     }//GEN-LAST:event_btnaddDFActionPerformed
 
     private void btnaddDPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddDPActionPerformed
-       switch(lcc.validar(txtcodP.getText(), txtproduto.getText(), txtqtdP.getText(), txtprecoP.getText(), tbP, flag, txtCodigo.getText(), 1))
+       switch(lcc.validar(txtcodP.getText(), txtproduto.getText(), txtqtdP.getText(), txtprecoP.getText().replace(",", "."), tbP, flag, txtCodigo.getText(), 1))
        {
            case 3: m.InformationMessage("Informe o Produto!", "Atenção"); btnlocF.requestFocus(); break;
            case 4: m.InformationMessage("O item não pode ser inserido!", "Atenção"); break;
@@ -1173,6 +1190,13 @@ public class MovLancarCompras extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if(!sc.help("SGG/SGGOnlineHelp/movcompra.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/movcompra.html", "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     
     private void lancarConta()
     {
@@ -1245,6 +1269,9 @@ public class MovLancarCompras extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

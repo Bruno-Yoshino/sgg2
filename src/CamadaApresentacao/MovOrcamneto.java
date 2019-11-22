@@ -171,6 +171,9 @@ public class MovOrcamneto extends javax.swing.JDialog {
         cbForma = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
         dcDataVencimento = new br.com.marciorl.beans.DateChooser();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -949,6 +952,21 @@ public class MovOrcamneto extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jMenu1.setText("Help");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setText("Ajuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1123,7 +1141,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
     }//GEN-LAST:event_txtDescontoActionPerformed
 
     private void btnAddServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddServicoActionPerformed
-     switch(oc.varidarAddServico(txtServico.getText(), txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDescricao.getText(), txtDesconto.getText(), linha, txtValor_total.getText()))
+     switch(oc.varidarAddServico(txtServico.getText(), txtValor.getText().replace(",", "."), String.valueOf(spQtd.getValue()), txtCustoP.getText().replace(",", "."), txtCustoI.getText().replace(",", "."), txtCustoAcab.getText().replace(",", "."), txtCustoArt.getText().replace(",", "."), txtCustoChap.getText().replace(",", "."), txtCustoMdO.getText().replace(",", "."), txtDescricao.getText(), txtDesconto.getText().replace(",", "."), linha, txtValor_total.getText()))
      {
          case 1: m.InformationMessage("Informe o Serviço!", "Atenção"); btnlocServico.requestFocus(); break;
          case 2: m.InformationMessage("Informe a Quantidade!", "Atenção"); spQtd.requestFocus(); break;
@@ -1392,39 +1410,39 @@ public class MovOrcamneto extends javax.swing.JDialog {
     }//GEN-LAST:event_txtCodigoFocusLost
 
     private void txtValorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusLost
-        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
+        txtValor_total.setText(sc.alteraValorPadraoBR(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()))));
     }//GEN-LAST:event_txtValorFocusLost
 
     private void spQtdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spQtdFocusLost
-        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
+        txtValor_total.setText(sc.alteraValorPadraoBR(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()))));
     }//GEN-LAST:event_spQtdFocusLost
 
     private void txtCustoPFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoPFocusLost
-        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
+        txtValor_total.setText(sc.alteraValorPadraoBR(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()))));
     }//GEN-LAST:event_txtCustoPFocusLost
 
     private void txtCustoIFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoIFocusLost
-        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
+        txtValor_total.setText(sc.alteraValorPadraoBR(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()))));
     }//GEN-LAST:event_txtCustoIFocusLost
 
     private void txtCustoAcabFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoAcabFocusLost
-        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
+        txtValor_total.setText(sc.alteraValorPadraoBR(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()))));
     }//GEN-LAST:event_txtCustoAcabFocusLost
 
     private void txtCustoArtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoArtFocusLost
-        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
+        txtValor_total.setText(sc.alteraValorPadraoBR(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()))));
     }//GEN-LAST:event_txtCustoArtFocusLost
 
     private void txtCustoChapFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoChapFocusLost
-        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
+        txtValor_total.setText(sc.alteraValorPadraoBR(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()))));
     }//GEN-LAST:event_txtCustoChapFocusLost
 
     private void txtCustoMdOFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustoMdOFocusLost
-        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
+        txtValor_total.setText(sc.alteraValorPadraoBR(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()))));
     }//GEN-LAST:event_txtCustoMdOFocusLost
 
     private void txtDescontoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescontoFocusLost
-        txtValor_total.setText(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText())));
+        txtValor_total.setText(sc.alteraValorPadraoBR(""+sc.truncar(oc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtCustoP.getText(), txtCustoI.getText(), txtCustoAcab.getText(), txtCustoArt.getText(), txtCustoChap.getText(), txtCustoMdO.getText(), txtDesconto.getText()))));
     }//GEN-LAST:event_txtDescontoFocusLost
 
     private void cbDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDescricaoActionPerformed
@@ -1446,6 +1464,13 @@ public class MovOrcamneto extends javax.swing.JDialog {
             oc.gerarPDF(Integer.valueOf(txtCodigo.getText())); 
         }
     }//GEN-LAST:event_btnPDFActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if(!sc.help("SGG/SGGOnlineHelp/movorcamento.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/movorcamento.html", "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void clearLocalComponents()
     {
@@ -1539,6 +1564,9 @@ public class MovOrcamneto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

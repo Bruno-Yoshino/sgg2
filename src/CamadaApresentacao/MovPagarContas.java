@@ -81,6 +81,9 @@ public class MovPagarContas extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -355,6 +358,21 @@ public class MovPagarContas extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jMenu1.setText("Help");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setText("Ajuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -415,7 +433,7 @@ public class MovPagarContas extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        switch(ldc.validarContasPagar(txtCodigo.getText(), txtValorP.getText(), dcDataPagamento.getData(), txtLocal.getText(), txtValor.getText(), txtSaldo.getText(), txtCaixa.getText()))
+        switch(ldc.validarContasPagar(txtCodigo.getText(), txtValorP.getText().replace(",", "."), dcDataPagamento.getData(), txtLocal.getText(), txtValor.getText(), txtSaldo.getText(), txtCaixa.getText()))
         {
             case 1: m.InformationMessage("Informe o valor a ser pago!", "Atenção"); txtValorP.requestFocus(); break;
             case 2: m.InformationMessage("Valor precisa ser maior ou igual a 0!", "Atenção"); txtValorP.requestFocus(); break;
@@ -551,6 +569,13 @@ public class MovPagarContas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnlocCaixaActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if(!sc.help("SGG/SGGOnlineHelp/movpcontas.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/movpcontas.html", "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
 private void LocalComponentsCtrl(boolean flag)
 {
     txtValorP.setEnabled(flag);
@@ -574,6 +599,9 @@ private void LocalComponentsCtrl(boolean flag)
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

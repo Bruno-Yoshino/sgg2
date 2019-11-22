@@ -79,6 +79,9 @@ public class ConsultaPadrao extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -248,9 +251,24 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        jMenu1.setText("Help");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setText("Ajuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -459,6 +477,39 @@ public class ConsultaPadrao extends javax.swing.JDialog {
     if(evt.getKeyCode() == KeyEvent.VK_ENTER)
         btnLocalizarActionPerformed(null);
     }//GEN-LAST:event_cbFlagClienteKeyPressed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        String caminho = "";
+        switch(tabela)
+        {
+            case "Estado": caminho="SGG/SGGOnlineHelp/consestado.html"; break;
+            case "Cidade": caminho="SGG/SGGOnlineHelp/conscidade.html"; break;
+            case "Funcionario": caminho="SGG/SGGOnlineHelp/consfunc.html"; break;
+            case "Folha": caminho="SGG/SGGOnlineHelp/consfolha.html"; break;
+            case "TipoConta": caminho="SGG/SGGOnlineHelp/constc.html"; break;
+            case "Cliente": caminho="SGG/SGGOnlineHelp/conscliente.html"; break;
+            case "Produto": caminho="SGG/SGGOnlineHelp/consprod.html"; break;
+            case "DetalheServico": caminho="SGG/SGGOnlineHelp/conssd.html"; break;
+            case "Servico": caminho="SGG/SGGOnlineHelp/consserv.html"; break;
+            case "AServico": caminho="SGG/SGGOnlineHelp/consserv.html"; break;
+            case "Fornecedor": caminho="SGG/SGGOnlineHelp/consforn.html"; break;
+            case "AProduto": caminho="SGG/SGGOnlineHelp/consprod.html"; break;
+            case "AFolha": caminho="SGG/SGGOnlineHelp/consfolha.html"; break;
+            case "Cheque": caminho="SGG/SGGOnlineHelp/conscheque.html"; break;
+//            case "CLancarDespesa": caminho="SGG/SGGOnlineHelp/"; break;
+//            case "CCaixabanco": caminho="SGG/SGGOnlineHelp/"; break;
+//            case "CCaixaGeral": caminho="SGG/SGGOnlineHelp/"; break;
+//            case "CEstornoCP": caminho="SGG/SGGOnlineHelp/"; break;
+//            case "CEstornoCR": caminho="SGG/SGGOnlineHelp/"; break;
+            case "Ajuste Folha": caminho="SGG/SGGOnlineHelp/consaf.html"; break;
+            case "Ajuste Produto": caminho="SGG/SGGOnlineHelp/consap.html"; break;
+            case "Caixa Retirada": caminho="SGG/SGGOnlineHelp/conscr.html"; break;
+        }
+        if(!sc.help(caminho, "C:/"))
+        {
+            sc.help(caminho, "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
     
     private void Estado() 
     {
@@ -1101,6 +1152,9 @@ public class ConsultaPadrao extends javax.swing.JDialog {
     private br.com.marciorl.beans.DateChooser dateInicio;
     private javax.swing.JLabel jLTexto;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

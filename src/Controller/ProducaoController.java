@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import CamadaLogica.ReadOnlyTableModel;
@@ -449,6 +444,39 @@ public class ProducaoController {
             p.setListaP(tempP);
         }
         model.removeRow(row);
+    }
+    
+    public int pos(String obj)
+    {
+//        switch(""+obj)
+//        {
+//            case "Pronto": return 0;
+//            case "Pausado": return 1;
+//            case "Desenvolvomento": return 2;
+//            default: return 3;
+//        }
+        if(obj.equals("Pronto"))
+        {
+            return 0;
+        }
+        else
+        {
+            if(obj.equals("Pausado"))
+            {
+                return 1;
+            }
+            else
+            {
+                if(obj.equals("Desenvolvomento"))
+                {
+                    return 2;
+                }
+                else
+                {
+                    return 3;
+                }
+            }
+        }
     }
     
     //------------------------------------------------------------------------------------------------------------------

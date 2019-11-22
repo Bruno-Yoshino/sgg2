@@ -178,6 +178,9 @@ public class MovPedido extends javax.swing.JDialog {
         jPanel6 = new javax.swing.JPanel();
         cbForma = new javax.swing.JComboBox<>();
         btnOrcamento = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -823,7 +826,7 @@ public class MovPedido extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lbEntrega)
@@ -852,9 +855,23 @@ public class MovPedido extends javax.swing.JDialog {
                             .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel13)
-                                .addComponent(txtValorT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(txtValorT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
         );
+
+        jMenu1.setText("Help");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setText("Ajuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -870,6 +887,7 @@ public class MovPedido extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -888,7 +906,7 @@ public class MovPedido extends javax.swing.JDialog {
     }//GEN-LAST:event_txtDescontoActionPerformed
 
     private void btnAddServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddServicoActionPerformed
-     switch(pc.varidarAddServico(txtServico.getText(), txtValor.getText(), String.valueOf(spQtd.getValue()), txtDescricao.getText(), txtDesconto.getText(), linha, txtValor_total.getText(), txtValorExtra.getText()))
+     switch(pc.varidarAddServico(txtServico.getText(), txtValor.getText().replace(",", "."), String.valueOf(spQtd.getValue()), txtDescricao.getText(), txtDesconto.getText().replace(",", "."), linha, txtValor_total.getText().replace(",", "."), txtValorExtra.getText().replace(",", ".")))
      {
          case 1: m.InformationMessage("Informe o Serviço!", "Atenção"); btnlocServico.requestFocus(); break;
          case 2: m.InformationMessage("Informe a Quantidade!", "Atenção"); spQtd.requestFocus(); break;
@@ -1100,7 +1118,7 @@ public class MovPedido extends javax.swing.JDialog {
                         if(pc.gravarPedido())
                         {
                             pc.UpdateNumberPedido();
-                            if(pc.gravarPedidoServico() && !dcEntrega.isVisible())
+                            if(!dcEntrega.isVisible() && pc.gravarPedidoServico())
                             {
 //                                if(pc.gravarPedidoServicoDetalhe())
 //                                {
@@ -1308,27 +1326,27 @@ public class MovPedido extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowOpened
 
     private void txtDescontoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescontoFocusLost
-        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText(), txtValorExtra.getText()));
+        txtValor_total.setText(sc.alteraValorPadraoBR(""+sc.truncar(pc.calcular(txtValor.getText().replace(",", "."), String.valueOf(spQtd.getValue()), txtDesconto.getText().replace(",", "."), txtValorExtra.getText().replace(",", ".")))));
     }//GEN-LAST:event_txtDescontoFocusLost
 
     private void txtValorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorFocusLost
-        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText(), txtValorExtra.getText()));
+        txtValor_total.setText(sc.alteraValorPadraoBR(""+sc.truncar(pc.calcular(txtValor.getText().replace(",", "."), String.valueOf(spQtd.getValue()), txtDesconto.getText().replace(",", "."), txtValorExtra.getText().replace(",", ".")))));
     }//GEN-LAST:event_txtValorFocusLost
 
     private void spQtdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spQtdFocusLost
-        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText(), txtValorExtra.getText()));
+        txtValor_total.setText(sc.alteraValorPadraoBR(""+sc.truncar(pc.calcular(txtValor.getText().replace(",", "."), String.valueOf(spQtd.getValue()), txtDesconto.getText().replace(",", "."), txtValorExtra.getText().replace(",", ".")))));
     }//GEN-LAST:event_spQtdFocusLost
 
     private void spQtdStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spQtdStateChanged
-        txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText(), txtValorExtra.getText()));
+        txtValor_total.setText(sc.alteraValorPadraoBR(""+sc.truncar(pc.calcular(txtValor.getText().replace(",", "."), String.valueOf(spQtd.getValue()), txtDesconto.getText().replace(",", "."), txtValorExtra.getText().replace(",", ".")))));
     }//GEN-LAST:event_spQtdStateChanged
 
     private void txtValorExtraFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorExtraFocusLost
-       txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText(), txtValorExtra.getText()));
+       txtValor_total.setText(sc.alteraValorPadraoBR(""+sc.truncar(pc.calcular(txtValor.getText().replace(",", "."), String.valueOf(spQtd.getValue()), txtDesconto.getText().replace(",", "."), txtValorExtra.getText().replace(",", ".")))));
     }//GEN-LAST:event_txtValorExtraFocusLost
 
     private void txtValorExtraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorExtraActionPerformed
-       txtValor_total.setText(""+pc.calcular(txtValor.getText(), String.valueOf(spQtd.getValue()), txtDesconto.getText(), txtValorExtra.getText()));
+       txtValor_total.setText(""+pc.calcular(txtValor.getText().replace(",", "."), String.valueOf(spQtd.getValue()), txtDesconto.getText().replace(",", "."), txtValorExtra.getText().replace(",", ".")));
     }//GEN-LAST:event_txtValorExtraActionPerformed
 
     private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
@@ -1342,6 +1360,13 @@ public class MovPedido extends javax.swing.JDialog {
             pc.gerarPDF(Integer.valueOf(txtCodigo.getText())); 
         }
     }//GEN-LAST:event_btnPDFActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if(!sc.help("SGG/SGGOnlineHelp/movpedido.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/movpedido.html", "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void startDescricao()
     {
@@ -1475,6 +1500,9 @@ public class MovPedido extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

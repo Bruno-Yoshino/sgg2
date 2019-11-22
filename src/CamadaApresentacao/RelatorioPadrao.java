@@ -80,6 +80,9 @@ public class RelatorioPadrao extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -263,9 +266,24 @@ public class RelatorioPadrao extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        jMenu1.setText("Help");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setText("Ajuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -449,6 +467,19 @@ public class RelatorioPadrao extends javax.swing.JDialog {
         codigo = 0;
     }//GEN-LAST:event_btnRelatorioActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        String caminho = "";
+        switch(tabela)
+        {
+            case "Orçamento": caminho = "SGG/SGGOnlineHelp/relorc.html";  break;
+            case "Pedido" : caminho = "SGG/SGGOnlineHelp/relped.html"; break;
+        }
+        if(!sc.help(caminho, "C:/"))
+        {
+            sc.help(caminho, "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     private void Cliente()
     {
         try
@@ -546,6 +577,9 @@ public class RelatorioPadrao extends javax.swing.JDialog {
     private br.com.marciorl.beans.DateChooser dateInicio;
     private javax.swing.JLabel jLTexto;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

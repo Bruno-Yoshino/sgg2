@@ -57,6 +57,9 @@ public class MovAjustarCaixaBanco extends javax.swing.JDialog {
         btnSair = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnLocalizar = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -223,6 +226,21 @@ public class MovAjustarCaixaBanco extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jMenu1.setText("Help");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setText("Ajuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -248,7 +266,7 @@ public class MovAjustarCaixaBanco extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        switch(cc.varidar(txtValor.getText(), txtNome.getText(), txtSaldo.getText(), Integer.parseInt(txtCodigo.getText()), rbAdicionar.isSelected()))
+        switch(cc.varidar(txtValor.getText(), txtNome.getText(), txtSaldo.getText().replace(",", "."), Integer.parseInt(txtCodigo.getText()), rbAdicionar.isSelected()))
         {
             case 1: m.InformationMessage("Informe o valor!", "Atenção"); txtValor.requestFocus(); txtValor.setText(""); break;
             case 2: m.InformationMessage("Valor a ser retirado é maior que o saldo Atual!", "Atenção"); txtValor.requestFocus();  break;
@@ -315,6 +333,13 @@ public class MovAjustarCaixaBanco extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_rbRetirarActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if(!sc.help("SGG/SGGOnlineHelp/movajustarcaixabanco.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/movajustarcaixabanco.html", "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -324,6 +349,9 @@ public class MovAjustarCaixaBanco extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel labelTexto;

@@ -140,6 +140,9 @@ public class MovProducao extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         txtReservadoF = new javax.swing.JTextField();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -650,6 +653,21 @@ public class MovProducao extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jMenu1.setText("Help");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setText("Ajuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -709,6 +727,7 @@ public class MovProducao extends javax.swing.JDialog {
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable2.getModel();
+        //cbStatus.setSelectedIndex(pc.pos(""+model.getValueAt(jTable2.getSelectedRow(), 2)));
         if(jTable2.getSelectedRow() >= 0)
         {
             if(evt.getClickCount() == 1)
@@ -716,6 +735,7 @@ public class MovProducao extends javax.swing.JDialog {
 //              jTable3.removeAll();
                 sc.limparTabela(jTable3);
                 sc.Alter(jPanel3.getComponents());
+                
                 //carregar os Itens Folha e produto  OK 
                 pc.carregarListaItens(Integer.valueOf(String.valueOf(model.getValueAt(jTable2.getSelectedRow(), 0))), jTable3);
                 if(!model.getValueAt(jTable2.getSelectedRow(), 2).equals("Aguardando"))
@@ -836,7 +856,7 @@ public class MovProducao extends javax.swing.JDialog {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable2.getModel();
-        cbStatus.setSelectedItem(model.getValueAt(jTable2.getSelectedRow(), 2)); 
+        //cbStatus.setSelectedIndex(pc.pos(""+model.getValueAt(jTable2.getSelectedRow(), 2)));
         if(model.getValueAt(jTable2.getSelectedRow(), 2).equals("Aguardando"))
         {
             sc.Edity(jPanel3.getComponents());
@@ -1027,6 +1047,13 @@ public class MovProducao extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnexcluirActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if(!sc.help("SGG/SGGOnlineHelp/movproducao.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/movproducao.html", "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1055,6 +1082,9 @@ public class MovProducao extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

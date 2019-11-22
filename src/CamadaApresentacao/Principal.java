@@ -202,7 +202,7 @@ public class Principal extends javax.swing.JFrame {
         Consulta.setVisible(false);
         Servico.setVisible(false);
         Relatorio.setVisible(false);
-        Configuracao.setVisible(false);
+//        Configuracao.setVisible(false);
         AccessLevel(func.getNivel());
         ImageIcon icon = new ImageIcon(func.getCaminho());
         jlFoto.setIcon(new ImageIcon(icon.getImage().getScaledInstance(jlFoto.getWidth(), jlFoto.getHeight(), Image.SCALE_DEFAULT))); // Utilizado para recuperar imagem.
@@ -306,9 +306,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem34 = new javax.swing.JMenuItem();
         jMenuItem35 = new javax.swing.JMenuItem();
         jMenuItem44 = new javax.swing.JMenuItem();
-        Configuracao = new javax.swing.JMenu();
-        jMenuItem29 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
+        jMenuItem29 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
@@ -1020,19 +1019,21 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(Relatorio);
 
-        Configuracao.setText("Configuração");
-
-        jMenuItem29.setText("Gerar Backup");
-        Configuracao.add(jMenuItem29);
-
-        jMenuBar1.add(Configuracao);
-
         jMenu7.setText("Sobre");
         jMenu7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu7ActionPerformed(evt);
             }
         });
+
+        jMenuItem29.setText("Sobre");
+        jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem29ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem29);
+
         jMenuBar1.add(jMenu7);
 
         jMenu6.setText("Sair");
@@ -1586,10 +1587,15 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItem44ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem44ActionPerformed
         RelPadrao frm = new RelPadrao(this, false);
         String[] vet = new String[1];
-        vet[0] = "Codigo";
+        vet[0] = "Numero Pedido";
         frm.configuraOpcoes(vet, 1, 0, "Nota NF");
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem44ActionPerformed
+
+    private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
+        Sobre frm = new Sobre(this, false);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem29ActionPerformed
 
     private void AccessLevel(int soma)
     {  
@@ -1599,7 +1605,7 @@ public class Principal extends javax.swing.JFrame {
             Consulta.setVisible(true);
             Servico.setVisible(true);
             Relatorio.setVisible(true);
-            Configuracao.setVisible(true);
+//            Configuracao.setVisible(true);
         }
         else
         {
@@ -1715,7 +1721,6 @@ public class Principal extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Cadastro;
-    private javax.swing.JMenu Configuracao;
     private javax.swing.JMenu Consulta;
     private javax.swing.JMenu Relatorio;
     private javax.swing.JMenu Servico;

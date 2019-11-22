@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CamadaApresentacao;
 
 import CamadaNegocio.Funcionario;
@@ -67,6 +62,9 @@ public class MovCaixaAbertura extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         btnAbrir = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -154,7 +152,7 @@ public class MovCaixaAbertura extends javax.swing.JDialog {
                                 .addComponent(jLabel4)
                                 .addComponent(dateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(relogio1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -196,6 +194,21 @@ public class MovCaixaAbertura extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jMenu1.setText("Help");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setText("Ajuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -221,7 +234,7 @@ public class MovCaixaAbertura extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
-        switch(cc.varidar(txtValor.getText(), LocalDateTime.now(), 0))
+        switch(cc.varidar(txtValor.getText().replace(",", "."), LocalDateTime.now(), 0))
         {
             case 1: m.InformationMessage("Informe o valor!", "Atenção"); txtValor.requestFocus(); txtValor.setText(""); break;
             case 2: m.InformationMessage("Valor negativo!", "Atenção"); txtValor.requestFocus();  break;
@@ -250,6 +263,13 @@ public class MovCaixaAbertura extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_formWindowActivated
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if(!sc.help("SGG/SGGOnlineHelp/movabrircaixa.html", "C:/"))
+        {
+            sc.help("SGG/SGGOnlineHelp/movabrircaixa.html", "D:/");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -260,6 +280,9 @@ public class MovCaixaAbertura extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
