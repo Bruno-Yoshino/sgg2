@@ -1,6 +1,7 @@
 package CamadaApresentacao;
 
 import CamadaLogica.ReadOnlyTableModel;
+import CamadaNegocio.Caixa;
 import CamadaNegocio.ContaPagar;
 import CamadaNegocio.ContaReceber;
 import CamadaNegocio.Empresa;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import util.mensagens;
 
 /*
@@ -181,8 +183,8 @@ Add conection Caixa -- Pedido and constraint FK caixa_codigo in Pedido
  */
 public class Principal extends javax.swing.JFrame {
 
-    private final Funcionario funcL;
-    private final Empresa emp;
+    private Funcionario funcL;
+    private Empresa emp;
     private final SystemControl sc = new SystemControl();
     private final java.awt.Frame log;
     private ClassHome ch;
@@ -192,23 +194,18 @@ public class Principal extends javax.swing.JFrame {
     public Principal(java.awt.Frame parent, boolean modal, Funcionario func, Empresa emp) {
         //super(parent, modal);
         initComponents();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        //setSize(screenSize);
+//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//        setSize(screenSize);
         setLocationRelativeTo(null);
         funcL = func;
         log = parent;
-        lbUser.setText(funcL.getNome());
-        Cadastro.setVisible(false);
-        Consulta.setVisible(false);
-        Servico.setVisible(false);
-        Relatorio.setVisible(false);
+        
+        loadQtdProducao();
 //        Configuracao.setVisible(false);
-        AccessLevel(func.getNivel());
-        ImageIcon icon = new ImageIcon(func.getCaminho());
-        jlFoto.setIcon(new ImageIcon(icon.getImage().getScaledInstance(jlFoto.getWidth(), jlFoto.getHeight(), Image.SCALE_DEFAULT))); // Utilizado para recuperar imagem.
+        StatusCaixa();
         this.emp = emp;
-        ImageIcon icon2 = new ImageIcon(emp.getCaminho());
-        jlLogo.setIcon(new ImageIcon(icon2.getImage().getScaledInstance(jlLogo.getWidth(), jlLogo.getHeight(), Image.SCALE_DEFAULT))); // Utilizado para recuperar imagem.
+        InitSystem();
+        EmpresaSystem();
         
         ClassHome.configuraModel(jTable1);
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
@@ -236,6 +233,7 @@ public class Principal extends javax.swing.JFrame {
         btn9 = new javax.swing.JButton();
         btn10 = new javax.swing.JButton();
         btn11 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
         relogio1 = new br.com.marciorl.beans.Relogio();
         calendario1 = new br.com.marciorl.beans.Calendario();
         jPanel4 = new javax.swing.JPanel();
@@ -248,6 +246,10 @@ public class Principal extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jlLogo = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        labelqtdnEntregue = new javax.swing.JLabel();
+        labelservicoFazer = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         Cadastro = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -309,6 +311,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu7 = new javax.swing.JMenu();
         jMenuItem29 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
+        jMenuItem45 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
@@ -338,7 +341,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/MovimentarCaixa2 32.jpg"))); // NOI18N
-        btn2.setToolTipText("Retirar Dinheiro Caixa");
+        btn2.setToolTipText("Retirar dinheiro");
         btn2.setName("btn1"); // NOI18N
         btn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -356,7 +359,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Folha32.jpg"))); // NOI18N
-        btn4.setToolTipText("Ajustar Estoque Folha");
+        btn4.setToolTipText("Ajuste Folha");
         btn4.setName("btn1"); // NOI18N
         btn4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -366,7 +369,7 @@ public class Principal extends javax.swing.JFrame {
 
         btn5.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         btn5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Produto32.jpg"))); // NOI18N
-        btn5.setToolTipText("Ajustar Estoque Produto");
+        btn5.setToolTipText("Ajuste Produto");
         btn5.setName("btn1"); // NOI18N
         btn5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -393,7 +396,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Novo Pessoa.png"))); // NOI18N
-        btn8.setToolTipText("Cadastrar Cliente");
+        btn8.setToolTipText("Cliente");
         btn8.setName("btn1"); // NOI18N
         btn8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -402,7 +405,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Funcionario32.jpg"))); // NOI18N
-        btn9.setToolTipText("Cadastrar Funcionário");
+        btn9.setToolTipText("Funcionário");
         btn9.setName("btn1"); // NOI18N
         btn9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -420,7 +423,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Sair.png"))); // NOI18N
-        btn11.setToolTipText("Sair");
+        btn11.setToolTipText("Log Out");
         btn11.setName("btn1"); // NOI18N
         btn11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -428,12 +431,17 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel4.setText("Caixa Status: ");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addGap(122, 122, 122)
                 .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -453,24 +461,30 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btn9, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn10, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(167, 167, 167)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn11, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btn5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addComponent(btn1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-                .addComponent(btn2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btn1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .addComponent(btn2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addComponent(btn6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         relogio1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -559,6 +573,18 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel1.setText("Quantidade de Serviço a fazer:");
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setText("Quantidade de Serviços prontos não entregue:");
+
+        labelqtdnEntregue.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        labelqtdnEntregue.setText(" ");
+
+        labelservicoFazer.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        labelservicoFazer.setText(" ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -573,8 +599,21 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(calendario1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(165, 165, 165)
-                        .addComponent(relogio1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(165, 165, 165)
+                                .addComponent(relogio1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(labelservicoFazer, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(labelqtdnEntregue, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 20, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -593,12 +632,23 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(calendario1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(relogio1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(labelservicoFazer))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(labelqtdnEntregue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(relogio1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, Short.MAX_VALUE)
+                                .addComponent(calendario1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -1048,7 +1098,14 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu7);
 
         jMenu6.setText("Sair");
-        jMenu6.setToolTipText("");
+
+        jMenuItem45.setText("Trocar Usuario");
+        jMenuItem45.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem45ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem45);
 
         jMenuItem13.setText("Log out");
         jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
@@ -1088,14 +1145,14 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -1109,12 +1166,48 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
 //        clip.stop();
-        log.setVisible(true);
-        dispose();
+        ShowImputPassword sip = new ShowImputPassword(this, true, "Informe a Senha:");
+        sip.setTitle("Informe");
+        sip.setVisible(true);
+        if(sip.getSenha().equals(funcL.getSenha()))
+        {
+            sip.dispose();
+            if(new Caixa().VerificaCaixaAberto())
+            {
+                MovCaixaFechar frm = new MovCaixaFechar(this, true, funcL);
+                frm.setTitle("Fechar Caixa");
+                frm.setVisible(true);
+            }
+            log.setVisible(true);
+            dispose();
+        }
+        else
+        {
+            m.InformationMessage("Senha incorreta!", "Atenção");
+        }
+        sip.dispose();
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-      System.exit(0);
+        ShowImputPassword sip = new ShowImputPassword(this, true, "Informe a Senha:");
+        sip.setTitle("Informe");
+        sip.setVisible(true);
+        if(sip.getSenha().equals(funcL.getSenha()))
+        {
+            sip.dispose();
+            if(new Caixa().VerificaCaixaAberto())
+            {
+                MovCaixaFechar frm = new MovCaixaFechar(this, true, funcL);
+                frm.setTitle("Fechar Caixa");
+                frm.setVisible(true);
+            }
+            System.exit(0);
+        }
+        else
+        {
+            m.InformationMessage("Senha incorreta!", "Atenção");
+        }
+        sip.dispose();
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
@@ -1187,9 +1280,26 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn10ActionPerformed
 
     private void btn11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn11ActionPerformed
-//        clip.stop();
-        log.setVisible(true);
-        dispose();
+        ShowImputPassword sip = new ShowImputPassword(this, true, "Informe a Senha:");
+        sip.setTitle("Informe");
+        sip.setVisible(true);
+        if(sip.getSenha().equals(funcL.getSenha()))
+        {
+            sip.dispose();
+            if(new Caixa().VerificaCaixaAberto())
+            {
+                MovCaixaFechar frm = new MovCaixaFechar(this, true, funcL);
+                frm.setTitle("Fechar Caixa");
+                frm.setVisible(true);
+            }
+            log.setVisible(true);
+            dispose();
+        }
+        else
+        {
+            m.InformationMessage("Senha incorreta!", "Atenção");
+        }
+        sip.dispose();
     }//GEN-LAST:event_btn11ActionPerformed
 
     private void cadFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadFuncionarioActionPerformed
@@ -1208,6 +1318,8 @@ public class Principal extends javax.swing.JFrame {
         CadastroEmpresa frm = new CadastroEmpresa(this, true, false);
         frm.setTitle("Cadastro Empresa");
         frm.setVisible(true);
+        emp = new Empresa().buscarEmpresa();
+        EmpresaSystem();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void cadClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadClienteActionPerformed
@@ -1351,6 +1463,7 @@ public class Principal extends javax.swing.JFrame {
         MovCaixaAbertura frmCA  = new MovCaixaAbertura(this, true, funcL);
         frmCA.setTitle("Abrir Caixa");
         frmCA.setVisible(true);
+        StatusCaixa();
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
@@ -1363,6 +1476,7 @@ public class Principal extends javax.swing.JFrame {
         MovCaixaFechar frm = new MovCaixaFechar(this, true, funcL);
         frm.setTitle("Fecher Caixa");
         frm.setVisible(true);
+        StatusCaixa();
     }//GEN-LAST:event_jMenuItem25ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
@@ -1427,6 +1541,7 @@ public class Principal extends javax.swing.JFrame {
         MovProducao frm = new MovProducao(this, true, funcL);
         frm.setTitle("Produção");
         frm.setVisible(true);
+        loadQtdProducao();
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
@@ -1512,7 +1627,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem36ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        m.InformationMessage("Ola "+funcL.getNome()+".\n Existe no total "+new Producao().buscarQTD()+" pedido(s) que estão no modo de Aguardando, Produção e Pausado." , "Informação");
+        m.InformationMessage("Ola "+funcL.getNome()+".\n Existe no total "+new Producao().buscarQTD()+" pedido(s) que estão no modo de Aguardando, Produção, Pausado ou Não Entrgue." , "Informação");
     }//GEN-LAST:event_formWindowOpened
 
     private void jMenuItem37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem37ActionPerformed
@@ -1607,6 +1722,27 @@ public class Principal extends javax.swing.JFrame {
         Sobre frm = new Sobre(this, false);
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem29ActionPerformed
+
+    private void jMenuItem45ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem45ActionPerformed
+        String Senha, User;
+        User = JOptionPane.showInputDialog(null, "Informe o Usuário:", "Informe", JOptionPane.INFORMATION_MESSAGE);
+        ShowImputPassword sip = new ShowImputPassword(this, true, User+", informe a sua Senha:");
+        sip.setTitle("Informe");
+        sip.setVisible(true);
+        Senha = sip.getSenha();
+        sip.dispose();
+        Funcionario temp  = new Funcionario().logar(User, Senha);
+        if(temp != null)
+        {
+            funcL = temp;
+            InitSystem();
+            m.InformationMessage("Funcionario trocado com sucesso!", "Informação");
+        }
+        else
+        {
+            m.WarmingMessage("Usuario ou Senha Incorreto", "Atenção");
+        }
+    }//GEN-LAST:event_jMenuItem45ActionPerformed
 
     private void AccessLevel(int soma)
     {  
@@ -1730,6 +1866,43 @@ public class Principal extends javax.swing.JFrame {
         }
     }
     
+    private void InitSystem()
+    {
+        Cadastro.setVisible(false);
+        Consulta.setVisible(false);
+        Servico.setVisible(false);
+        Relatorio.setVisible(false);
+        AccessLevel(funcL.getNivel());
+        lbUser.setText(funcL.getNome());
+        ImageIcon icon = new ImageIcon(funcL.getCaminho());
+        jlFoto.setIcon(new ImageIcon(icon.getImage().getScaledInstance(jlFoto.getWidth(), jlFoto.getHeight(), Image.SCALE_DEFAULT))); // Utilizado para recuperar imagem.
+    }
+    
+    private void EmpresaSystem()
+    {
+        ImageIcon icon2 = new ImageIcon(emp.getCaminho());
+        jlLogo.setIcon(new ImageIcon(icon2.getImage().getScaledInstance(jlLogo.getWidth(), jlLogo.getHeight(), Image.SCALE_DEFAULT))); // Utilizado para recuperar imagem.
+    }
+    
+    private void loadQtdProducao()
+    {
+        //new Producao().buscarQTD()
+        labelservicoFazer.setText(""+(new Producao().buscarQTD()-1));
+        labelqtdnEntregue.setText(""+new Producao().buscarQTD2());
+    }
+    
+    private void StatusCaixa()
+    {
+        if(new Caixa().VerificaCaixaAberto())
+        {
+            jLabel4.setText("Caixa Status: Aberto");
+        }
+        else
+        {
+            jLabel4.setText("Caixa Status: Fechado");
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Cadastro;
     private javax.swing.JMenu Consulta;
@@ -1756,7 +1929,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem cadFuncionario1;
     private br.com.marciorl.beans.Calendario calendario1;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -1805,6 +1981,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem42;
     private javax.swing.JMenuItem jMenuItem43;
     private javax.swing.JMenuItem jMenuItem44;
+    private javax.swing.JMenuItem jMenuItem45;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
@@ -1819,6 +1996,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel jlFoto;
     private javax.swing.JLabel jlLogo;
+    private javax.swing.JLabel labelqtdnEntregue;
+    private javax.swing.JLabel labelservicoFazer;
     private javax.swing.JLabel lbUser;
     private br.com.marciorl.beans.Relogio relogio1;
     // End of variables declaration//GEN-END:variables

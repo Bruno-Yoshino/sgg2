@@ -326,7 +326,7 @@ public class CadastroCliente extends javax.swing.JDialog {
         jLabel16.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel16.setText("CNPJ:");
 
-        jLabel18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel18.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel18.setText("Inscrição Estadual:");
 
         jLabel19.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -350,7 +350,7 @@ public class CadastroCliente extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel18)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtcli_ie, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtcli_ie, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panejuridicaLayout.createSequentialGroup()
                         .addComponent(jLabel19)
@@ -432,8 +432,7 @@ public class CadastroCliente extends javax.swing.JDialog {
                                     .addComponent(jLabel9)
                                     .addComponent(jLabel11))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(txtcli_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -443,7 +442,8 @@ public class CadastroCliente extends javax.swing.JDialog {
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel15)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtcli_datac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(txtcli_datac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addComponent(txtcid_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -807,29 +807,29 @@ public class CadastroCliente extends javax.swing.JDialog {
             case 2: JOptionPane.showMessageDialog(this, "Informe o Nome!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtcli_nome.requestFocus(); break;
             case 7:
-                if(flag)
-                {
+//                if(flag)
+//                {
                     JOptionPane.showMessageDialog(this, "Informe o Orgão emissor!","Alerta", JOptionPane.WARNING_MESSAGE);
                     txtcli_orgEmi.requestFocus();
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(this, "Informe Inscrição Estadual!","Alerta", JOptionPane.WARNING_MESSAGE);
-                    txtcli_ie.requestFocus();
-                }
+//                }
+//                else
+//                {
+//                    JOptionPane.showMessageDialog(this, "Informe Inscrição Estadual!","Alerta", JOptionPane.WARNING_MESSAGE);
+//                    txtcli_ie.requestFocus();
+//                }
 
             break;
             case 8:
-                if(flag)
-                {
-                    JOptionPane.showMessageDialog(this, "O tamanho do Orgão emissor deve ser 2 caracteres!","Alerta", JOptionPane.WARNING_MESSAGE);
+//                if(flag)
+//                {
+                    JOptionPane.showMessageDialog(this, "O tamanho do Orgão emissor deve ser 3 caracteres!","Alerta", JOptionPane.WARNING_MESSAGE);
                     txtcli_orgEmi.requestFocus();
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(this, "O tamanho da Inscrição Estadual deve ser 2 caracteres!","Alerta", JOptionPane.WARNING_MESSAGE);
-                    txtcli_ie.requestFocus();
-                }
+//                }
+//                else
+//                {
+//                    JOptionPane.showMessageDialog(this, "O tamanho da Inscrição Estadual deve ser 2 caracteres!","Alerta", JOptionPane.WARNING_MESSAGE);
+//                    txtcli_ie.requestFocus();
+//                }
             break;
             case 9:
             JOptionPane.showMessageDialog(this, "Informe o endereço!","Alerta", JOptionPane.WARNING_MESSAGE);
@@ -906,6 +906,8 @@ public class CadastroCliente extends javax.swing.JDialog {
                     m.ErroMessage("Cliente ja cadastrado!", "ERRO"); 
                 }
             break;
+            case 22:
+                m.InformationMessage("Inscrição Estadual não pode ter mais que 12 digitos!", "Informação"); txtcli_ie.requestFocus(); break;
             default:
             if(cc.gravar())
             {

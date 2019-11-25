@@ -169,7 +169,7 @@ public class Producao
         {
             switch (tipo)
             {
-                case 1:// Mome
+                case 1:// Nome
                 {
                     query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_dataentrega "
                           + " FROM pedido p, cliente c "
@@ -201,7 +201,7 @@ public class Producao
         {
             switch (tipo)
             {
-                case 1:// Mome
+                case 1:// Nome
                 {
                     query = "SELECT c.cli_codigo, c.cli_nome, p.pe_codigo, p.pe_datapedido, p.pe_dataentrega "
                           + " FROM pedido p, cliente c "
@@ -253,11 +253,29 @@ public class Producao
         return Banco.getCon().retornaResultSet(query);
     }
     
-    public int buscarQTD()
+    public int buscarQTD()//Pedidos em andamento
     {
         String sql = "SELECT count(*) "
                      + " FROM producao "
                      + " WHERE prod_status != 1 ";
+
+        ResultSet rs=Banco.getCon().consultar(sql);
+        try {
+            if(rs.next())
+            {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Producao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    public int buscarQTD2()//Pedidos nao entregue
+    {
+        String sql = "SELECT count(*) "
+                   +" FROM pedido p, cliente c " 
+                   +" WHERE p.cli_codigo = c.cli_codigo and p.pe_datapedido > p.pe_dataentrega and (select count(*) from producao prod where p.pe_codigo = prod.pe_codigo and prod.prod_status = 1) != 0";
 
         ResultSet rs=Banco.getCon().consultar(sql);
         try {
