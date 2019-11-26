@@ -225,7 +225,7 @@ public class PedidoController {
             model.setValueAt(temp.get(linha).getQtd(), linha, 2);
             model.setValueAt(temp.get(linha).getDesconto(), linha, 3);
             model.setValueAt(temp.get(linha).getDesconto(), linha, 4);
-            model.setValueAt(sc.alteraValorPadraoBR(sc.truncar(temp.get(linha).getValor()*temp.get(linha).getQtd()-temp.get(linha).getDesconto())), linha, 5);
+            model.setValueAt(sc.alteraValorPadraoBR(sc.truncar(temp.get(linha).getValor()*temp.get(linha).getQtd()-temp.get(linha).getDesconto()+temp.get(linha).getValorExtra())), linha, 5);
             model.setValueAt(temp.get(linha).getDescricao(), linha, 6);
         }
     }
@@ -268,6 +268,10 @@ public class PedidoController {
     
     public double calcular(String valor, String qtd, String desconto, String valorExtra)
     {
+        desconto = v.verificaNunero(desconto);
+        valorExtra = v.verificaNunero(valorExtra);
+        valor = v.verificaNunero(valor);
+        
         return (v.ConverteNumeroReal(valor.replace(",", ".")) * v.ConverteNumeroInteiro(qtd.replace(",", ".")) - v.ConverteNumeroReal(desconto.replace(",", ".")) + v.ConverteNumeroReal(valorExtra.replace(",", ".")));
     }
     

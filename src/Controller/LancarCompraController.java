@@ -241,11 +241,14 @@ public class LancarCompraController
         {
             return 1;
         }
-        if(v.ConverteNumeroReal(valor.getText().replace(",", ".")) <= 0)
+        String temp = valor.getText();
+        temp = temp.replace(",", ".");
+        temp = v.verificaNunero(temp);
+        if(v.ConverteNumeroReal(temp) <= 0)
         {
             return 2;
         }
-        total.setText(""+(Double)(v.ConverteNumeroInteiro(qtd.getText()) * v.ConverteNumeroReal(valor.getText().replace(",", "."))));
+        total.setText(""+(Double)(v.ConverteNumeroInteiro(qtd.getText()) * v.ConverteNumeroReal(temp)));
         return 0;
     }
     

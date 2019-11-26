@@ -433,7 +433,7 @@ public class MovPagarContas extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        switch(ldc.validarContasPagar(txtCodigo.getText(), txtValorP.getText().replace(",", "."), dcDataPagamento.getData(), txtLocal.getText(), txtValor.getText(), txtSaldo.getText(), txtCaixa.getText()))
+        switch(ldc.validarContasPagar(txtCodigo.getText(), txtValorP.getText().replace(",", "."), dcDataPagamento.getData(), txtLocal.getText(), txtValor.getText().replace(",", "."), txtSaldo.getText().replace(",", "."), txtCaixa.getText()))
         {
             case 1: m.InformationMessage("Informe o valor a ser pago!", "Atenção"); txtValorP.requestFocus(); break;
             case 2: m.InformationMessage("Valor precisa ser maior ou igual a 0!", "Atenção"); txtValorP.requestFocus(); break;

@@ -421,7 +421,7 @@ public class SystemControl
             alt = alt + ".";
             alt = alt + valor.charAt(tam-2);
             alt = alt + valor.charAt(tam-1);
-            return alt;
+            return alt.replace(",", "");
         }
     }
     

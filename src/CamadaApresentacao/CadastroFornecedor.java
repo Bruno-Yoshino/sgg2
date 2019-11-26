@@ -396,7 +396,7 @@ public class CadastroFornecedor extends javax.swing.JDialog {
     }//GEN-LAST:event_txtCodigoFocusLost
 
     private void btnaddCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddCidadeActionPerformed
-        CadastroCidade frm = new CadastroCidade(null, false);
+        CadastroCidade frm = new CadastroCidade(null, true);
         frm.setVisible(true);
     }//GEN-LAST:event_btnaddCidadeActionPerformed
 

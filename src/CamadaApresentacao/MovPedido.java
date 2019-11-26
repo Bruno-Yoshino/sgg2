@@ -1385,12 +1385,12 @@ public class MovPedido extends javax.swing.JDialog {
     private void initializeServico()
     {
         txtServico.setText("");
-        txtValor_total.setText("0");
         txtValor.setText("0");
         spQtd.setValue(0);
         txtValorExtra.setText("0");
         txtDescricao.setText("");
         txtDesconto.setText("0");
+        txtValor_total.setText("0");
     }
     
     private void enableComponents(String valor)

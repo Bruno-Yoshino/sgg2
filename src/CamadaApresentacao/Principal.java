@@ -1280,26 +1280,26 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn10ActionPerformed
 
     private void btn11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn11ActionPerformed
-        ShowImputPassword sip = new ShowImputPassword(this, true, "Informe a Senha:");
-        sip.setTitle("Informe");
-        sip.setVisible(true);
-        if(sip.getSenha().equals(funcL.getSenha()))
-        {
-            sip.dispose();
-            if(new Caixa().VerificaCaixaAberto())
-            {
-                MovCaixaFechar frm = new MovCaixaFechar(this, true, funcL);
-                frm.setTitle("Fechar Caixa");
-                frm.setVisible(true);
-            }
+//        ShowImputPassword sip = new ShowImputPassword(this, true, "Informe a Senha:");
+//        sip.setTitle("Informe");
+//        sip.setVisible(true);
+//        if(sip.getSenha().equals(funcL.getSenha()))
+//        {
+//            sip.dispose();
+//            if(new Caixa().VerificaCaixaAberto())
+//            {
+//                MovCaixaFechar frm = new MovCaixaFechar(this, true, funcL);
+//                frm.setTitle("Fechar Caixa");
+//                frm.setVisible(true);
+//            }
             log.setVisible(true);
             dispose();
-        }
-        else
-        {
-            m.InformationMessage("Senha incorreta!", "Atenção");
-        }
-        sip.dispose();
+//        }
+//        else
+//        {
+//            m.InformationMessage("Senha incorreta!", "Atenção");
+//        }
+//        sip.dispose();
     }//GEN-LAST:event_btn11ActionPerformed
 
     private void cadFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadFuncionarioActionPerformed
@@ -1886,8 +1886,9 @@ public class Principal extends javax.swing.JFrame {
     
     private void loadQtdProducao()
     {
-        //new Producao().buscarQTD()
-        labelservicoFazer.setText(""+(new Producao().buscarQTD()-1));
+        //new Producao().buscarQTD()[
+        int qtd = new Producao().buscarQTD();
+        labelservicoFazer.setText(""+(qtd == 0 ? 0 : qtd-1));
         labelqtdnEntregue.setText(""+new Producao().buscarQTD2());
     }
     

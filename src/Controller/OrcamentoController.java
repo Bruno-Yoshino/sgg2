@@ -160,8 +160,6 @@ public class OrcamentoController {
             temp.get(linha).setDescricao(descricao);
             temp.get(linha).setServ(ser);
             temp.get(linha).setValor(v.ConverteNumeroReal(valor));
-            
-            
         }
         o.setLista(temp);
         return 0;
@@ -292,8 +290,17 @@ public class OrcamentoController {
     }
     
     
-    public double calcular(String valor, String qtd, String custoP, String custoI, String custoAca, String custoArt, String custoChap, String custoMdO, String desconto)
+    public double calcular(String valor, String qtd, String custoP, 
+            String custoI, String custoAca, String custoArt, String custoChap, String custoMdO, String desconto)
     {
+        desconto = v.verificaNunero(desconto);
+        custoP = v.verificaNunero(custoP);
+        custoI = v.verificaNunero(custoI);
+        custoAca = v.verificaNunero(custoAca);
+        custoArt = v.verificaNunero(custoArt);
+        custoChap = v.verificaNunero(custoChap);
+        custoMdO = v.verificaNunero(custoMdO);
+        valor = v.verificaNunero(valor);
         return (v.ConverteNumeroReal(valor.replace(",", ".")) * v.ConverteNumeroInteiro(qtd)) + v.ConverteNumeroReal(custoP.replace(",", ".")) + v.ConverteNumeroReal(custoI.replace(",", ".")) + v.ConverteNumeroReal(custoAca.replace(",", ".")) + v.ConverteNumeroReal(custoArt.replace(",", ".")) + v.ConverteNumeroReal(custoChap.replace(",", ".")) + v.ConverteNumeroReal(custoMdO.replace(",", ".")) - v.ConverteNumeroReal(desconto.replace(",", "."));
     }
     

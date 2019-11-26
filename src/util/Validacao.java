@@ -110,6 +110,15 @@ public class Validacao
             return false;
         }
     }
+    
+    public final String verificaNunero(String texto)// return == -999 -> Nuber Invalid | return != -999 -> OK
+    {
+        if(texto.equals(".0") || texto.equals(".00") || texto.isEmpty())
+        {
+            return "0";
+        }
+        return texto;
+    }
         
     public final boolean ValidarDataMenorAtual(LocalDate data)
     {

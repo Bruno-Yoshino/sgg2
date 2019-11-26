@@ -49,7 +49,7 @@ public class LancarDespesaController
     public void CarregaTipoConta(JComboBox c) throws SQLException
     {
         ResultSet rs = TipoConta.buscarDados("",0);
-        
+        c.removeAllItems();
         while(rs.next())
         {
             c.addItem(rs.getString("tc_tipo"));

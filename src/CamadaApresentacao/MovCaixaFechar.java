@@ -350,7 +350,7 @@ public class MovCaixaFechar extends javax.swing.JDialog {
     private void txtValorCaixaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtValorCaixaFocusLost
         txtValorReal.setText(""+sc.truncar(cc.buscaValorReal(txtValorRecebido.getText(), txtValor.getText(), txtValorRetirado.getText())));
         txtDiferenca.setText(""+sc.truncar(cc.diferenca(txtValorCaixa.getText().replace(",", "."), txtValorReal.getText().replace(",", "."))));
-        Color c = cc.verificaDiferenca(txtValorCaixa.getText(), txtValorReal.getText());
+        Color c = cc.verificaDiferenca(txtValorCaixa.getText().replace(",", "."), txtValorReal.getText().replace(",", "."));
         txtValorReal.setBackground(c);
         if(c.equals(Color.yellow))
         {

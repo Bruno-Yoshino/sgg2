@@ -88,6 +88,7 @@ public class ReceberContaController {
     public int validarContasReceber(String codigoC, String valorPag, Date pagamento, String obs) throws SQLException
     {
         cr = new ContaReceber().buscaContaReceber(v.ConverteNumeroInteiro(codigoC));
+        valorPag = v.verificaNunero(valorPag);
         if(valorPag.equals(""))
         {
             return 1;

@@ -586,7 +586,7 @@ public class MovReceberContas extends javax.swing.JDialog {
         ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
         try {
             //String codigoC, String valorPag, Date pagamento, String obs
-            switch(rcc.validarContasReceber(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 5)), txtValorP.getText().replace(",", "."), dcPagamento.getData(), txtObs.getText()))
+            switch(rcc.validarContasReceber(String.valueOf(model.getValueAt(jTable1.getSelectedRow(), 5)).replace(",", "."), txtValorP.getText().replace(",", "."), dcPagamento.getData(), txtObs.getText()))
             {
                 case 1: m.InformationMessage("Informe o valor a ser Recebido!", "Atenção"); txtValorP.requestFocus(); break;
                 case 2: m.InformationMessage("Valor precisa ser maior ou igual a 0!", "Atenção"); txtValorP.requestFocus(); break;
