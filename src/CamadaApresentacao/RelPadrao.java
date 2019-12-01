@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import util.SystemControl;
+import util.mensagens;
 
 /**
  * @author 吉野　廉
@@ -31,6 +32,7 @@ public class RelPadrao extends javax.swing.JDialog {
     private int tl;
     private String tabela;
     private int posDefault;
+    private final mensagens m = new mensagens();
     boolean jtableEditavel;
     private final Relatorio rel = new Relatorio();
     private Pedido ped;
@@ -385,7 +387,7 @@ public class RelPadrao extends javax.swing.JDialog {
             else
                 rel.ImprimirRelatorio(AjustarProduto.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\AjusteProduto.jasper", "Relatorio Ajuste Produto");
         } catch (JRException ex) {
-            System.out.println(""+ex.toString());
+            m.InformationMessage("Relatório em Branco!", "Atenção");
         }
         
     }
@@ -398,7 +400,7 @@ public class RelPadrao extends javax.swing.JDialog {
             else
                 rel.ImprimirRelatorio(AjustarFolha.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\ajustefolha.jasper", "Relatorio Ajuste Folha");
         } catch (JRException ex) {
-            System.out.println(""+ex.toString());
+            m.InformationMessage("Relatório em Branco!", "Atenção");
         }
     }
     
@@ -410,7 +412,7 @@ public class RelPadrao extends javax.swing.JDialog {
             else
                 rel.ImprimirRelatorio(AjustarFolha.Relatorio(txtValor.getText(), cbOpcao.getSelectedIndex(), dataInicio.getData(), dataFim.getData()), "Relatorios\\comprovantep.jasper", "Relatorio Ajuste Folha");
         } catch (JRException ex) {
-            System.out.println(""+ex.toString());
+            m.InformationMessage("Relatório em Branco!", "Atenção");
         }
     }
     
@@ -424,7 +426,7 @@ public class RelPadrao extends javax.swing.JDialog {
                 else
                     rel.ImprimirRelatorioNNF(ped, "Relatorios\\notaNF.jasper", "Nota Não Fiscal");
             } catch (JRException ex) {
-                System.out.println(""+ex.toString());
+                m.InformationMessage("Relatório em Branco!", "Atenção");
             }
         }
     }
@@ -437,7 +439,8 @@ public class RelPadrao extends javax.swing.JDialog {
                 else
                     rel.ImprimirRelatorioData(dataInicio.getData(), "Relatorios\\espelhoC.jasper", "Espelho Caixa");
             } catch (JRException ex) {
-                System.out.println(""+ex.toString());
+                //System.out.println(""+ex.toString());
+                m.InformationMessage("Relatório em Branco!", "Atenção");
             }
     }
 

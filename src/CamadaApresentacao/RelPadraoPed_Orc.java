@@ -386,7 +386,8 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
                         break;
                 }
         } catch (JRException ex) {
-            Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            m.InformationMessage("Relatório em Branco!", "Atenção");
         }
     }
     
@@ -422,7 +423,8 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
                         break;
                 }
         } catch (JRException ex) {
-            Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
+            m.InformationMessage("Relatório em Branco!", "Atenção");
         }
     }
 

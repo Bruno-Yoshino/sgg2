@@ -496,11 +496,13 @@ public class ConsultaPadrao extends javax.swing.JDialog {
             case "AProduto": caminho="SGG/SGGOnlineHelp/consprod.html"; break;
             case "AFolha": caminho="SGG/SGGOnlineHelp/consfolha.html"; break;
             case "Cheque": caminho="SGG/SGGOnlineHelp/conscheque.html"; break;
-//            case "CLancarDespesa": caminho="SGG/SGGOnlineHelp/"; break;
-//            case "CCaixabanco": caminho="SGG/SGGOnlineHelp/"; break;
-//            case "CCaixaGeral": caminho="SGG/SGGOnlineHelp/"; break;
-//            case "CEstornoCP": caminho="SGG/SGGOnlineHelp/"; break;
-//            case "CEstornoCR": caminho="SGG/SGGOnlineHelp/"; break;
+            
+            case "CLancarDespesa": caminho="SGG/SGGOnlineHelp/consdespesa.html"; break;
+            case "CCaixabanco": caminho="SGG/SGGOnlineHelp/conscaixabanco.html"; break;
+            case "CCaixaGeral": caminho="SGG/SGGOnlineHelp/conscaixageral.html"; break;
+            case "CEstornoCP": caminho="SGG/SGGOnlineHelp/consestornocp.html"; break;
+            case "CEstornoCR": caminho="SGG/SGGOnlineHelp/consestornocr.html"; break;
+            
             case "Ajuste Folha": caminho="SGG/SGGOnlineHelp/consaf.html"; break;
             case "Ajuste Produto": caminho="SGG/SGGOnlineHelp/consap.html"; break;
             case "Caixa Retirada": caminho="SGG/SGGOnlineHelp/conscr.html"; break;
