@@ -250,6 +250,7 @@ public class RelPadrao extends javax.swing.JDialog {
             case "AjusteEstoqueFolha": AjusteFolha(""+valor); break;
             case "Nota NF": NNF(""+valor); break;
             case "Comprovante": Comprovante(""+valor); break;
+            case "CaixaE": CaixaE(""+valor); break;
         }        
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -426,6 +427,18 @@ public class RelPadrao extends javax.swing.JDialog {
                 System.out.println(""+ex.toString());
             }
         }
+    }
+    
+    private void CaixaE(String op)//Nota Nao Fiscal
+    {
+            try {
+                if(op.equals("PDF"))
+                    rel.ImprimirRelatorioPDFData(dataInicio.getData(), "Relatorios\\espelhoC.jasper");
+                else
+                    rel.ImprimirRelatorioData(dataInicio.getData(), "Relatorios\\espelhoC.jasper", "Espelho Caixa");
+            } catch (JRException ex) {
+                System.out.println(""+ex.toString());
+            }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

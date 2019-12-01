@@ -377,7 +377,7 @@ public class MovCaixaFechar extends javax.swing.JDialog {
     }//GEN-LAST:event_btnInformationActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        switch(cc.validar(txtValorCaixa.getText().replace(",", "."), txtDiferenca.getText(), txtValorRetirado.getText()))
+        switch(cc.validar(txtValorCaixa.getText().replace(",", "."), txtDiferenca.getText().replace(",", "."), txtValorReal.getText().replace(",", ".")))
         {
             case 1: m.InformationMessage("Informe o Valor atual do Caixa!", "Atenção"); txtValorCaixa.requestFocus(); break;
             case 2: m.InformationMessage("Altere o Valor!", "Atenção"); txtValorCaixa.requestFocus(); break;

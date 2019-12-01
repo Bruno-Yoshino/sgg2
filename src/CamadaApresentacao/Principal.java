@@ -308,6 +308,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem34 = new javax.swing.JMenuItem();
         jMenuItem35 = new javax.swing.JMenuItem();
         jMenuItem44 = new javax.swing.JMenuItem();
+        jMenuItem46 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem29 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
@@ -1078,6 +1079,14 @@ public class Principal extends javax.swing.JFrame {
         });
         Relatorio.add(jMenuItem44);
 
+        jMenuItem46.setText("Espelho Caixa");
+        jMenuItem46.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem46ActionPerformed(evt);
+            }
+        });
+        Relatorio.add(jMenuItem46);
+
         jMenuBar1.add(Relatorio);
 
         jMenu7.setText("Sobre");
@@ -1766,6 +1775,14 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem45ActionPerformed
 
+    private void jMenuItem46ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem46ActionPerformed
+        RelPadrao frm = new RelPadrao(this, false);
+        String[] vet = new String[1];
+        vet[0] = "Data";
+        frm.configuraOpcoes(vet, 1, 0, "CaixaE");
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem46ActionPerformed
+
     private void AccessLevel(int soma)
     {  
         if(soma == 64)
@@ -2005,6 +2022,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem43;
     private javax.swing.JMenuItem jMenuItem44;
     private javax.swing.JMenuItem jMenuItem45;
+    private javax.swing.JMenuItem jMenuItem46;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
