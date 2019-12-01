@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2019-11-27T10:04:36 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="emp" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1368b62f-068b-4e8a-ab5f-7a5582102d7a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SGGAdapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[select * from empresa]]>
+	</queryString>
+	<field name="cid_codigo" class="java.lang.Integer"/>
+	<field name="emp_nome" class="java.lang.String"/>
+	<field name="emp_cnpj" class="java.lang.String"/>
+	<field name="emp_endereco" class="java.lang.String"/>
+	<field name="emp_numero" class="java.lang.Integer"/>
+	<field name="emp_telefone" class="java.lang.String"/>
+	<field name="emp_caminho" class="java.lang.String"/>
+	<field name="emp_email" class="java.lang.String"/>
+	<field name="emp_cep" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="1" width="533" height="78" uuid="0eab815e-9fb5-4709-8b9a-a19b0a9df383"/>
+			</rectangle>
+			<image scaleImage="FillFrame" hAlign="Center" onErrorType="Blank">
+				<reportElement x="4" y="4" width="166" height="69" uuid="5f455f9d-4b01-4138-855a-b39f4bd82562"/>
+				<box>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</box>
+				<imageExpression><![CDATA[$F{emp_caminho}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="180" y="1" width="280" height="19" backcolor="#FFFFFF" uuid="01c77491-5ccc-40c2-bd15-51f5617f1be9"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emp_endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="20" width="350" height="19" uuid="31cb8851-71f5-4a8a-ad3b-2db188e05a3e"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emp_telefone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="40" width="350" height="20" uuid="90d686dd-326d-4df9-a786-7dbc5a407b04"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emp_email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="60" width="350" height="19" uuid="f112fa99-b8f9-4535-8e4d-d2a7991bace1"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emp_cep}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="489" y="0" width="40" height="20" uuid="6f6e8004-c3fa-4cb0-bf80-09302fab4e8b"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emp_numero}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

@@ -301,7 +301,7 @@ public class MovCaixaBanco extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        switch(cc.varidar(txtValor.getText(), txtNome.getText(), Integer.parseInt(txtCodigo.getText())))
+        switch(cc.varidar(txtValor.getText().replace(",", "."), txtNome.getText(), Integer.parseInt(txtCodigo.getText())))
         {
             case 1: m.InformationMessage("Informe o valor!", "Atenção"); txtValor.requestFocus(); txtValor.setText(""); break;
             case 2: m.InformationMessage("Valor negativo!", "Atenção"); txtValor.requestFocus();  break;

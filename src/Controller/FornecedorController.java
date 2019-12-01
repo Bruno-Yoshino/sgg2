@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import CamadaNegocio.Cidade;
@@ -54,7 +49,7 @@ public class FornecedorController
         return 0;
     }
 
-    public int validar(String codigo, String cidade, String nome, String telefone, String celular, String email)
+    public int validar(String codigo, String cidade, String nome, String telefone, String celular, String email, String endereco)
     {
         
         if(cidade.equals(""))//informa cidade
@@ -77,6 +72,7 @@ public class FornecedorController
         forn.setTel(telefone);
         forn.setCel(celular);
         forn.setEmail(email);
+        forn.setEndereco(endereco);
         return 0;
     }
     

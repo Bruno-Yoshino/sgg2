@@ -11,6 +11,7 @@ import CamadaNegocio.Orcamento;
 import CamadaNegocio.Pedido;
 import java.util.ArrayList;
 import util.SystemControl;
+import util.Validacao;
 
 /**
  *
@@ -657,17 +658,19 @@ public class ConsultaMov extends javax.swing.JDialog {
         {
             ResultSet rs;
             int tipo = cbOpcao.getSelectedIndex();
-            
+            Validacao v = new Validacao();
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
             rs = Pedido.ConsultaPedido(txtValor.getText(), tipo, dateInicio.getData(), dateFim.getData());
             while (rs.next())
             {
                 model.addRow(new Object[]
                 {//"Número", "Cliente", "Data Pedido", "Data Vencimento", "Valor Total"
+                //p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega
                     rs.getInt(1), 
                     rs.getString(2),
                     rs.getDate(4),
-                    rs.getDate(5),
+                    //rs.getDate(5),
+                    v.ValidarDataDuasData(rs.getDate(4), rs.getDate(5)) || v.ValidarDataDuasDataIgual(rs.getDate(4), rs.getDate(5))  ? rs.getDate(5) : "",
                     rs.getDouble(3)
                 });
             }

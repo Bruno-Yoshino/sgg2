@@ -203,7 +203,7 @@ public class Caixa
         String sql;
         sql = "select caixa_codigo, func_abrir, func_fechar, caixa_saldoinicio, caixa_saldofinal, caixa_valorreal, caixa_datainicio, max(caixa_codigo) "
                 + " from caixa "
-                + " where func_fechar is null and caixa_saldoinicio != -1 " 
+                + " where func_fechar is null and caixa_saldofinal != -1 " 
                 + " group by caixa_codigo, func_abrir, func_fechar, caixa_saldoinicio, caixa_saldofinal, caixa_valorreal, caixa_datainicio ";
                 ResultSet rs=Banco.getCon().consultar(sql);
         try 

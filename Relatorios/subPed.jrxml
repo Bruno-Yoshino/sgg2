@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2019-11-15T15:27:51 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subPed" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="30daff83-5e6f-4cb8-99ac-34730d6e0ef5">
+<!-- 2019-12-01T11:01:09 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subPed" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="30daff83-5e6f-4cb8-99ac-34730d6e0ef5">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SGGAdapter"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<parameter name="numero" class="java.lang.Integer"/>
-	<parameter name="sequence" class="java.lang.Integer"/>
+	<parameter name="numero" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sequence" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select * from  pedido_servico_detalhe psd, detalhe_serv ds
 where psd.ps_sequence = $P{sequence} and psd.ds_codigo = ds.ds_codigo and psd.pe_codigo = $P{numero}]]>
@@ -25,9 +29,12 @@ where psd.ps_sequence = $P{sequence} and psd.ds_codigo = ds.ds_codigo and psd.pe
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="22" splitType="Stretch">
+		<band height="29" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="553" height="29" uuid="9a83ec10-5c54-4b39-84b4-2722776df578"/>
+			</rectangle>
 			<textField>
-				<reportElement x="2" y="1" width="549" height="18" uuid="381b3144-bc96-42cc-bdfa-391040ddba0a"/>
+				<reportElement x="2" y="1" width="549" height="19" uuid="381b3144-bc96-42cc-bdfa-391040ddba0a"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>

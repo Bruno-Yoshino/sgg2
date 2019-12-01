@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2019-11-04T20:01:41 -->
+<!-- 2019-12-01T10:57:44 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subOrcamento" pageWidth="595" pageHeight="842" orientation="Landscape" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="a94edd3e-eafc-4a8c-a9f7-36fee678fc70">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -29,7 +29,10 @@ where osd.os_sequence = $P{sequence} and osd.ds_codigo = ds.ds_codigo and osd.or
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="19" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="554" height="19" uuid="5d8d7ff7-66a7-43a0-a276-79046ba88545"/>
+			</rectangle>
 			<textField>
 				<reportElement x="2" y="1" width="549" height="18" uuid="3f070618-42e9-44d0-807d-42b8a1fa1029"/>
 				<textFieldExpression><![CDATA[$F{ds_descricao}.equals("Numeração") ? "Numeração de"+$F{osd_numeracaoini} + " a " +$F{osd_numeracaofim} : $F{ds_descricao}.equals("Vias") ? "Vias: " + $F{osd_vias} : $F{ds_descricao}.equals("Outros") ? "Outros: " + $F{osd_outros} : $F{ds_descricao}]]></textFieldExpression>

@@ -1280,26 +1280,26 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn10ActionPerformed
 
     private void btn11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn11ActionPerformed
-//        ShowImputPassword sip = new ShowImputPassword(this, true, "Informe a Senha:");
-//        sip.setTitle("Informe");
-//        sip.setVisible(true);
-//        if(sip.getSenha().equals(funcL.getSenha()))
-//        {
-//            sip.dispose();
-//            if(new Caixa().VerificaCaixaAberto())
-//            {
-//                MovCaixaFechar frm = new MovCaixaFechar(this, true, funcL);
-//                frm.setTitle("Fechar Caixa");
-//                frm.setVisible(true);
-//            }
+        ShowImputPassword sip = new ShowImputPassword(this, true, "Informe a Senha:");
+        sip.setTitle("Informe");
+        sip.setVisible(true);
+        if(sip.getSenha().equals(funcL.getSenha()))
+        {
+            sip.dispose();
+            if(new Caixa().VerificaCaixaAberto())
+            {
+                MovCaixaFechar frm = new MovCaixaFechar(this, true, funcL);
+                frm.setTitle("Fechar Caixa");
+                frm.setVisible(true);
+            }
             log.setVisible(true);
             dispose();
-//        }
-//        else
-//        {
-//            m.InformationMessage("Senha incorreta!", "Atenção");
-//        }
-//        sip.dispose();
+        }
+        else
+        {
+            m.InformationMessage("Senha incorreta!", "Atenção");
+        }
+        sip.dispose();
     }//GEN-LAST:event_btn11ActionPerformed
 
     private void cadFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadFuncionarioActionPerformed
@@ -1601,10 +1601,11 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
         RelPadraoPed_Orc frm = new RelPadraoPed_Orc(this, false);
-        String[] vet = new String[2];
+        String[] vet = new String[3];
         vet[0] = "Número";
         vet[1] = "Periodo e Nome";
-        frm.configuraOpcoes(vet, 2, 0, "Pedido");
+        vet[2] = "Do Dia";
+        frm.configuraOpcoes(vet, 3, 0, "Pedido");
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem35ActionPerformed
 
@@ -1700,12 +1701,13 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem43ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem43ActionPerformed
         ConsultaMov consPedido = new ConsultaMov(null, true);
-        String[] vet = new String[4];
+        String[] vet = new String[5];
         vet[0] = "Tudo";
         vet[1] = "Data";
         vet[2] = "Periodo";
         vet[3] = "Numero";
-        consPedido.configuraOpcoes(vet, 4, 0, "Pedido", false);
+        vet[4] = "Nome";
+        consPedido.configuraOpcoes(vet, 5, 0, "Pedido", false);
         consPedido.verificaconsulta(false);
         consPedido.setVisible(true);
     }//GEN-LAST:event_jMenuItem43ActionPerformed
@@ -1725,23 +1727,43 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem45ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem45ActionPerformed
         String Senha, User;
-        User = JOptionPane.showInputDialog(null, "Informe o Usuário:", "Informe", JOptionPane.INFORMATION_MESSAGE);
-        ShowImputPassword sip = new ShowImputPassword(this, true, User+", informe a sua Senha:");
+        ShowImputPassword sip = new ShowImputPassword(this, true, "Informe a Senha:");
         sip.setTitle("Informe");
         sip.setVisible(true);
-        Senha = sip.getSenha();
-        sip.dispose();
-        Funcionario temp  = new Funcionario().logar(User, Senha);
-        if(temp != null)
+        if(sip.getSenha().equals(funcL.getSenha()))
         {
-            funcL = temp;
-            InitSystem();
-            m.InformationMessage("Funcionario trocado com sucesso!", "Informação");
+            sip.dispose();
+            if(new Caixa().VerificaCaixaAberto())
+            {
+                MovCaixaFechar frm = new MovCaixaFechar(this, true, funcL);
+                frm.setTitle("Fechar Caixa");
+                frm.setVisible(true);
+                User = JOptionPane.showInputDialog(null, "Informe o Usuário:", "Informe", JOptionPane.INFORMATION_MESSAGE);
+                ShowImputPassword sip2 = new ShowImputPassword(this, true, "Informe a Senha:");
+                sip2.setTitle("Informe");
+                sip2.setVisible(true);
+                Senha = sip2.getSenha();
+                Funcionario temp  = new Funcionario().logar(User, Senha);
+                if(temp != null)
+                {
+                    funcL = temp;
+                    InitSystem();
+                    m.InformationMessage("Funcionario trocado com sucesso!", "Informação");
+                }
+                else
+                {
+                    m.WarmingMessage("Usuario ou Senha Incorreto", "Atenção");
+                }
+                sip2.dispose();
+            }
         }
         else
         {
-            m.WarmingMessage("Usuario ou Senha Incorreto", "Atenção");
+            m.InformationMessage("Senha incorreta!", "Atenção");
         }
+        sip.dispose();
+        
+        
     }//GEN-LAST:event_jMenuItem45ActionPerformed
 
     private void AccessLevel(int soma)

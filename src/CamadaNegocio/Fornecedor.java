@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CamadaNegocio;
 
 import CamadaLogica.Banco;
@@ -31,14 +26,16 @@ public class Fornecedor
     private String tel;
     private String cel;
     private String email;
+    private String endereco;
 
-    public Fornecedor(int codigo, Cidade cid, String nome, String tel, String cel, String email) {
+    public Fornecedor(int codigo, Cidade cid, String nome, String tel, String cel, String email, String endereco) {
         this.codigo = codigo;
         this.cid = cid;
         this.nome = nome;
         this.tel = tel;
         this.cel = cel;
         this.email = email;
+        this.endereco = endereco;
     }
 
     public Fornecedor() {
@@ -91,19 +88,28 @@ public class Fornecedor
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+    
     ///---------------------------------------------------------------- Data Base---------------------------------------------
     public boolean gravar()  // using This
     {
         String sql;
         if(this.codigo == 0)
         {
-            sql = "insert into fornecedor (cid_codigo, forn_nome, forn_telefone, forn_celular, forn_email\n" +
-                    ") values ("+this.cid.getCodigo()+", '"+this.getNome()+"', '"+this.getTel()+"', '"+this.getCel()+"', '"+this.email+"')";
+            sql = "insert into fornecedor (cid_codigo, forn_nome, forn_telefone, forn_celular, forn_email, forn_endereco\n" +
+                    ") values ("+this.cid.getCodigo()+", '"+this.getNome()+"', '"+this.getTel()+"', '"+this.getCel()+"', '"+this.email+"', '"+this.endereco+"')";
         }
         else
         {
             sql = "update fornecedor set cid_codigo = "+this.cid.getCodigo()+", forn_nome = '"+this.getNome()+"', "
-                    + " forn_telefone = '"+this.getTel()+"', forn_celular = '"+this.getCel()+"', forn_email = '"+this.email+"' where forn_codigo = "+this.codigo+"";
+                    + " forn_telefone = '"+this.getTel()+"', forn_celular = '"+this.getCel()+"', forn_email = '"+this.email+"', forn_endereco = '"+this.endereco+"' where forn_codigo = "+this.codigo+"";
         }
         return Banco.getCon().manipular(sql);
     }
@@ -120,7 +126,7 @@ public class Fornecedor
         String sql;
         sql = "select forn_codigo, cid_codigo, forn_nome, "
                 + "forn_telefone, "
-                + "forn_celular, forn_email"
+                + "forn_celular, forn_email, forn_endereco "
                 + "from fornecedor "
                 + "where forn_nome like '%"+s+"%' order by forn_nome";
         ResultSet rs=Banco.getCon().consultar(sql);
@@ -129,7 +135,7 @@ public class Fornecedor
             if (rs.next()) 
             {
                 return new Fornecedor(rs.getInt(1), new Cidade().buscarCodigo(rs.getInt(2)), rs.getString(3), 
-                        rs.getString(4), rs.getString(5), rs.getString(6));
+                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
             }
         } 
         catch (SQLException e) 
@@ -167,7 +173,7 @@ public class Fornecedor
         String sql;
         sql = "select forn_codigo, cid_codigo, forn_nome, "
                 + "forn_telefone, "
-                + "forn_celular, forn_email "
+                + "forn_celular, forn_email, forn_endereco "
                 + "from fornecedor "
                 + "where forn_codigo = "+i+" ";
         ResultSet rs=Banco.getCon().consultar(sql);
@@ -176,7 +182,7 @@ public class Fornecedor
             if (rs.next()) 
             {
                 return new Fornecedor(rs.getInt(1), new Cidade().buscarCodigo(rs.getInt(2)), rs.getString(3), 
-                        rs.getString(4), rs.getString(5), rs.getString(6));
+                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
             }
         } 
         catch (SQLException e) 

@@ -295,6 +295,13 @@ public class Pedido {
                             + "where p.pe_codigo = '"+valor+"' and p.cli_codigo = c.cli_codigo";
                     break;
                 }
+                case 4:// Nome Cliente
+                {
+                    query = "select p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
+                             + " FROM pedido p, cliente c "
+                            + "where c.cli_nome ilike '%"+valor+"%' and p.cli_codigo = c.cli_codigo";
+                    break;
+                }
             }
         }
         return Banco.getCon().retornaResultSet(query);
@@ -370,7 +377,7 @@ public class Pedido {
     
     public static void configuraModel(JTable jTable) // Configurar Tabela Para consulta ou para Alterar
     {
-        String colunas[] = new String [] {"Número", "Cliente", "Data Pedido", "Data Vencimento", "Valor Total"};
+        String colunas[] = new String [] {"Número", "Cliente", "Data Pedido", "Data Entrega", "Valor Total"};
         jTable.setModel(new ReadOnlyTableModel(colunas, 0));
         jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
         jTable.getColumnModel().getColumn(1).setPreferredWidth(250);

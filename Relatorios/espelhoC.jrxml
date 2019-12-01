@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2019-11-30T22:35:01 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="espelhoC" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b6b4ce59-506a-4732-91df-ecdc22b9af40">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SGGAdapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="data" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[select * from caixa c where caixa_datainicio = $P{data} and func_fechar is not null]]>
+	</queryString>
+	<field name="caixa_codigo" class="java.lang.Integer"/>
+	<field name="func_abrir" class="java.lang.Integer"/>
+	<field name="func_fechar" class="java.lang.Integer"/>
+	<field name="caixa_saldoinicio" class="java.lang.Double"/>
+	<field name="caixa_saldofinal" class="java.lang.Double"/>
+	<field name="caixa_valorreal" class="java.lang.Double"/>
+	<field name="caixa_datainicio" class="java.sql.Date"/>
+	<field name="caixa_nome" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="159" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="550" height="110" uuid="66b056e7-bfc8-4d46-980d-3ee0563b0e18"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["Relatorios/emp.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="0" y="113" width="550" height="46" uuid="1018c8f0-0079-4926-943f-8e01a8be35b1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="24"/>
+				</textElement>
+				<text><![CDATA[Espelho Caixa]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="205" splitType="Stretch">
+			<textField>
+				<reportElement x="93" y="1" width="152" height="20" uuid="de0b382d-3943-43aa-9bf5-764ce375986b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Aria" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{caixa_codigo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="1" width="90" height="20" uuid="020af8cd-6327-4ac2-bb1e-30377758ae4a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Codigo Caixa:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="92" y="21" width="152" height="18" uuid="cc8d6066-743e-4574-afdb-33f812a6cd5c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{caixa_saldoinicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="21" width="90" height="18" uuid="ac5fb8a6-849f-458f-933d-37cd00871d96"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Saldo Inicio:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="331" y="21" width="131" height="18" uuid="0c584cf3-9853-40d9-8b68-4663dd802e2c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{caixa_saldofinal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="245" y="21" width="86" height="18" uuid="a34e5f10-330c-4778-b7a0-7e4862ea0b98"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Saldo Final:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="93" y="40" width="151" height="20" uuid="7eaa8a31-fa13-4758-b3f9-ebdecbc426b3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{caixa_valorreal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="40" width="90" height="20" uuid="a835c78c-11de-4286-83a4-a94735709451"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Valor Real:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="2" y="60" width="540" height="70" uuid="36eced42-99f2-4a1f-8834-197abcf32131">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="codigo">
+					<subreportParameterExpression><![CDATA[$F{caixa_codigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["Relatorios/subContaPago.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="0" y="135" width="540" height="70" uuid="8048802c-983d-4b41-bee0-6caf4b569ee5">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="codigo1">
+					<subreportParameterExpression><![CDATA[$F{caixa_codigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["Relatorios/subContaRecebida.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="19" splitType="Stretch">
+			<textField pattern="d/M/yyyy">
+				<reportElement x="435" y="3" width="119" height="16" uuid="b6fa1fc0-858e-45eb-ad1f-c9430fca5e8b"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="494" y="0" width="60" height="14" uuid="1a555e58-d6c4-4ac0-9b70-02e3441e6ce5"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

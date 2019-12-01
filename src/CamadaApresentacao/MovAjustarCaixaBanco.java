@@ -266,7 +266,7 @@ public class MovAjustarCaixaBanco extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        switch(cc.varidar(txtValor.getText(), txtNome.getText(), txtSaldo.getText().replace(",", "."), Integer.parseInt(txtCodigo.getText()), rbAdicionar.isSelected()))
+        switch(cc.varidar(txtValor.getText().replace(",", "."), txtNome.getText(), txtSaldo.getText().replace(",", "."), Integer.parseInt(txtCodigo.getText()), rbAdicionar.isSelected()))
         {
             case 1: m.InformationMessage("Informe o valor!", "Atenção"); txtValor.requestFocus(); txtValor.setText(""); break;
             case 2: m.InformationMessage("Valor a ser retirado é maior que o saldo Atual!", "Atenção"); txtValor.requestFocus();  break;

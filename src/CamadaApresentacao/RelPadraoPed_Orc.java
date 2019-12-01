@@ -242,7 +242,7 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
     }//GEN-LAST:event_cbOpcaoItemStateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    if(!txtValor.getText().equals(""))
+    if(!txtValor.getText().equals("") || cbOpcao.getSelectedIndex()== 2)
     {    String lista[] = {"PDF","Local"};
         Object valor;
         do{
@@ -335,14 +335,28 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
         }
         else
         {
-            txtValor.setVisible(true);
-            lbTexto.setText("Número:");
-            lbData.setVisible(false);
-            dataInicio.setVisible(false);
-            dataFim.setVisible(false);
-            lbA.setVisible(false);
-            btnlocCliente.setVisible(false);
-            txtValor.setText("");
+            if(nome.contains("Número"))
+            {
+                txtValor.setVisible(true);
+                lbTexto.setText("Número:");
+                lbData.setVisible(false);
+                dataInicio.setVisible(false);
+                dataFim.setVisible(false);
+                lbA.setVisible(false);
+                btnlocCliente.setVisible(false);
+                txtValor.setText("");
+            }
+            else
+            {
+                txtValor.setVisible(false);
+                lbTexto.setText("");
+                lbData.setVisible(true);
+                dataInicio.setVisible(true);
+                dataFim.setVisible(false);
+                lbA.setVisible(false);
+                btnlocCliente.setVisible(false);
+                txtValor.setText("");
+            }
         }
     }
     
@@ -384,10 +398,13 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
                 switch(cbOpcao.getSelectedIndex())
                 {
                     case 1:
-                        rel.ImprimirRelatorioPDF(cli.getCodigo(), dataInicio.getData(), dataFim.getData(), "Relatorios\\pedido.jasper");
+                        rel.ImprimirRelatorioPDF(cli.getCodigo(), dataInicio.getData(), dataFim.getData(), "Relatorios\\pedido2.jasper");
                         break;
                     case 0:
                         rel.ImprimirRelatorioPDFNumero(v.ConverteNumeroInteiro(txtValor.getText()), "Relatorios\\pedidoCodigo.jasper");
+                        break;
+                    case 2:
+                        rel.ImprimirRelatorioPDFData(dataInicio.getData(), "Relatorios\\pedidoDia.jasper");
                         break;
                 }
             }
@@ -395,10 +412,13 @@ public class RelPadraoPed_Orc extends javax.swing.JDialog {
                 switch(cbOpcao.getSelectedIndex())
                 {
                     case 1:
-                        rel.ImprimirRelatorio(cli.getCodigo(), dataInicio.getData(), dataFim.getData(), "Relatorios\\pedido.jasper", "Relatorio Pedido");
+                        rel.ImprimirRelatorio(cli.getCodigo(), dataInicio.getData(), dataFim.getData(), "Relatorios\\pedido2.jasper", "Relatorio Pedido");
                         break;
                     case 0:
                         rel.ImprimirRelatorioNumero(v.ConverteNumeroInteiro(txtValor.getText()), "Relatorios\\pedidoCodigo.jasper", "Relatorio Pedido");
+                        break;
+                    case 2:
+                        rel.ImprimirRelatorioData(dataInicio.getData(), "Relatorios\\pedidoDia.jasper", "Relatorio Pedido");
                         break;
                 }
         } catch (JRException ex) {
