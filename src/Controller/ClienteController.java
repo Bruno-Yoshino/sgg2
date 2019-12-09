@@ -58,12 +58,12 @@ public class ClienteController {
             return 2;
         }
         c.setNome(nome);//3
-        
+        //orgemi_insc
         if(orgemi_insc.trim().equals("")) // orgemi nao informado
         {
             return 7;
         }
-        if(orgemi_insc.length() > 2) // orgemi > 2 nao informado
+        if(orgemi_insc.length() == 0) // orgemi > 2 nao informado
         {
             return 8;
         }
@@ -107,23 +107,26 @@ public class ClienteController {
         c.setEmail(email);//10
         if(flag)
         {
-            if(cpf.trim().length() != 14)
+            if(!cpf.equals("000.000.000-00"))
             {
-                return 15;
-            }
-            String cpfA = cpf;
-            cpfA = cpfA.replaceAll("\\.", "");
-            cpfA = cpfA.replaceAll("/", "");
-            cpfA = cpfA.replaceAll("-", "");
-            int dig1, dig2;
-            dig1 = v.PrimeiroDigito(cpfA);
-            dig2 = v.SegundoDigito(cpfA);  
-            String d1, d2;
-            d1 = Integer.toString(dig1);
-            d2 = Integer.toString(dig2);
-            if(cpfA.charAt(9) != d1.charAt(0) || cpfA.charAt(10) != d2.charAt(0))
-            {
-                return 21;
+                if(cpf.trim().length() != 14)
+                {
+                    return 15;
+                }
+                String cpfA = cpf;
+                cpfA = cpfA.replaceAll("\\.", "");
+                cpfA = cpfA.replaceAll("/", "");
+                cpfA = cpfA.replaceAll("-", "");
+                int dig1, dig2;
+                dig1 = v.PrimeiroDigito(cpfA);
+                dig2 = v.SegundoDigito(cpfA);  
+                String d1, d2;
+                d1 = Integer.toString(dig1);
+                d2 = Integer.toString(dig2);
+                if(cpfA.charAt(9) != d1.charAt(0) || cpfA.charAt(10) != d2.charAt(0))
+                {
+                    return 21;
+                }
             }
             c.setCpf(cpf);//1
             if(rg.trim().equals(""))
@@ -137,6 +140,7 @@ public class ClienteController {
             }
             c.setDataNasc(dataNasc);//3
             c.setCnpj(null);
+            
         }
         else
         {
@@ -149,12 +153,17 @@ public class ClienteController {
             {
                 return 19;
             }
+            if(orgemi_insc.length() > 12)
+            {
+                return 22;
+            }
             c.setRazasoci(razasoci);//2
             c.setCpf(null);
         }
         if(c.VerificaCliente(cpf,cnpj) && c.getCodigo() == 0)
         {
-            return 20;
+            if(!cpf.equals("000.000.000-00"))
+                return 20;
         }
         return 0;
     }
@@ -247,5 +256,10 @@ public class ClienteController {
     public void Reativar(int codigo)
     {
         c.recuperar(codigo);
+    }
+    
+    public void deleta()
+    {
+        c.excluir(c.maxCoidgo());
     }
 }

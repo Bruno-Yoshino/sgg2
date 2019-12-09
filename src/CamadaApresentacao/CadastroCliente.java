@@ -820,16 +820,16 @@ public class CadastroCliente extends javax.swing.JDialog {
 
             break;
             case 8:
-//                if(flag)
-//                {
+                if(flag)
+                {
                     JOptionPane.showMessageDialog(this, "O tamanho do Orgão emissor deve ser 3 caracteres!","Alerta", JOptionPane.WARNING_MESSAGE);
                     txtcli_orgEmi.requestFocus();
-//                }
-//                else
-//                {
-//                    JOptionPane.showMessageDialog(this, "O tamanho da Inscrição Estadual deve ser 2 caracteres!","Alerta", JOptionPane.WARNING_MESSAGE);
-//                    txtcli_ie.requestFocus();
-//                }
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "O tamanho da Inscrição Estadual deve ser 12 caracteres!","Alerta", JOptionPane.WARNING_MESSAGE);
+                    txtcli_ie.requestFocus();
+                }
             break;
             case 9:
             JOptionPane.showMessageDialog(this, "Informe o endereço!","Alerta", JOptionPane.WARNING_MESSAGE);
@@ -915,6 +915,11 @@ public class CadastroCliente extends javax.swing.JDialog {
                 {
                     JOptionPane.showMessageDialog(this, "Gravado com sucesso!","Informação", JOptionPane.INFORMATION_MESSAGE);
                     limpar();                    
+                }
+                else
+                {
+                    m.ErroMessage("ERRO!", "ERRO"); 
+                    cc.deleta();
                 }
             }
             else
