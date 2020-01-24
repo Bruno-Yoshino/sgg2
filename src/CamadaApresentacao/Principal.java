@@ -1541,6 +1541,7 @@ public class Principal extends javax.swing.JFrame {
             frm.setTitle("Pedido");
             frm.setVisible(true);
             carregaTabela(); 
+            loadQtdProducao();
         } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1715,7 +1716,7 @@ public class Principal extends javax.swing.JFrame {
         vet[1] = "Data";
         vet[2] = "Periodo";
         vet[3] = "Numero";
-        vet[4] = "Nome";
+        vet[4] = "Nome Cliente";
         consPedido.configuraOpcoes(vet, 5, 0, "Pedido", false);
         consPedido.verificaconsulta(false);
         consPedido.setVisible(true);

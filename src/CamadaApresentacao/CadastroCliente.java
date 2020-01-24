@@ -807,11 +807,11 @@ public class CadastroCliente extends javax.swing.JDialog {
             case 2: JOptionPane.showMessageDialog(this, "Informe o Nome!","Alerta", JOptionPane.WARNING_MESSAGE);
             txtcli_nome.requestFocus(); break;
             case 7:
-//                if(flag)
-//                {
+                if(flag)
+                {
                     JOptionPane.showMessageDialog(this, "Informe o Orgão emissor!","Alerta", JOptionPane.WARNING_MESSAGE);
                     txtcli_orgEmi.requestFocus();
-//                }
+                }
 //                else
 //                {
 //                    JOptionPane.showMessageDialog(this, "Informe Inscrição Estadual!","Alerta", JOptionPane.WARNING_MESSAGE);

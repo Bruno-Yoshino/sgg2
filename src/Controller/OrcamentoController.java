@@ -585,6 +585,11 @@ public class OrcamentoController {
         return new Orcamento().UltimoCodigo();
     }
     
+    public void StartOrcamento() 
+    {
+        o.setLista(new ArrayList<>()); 
+    }
+    
     public static void configuraModelServico(JTable jTable) // Configurar Tabela Servico
     {
         String colunas[] = new String [] {"Serviço", "Valor", "Quantidade", "Valor Papel", "Valor Arte", "Valor Implessão", "Valor Acabameto", "Valor Chapa", "Valor MDO", "Desconto", "Valor Total", "Descrição"};

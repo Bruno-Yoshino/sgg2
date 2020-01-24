@@ -74,6 +74,7 @@ public class ConsultaMov extends javax.swing.JDialog {
         jla = new javax.swing.JLabel();
         btnLocalizar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -175,6 +176,10 @@ public class ConsultaMov extends javax.swing.JDialog {
             }
         });
 
+        jCheckBox1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jCheckBox1.setSelected(true);
+        jCheckBox1.setText("Exibir apenas Não Entregue");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -191,11 +196,14 @@ public class ConsultaMov extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtValor)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(dateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jla)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dateFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(dateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jla)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dateFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCheckBox1))
                 .addGap(42, 42, 42)
                 .addComponent(btnLocalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(81, 81, 81)
@@ -218,7 +226,8 @@ public class ConsultaMov extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(cbOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1))
+                                    .addComponent(jLabel1)
+                                    .addComponent(jCheckBox1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLTexto)
@@ -261,7 +270,7 @@ public class ConsultaMov extends javax.swing.JDialog {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -374,6 +383,14 @@ public class ConsultaMov extends javax.swing.JDialog {
             cbOpcao.addItem(vetOpcoes[i]);
         }
         cbOpcao.setSelectedIndex(posDefault);
+        if(tabela.equals("Pedido"))
+        {
+            jCheckBox1.setVisible(true);
+        }
+        else
+        {
+            jCheckBox1.setVisible(false);
+        }
     }
     
     private void ControlaComboBox() //alterar os campos conforme a opcao selecionada
@@ -660,7 +677,7 @@ public class ConsultaMov extends javax.swing.JDialog {
             int tipo = cbOpcao.getSelectedIndex();
             Validacao v = new Validacao();
             ReadOnlyTableModel model = (ReadOnlyTableModel) jTable1.getModel();
-            rs = Pedido.ConsultaPedido(txtValor.getText(), tipo, dateInicio.getData(), dateFim.getData());
+            rs = Pedido.ConsultaPedido(txtValor.getText(), tipo, dateInicio.getData(), dateFim.getData(), jCheckBox1.isSelected());
             while (rs.next())
             {
                 model.addRow(new Object[]
@@ -864,6 +881,7 @@ public class ConsultaMov extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cbOpcao;
     private br.com.marciorl.beans.DateChooser dateFim;
     private br.com.marciorl.beans.DateChooser dateInicio;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLTexto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;

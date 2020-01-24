@@ -54,7 +54,6 @@ public class PedidoController {
     private DetalheServico sd; 
     private final ArrayList<Pedido_Servico> excluirS;
     private final ArrayList<Integer> excluirSD;
-    private final ArrayList<Integer> excluirSDCodigo;
     private final ArrayList<String> excluirDetalhes;
     private final util.SystemControl sc;
 
@@ -65,7 +64,6 @@ public class PedidoController {
         sd = new DetalheServico();
         excluirS = new ArrayList<>();
         excluirSD = new ArrayList<>();
-        excluirSDCodigo = new ArrayList<>();
         excluirDetalhes = new ArrayList<>();
         sc = new SystemControl();
     }
@@ -705,6 +703,11 @@ public class PedidoController {
         } catch (JRException ex) {
             Logger.getLogger(OrcamentoController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void StartPedido()
+    {
+        p.setLista(new ArrayList<>());
     }
     
     public static void configuraModelServico(JTable jTable) // Configurar Tabela Servico

@@ -59,11 +59,11 @@ public class ClienteController {
         }
         c.setNome(nome);//3
         //orgemi_insc
-        if(orgemi_insc.trim().equals("")) // orgemi nao informado
+        if(orgemi_insc.trim().equals("") && flag) // orgemi nao informado
         {
             return 7;
         }
-        if(orgemi_insc.length() == 0) // orgemi > 2 nao informado
+        if(orgemi_insc.length() == 0 && flag) // orgemi > 2 nao informado
         {
             return 8;
         }

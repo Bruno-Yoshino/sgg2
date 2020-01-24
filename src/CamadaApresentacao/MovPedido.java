@@ -1063,6 +1063,7 @@ public class MovPedido extends javax.swing.JDialog {
         txtCodigo.setText("0");
         txtValorT.setText("0");
         initializeServico();
+        pc.StartPedido();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEntregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregarActionPerformed
@@ -1145,6 +1146,7 @@ public class MovPedido extends javax.swing.JDialog {
                                         linha = -1;
                                         lbEntrega.setVisible(false);
                                         dcEntrega.setVisible(false);
+                                        
                                     }
                                     else
                                     {
@@ -1219,12 +1221,13 @@ public class MovPedido extends javax.swing.JDialog {
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
         ConsultaMov consPedido = new ConsultaMov(null, true);
-        String[] vet = new String[4];
+        String[] vet = new String[5];
         vet[0] = "Tudo";
         vet[1] = "Data";
         vet[2] = "Periodo";
         vet[3] = "Numero";
-        consPedido.configuraOpcoes(vet, 4, 0, "Pedido", false);
+        vet[4] = "Nome Cliente";
+        consPedido.configuraOpcoes(vet, 5, 0, "Pedido", false);
         consPedido.verificaconsulta(true);
         consPedido.setVisible(true);
         if (consPedido.getCodigo() != 0)

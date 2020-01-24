@@ -1172,6 +1172,7 @@ public class MovOrcamneto extends javax.swing.JDialog {
         txtValorT.setText("0");
         txtCodigo.setText("0");
         clearLocalComponents();
+        oc.StartOrcamento();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnAlterarServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarServicoActionPerformed

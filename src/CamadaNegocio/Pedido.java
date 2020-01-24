@@ -254,56 +254,100 @@ public class Pedido {
         return temp;
     }
     
-    public static ResultSet ConsultaPedido(String valor, int tipo, Date dataI, Date dataF)
+    public static ResultSet ConsultaPedido(String valor, int tipo, Date dataI, Date dataF, boolean flag)
     {
         String query = null;
-        if (valor.equals(""))
-        {
-            query = "SELECT p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
-                + " FROM pedido p, cliente c "
-                + " WHERE p.cli_codigo = c.cli_codigo ";
-        }
-        else
-        {
-            switch (tipo)
+//        if (valor.equals(""))
+//        {
+//            query = "SELECT p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
+//                + " FROM pedido p, cliente c "
+//                + " WHERE p.cli_codigo = c.cli_codigo ";
+//        }
+//        else
+//        {
+            if(flag)
             {
-                case 0:// Tudo
+                switch (tipo)
                 {
-                    query = "SELECT p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
-                          + " FROM pedido p, cliente c "
-                          + " WHERE p.cli_codigo = c.cli_codigo ";
-                    break;
-                }
-                case 1:// Data
-                {
-                    query = "SELECT p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
-                          + " FROM pedido p, cliente c "
-                          + " WHERE p.pe_datapedido = '"+valor+"' and p.cli_codigo = c.cli_codigo ";
-                    break;
-                }
-                case 2:// Periodo
-                {
-                    query = "SELECT p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
-                             + " FROM pedido p, cliente c "
-                            + " WHERE p.pe_datapedido BETWEEN '"+dataI+"' and '"+dataF+"' and p.cli_codigo = c.cli_codigo";
-                    break;
-                }
-                case 3:// Numero
-                {
-                    query = "select p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
-                             + " FROM pedido p, cliente c "
-                            + "where p.pe_codigo = '"+valor+"' and p.cli_codigo = c.cli_codigo";
-                    break;
-                }
-                case 4:// Nome Cliente
-                {
-                    query = "select p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
-                             + " FROM pedido p, cliente c "
-                            + "where c.cli_nome ilike '%"+valor+"%' and p.cli_codigo = c.cli_codigo";
-                    break;
+                    case 0:// Tudo
+                    {
+                        query = "SELECT p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
+                              + " FROM pedido p, cliente c "
+                              + " WHERE p.cli_codigo = c.cli_codigo and p.pe_dataentrega < p.pe_datapedido";
+                        break;
+                    }
+                    case 1:// Data
+                    {
+                        query = "SELECT p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
+                              + " FROM pedido p, cliente c "
+                              + " WHERE p.pe_datapedido = '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_dataentrega < p.pe_datapedido";
+                        break;
+                    }
+                    case 2:// Periodo
+                    {
+                        query = "SELECT p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
+                                 + " FROM pedido p, cliente c "
+                                + " WHERE p.pe_datapedido BETWEEN '"+dataI+"' and '"+dataF+"' and p.cli_codigo = c.cli_codigo and p.pe_dataentrega < p.pe_datapedido";
+                        break;
+                    }
+                    case 3:// Numero
+                    {
+                        query = "select p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
+                                 + " FROM pedido p, cliente c "
+                                + "where p.pe_codigo = '"+valor+"' and p.cli_codigo = c.cli_codigo and p.pe_dataentrega < p.pe_datapedido";
+                        break;
+                    }
+                    case 4:// Nome Cliente
+                    {
+                        query = "select p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
+                                 + " FROM pedido p, cliente c "
+                                + "where c.cli_nome ilike '%"+valor+"%' and p.cli_codigo = c.cli_codigo and p.pe_dataentrega < p.pe_datapedido";
+                        break;
+                    }
                 }
             }
-        }
+            else
+            {
+                switch (tipo)
+                {
+                    case 0:// Tudo
+                    {
+                        query = "SELECT p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
+                              + " FROM pedido p, cliente c "
+                              + " WHERE p.cli_codigo = c.cli_codigo ";
+                        break;
+                    }
+                    case 1:// Data
+                    {
+                        query = "SELECT p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
+                              + " FROM pedido p, cliente c "
+                              + " WHERE p.pe_datapedido = '"+valor+"' and p.cli_codigo = c.cli_codigo ";
+                        break;
+                    }
+                    case 2:// Periodo
+                    {
+                        query = "SELECT p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
+                                 + " FROM pedido p, cliente c "
+                                + " WHERE p.pe_datapedido BETWEEN '"+dataI+"' and '"+dataF+"' and p.cli_codigo = c.cli_codigo";
+                        break;
+                    }
+                    case 3:// Numero
+                    {
+                        query = "select p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
+                                 + " FROM pedido p, cliente c "
+                                + "where p.pe_codigo = '"+valor+"' and p.cli_codigo = c.cli_codigo";
+                        break;
+                    }
+                    case 4:// Nome Cliente
+                    {
+                        query = "select p.pe_codigo, c.cli_nome, p.pe_valortotal, p.pe_datapedido, p.pe_dataentrega "
+                                 + " FROM pedido p, cliente c "
+                                + "where c.cli_nome ilike '%"+valor+"%' and p.cli_codigo = c.cli_codigo";
+                        break;
+                    }
+                }
+            }
+//        }
         return Banco.getCon().retornaResultSet(query);
     }
     
